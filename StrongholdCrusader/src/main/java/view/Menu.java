@@ -8,10 +8,6 @@ import java.util.regex.Pattern;
 
 public class Menu {
     final protected Scanner scanner = new Scanner(System.in);
-    protected DataBase dataBase;
-    public Menu (DataBase dataBase) {
-        this.dataBase = dataBase;
-    }
     protected void run() {}
 
     protected Matcher getMatcher(String input, String regex) {

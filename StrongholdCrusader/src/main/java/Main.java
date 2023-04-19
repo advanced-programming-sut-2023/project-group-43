@@ -4,7 +4,7 @@ import view.RegisterMenu;
 public class Main {
     public static void main(String[] args) {
         DataBase dataBase = DataBase.getInstance();
-        RegisterMenu registerMenu = new RegisterMenu(dataBase);
+        RegisterMenu registerMenu = new RegisterMenu();
         registerMenu.run();
     }
 }

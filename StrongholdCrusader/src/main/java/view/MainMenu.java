@@ -5,11 +5,6 @@ import model.DataBase;
 
 public class MainMenu extends Menu{
 
-
-    public MainMenu(DataBase dataBase) {
-        super(dataBase);
-    }
-
     public void run(){}
 
     private void enterChangeEnvironmentMenu() {}

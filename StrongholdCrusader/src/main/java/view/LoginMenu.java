@@ -9,11 +9,6 @@ public class LoginMenu extends Menu{
 
     private RegisterAndLoginController registerAndLoginController;
 
-    public LoginMenu(DataBase dataBase) {
-        super(dataBase);
-        this.registerAndLoginController = new RegisterAndLoginController(dataBase);
-    }
-
     public void run(){}
 
     private String loginUser(Matcher matcher){return null;}

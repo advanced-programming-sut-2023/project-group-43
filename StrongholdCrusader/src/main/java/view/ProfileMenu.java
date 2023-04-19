@@ -9,12 +9,6 @@ import java.util.regex.Matcher;
 public class ProfileMenu extends Menu{
 
     private ProfileController profileController;
-
-    public ProfileMenu(DataBase dataBase) {
-        super(dataBase);
-        this.profileController = new ProfileController(dataBase);
-    }
-
     public void run(){}
 
     private String changeProfile(Matcher matcher){return null;}

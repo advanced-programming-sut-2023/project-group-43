@@ -5,12 +5,6 @@ import model.DataBase;
 
 public class GameController {
 
-    private DataBase dataBase;
-
-    public GameController(DataBase dataBase) {
-        this.dataBase = dataBase;
-    }
-
     public static Output dropBuilding(int x, int y, String type) {return null;}
 
     public static Output selectBuilding(int x, int y) {return null;}

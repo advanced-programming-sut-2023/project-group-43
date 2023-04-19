@@ -12,11 +12,6 @@ public class GameMenu extends Menu{
 
     private int turns;
 
-    public GameMenu(DataBase dataBase) {
-        super(dataBase);
-        this.gameController = new GameController(dataBase);
-    }
-
     public int getTurns() {
         return turns;
     }

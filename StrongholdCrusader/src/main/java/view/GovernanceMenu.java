@@ -9,11 +9,6 @@ public class GovernanceMenu extends Menu{
 
     private GovernanceController governanceController;
 
-    public GovernanceMenu(DataBase dataBase) {
-        super(dataBase);
-        this.governanceController = new GovernanceController(dataBase);
-    }
-
     public void run() {}
 
     private String showPopularityFactors() {

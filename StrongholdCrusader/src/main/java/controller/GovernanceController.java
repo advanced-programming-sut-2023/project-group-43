@@ -5,12 +5,6 @@ import model.DataBase;
 
 public class GovernanceController {
 
-    private DataBase dataBase;
-
-    public GovernanceController(DataBase dataBase) {
-        this.dataBase = dataBase;
-    }
-
     public static Output showPopularityFactors() { return null;}
 
     public static Output showPopularity() {return null;}

@@ -10,11 +10,6 @@ public class ChangeEnvironmentMenu extends Menu{
 
     private ChangeEnvironmentController changeEnvironmentController;
 
-    public ChangeEnvironmentMenu(DataBase dataBase) {
-        super(dataBase);
-        this.changeEnvironmentController = new ChangeEnvironmentController(dataBase);
-    }
-
     public void run() {
     }
 

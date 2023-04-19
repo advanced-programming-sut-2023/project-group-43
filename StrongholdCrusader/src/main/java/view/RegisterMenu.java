@@ -9,10 +9,6 @@ public class RegisterMenu extends Menu{
 
     private RegisterAndLoginController registerAndLoginController;
 
-    public RegisterMenu(DataBase dataBase) {
-        super(dataBase);
-        this.registerAndLoginController = new RegisterAndLoginController(dataBase);
-    }
     public void run(){
     }
 

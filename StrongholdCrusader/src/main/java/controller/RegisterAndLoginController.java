@@ -5,11 +5,6 @@ import model.DataBase;
 
 public class RegisterAndLoginController {
 
-    private DataBase dataBase;
-
-    public RegisterAndLoginController(DataBase dataBase) {
-        this.dataBase = dataBase;
-    }
     public static Output createUser(String username,
                                     String password,
                                     String nickname,

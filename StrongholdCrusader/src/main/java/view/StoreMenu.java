@@ -10,11 +10,6 @@ public class StoreMenu extends Menu{
 
     private StoreController storeController;
 
-    public StoreMenu(DataBase dataBase) {
-        super(dataBase);
-        this.storeController = new StoreController(dataBase);
-    }
-
     public void run() {
     }
 

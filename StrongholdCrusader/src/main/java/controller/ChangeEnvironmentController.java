@@ -5,12 +5,6 @@ import model.DataBase;
 
 public class ChangeEnvironmentController {
 
-    private DataBase dataBase;
-
-    public ChangeEnvironmentController(DataBase dataBase) {
-        this.dataBase = dataBase;
-    }
-
     public static void generateMap(int numberOfPlayers, int size) {}
 
     public static Output chooseMap(int numberOfPlayers, int size) {return null;}

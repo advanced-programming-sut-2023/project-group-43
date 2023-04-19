@@ -5,12 +5,6 @@ import model.DataBase;
 
 public class ProfileController {
 
-    private DataBase dataBase;
-
-    public ProfileController(DataBase dataBase) {
-        this.dataBase = dataBase;
-    }
-
     public static Output changeProfile(String flag, String newInfo) {
     }
 
