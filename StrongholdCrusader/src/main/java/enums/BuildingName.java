@@ -8,7 +8,7 @@ public class BuildingName {
     private BuildingType buildingType;
 
 
-    public BuildingName(int cost, int hitPoint, int peopleCapacity, BuildingType buildingType ) {
+    BuildingName(int cost, int hitPoint, int peopleCapacity, BuildingType buildingType ) {
     }
 
     public int getCost() {

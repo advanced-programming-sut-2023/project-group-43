@@ -3,6 +3,7 @@ package model;
 import enums.Texture;
 import enums.TreeType;
 import enums.WaterArea;
+import model.units.Unit;
 
 import java.util.ArrayList;
 
