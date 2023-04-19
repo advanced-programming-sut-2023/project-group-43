@@ -2,12 +2,19 @@ package controller;
 
 import enums.Output;
 import model.DataBase;
+import model.Game;
 
 public class StoreController {
 
-    public static Output showPriceList() {}
+    private Game game;
 
-    public static Output buy(String itemName, int amount) {}
+    public StoreController(Game game) {
+        this.game = game;
+    }
 
-    public static Output sell(String itemName, int amount) {}
+    public Output showPriceList() {return null;}
+
+    public Output buy(String itemName, int amount) {return null;}
+
+    public Output sell(String itemName, int amount) {return null;}
 }

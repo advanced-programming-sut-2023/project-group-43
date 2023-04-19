@@ -8,6 +8,10 @@ public class TradeMenu extends Menu{
 
     private TradeController tradeController;
 
+    public TradeMenu(TradeController tradeController) {
+        this.tradeController = tradeController;
+    }
+
     public void run() {
     }
 

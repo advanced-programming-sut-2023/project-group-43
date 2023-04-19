@@ -11,5 +11,4 @@ public class MainMenu extends Menu{
 
     private void enterProfileMenu() {}
 
-    private void enterGameMenu() {}
 }

@@ -5,30 +5,21 @@ import java.util.ArrayList;
 public class DataBase {
 
     private static DataBase dataBase = null;
+
     ArrayList<User> users = new ArrayList<>();
     User loggedInUser;
-    private User currentUser;
 
-    private User currentPlayer;
-    private ArrayList<User> players;
-
-    private ArrayList<Trade> trades;
-    private Cell[][] cells;
-
-    private Building selectedBuilding;
-
-    private Unit selectedUnit;
+    User currentUser;
 
     private DataBase() {
-        return;
     }
 
-    public Cell[][] getCells() {
-        return cells;
-    }
 
-    public ArrayList<User> getPlayers() {
-        return players;
+    public static DataBase getInstance() {
+        if(dataBase == null) {
+            dataBase = new DataBase();
+        }
+        return dataBase;
     }
 
     public User getCurrentUser() {
@@ -39,57 +30,15 @@ public class DataBase {
         this.currentUser = currentUser;
     }
 
-    public User getCurrentPlayer() {
-        return currentPlayer;
+    public User getLoggedInUser() {
+        return loggedInUser;
     }
 
-    public void setCurrentPlayer(User currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
-    public void setCells(Cell[][] cells) {
-        this.cells = cells;
-    }
-
-    public Building getSelectedBuilding() {
-        return selectedBuilding;
-    }
-
-    public void setSelectedBuilding(Building building) {
-        selectedBuilding = building;
-    }
-
-    public Unit getSelectedUnit() {
-        return selectedUnit;
-    }
-
-    public void setSelectedUnit(Unit selectedUnit) {
-        this.selectedUnit = selectedUnit;
-    }
-
-    public void setPlayers(ArrayList<User> players) {
-        this.players = players;
-    }
-
-    public void setTrades(ArrayList<Trade> trades) {
-        this.trades = trades;
-    }
-
-    public ArrayList<Trade> getTrades() {
-        return trades;
-    }
-
-    public void addPlayer(User player) {
-        players.add(player);
-    }
-
-    public void addTrade(Trade trade) {}
-
-    public void removeTrade(Trade trade) {}
-    public static getInstance() {
-        if(dataBase == null) {
-            dataBase = new DataBase();
-        }
-        return dataBase;
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
     }
 }

@@ -1,26 +1,32 @@
 package controller;
 
 import enums.Output;
-import model.DataBase;
+import model.*;
 
 public class GovernanceController {
 
-    public static Output showPopularityFactors() { return null;}
+    private Game game;
 
-    public static Output showPopularity() {return null;}
+    public GovernanceController(Game game) {
+        this.game = game;
+    }
 
-    public static Output showFoodList() {return null;}
+    public Output showPopularityFactors() { return null;}
 
-    public static Output foodRate(int rate) {return null;}
+    public Output showPopularity() {return null;}
 
-    public static Output showFoodRate() {return null;}
+    public Output showFoodList() {return null;}
 
-    public static Output taxRate(int rate) {return null;}
+    public Output foodRate(int rate) {return null;}
 
-    public static Output showTaxRate() {return null;}
+    public Output showFoodRate() {return null;}
 
-    public static Output fearRate(int rate) {return null;}
+    public Output taxRate(int rate) {return null;}
 
-    public static Output showFearRate() {return null;}
+    public Output showTaxRate() {return null;}
+
+    public Output fearRate(int rate) {return null;}
+
+    public Output showFearRate() {return null;}
 
 }

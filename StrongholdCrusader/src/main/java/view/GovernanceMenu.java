@@ -9,6 +9,10 @@ public class GovernanceMenu extends Menu{
 
     private GovernanceController governanceController;
 
+    public GovernanceMenu(GovernanceController governanceController) {
+        this.governanceController = governanceController;
+    }
+
     public void run() {}
 
     private String showPopularityFactors() {

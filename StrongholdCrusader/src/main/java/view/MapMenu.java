@@ -10,6 +10,10 @@ public class MapMenu extends Menu{
 
     private MapController mapController;
 
+    public MapMenu(MapController mapController) {
+        this.mapController = mapController;
+    }
+
     public void run(){}
 
     private String moveMap(Matcher matcher){return null;}

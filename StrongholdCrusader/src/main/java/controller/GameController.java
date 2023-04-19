@@ -1,67 +1,101 @@
 package controller;
 
 import enums.Output;
-import model.DataBase;
+import model.*;
+import view.GovernanceMenu;
+import view.MapMenu;
+import view.StoreMenu;
+import view.TradeMenu;
 
 public class GameController {
 
-    public static Output dropBuilding(int x, int y, String type) {return null;}
+    private Game game;
 
-    public static Output selectBuilding(int x, int y) {return null;}
+    public GameController(Game game) {
+        this.game = game;
+    }
 
-    public static Output createUnit(String type, int count) {return null;}
+    public Output dropBuilding(int x, int y, String type) {return null;}
 
-    public static Output repairCastle() {return null;}
+    public Output selectBuilding(int x, int y) {return null;}
 
-    public static Output selectUnit(int x, int y) {return null;}
+    public Output createUnit(String type, int count) {return null;}
 
-    public static Output moveUnit(int x, int y) {return null;}
+    public Output repairCastle() {return null;}
 
-    public static Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
+    public Output selectUnit(int x, int y) {return null;}
 
-    public static Output setUnitState(int x, int y, String state) {return null;}
+    public Output moveUnit(int x, int y) {return null;}
 
-    public static Output attack(int x, int y) {return null;}
+    public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
 
-    private static Output attackToEnemy(int x, int y) {return null;}
+    public Output setUnitState(int x, int y, String state) {return null;}
 
-    private static Output airAttack(int x, int y) {return null;}
+    public Output attack(int x, int y) {return null;}
 
-    public static Output pourOil(String direction) {return null;}
+    private Output attackToEnemy(int x, int y) {return null;}
 
-    public static Output digTunnel(int x, int y) {return null;}
+    private Output airAttack(int x, int y) {return null;}
 
-    public static Output buildEquipment (String equipmentName) {return null;}
+    public Output pourOil(String direction) {return null;}
 
-    public static Output disbandUnit() {return null;}
+    public Output digTunnel(int x, int y) {return null;}
 
-    public static void applyChanges() {}
+    public Output buildEquipment (String equipmentName) {return null;}
 
-    private static void applyHitPointChange() {}
+    public Output disbandUnit() {return null;}
 
-    private static void applyDeathChange() {}
+    public void applyChanges() {}
 
-    public static void updateForNextTurn() {}
+    private void applyHitPointChange() {}
 
-    private static void updateResources() {}
+    private void applyDeathChange() {}
 
-    private static void updateUnemployedPopulation() {}
+    public void updateForNextTurn() {}
 
-    private static void updateTaxIncome() {}
+    private void updateResources() {}
 
-    private static void updatePopularity() {}
+    private void updateUnemployedPopulation() {}
 
-    private static void updateFoodRate() {}
+    private void updateTaxIncome() {}
 
-    private static void updateTaxRate() {}
+    private void updatePopularity() {}
 
-    private static void updateEfficiency() {}
+    private void updateFoodRate() {}
 
-    public static boolean isGameEnded() {return false;}
+    private void updateTaxRate() {}
 
-    public static Output showGameResult() {return null;}
+    private void updateEfficiency() {}
 
-    private static void updateScores() {}
+    public boolean isGameEnded() {return false;}
 
-    public static void clearGame() {}
+    public Output showGameResult() {return null;}
+
+    private void updateScores() {}
+
+    public void clearGame() {}
+
+    public void enterStoreMenu() {
+        StoreController storeController = new StoreController(game);
+        StoreMenu storeMenu = new StoreMenu(storeController);
+        storeMenu.run();
+    }
+
+    public void enterTradeMenu() {
+        TradeController tradeController = new TradeController(game);
+        TradeMenu tradeMenu = new TradeMenu(tradeController);
+        tradeMenu.run();
+    }
+
+    public void enterGovernanceMenu() {
+        GovernanceController governanceController = new GovernanceController(game);
+        GovernanceMenu governanceMenu = new GovernanceMenu(governanceController);
+        governanceMenu.run();
+    }
+
+    public void enterMapMenu() {
+        MapController mapController = new MapController(game);
+        MapMenu mapMenu = new MapMenu(mapController);
+        mapMenu.run();
+    }
 }

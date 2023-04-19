@@ -2,17 +2,24 @@ package controller;
 
 import enums.Output;
 import model.DataBase;
+import model.Game;
 import model.Trade;
 
 public class TradeController {
 
-    public static Output requestTrade(String resourceType, int resourceAmount, int price, String message) {return null;}
+    private Game game;
 
-    public static Output showTradeList() {return null;}
+    public TradeController(Game game) {
+        this.game = game;
+    }
 
-    public static Output showNotification() {return null;}
+    public Output requestTrade(String resourceType, int resourceAmount, int price, String message) {return null;}
 
-    public static Output acceptTrade(int id, String message) {return null;}
+    public Output showTradeList() {return null;}
 
-    public static Output showTradeHistory() {return null;}
+    public Output showNotification() {return null;}
+
+    public Output acceptTrade(int id, String message) {return null;}
+
+    public Output showTradeHistory() {return null;}
 }

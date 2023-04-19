@@ -40,4 +40,8 @@ public class ChangeEnvironmentMenu extends Menu{
     public String dropUnit(Matcher matcher) {
         return null;
     }
+
+    private void enterGameMenu() {
+
+    }
 }

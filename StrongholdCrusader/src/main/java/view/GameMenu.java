@@ -10,14 +10,8 @@ public class GameMenu extends Menu{
 
     private GameController gameController;
 
-    private int turns;
-
-    public int getTurns() {
-        return turns;
-    }
-
-    public void setTurns(int turns) {
-        this.turns = turns;
+    public GameMenu(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public void run() {

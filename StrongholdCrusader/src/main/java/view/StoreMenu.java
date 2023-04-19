@@ -10,6 +10,10 @@ public class StoreMenu extends Menu{
 
     private StoreController storeController;
 
+    public StoreMenu(StoreController storeController) {
+        this.storeController = storeController;
+    }
+
     public void run() {
     }
 

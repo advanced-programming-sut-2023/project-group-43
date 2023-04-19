@@ -2,12 +2,19 @@ package controller;
 
 import enums.Output;
 import model.DataBase;
+import model.Game;
 
 public class MapController {
-    public static Output showMap(int x, int y) {}
 
-    public static Output moveMap(String verticalDirection, String horizontalDirection) {}
+    private Game game;
 
-    public static Output showDetails(int x, int y) {}
+    public MapController(Game game) {
+        this.game = game;
+    }
+    public Output showMap(int x, int y) {return null;}
+
+    public Output moveMap(String verticalDirection, String horizontalDirection) {return null;}
+
+    public Output showDetails(int x, int y) {return null;}
 
 }
