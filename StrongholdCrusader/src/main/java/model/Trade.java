@@ -1,7 +1,5 @@
 package model;
 
-import enums.ResourceType;
-
 public class Trade {
     private User sender;
     private User receiver;

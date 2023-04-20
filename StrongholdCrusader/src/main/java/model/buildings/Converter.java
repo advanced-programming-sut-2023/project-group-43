@@ -1,8 +1,6 @@
 package model.buildings;
 
-import enums.BuildingName;
 import enums.Material;
-import enums.ResourceType;
 import model.User;
 
 public class Converter extends Building{

@@ -1,6 +1,5 @@
 package model.buildings;
 
-import enums.BuildingName;
 import model.User;
 
 public class CastleDepartment extends Building {
