@@ -1,9 +1,11 @@
-package model;
+package model.units;
 
 import enums.UnitState;
 import enums.UnitName;
 import enums.UnitType;
 import enums.UnitWeapon;
+import model.Cell;
+import model.User;
 
 public class Unit {
     private User owner;
@@ -17,11 +19,7 @@ public class Unit {
     private int defense;
     private int speed;
     private int cost;
-
-    private boolean hasHorse;
     private boolean hasLadder;
-    private boolean canHide;
-    private UnitWeapon weapon;
 
     private UnitState state;
 
@@ -29,14 +27,10 @@ public class Unit {
         this.owner = owner;
         this.name = name;
         this.hitPoint = name.getHitPoint();
-        this.damage = name.getDamage();
         this.defense = name.getDefense();
         this.speed = name.getSpeed();
         this.cost = name.getCost();
-        this.hasHorse = name.HasHorse();
         this.hasLadder = name.HasLadder();
-        this.canHide = name.CanHide();
-        this.weapon = name.getWeapon();
     }
 
     public User getOwner() {
@@ -84,21 +78,8 @@ public class Unit {
     }
 
 
-    public boolean HasHorse() {
-        return hasHorse;
-    }
-
     public boolean HasLadder() {
         return hasLadder;
-    }
-
-    public boolean CanHide() {
-        return canHide;
-    }
-
-
-    public UnitWeapon getWeapon() {
-        return weapon;
     }
 
     public UnitState getState() {
@@ -124,14 +105,11 @@ public class Unit {
     public UnitType getType() {
         return type;
     }
-
-    public void attack() {}
     public void defense() {}
-    public void shoot() {}
     public void move() {}
     public void digDitch() {}
     public void climbWall() {}
-    public void hide() {}
+
 }
 
 
