@@ -11,7 +11,15 @@ public enum Texture {
     IRON("iron"),
     GRASS("grass"),
     MEADOW("meadow"),
-    DENSE_GRASSLAND("dense grassland");
+    DENSE_GRASSLAND("dense grassland"),
+    OIL("oil"),
+    PLAIN("plain"),
+    SHALLOW_WATER("shallow water"),
+    RIVER("river"),
+    SMALL_POND("small pond"),
+    BIG_POND("big pond"),
+    BEACH("beach"),
+    SEA("sea");
     private String texture;
 
     private Texture(String regex) {

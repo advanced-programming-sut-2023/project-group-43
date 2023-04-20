@@ -2,6 +2,7 @@ package controller;
 
 import enums.Output;
 import enums.Texture;
+import enums.TreeType;
 import model.*;
 import view.GameMenu;
 
@@ -79,16 +80,40 @@ public class ChangeEnvironmentController {
         game.getCells()[x - 1][y - 1].setUnits(null);
         game.getCells()[x - 1][y - 1].setTexture(Texture.GROUND);
         game.getCells()[x - 1][y - 1].setTreeType(null);
-        game.getCells()[x - 1][y - 1].setWaterArea(null);
         game.getCells()[x - 1][y - 1].setHasRock(false);
         return Output.BLOCK_CLEARED;
     }
 
-    public Output dropRock(int x, int y, String direction) {return null;}
+    public Output dropRock(int x, int y, String direction) {
+        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            return Output.WRONG_COORDINATES;
+        game.getCells()[x- 1][y - 1].setHasRock(true);
+        game.getCells()[x- 1][y - 1].setRockDirection(direction);
+        return Output.DROP_ROCK;
+    }
 
-    public Output dropTree(int x, int y, String type) {return null;}
+    public Output dropTree(int x, int y, String type) {
+        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            return Output.WRONG_COORDINATES;
+        TreeType treeType = null;
+        for (TreeType treeType1 : TreeType.values()) {
+            if (treeType1.equals(type)) {
+                treeType = treeType1;
+                break;
+            }
+        }
+        if (treeType == null) return Output.WRONG_TREE_TYPE;
+        if (!(game.getCells()[x - 1][y - 1].getTexture().equals(Texture.GRASS) || game.getCells()[x - 1][y - 1].getTexture().equals(Texture.DENSE_GRASSLAND)))
+            return Output.INAPPROPRIATE_GROUND_FOR_TREE;
+        game.getCells()[x - 1][y - 1].setTreeType(treeType);
+        return Output.DROP_TREE;
+    }
 
-    public Output dropBuilding(int x, int y, String type) {return null;}
+    public Output dropBuilding(int x, int y, String type) {
+        //if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            //return Output.WRONG_COORDINATES;
+        return null;
+    }
 
     public Output dropUnit(int x, int y, String type, int count) {return null;}
 
