@@ -14,7 +14,17 @@ public class ChangeEnvironmentController {
         this.currentUser = currentUser;
     }
 
-    public void generateMap(int numberOfPlayers, int size) {}
+
+    public void showMap(int row, int column) {
+        //TODO
+    }
+    public void showMapDetails(int row, int column) {
+
+    }
+    public void moveMap(int horizontalDisplacement, int verticalDisplacement) {}
+    public void generateMap(int numberOfPlayers, int size) {
+
+    }
 
     public Output chooseMap(int numberOfPlayers, int size) {return null;}
 
