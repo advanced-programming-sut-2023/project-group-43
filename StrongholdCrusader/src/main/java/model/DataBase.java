@@ -34,7 +34,12 @@ public class DataBase {
         this.loggedInUser = loggedInUser;
     }
 
-    public User getUserByUsername(String userName) {
-        return User;
+    public User getUserByUsername(String username) {
+        for(User user: users) {
+            if(user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 }
