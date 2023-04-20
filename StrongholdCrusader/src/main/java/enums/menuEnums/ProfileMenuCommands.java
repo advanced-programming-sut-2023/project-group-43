@@ -17,7 +17,7 @@ public enum ProfileMenuCommands {
     DISPLAY_SLOGAN("profile display slogan"),
     PROFILE_DISPLAY("profile display")
     ;
-    private final String regex;
+    final String regex;
 
     private ProfileMenuCommands(String regex) {
         this.regex = regex;
