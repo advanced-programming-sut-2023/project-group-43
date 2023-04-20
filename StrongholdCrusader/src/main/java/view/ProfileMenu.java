@@ -18,23 +18,24 @@ public class ProfileMenu extends Menu{
         Scanner scanner = Menu.getScanner();
         String input;
         Output output;
+        Matcher matcher;
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME) != null) {
-                output = changeUsername(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME));
+            if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME)) != null) {
+                output = changeUsername(matcher);
             }
-            else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME) != null) {
-                output = changeNickname(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME));
+            else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME)) != null) {
+                output = changeNickname(matcher);
             }
-            else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD) != null) {
-                output = changePassword(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD));
+            else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD)) != null) {
+                output = changePassword(matcher);
             }
-            else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL) != null) {
-                output = changeEmail(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL));
+            else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL)) != null) {
+                output = changeEmail(matcher);
             }
-            else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN) != null) {
-                output = changeSlogan(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN));
+            else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN)) != null) {
+                output = changeSlogan(matcher);
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.REMOVE_SLOGAN) != null) {
                 output = removeSlogan();
