@@ -1,10 +1,7 @@
 package view;
 
-import controller.GameController;
 import controller.ProfileController;
-import enums.Commands;
 import enums.menuEnums.ProfileMenuCommands;
-import model.DataBase;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

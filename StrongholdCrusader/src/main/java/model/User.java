@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import model.buildings.Storage;
 
 public class User {
     private String username;
