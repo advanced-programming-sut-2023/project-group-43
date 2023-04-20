@@ -7,11 +7,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Menu {
-    final protected Scanner scanner = new Scanner(System.in);
+    final protected static Scanner scanner = new Scanner(System.in);
     protected void run() {}
 
-    protected Matcher getMatcher(String input, String regex) {
+    protected static Matcher getMatcher(String input, String regex) {
             Pattern pattern = Pattern.compile(regex);
             return pattern.matcher(input);
+    }
+
+    public static Scanner getScanner() {
+        return scanner;
     }
 }

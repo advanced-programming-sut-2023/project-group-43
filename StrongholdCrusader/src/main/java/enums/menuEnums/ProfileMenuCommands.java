@@ -13,7 +13,8 @@ public enum ProfileMenuCommands {
     DISPLAY_HIGHSCORE("profile display highscore"),
     DISPLAY_RANK("profile display rank"),
     DISPLAY_SLOGAN("profile display slogan"),
-    PROFILE_DISPLAY("profile display")
+    PROFILE_DISPLAY("profile display"),
+    BACK("back")
     ;
     private final String regex;
 

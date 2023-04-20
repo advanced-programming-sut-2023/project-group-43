@@ -1,6 +1,7 @@
 package view;
 
 import controller.ProfileController;
+import enums.Output;
 import enums.menuEnums.ProfileMenuCommands;
 
 import java.util.Scanner;
@@ -13,81 +14,89 @@ public class ProfileMenu extends Menu{
     public ProfileMenu(ProfileController profileController) {
         this.profileController = profileController;
     }
-    public void run(Scanner scanner){
+    public void run(){
+        Scanner scanner = Menu.getScanner();
         String input;
+        Output output;
         while (true) {
             input = scanner.nextLine();
+            output = null;
             if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME) != null) {
-                changingUsername(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME));
+                output = changeUsername(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME));
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME) != null) {
-                System.out.println(changeNickname(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME)));
+                output = changeNickname(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME));
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD) != null) {
-                System.out.println(changePassword(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD)));
+                output = changePassword(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD));
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL) != null) {
-                System.out.println(changeEmail(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL)));
+                output = changeEmail(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL));
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN) != null) {
-                System.out.println(changeSlogan(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN)));
+                output = changeSlogan(ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN));
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.REMOVE_SLOGAN) != null) {
-                System.out.println(removeSlogan());
+                output = removeSlogan();
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_HIGHSCORE) != null) {
-                System.out.println(displayHighscore());
+                output = displayHighScore();
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_RANK) != null) {
-                System.out.println(displayRank());
+                output = displayRank();
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_SLOGAN) != null) {
-                System.out.println(displaySlogan());
+                output = displaySlogan();
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.PROFILE_DISPLAY) != null) {
-                System.out.println(displayProfile());
+                output = displayProfile();
             }
+            else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.BACK) != null) {
+                return;
+            }
+            if (output != null) System.out.println(output.getString());
             else System.out.println("Invalid Command!");
         }
     }
 
-    private String changeProfile(Matcher matcher){return null;}
-
-    private String changePassword(Matcher matcher){
-        return String.valueOf(profileController.changePassword(matcher.group("oldPassword"), matcher.group("newPassword")));
+    private Output changePassword(Matcher matcher){
+        String oldPassword = matcher.group("oldPassword");
+        String newPassword = matcher.group("newPassword");
+        return profileController.changePassword(oldPassword, newPassword);
     }
 
-    private String changingUsername(Matcher matcher) {
-        return String.valueOf(profileController.changeUsername(matcher.group("username")));
+    private Output changeUsername(Matcher matcher) {
+        return profileController.changeUsername(matcher.group("username"));
     }
 
-    private String changeNickname(Matcher matcher) {
-        return String.valueOf(profileController.changeNickname(matcher.group("nickname")));
+    private Output changeNickname(Matcher matcher) {
+        return profileController.changeNickname(matcher.group("nickname"));
     }
 
-    private String changeEmail(Matcher matcher) {
-        return String.valueOf(profileController.changeEmail(matcher.group("email")));
+    private Output changeEmail(Matcher matcher) {
+        return profileController.changeEmail(matcher.group("email"));
     }
 
-    private String changeSlogan(Matcher matcher) {
-        return String.valueOf(profileController.changeSlogan(matcher.group("slogan")));
+    private Output changeSlogan(Matcher matcher) {
+        return profileController.changeSlogan(matcher.group("slogan"));
     }
 
-    private String removeSlogan(){
-        return String.valueOf(profileController.removeSlogan());
+    private Output removeSlogan(){
+
+        return profileController.removeSlogan();
     }
-    private String displayHighscore() {
-        return String.valueOf(profileController.displayHighscore());
+    private Output displayHighScore() {
+        return profileController.displayHighscore();
     }
-    private String displayRank() {
-        return String.valueOf(profileController.displayRank());
+    private Output displayRank() {
+        return profileController.displayRank();
     }
 
-    private String displayProfile(){
-        return String.valueOf(profileController.displayAllProfile());
+    private Output displayProfile(){
+        return profileController.displayAllProfile();
     }
 
-    private String displaySlogan() {
-        return String.valueOf(profileController.displaySlogan());
+    private Output displaySlogan() {
+        return profileController.displaySlogan();
     }
 }

@@ -10,9 +10,12 @@ public class RegisterMenu extends Menu{
     private RegisterAndLoginController registerAndLoginController;
 
     public void run(){
+        while ()
     }
 
     private String createUser(Matcher matcher){return null;}
 
-    public void enterLoginMenu() {}
+    public void enterLoginMenu() {
+
+    }
 }

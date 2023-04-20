@@ -6,11 +6,11 @@ public enum Output {
     DUPLICATE_USERNAME("warning : duplicate username!"),
     SUCCESSFUL_USERNAME_CHANGE("username changed successfully")
     ;
-    private String output;
-    private Output(String output) {
-        this.output = output;
+    private String string;
+    private Output(String string) {
+        this.string = string;
     }
-    public void setOutput(String output) {
-        this.output = output;
+    public String getString() {
+        return this.string;
     }
 }
