@@ -1,39 +1,44 @@
 package controller;
 
 import enums.Output;
-import model.DataBase;
+import model.*;
 
 public class ProfileController {
 
-    public static Output changeProfile(String flag, String newInfo) {
+    User currentUser;
+
+    public ProfileController(User currentUser) {
+        this.currentUser = currentUser;
+    }
+    public Output changeProfile(String flag, String newInfo) {
     }
 
-    public static Output changePassword(String oldPassword, String newPassword) {
+    public Output changePassword(String oldPassword, String newPassword) {
     }
 
-    private static Output changeUsername(String username) {
+    private Output changeUsername(String username) {
     }
 
-    private static Output changeNickname(String nickname) {
+    private Output changeNickname(String nickname) {
     }
 
-    private static Output changeEmail(String email) {
+    private Output changeEmail(String email) {
     }
 
-    private static Output changeSlogan(String slogan) {
+    private Output changeSlogan(String slogan) {
     }
 
-    public static Output removeSlogan() {
+    public Output removeSlogan() {
     }
 
-    public static Output displayProfile(String info) {
+    public Output displayProfile(String info) {
     }
 
-    public static Output displayAllProfile() {}
+    public Output displayAllProfile() {}
 
-    private static Output displayHighScore() {}
+    private Output displayHighScore() {}
 
-    private static Output displayRank() {}
+    private Output displayRank() {}
 
-    private static Output displaySlogan() {}
+    private Output displaySlogan() {}
 }

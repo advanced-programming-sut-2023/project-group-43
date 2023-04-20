@@ -10,6 +10,10 @@ public class ChangeEnvironmentMenu extends Menu{
 
     private ChangeEnvironmentController changeEnvironmentController;
 
+    public ChangeEnvironmentMenu(ChangeEnvironmentController changeEnvironmentController) {
+        this.changeEnvironmentController = changeEnvironmentController;
+    }
+
     public void run() {
     }
 
@@ -42,6 +46,6 @@ public class ChangeEnvironmentMenu extends Menu{
     }
 
     private void enterGameMenu() {
-
+        changeEnvironmentController.enterGameMenu();
     }
 }

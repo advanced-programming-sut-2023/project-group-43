@@ -1,7 +1,8 @@
 package controller;
 
 import enums.Output;
-import model.DataBase;
+import model.*;
+import view.MainMenu;
 
 public class RegisterAndLoginController {
 
@@ -36,6 +37,13 @@ public class RegisterAndLoginController {
     }
 
     private static String makeCaptcha() {return null;}
+
+    public static void enterMainMenu(String username) {
+        User currentUser = DataBase.getInstance().getUserByUsername(username);
+        MainController mainController = new MainController(currentUser);
+        MainMenu mainMenu = new MainMenu(mainController);
+        mainMenu.run();
+    }
 
 }
 

@@ -9,6 +9,10 @@ import java.util.regex.Matcher;
 public class ProfileMenu extends Menu{
 
     private ProfileController profileController;
+
+    public ProfileMenu(ProfileController profileController) {
+        this.profileController = profileController;
+    }
     public void run(){}
 
     private String changeProfile(Matcher matcher){return null;}

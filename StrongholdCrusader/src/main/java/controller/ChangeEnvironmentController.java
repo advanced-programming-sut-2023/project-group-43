@@ -1,13 +1,18 @@
 package controller;
 
 import enums.Output;
-import model.DataBase;
-import model.Game;
+import model.*;
 import view.GameMenu;
 
 public class ChangeEnvironmentController {
 
     private Game game = new Game();
+
+    private User currentUser;
+
+    public ChangeEnvironmentController(User currentUser) {
+        this.currentUser = currentUser;
+    }
 
     public void generateMap(int numberOfPlayers, int size) {}
 
