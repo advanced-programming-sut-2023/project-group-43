@@ -1,7 +1,10 @@
-package model;
+package model.buildings;
 
-import enums.*;
-import model.units.Unit;
+import enums.BuildingName;
+import enums.BuildingType;
+import enums.ResourceType;
+import model.Cell;
+import model.User;
 
 import java.util.ArrayList;
 
@@ -135,6 +138,7 @@ public class Building {
     public void plantTree() {}
 
 }
+
 
 
 
