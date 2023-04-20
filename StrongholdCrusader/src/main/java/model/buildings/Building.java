@@ -13,20 +13,7 @@ public class Building {
     private final BuildingName name;
     private final int hp;
     private ArrayList<Unit> units = new ArrayList<>();
-    //private ResourceType resourceCost;
-    //private int hitPoint;
-    //private int damage;
-    //private int fireRange;
-    //private int peopleCapacity;
-    //private UnitName unitName;
-    //private int popularityRate;
-    //private int rate;
-    //private int recourseCapacity;
-    //private ResourceType savedResource;
-    //private ResourceType consumedRecourse;
-    //private Material producedMaterial;
-    //private int productionRate;
-
+    private ResourceType resourceCost;
 
     public Building(User owner, BuildingName name, int hp) {
         this.owner = owner;
@@ -58,24 +45,7 @@ public class Building {
         this.units = units;
     }
 
-    //
-//    public void reduceEnemySpeed() {}
-//
-//    public void hireEngineerAndWorker() {}
-//
-//    public void produceMaterial() {}
-//
-//    public void consumeResource() {}
-//
-//    public void makeUnit() {}
-//
-//    public void increasePopularity() {}
-//
-//    public void increasePopulation() {}
-//
-//    public void attackEnemy() {}
-//
-//    public void plantTree() {}
+    public void hireEngineerAndWorker() {};
 
 }
 
