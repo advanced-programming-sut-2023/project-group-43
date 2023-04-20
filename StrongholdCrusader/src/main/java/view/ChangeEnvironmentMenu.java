@@ -6,25 +6,30 @@ import enums.Output;
 import enums.menuEnums.EnvironmentChangeCommands;
 import enums.menuEnums.ProfileMenuCommands;
 import model.DataBase;
+import model.User;
 
-import java.util.EventListener;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.*;
 import java.util.regex.Matcher;
 
 public class ChangeEnvironmentMenu extends Menu{
 
     private ChangeEnvironmentController changeEnvironmentController;
-
     public ChangeEnvironmentMenu(ChangeEnvironmentController changeEnvironmentController) {
         this.changeEnvironmentController = changeEnvironmentController;
     }
 
     public void run() {
         Scanner scanner = Menu.getScanner();
-        System.out.println("Enter the height and width of your desire battle ground : ");
-        int height = scanner.nextInt();
-        int width = scanner.nextInt();
+        System.out.println("Enter the rows and columns of your desire battle ground : ");
+        int row = scanner.nextInt();
+        int column = scanner.nextInt();
+        System.out.println("Enter players username : ");
+        ArrayList<User> playersArraylist = new ArrayList<>();
+        while (scanner.hasNext()) {
+            playersArraylist.add(DataBase.getInstance().getUserByUsername(scanner.next()));
+        }
+        changeEnvironmentController.generateMap(playersArraylist, row, column);
         String input;
         Output output;
         Matcher matcher;
