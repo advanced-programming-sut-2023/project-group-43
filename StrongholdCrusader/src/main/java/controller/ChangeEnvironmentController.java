@@ -32,7 +32,7 @@ public class ChangeEnvironmentController {
 
     public Output setTextureRectangle(int x1, int y1, int x2, int y2, String texture) {return null;}
 
-    public Output clearMap(int x, int y) {return null;}
+    public Output clear(int x, int y) {return null;}
 
     public Output dropRock(int x, int y, String direction) {return null;}
 
