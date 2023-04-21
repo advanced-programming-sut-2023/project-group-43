@@ -2,8 +2,6 @@ package model.units;
 
 import enums.UnitState;
 import enums.UnitName;
-import enums.UnitType;
-import enums.UnitWeapon;
 import model.Cell;
 import model.User;
 

@@ -1,6 +1,5 @@
 package model;
 
-import enums.FoodType;
 import enums.Material;
 
 import java.util.HashMap;

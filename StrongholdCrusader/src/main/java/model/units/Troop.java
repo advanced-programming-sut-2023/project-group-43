@@ -2,7 +2,6 @@ package model.units;
 
 import enums.TroopType;
 import enums.UnitName;
-import enums.UnitWeapon;
 import model.*;
 
 public class Troop extends Unit{
