@@ -110,9 +110,9 @@ public class ChangeEnvironmentController {
     }
 
     public Output dropBuilding(int x, int y, String type) {
-        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
-            return Output.WRONG_COORDINATES;
-
+        //if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            //return Output.WRONG_COORDINATES;
+        return null;
     }
 
     public Output dropUnit(int x, int y, String type, int count) {return null;}
