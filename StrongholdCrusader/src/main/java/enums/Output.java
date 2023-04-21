@@ -1,8 +1,6 @@
 package enums;
 
 public enum Output {
-<<<<<<< Updated upstream
-=======
     EMPTY_FIELD("warning : empty field!"),
     INVALID_USERNAME("warning : invalid username!"),
     DUPLICATE_USERNAME("warning : duplicated username!"),
@@ -22,11 +20,14 @@ public enum Output {
     INVALID_PASSWORD_RECOVERY_QUESTION("warning: you have to choose a number between 1 to 3"),
     SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("your password recovery question have chosen successfully"),
     INCORRECT_ANSWER_CONFIRMATION("warning: answer and answer confirmation aren't matched")
->>>>>>> Stashed changes
     ;
-    private String output;
+    private String string;
 
-    public void setOutput(String output) {
-        this.output = output;
+    private Output(String string) {
+        this.string = string;
+    }
+
+    public String getString() {
+        return string;
     }
 }

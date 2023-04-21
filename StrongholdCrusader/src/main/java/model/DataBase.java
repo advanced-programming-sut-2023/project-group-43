@@ -9,8 +9,6 @@ public class DataBase {
     ArrayList<User> users = new ArrayList<>();
     User loggedInUser;
 
-    User currentUser;
-
     private DataBase() {
     }
 
@@ -22,13 +20,6 @@ public class DataBase {
         return dataBase;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
 
     public User getLoggedInUser() {
         return loggedInUser;
@@ -41,8 +32,6 @@ public class DataBase {
     public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }
-<<<<<<< Updated upstream
-=======
 
     public void addUser(User user) {
         users.add(user);
@@ -65,5 +54,4 @@ public class DataBase {
         }
         return null;
     }
->>>>>>> Stashed changes
 }

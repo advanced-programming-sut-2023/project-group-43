@@ -1,22 +1,21 @@
 package view;
 
 import controller.RegisterAndLoginController;
-<<<<<<< Updated upstream
+
 import model.DataBase;
-=======
+
 import enums.Output;
 import enums.menuEnums.RegisterAndLoginCommands;
->>>>>>> Stashed changes
 
+
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class RegisterMenu extends Menu {
 
-<<<<<<< Updated upstream
+
     private RegisterAndLoginController registerAndLoginController;
 
-    public void run(){
-=======
     private String randomPassword;
 
     public void run() {
@@ -39,7 +38,6 @@ public class RegisterMenu extends Menu {
                 System.out.println(output.getString());
             } else System.out.println("invalid command");
         }
->>>>>>> Stashed changes
     }
 
     private Output createUser(Matcher matcher, String randomPassword, String randomConfirmation, String randomSlogan) {
@@ -90,9 +88,6 @@ public class RegisterMenu extends Menu {
         return output;
     }
 
-<<<<<<< Updated upstream
-    public void enterLoginMenu() {}
-=======
     public void enterLoginMenu() {
         LoginMenu loginMenu = new LoginMenu();
         loginMenu.run();
@@ -138,5 +133,4 @@ public class RegisterMenu extends Menu {
                     password, nickname, email, slogan, questionNumber, answer, answerConfirmation);
         }
     }
->>>>>>> Stashed changes
 }

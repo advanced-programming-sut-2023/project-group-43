@@ -2,11 +2,9 @@ package controller;
 
 import enums.Output;
 import model.DataBase;
-<<<<<<< Updated upstream
-=======
 import model.User;
 import view.MainMenu;
->>>>>>> Stashed changes
+
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -124,9 +122,6 @@ public class RegisterAndLoginController {
     private static String makeCaptcha() {
         return null;
     }
-
-<<<<<<< Updated upstream
-=======
     public static void enterMainMenu(String username) {
         User currentUser = DataBase.getInstance().getUserByUsername(username);
         MainController mainController = new MainController(currentUser);
@@ -163,6 +158,5 @@ public class RegisterAndLoginController {
         return null;
     }
 
->>>>>>> Stashed changes
 }
 
