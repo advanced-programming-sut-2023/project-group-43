@@ -4,6 +4,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GovernanceMenuCommands {
+    SHOW_POPULARITY_FACTORS("show popularity factors"),
+    SHOW_POPULARITY("show popularity"),
+    SHOW_FOOD_LIST("show food list"),
+    FOOD_RATE("food rate -r (?<rate>\\d+)"),
+    FOOD_RATE_SHOW("food rate show"),
+    TAX_RATE("tax rate -r (?<rate>\\d+)"),
+    TAX_RATE_SHOW("tax rate show"),
+    FEAR_RATE("fear rate -r (?<rate>\\d+)"),
     ;
     private final String regex;
 
