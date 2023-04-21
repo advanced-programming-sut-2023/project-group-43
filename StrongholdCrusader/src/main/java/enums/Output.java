@@ -5,6 +5,7 @@ public enum Output {
     INVALID_USERNAME("warning : invalid username!"),
     DUPLICATE_USERNAME("warning : duplicated username!"),
     SUCCESSFUL_USERNAME_CHANGE("username changed successfully"),
+    SUCCESSFUL_PASSWORD_CHANGE("password changed successfully"),
     SHORT_PASSWORD("warning : password must have at least 6 characters!"),
     WITHOUT_CAPITAL_CASE_LETTER("warning: password must have at least one capital letter"),
     WITHOUT_LOWER_CASE_LETTER("warning: password must have at least one lower letter"),
@@ -18,7 +19,7 @@ public enum Output {
     CHOOSE_PASSWORD_RECOVERY_QUESTION("Pick your security question: 1. What is my father’s name? 2. What" +
             "was my first pet’s name? 3. What is my mother’s last name?"),
     INVALID_PASSWORD_RECOVERY_QUESTION("warning: you have to choose a number between 1 to 3"),
-    SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("your password recovery question have chosen successfully"),
+    SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("user sign up successfully!"),
     INCORRECT_ANSWER_CONFIRMATION("warning: answer and answer confirmation aren't matched")
     ,
     DUPLICATE_NICKNAME("warning : duplicate nickname!"),
@@ -32,7 +33,12 @@ public enum Output {
     DROP_ROCK("rock dropped successfully"),
     WRONG_TREE_TYPE("warning : wrong tree type!"),
     DROP_TREE("tree dropped successfully"),
-    INAPPROPRIATE_GROUND_FOR_TREE("warning : the soil is not suitable for dropping the tree")
+    INAPPROPRIATE_GROUND_FOR_TREE("warning : the soil is not suitable for dropping the tree"),
+    NONEXISTENT_USERNAME("warning: this username does not exist"),
+    INCORRECT_PASSWORD("Username and password didn't match!"),
+    SUCCESSFUL_LOGIN("user logged in successfully!"),
+    CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
+    WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect")
     ;
     private String string;
 

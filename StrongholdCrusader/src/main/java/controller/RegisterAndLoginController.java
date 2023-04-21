@@ -1,6 +1,7 @@
 package controller;
 
 import enums.Output;
+import enums.menuEnums.RegisterAndLoginCommands;
 import model.DataBase;
 import model.User;
 import view.MainMenu;
@@ -70,7 +71,7 @@ public class RegisterAndLoginController {
         return hexString.toString();
     }
 
-    public static Output checkPassword(String password) {
+    private static Output checkPassword(String password) {
         if (password.matches(".{1,5}")) {
             return Output.SHORT_PASSWORD;
         } else if (password.matches("[^A-Z]+")) {
@@ -85,12 +86,35 @@ public class RegisterAndLoginController {
         return null;
     }
 
-    public static Output loginUser(String username, String password) {
-        return null;
+    public static Output loginUser(String username, String password, boolean isStayLoggedIn) {
+        User user = DataBase.getInstance().getUserByUsername(username);
+        if (user == null) return Output.NONEXISTENT_USERNAME;
+        password = makeShaCode(password);
+        if (!password.equals(user.getPassword()))
+            return Output.INCORRECT_PASSWORD;
+        if (isStayLoggedIn) DataBase.getInstance().setLoggedInUser(user);
+        return Output.SUCCESSFUL_LOGIN;
     }
 
-    public static Output forgetPassword() {
-        return null;
+    public static String forgetPassword(String username) {
+        User user = DataBase.getInstance().getUserByUsername(username);
+        if (user == null) return "user does not exist";
+        return user.getPasswordRecoveryQuestion();
+    }
+
+    public static Output checkPasswordRecoveryAnswer(String username, String answer) {
+        User user = DataBase.getInstance().getUserByUsername(username);
+        if (user.getPasswordRecoveryAnswer().equals(answer)) return Output.CORRECT_PASSWORD_RECOVERY_ANSWER;
+        return Output.WRONG_PASSWORD_RECOVERY_ANSWER;
+    }
+
+    public static Output changePassword(String username, String password) {
+        User user = DataBase.getInstance().getUserByUsername(username);
+        Output output = checkPassword(password);
+        if (output != null) return output;
+        password = makeShaCode(password);
+        user.setPassword(password);
+        return Output.SUCCESSFUL_PASSWORD_CHANGE;
     }
 
     public static String makeRandomPassword() {
