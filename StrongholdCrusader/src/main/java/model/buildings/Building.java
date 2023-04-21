@@ -1,7 +1,6 @@
 package model.buildings;
 
-import enums.*;
-import model.Cell;
+import enums.BuildingEnums.BuildingStructure;
 import model.User;
 import model.units.Unit;
 
@@ -10,9 +9,16 @@ import java.util.ArrayList;
 public class Building {
     private String name;
     private User owner;
-    private BuildingType buildingType;
+    //building
+    private BuildingStructure buildingStructure;
     private ArrayList<Unit> units = new ArrayList<>();
     private static ArrayList<Building>buildings = new ArrayList<>();
+
+    public Building(String name, User owner, BuildingStructure buildingStructure) {
+        this.name = name;
+        this.owner = owner;
+        this.buildingStructure = buildingStructure;
+    }
 
     public void hireEngineerAndWorker() {};
     public void addUnit(Unit unit){
@@ -21,10 +27,10 @@ public class Building {
     public void addBuilding(Building building){
         buildings.add(building);
     };
+    public String getName(){return name;}
     public User getOwner() {
         return owner;
     }
-    public BuildingName getName()
     public ArrayList<Unit> getUnits() {
         return units;
     }

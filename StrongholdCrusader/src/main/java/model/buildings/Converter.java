@@ -9,8 +9,8 @@ public class Converter extends Building{
     private final ResourceType consumedRecourse;
     private final Material producedMaterial;
     private final int productionRate;
-    public Converter(User owner, BuildingName name, int hp, int recourseCapacity, ResourceType consumedRecourse, Material producedMaterial, int productionRate) {
-        super(owner, name, hp);
+    public Converter(User owner, int recourseCapacity, ResourceType consumedRecourse, Material producedMaterial, int productionRate) {
+        super(name , owner ,buildingStructure);
         this.recourseCapacity = recourseCapacity;
         this.consumedRecourse = consumedRecourse;
         this.producedMaterial = producedMaterial;
