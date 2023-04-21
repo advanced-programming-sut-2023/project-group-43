@@ -41,16 +41,19 @@ public class ProfileMenu extends Menu{
                 output = removeSlogan();
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_HIGHSCORE) != null) {
-                output = displayHighScore();
+                System.out.println(displayHighScore());
+                continue;
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_RANK) != null) {
-                output = displayRank();
+                System.out.println(displayRank());
+                continue;
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_SLOGAN) != null) {
-                output = displaySlogan();
+                System.out.println(displaySlogan());
+                continue;
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.PROFILE_DISPLAY) != null) {
-                output = displayProfile();
+                System.out.println(displayProfile());
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.BACK) != null) {
                 return;
@@ -86,18 +89,18 @@ public class ProfileMenu extends Menu{
 
         return profileController.removeSlogan();
     }
-    private Output displayHighScore() {
+    private int displayHighScore() {
         return profileController.displayHighscore();
     }
-    private Output displayRank() {
+    private int displayRank() {
         return profileController.displayRank();
     }
 
-    private Output displayProfile(){
+    private String displayProfile(){
         return profileController.displayAllProfile();
     }
 
-    private Output displaySlogan() {
+    private String displaySlogan() {
         return profileController.displaySlogan();
     }
 }

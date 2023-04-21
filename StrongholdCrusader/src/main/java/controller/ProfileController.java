@@ -65,13 +65,13 @@ public class ProfileController {
         currentUser.setSlogan(slogan);
         return Output.SUCCESSFUL_SLOGAN_CHANGE;
     }
-    public Output displayHighscore() {
+    public int displayHighscore() {
         return currentUser.getScore();
     }
-    public Output displayRank() {
+    public int displayRank() {
         return DataBase.getRank(currentUser);
     }
-    public Output displaySlogan() {
+    public String displaySlogan() {
         return currentUser.getSlogan();
     }
 
@@ -79,7 +79,7 @@ public class ProfileController {
         currentUser.setSlogan(null);
         return Output.SLOGAN_REMOVED_SUCCESSFULLY;
     }
-    public Output displayAllProfile() {
+    public String displayAllProfile() {
         StringBuilder userProfile = new StringBuilder();
         userProfile.append("Username : ").append(currentUser.getUsername()).append("\n");
         userProfile.append("Nickname : ").append(currentUser.getNickname()).append("\n");
