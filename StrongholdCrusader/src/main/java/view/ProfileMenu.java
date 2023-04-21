@@ -25,7 +25,18 @@ public class ProfileMenu extends Menu{
 
     private String removeSlogan(Matcher matcher){return null;}
 
+<<<<<<< Updated upstream
     private String displayProfile(Matcher matcher){return null;}
+=======
+        return profileController.removeSlogan();
+    }
+    private Output displayHighScore() {
+        return profileController.displayHighScore();
+    }
+    private Output displayRank() {
+        return profileController.displayRank();
+    }
+>>>>>>> Stashed changes
 
     private static String displaySlogan(Matcher matcher) {return null;}
 }

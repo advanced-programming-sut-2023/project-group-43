@@ -41,4 +41,29 @@ public class DataBase {
     public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public User getUserByUsername(String username) {
+        for(User user: users) {
+            if(user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User getUserByEmail(String email) {
+        for(User user: users) {
+            if(user.getEmail().toLowerCase().equals(email.toLowerCase())) {
+                return user;
+            }
+        }
+        return null;
+    }
+>>>>>>> Stashed changes
 }
