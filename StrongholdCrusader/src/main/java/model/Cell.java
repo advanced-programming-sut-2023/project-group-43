@@ -5,6 +5,7 @@ import enums.TreeType;
 import model.buildings.Building;
 import model.units.Unit;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Cell {
