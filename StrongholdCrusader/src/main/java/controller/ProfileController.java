@@ -1,8 +1,18 @@
 package controller;
 
 import enums.Output;
+<<<<<<< Updated upstream
+import model.DataBase;
+
+public class ProfileController {
+
+    public static Output changeProfile(String flag, String newInfo) {
+    }
+
+    public static Output changePassword(String oldPassword, String newPassword) {
+=======
 import enums.Validations;
-import model.*;
+import model.User;
 
 public class ProfileController {
 
@@ -11,54 +21,70 @@ public class ProfileController {
     public ProfileController(User currentUser) {
         this.currentUser = currentUser;
     }
-    public Output changeProfile(String flag, String newInfo) {
-    }
-
     public Output changePassword(String oldPassword, String newPassword) {
+        return null;
+>>>>>>> Stashed changes
     }
 
-    public Output changeUsername(String username) {
-        if (username.equals(null)) return Output.EMPTY_FIELD;
-        if (!Validations.check(username, Validations.VALID_USERNAME)) return Output.INVALID_USERNAME;
-        if (currentUser.getUsername().equals(username)) return Output.DUPLICATE_USERNAME;
-        //TODO
-        currentUser.setUsername(username);
-        return Output.SUCCESSFUL_USERNAME_CHANGE;
+    private static Output changeUsername(String username) {
     }
 
+<<<<<<< Updated upstream
+    private static Output changeNickname(String nickname) {
+    }
+
+    private static Output changeEmail(String email) {
+    }
+
+    private static Output changeSlogan(String slogan) {
+    }
+
+    public static Output removeSlogan() {
+    }
+
+    public static Output displayProfile(String info) {
+    }
+
+    public static Output displayAllProfile() {}
+
+    private static Output displayHighScore() {}
+
+    private static Output displayRank() {}
+
+    private static Output displaySlogan() {}
+=======
     public Output changeNickname(String nickname) {
-        if (nickname.equals(null)) return Output.EMPTY_FIELD;
-        if (nickname.equals(currentUser.getNickname())) return Output.DUPLICATE_NICKNAME;
-        currentUser.setNickname(nickname);
-        return Output.SUCCESSFUL_NICKNAME_CHANGE;
+        return null;
     }
 
     public Output changeEmail(String email) {
-        if (email.equals(null)) return Output.EMPTY_FIELD;
-        if (email.toLowerCase().equals(currentUser.getNickname().toLowerCase())) return Output.DUPLICATE_EMAIL;
-
-        currentUser.setNickname(email);
-        return Output.SUCCESSFUL_EMAIL_CHANGE;
+        return null;
     }
 
     public Output changeSlogan(String slogan) {
+        return null;
     }
-    public Output displayHighscore() {
+
+    public Output displayHighScore() {
+        return null;
     }
-    public Output displayRank() {}
-    public Output displaySlogan() {}
+
+    public Output displayRank() {
+        return null;
+    }
+
+    public Output displaySlogan() {
+        return null;
+    }
 
     public Output removeSlogan() {
+        return null;
     }
 
-    public Output displayProfile(String info) {
+
+    public Output displayAllProfile() {
+        return null;
     }
 
-    public Output displayAllProfile() {}
-
-    private Output displayHighScore() {}
-
-    private Output displayRank() {}
-
-    private Output displaySlogan() {}
+>>>>>>> Stashed changes
 }
