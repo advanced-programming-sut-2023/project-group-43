@@ -17,7 +17,21 @@ public enum Output {
     DROP_ROCK("rock dropped successfully"),
     WRONG_TREE_TYPE("warning : wrong tree type!"),
     DROP_TREE("tree dropped successfully"),
-    INAPPROPRIATE_GROUND_FOR_TREE("warning : the soil is not suitable for dropping the tree");
+    INAPPROPRIATE_GROUND_FOR_TREE("warning : the soil is not suitable for dropping the tree"),
+    SHORT_PASSWORD("warning : password must have at least 6 characters!"),
+    WITHOUT_CAPITAL_CASE_LETTER("warning: password must have at least one capital letter"),
+    WITHOUT_LOWER_CASE_LETTER("warning: password must have at least one lower letter"),
+    WITHOUT_NUMBER("warning: password must have at least one number"),
+    WITHOUT_SPECIAL_CHARACTER("warning: password must have at least one special character"),
+    INCORRECT_PASSWORD_CONFIRMATION("warning: password and password confirmation aren't matched"),
+    INVALID_EMAIL_FORMAT("warning: email format is invalid"),
+    CONFIRM_PASSWORD("please re-enter your password here:"),
+    RANDOM_SLOGAN("your slogan is: "),
+    CHOOSE_PASSWORD_RECOVERY_QUESTION("Pick your security question: 1. What is my father’s name? 2. What" +
+            "was my first pet’s name? 3. What is my mother’s last name?"),
+    INVALID_PASSWORD_RECOVERY_QUESTION("warning: you have to choose a number between 1 to 3"),
+    SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("your password recovery question have chosen successfully"),
+    INCORRECT_ANSWER_CONFIRMATION("warning: answer and answer confirmation aren't matched");
     private String string;
     private Output(String string) {
         this.string = string;

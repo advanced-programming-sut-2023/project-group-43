@@ -9,7 +9,6 @@ public class DataBase {
     ArrayList<User> users = new ArrayList<>();
     User loggedInUser;
 
-
     private DataBase() {
     }
 
@@ -34,9 +33,22 @@ public class DataBase {
         this.loggedInUser = loggedInUser;
     }
 
+    public void addUser(User user) {
+        users.add(user);
+    }
+
     public User getUserByUsername(String username) {
         for(User user: users) {
             if(user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User getUserByEmail(String email) {
+        for(User user: users) {
+            if(user.getEmail().toLowerCase().equals(email.toLowerCase())) {
                 return user;
             }
         }
