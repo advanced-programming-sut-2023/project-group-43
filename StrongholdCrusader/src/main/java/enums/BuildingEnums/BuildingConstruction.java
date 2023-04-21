@@ -1,7 +1,7 @@
 package enums.BuildingEnums;
 
 public enum BuildingConstruction {
-    //<<<----------castle buildings---------->>>
+    //<<<----------castle department---------->>>
     //------> 1) gatehouses
     SMALL_STONE_GATEHOUSE(0 , 0 ,0 , 0,0),
     BIG_STONE_GATEHOUSE(0 ,20,0 , 0,0),
