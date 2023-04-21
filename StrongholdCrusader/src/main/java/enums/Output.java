@@ -20,6 +20,19 @@ public enum Output {
     INVALID_PASSWORD_RECOVERY_QUESTION("warning: you have to choose a number between 1 to 3"),
     SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("your password recovery question have chosen successfully"),
     INCORRECT_ANSWER_CONFIRMATION("warning: answer and answer confirmation aren't matched")
+    ,
+    DUPLICATE_NICKNAME("warning : duplicate nickname!"),
+    SUCCESSFUL_EMAIL_CHANGE("email changed successfully"),
+    SUCCESSFUL_NICKNAME_CHANGE("nickname changed successfully"),
+    SET_TEXTURE("texture setted successfully for this coordinates"),
+    SET_TEXTURE_RECTANGLE("texture setted successfully for these coordinates"),
+    WRONG_COORDINATES("warning : incorrect coordinates!"),
+    BUILDING_IN_THIS_AREA("warning : you can not change the texture of this area because of existed buildings!"),
+    BLOCK_CLEARED("block cleared successfully"),
+    DROP_ROCK("rock dropped successfully"),
+    WRONG_TREE_TYPE("warning : wrong tree type!"),
+    DROP_TREE("tree dropped successfully"),
+    INAPPROPRIATE_GROUND_FOR_TREE("warning : the soil is not suitable for dropping the tree")
     ;
     private String string;
 
