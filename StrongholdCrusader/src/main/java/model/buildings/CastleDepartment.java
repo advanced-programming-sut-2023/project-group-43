@@ -1,14 +1,14 @@
 package model.buildings;
-import enums.BuildingStructure;
+import enums.Buildings;
 import model.User;
 
 public class CastleDepartment extends Building {
 
     private final int hitPoint;
     private final int peopleCapacity;
-    private BuildingStructure buildingStructure;
-    public CastleDepartment(String name ,User owner, BuildingStructure buildingStructure, int hitPoint, int peopleCapacity) {
-        super(name , owner ,buildingStructure);
+    private Buildings buildings;
+    public CastleDepartment(String name , User owner, Buildings buildings, int hitPoint, int peopleCapacity) {
+        super(name , owner , buildings);
         this.hitPoint = hitPoint;
         this.peopleCapacity = peopleCapacity;
     }

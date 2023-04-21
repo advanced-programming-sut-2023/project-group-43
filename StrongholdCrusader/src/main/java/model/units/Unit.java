@@ -1,13 +1,13 @@
 package model.units;
 
-import enums.UnitState;
-import enums.UnitName;
+import enums.unitEnums.UnitState;
+import enums.unitEnums.Units;
 import model.Cell;
 import model.User;
 
 public class Unit {
     private User owner;
-    private UnitName name;
+    private Units name;
 
     private UnitType type;
 
@@ -21,7 +21,7 @@ public class Unit {
 
     private UnitState state;
 
-    public Unit(User owner, UnitName name) {
+    public Unit(User owner, Units name) {
         this.owner = owner;
         this.name = name;
         this.hitPoint = name.getHitPoint();
@@ -35,7 +35,7 @@ public class Unit {
         return owner;
     }
 
-    public UnitName getName() {
+    public Units getName() {
         return name;
     }
 

@@ -1,17 +1,17 @@
 package model.buildings;
-import enums.BuildingStructure;
-import enums.Material;
+import enums.Buildings;
+import enums.Materials;
 import model.User;
 
 public class Converter extends Building{
 
     private final int recourseCapacity;
-    private final Material producedMaterial;
+    private final Materials producedMaterials;
     private final int productionRate;
-    public Converter(String name, User owner, BuildingStructure buildingStructure, int recourseCapacity, Material consumedRecourse, Material producedMaterial, int productionRate) {
-        super(name , owner ,buildingStructure);
+    public Converter(String name, User owner, Buildings buildings, int recourseCapacity, Materials consumedRecourse, Materials producedMaterials, int productionRate) {
+        super(name , owner , buildings);
         this.recourseCapacity = recourseCapacity;
-        this.producedMaterial = producedMaterial;
+        this.producedMaterials = producedMaterials;
         this.productionRate = productionRate;
     }
     public void produceMaterial() {};
@@ -21,8 +21,8 @@ public class Converter extends Building{
         return recourseCapacity;
     }
 
-    public Material getProducedMaterial() {
-        return producedMaterial;
+    public Materials getProducedMaterial() {
+        return producedMaterials;
     }
 
     public int getProductionRate() {

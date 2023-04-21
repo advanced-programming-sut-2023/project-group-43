@@ -1,6 +1,6 @@
 package model;
 
-import enums.Material;
+import enums.Materials;
 
 import java.util.HashMap;
 
@@ -10,7 +10,7 @@ public class Storage {
     private int stone;
     private HashMap<FoodType, Integer> food = new HashMap<>();
 
-    private HashMap<Material, Integer> materials = new HashMap<>();
+    private HashMap<Materials, Integer> materials = new HashMap<>();
 
     public Storage(int gold, int wood, int stone) {
         this.gold = gold;
@@ -61,16 +61,16 @@ public class Storage {
     public void changeFoodAmount(FoodType type, int amount) {
         food.replace(type, food.get(type) + amount);
     }
-    public void addMaterial(Material material, int amount) {
-        materials.put(material, amount);
+    public void addMaterial(Materials materials, int amount) {
+        this.materials.put(materials, amount);
     }
 
-    public int getAmountOfMaterial(Material material) {
-        return materials.get(material);
+    public int getAmountOfMaterial(Materials materials) {
+        return this.materials.get(materials);
     }
 
-    public void changeMaterialAmount(Material material, int amount) {
-        materials.replace(material, materials.get(material) + amount);
+    public void changeMaterialAmount(Materials materials, int amount) {
+        this.materials.replace(materials, this.materials.get(materials) + amount);
     }
 
 }

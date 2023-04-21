@@ -1,14 +1,14 @@
 package model.buildings;
 
-import enums.BuildingStructure;
+import enums.Buildings;
 import model.User;
 
 public class PopularityBooster extends Building {
 
     private int rate;
-    private BuildingStructure buildingStructure;
-    public PopularityBooster(String name, User owner, BuildingStructure buildingStructure , int rate) {
-        super(name, owner, buildingStructure);
+    private Buildings buildings;
+    public PopularityBooster(String name, User owner, Buildings buildings, int rate) {
+        super(name, owner, buildings);
         this.rate = rate;
     }
 

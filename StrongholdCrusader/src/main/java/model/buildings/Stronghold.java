@@ -1,9 +1,9 @@
 package model.buildings;
-import enums.BuildingStructure;
+import enums.Buildings;
 import model.User;
 
 public class Stronghold extends Building{
-    public Stronghold(String name, User owner, BuildingStructure buildingStructure) {
-        super(name, owner, buildingStructure);
+    public Stronghold(String name, User owner, Buildings buildings) {
+        super(name, owner, buildings);
     }
 }

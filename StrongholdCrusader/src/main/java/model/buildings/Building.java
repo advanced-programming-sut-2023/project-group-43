@@ -1,5 +1,5 @@
 package model.buildings;
-import enums.BuildingStructure;
+import enums.Buildings;
 import model.User;
 import model.units.Unit;
 
@@ -9,14 +9,14 @@ public class Building {
     private final String name;
     private final User owner;
     //building
-    private final BuildingStructure buildingStructure;
+    private final Buildings buildings;
     private ArrayList<Unit> units = new ArrayList<>();
     private static ArrayList<Building>buildings = new ArrayList<>();
 
-    public Building(String name, User owner, BuildingStructure buildingStructure) {
+    public Building(String name, User owner, Buildings buildings) {
         this.name = name;
         this.owner = owner;
-        this.buildingStructure = buildingStructure;
+        this.buildings = buildings;
     }
 
     public void hireEngineerAndWorker() {};
@@ -34,8 +34,8 @@ public class Building {
         return units;
     }
 
-    public BuildingStructure getBuildingStructure() {
-        return buildingStructure;
+    public Buildings getBuildingStructure() {
+        return buildings;
     }
 
     public static ArrayList<Building> getBuildings() {

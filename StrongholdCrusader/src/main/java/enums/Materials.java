@@ -1,6 +1,6 @@
 package enums;
 
-public enum Material {
+public enum Materials {
     //minerals
     STONE("mineral" , "stone" , 0 , 0),
     WOOD("mineral" , "wood" , 0 , 0),
@@ -20,6 +20,7 @@ public enum Material {
     ARMOR("weapon" , "armor" , 0 ,0),
     SWORD("weapon" , "sword" , 0 ,0),
     SPEAR("weapon" , "spear" , 0 ,0),
+    LADDER("weapon" , "ladder" ,0,0)
 
     ;
     private String type;
@@ -27,17 +28,17 @@ public enum Material {
     private int initialCost;
     private int secondaryCost;
 
-    Material(String type, String name, int initialCost , int secondaryCost) {
+    Materials(String type, String name, int initialCost , int secondaryCost) {
         this.type = type;
         this.name = name;
         this.initialCost = initialCost;
         this.secondaryCost = secondaryCost;
     }
 
-    public Material getMaterialByName(String name){
-        for(Material material : Material.values()){
-            if(material.name.equals(name))
-                return material;
+    public Materials getMaterialByName(String name){
+        for(Materials materials : Materials.values()){
+            if(materials.name.equals(name))
+                return materials;
         }
         return null;
     }
