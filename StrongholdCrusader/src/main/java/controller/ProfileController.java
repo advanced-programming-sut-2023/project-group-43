@@ -11,10 +11,28 @@ public class ProfileController {
     public ProfileController(User currentUser) {
         this.currentUser = currentUser;
     }
-    public Output changeProfile(String flag, String newInfo) {
+    public static Output checkPassword(String password) {
+        if (password.matches(".{1,5}")) {
+            return Output.SHORT_PASSWORD;
+        } else if (password.matches("[^A-Z]+")) {
+            return Output.WITHOUT_CAPITAL_CASE_LETTER;
+        } else if (password.matches("[^a-z]+")) {
+            return Output.WITHOUT_LOWER_CASE_LETTER;
+        } else if (password.matches("[^\\d]+")) {
+            return Output.WITHOUT_NUMBER;
+        } else if (password.matches("\\w+")) {
+            return Output.WITHOUT_SPECIAL_CHARACTER;
+        }
+        return null;
     }
-
     public Output changePassword(String oldPassword, String newPassword) {
+        if (oldPassword.equals(newPassword)) return Output.DUPLICATED_NEWPASSWORD;
+        Output output = checkPassword(newPassword);
+        if (output.equals(null)) {
+            currentUser.setPassword(newPassword);
+            return Output.SUCCESSFUL_PASSWORD_CHANGEING;
+        }
+        else return output;
     }
 
     public Output changeUsername(String username) {
@@ -36,29 +54,38 @@ public class ProfileController {
     public Output changeEmail(String email) {
         if (email.equals(null)) return Output.EMPTY_FIELD;
         if (email.toLowerCase().equals(currentUser.getNickname().toLowerCase())) return Output.DUPLICATE_EMAIL;
-
-        currentUser.setNickname(email);
+        if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) return Output.INVALID_EMAIL_FORMAT;
+        currentUser.setEmail(email);
         return Output.SUCCESSFUL_EMAIL_CHANGE;
     }
 
     public Output changeSlogan(String slogan) {
+        if (slogan == null) return Output.EMPTY_FIELD;
+        if (slogan.toLowerCase().equals(currentUser.getSlogan().toLowerCase())) return Output.DUPLICATE_SLOGAN;
+        currentUser.setSlogan(slogan);
+        return Output.SUCCESSFUL_SLOGAN_CHANGE;
     }
     public Output displayHighscore() {
+        return currentUser.getScore();
     }
-    public Output displayRank() {}
-    public Output displaySlogan() {}
+    public Output displayRank() {
+        return DataBase.getRank(currentUser);
+    }
+    public Output displaySlogan() {
+        return currentUser.getSlogan();
+    }
 
     public Output removeSlogan() {
+        currentUser.setSlogan(null);
+        return Output.SLOGAN_REMOVED_SUCCESSFULLY;
     }
-
-    public Output displayProfile(String info) {
+    public Output displayAllProfile() {
+        StringBuilder userProfile = new StringBuilder();
+        userProfile.append("Username : ").append(currentUser.getUsername()).append("\n");
+        userProfile.append("Nickname : ").append(currentUser.getNickname()).append("\n");
+        userProfile.append("Email : ").append(currentUser.getEmail()).append("\n");
+        userProfile.append("Slogan : ").append(currentUser.getSlogan()).append("\n");
+        userProfile.append("Score : ").append(currentUser.getScore()).append("\n");
+        return userProfile.toString();
     }
-
-    public Output displayAllProfile() {}
-
-    private Output displayHighScore() {}
-
-    private Output displayRank() {}
-
-    private Output displaySlogan() {}
 }
