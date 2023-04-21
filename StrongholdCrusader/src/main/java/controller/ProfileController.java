@@ -27,9 +27,18 @@ public class ProfileController {
     }
 
     public Output changeNickname(String nickname) {
+        if (nickname.equals(null)) return Output.EMPTY_FIELD;
+        if (nickname.equals(currentUser.getNickname())) return Output.DUPLICATE_NICKNAME;
+        currentUser.setNickname(nickname);
+        return Output.SUCCESSFUL_NICKNAME_CHANGE;
     }
 
     public Output changeEmail(String email) {
+        if (email.equals(null)) return Output.EMPTY_FIELD;
+        if (email.toLowerCase().equals(currentUser.getNickname().toLowerCase())) return Output.DUPLICATE_EMAIL;
+
+        currentUser.setNickname(email);
+        return Output.SUCCESSFUL_EMAIL_CHANGE;
     }
 
     public Output changeSlogan(String slogan) {
