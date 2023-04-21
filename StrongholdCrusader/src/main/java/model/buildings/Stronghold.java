@@ -1,6 +1,5 @@
 package model.buildings;
-
-import enums.BuildingEnums.BuildingStructure;
+import enums.BuildingStructure;
 import model.User;
 
 public class Stronghold extends Building{

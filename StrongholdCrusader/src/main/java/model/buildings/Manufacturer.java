@@ -1,6 +1,5 @@
 package model.buildings;
-
-import enums.BuildingEnums.BuildingStructure;
+import enums.BuildingStructure;
 import enums.Material;
 import model.User;
 

@@ -1,16 +1,15 @@
 package model.buildings;
-
-import enums.BuildingEnums.BuildingStructure;
+import enums.BuildingStructure;
 import model.User;
 import model.units.Unit;
 
 import java.util.ArrayList;
 
 public class Building {
-    private String name;
-    private User owner;
+    private final String name;
+    private final User owner;
     //building
-    private BuildingStructure buildingStructure;
+    private final BuildingStructure buildingStructure;
     private ArrayList<Unit> units = new ArrayList<>();
     private static ArrayList<Building>buildings = new ArrayList<>();
 
@@ -35,6 +34,13 @@ public class Building {
         return units;
     }
 
+    public BuildingStructure getBuildingStructure() {
+        return buildingStructure;
+    }
+
+    public static ArrayList<Building> getBuildings() {
+        return buildings;
+    }
 }
 
 
