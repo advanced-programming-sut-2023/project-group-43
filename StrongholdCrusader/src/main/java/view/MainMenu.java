@@ -2,6 +2,7 @@ package view;
 
 import controller.MainController;
 import controller.RegisterAndLoginController;
+import enums.menuEnums.MainMenuCommands;
 import model.DataBase;
 
 import java.util.Scanner;
@@ -19,10 +20,10 @@ public class MainMenu extends Menu{
         while (true){
             if(input.matches("back"))
                 return;
-            else if(input.matches(""))
-                System.out.println("");;
-            else if(input.matches(""))
-                System.out.println("");;
+            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_PROFILE_MENU) != null)
+                System.out.println("");
+            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU)!= null)
+                System.out.println("");
             else System.out.println("Invalid Command!");
         }
     }
