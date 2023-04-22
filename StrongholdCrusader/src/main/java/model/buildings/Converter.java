@@ -1,6 +1,5 @@
 package model.buildings;
-import enums.Buildings;
-import enums.Materials;
+import enums.environmentEnums.Materials;
 import model.User;
 
 public class Converter extends Building{
@@ -8,8 +7,8 @@ public class Converter extends Building{
     private final int recourseCapacity;
     private final Materials producedMaterials;
     private final int productionRate;
-    public Converter(String name, User owner, Buildings buildings, int recourseCapacity, Materials consumedRecourse, Materials producedMaterials, int productionRate) {
-        super(name , owner , buildings);
+    public Converter(String name, User owner, int recourseCapacity, Materials consumedRecourse, Materials producedMaterials, int productionRate) {
+        super(name , owner);
         this.recourseCapacity = recourseCapacity;
         this.producedMaterials = producedMaterials;
         this.productionRate = productionRate;

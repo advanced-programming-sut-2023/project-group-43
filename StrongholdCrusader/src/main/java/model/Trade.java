@@ -1,6 +1,6 @@
 package model;
 
-import enums.Materials;
+import enums.environmentEnums.Materials;
 
 public class Trade {
     private User sender;

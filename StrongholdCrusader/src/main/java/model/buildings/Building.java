@@ -1,5 +1,5 @@
 package model.buildings;
-import enums.BuildingEnum;
+import enums.BuildingEnums.BuildingEnum;
 import model.User;
 import model.units.Unit;
 
@@ -44,6 +44,26 @@ public class Building {
 
     public static ArrayList<Building> getBuildings() {
         return buildings;
+    }
+
+    public int getWood() {
+        return wood;
+    }
+
+    public int getStone() {
+        return stone;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getLadderlans() {
+        return ladderlans;
     }
 }
 

@@ -1,4 +1,4 @@
-package enums;
+package enums.BuildingEnums;
 
     public enum BuildingEnum {
         //<<<----------castle department---------->>>

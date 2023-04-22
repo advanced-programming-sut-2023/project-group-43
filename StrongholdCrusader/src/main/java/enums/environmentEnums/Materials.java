@@ -1,4 +1,4 @@
-package enums;
+package enums.environmentEnums;
 
 public enum Materials {
     //minerals

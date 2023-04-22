@@ -94,13 +94,6 @@ public class Unit {
         this.cell = cell;
     }
 
-    public void setType(UnitType type) {
-        this.type = type;
-    }
-
-    public UnitType getType() {
-        return type;
-    }
     public void defense() {}
     public void move() {}
     public void digDitch() {}

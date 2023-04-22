@@ -1,6 +1,6 @@
 package model.buildings;
 
-import enums.BuildingEnum;
+import enums.BuildingEnums.BuildingEnum;
 import model.User;
 import java.util.HashMap;
 
@@ -11,7 +11,7 @@ public class Storage extends Building{
     HashMap<String , Integer>foodStockpile = new HashMap<String , Integer>();
     HashMap<String , Integer>armoury = new HashMap<String , Integer>();
     public Storage(String name, User owner, BuildingEnum buildingEnum) {
-        super(name, owner, buildingEnum);
+        super(name, owner);
     }
 
     //TODO

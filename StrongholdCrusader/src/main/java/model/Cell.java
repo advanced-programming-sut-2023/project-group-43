@@ -1,8 +1,8 @@
 package model;
 
-import enums.Texture;
-import enums.TreeType;
-import enums.WaterArea;
+import enums.environmentEnums.Texture;
+import enums.environmentEnums.TreeType;
+import enums.environmentEnums.WaterArea;
 import model.buildings.Building;
 import model.units.Unit;
 
