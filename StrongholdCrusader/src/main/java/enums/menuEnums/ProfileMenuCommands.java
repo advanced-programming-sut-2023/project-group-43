@@ -1,7 +1,5 @@
 package enums.menuEnums;
 
-import enums.Commands;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +13,8 @@ public enum ProfileMenuCommands {
     DISPLAY_HIGHSCORE("profile display highscore"),
     DISPLAY_RANK("profile display rank"),
     DISPLAY_SLOGAN("profile display slogan"),
-    PROFILE_DISPLAY("profile display")
+    PROFILE_DISPLAY("profile display"),
+    BACK("back")
     ;
     final String regex;
 

@@ -1,8 +1,9 @@
 package controller;
 
 import enums.Output;
-import enums.Validations;
-import model.*;
+import model.DataBase;
+
+import model.User;
 
 public class ProfileController {
 
@@ -11,45 +12,42 @@ public class ProfileController {
     public ProfileController(User currentUser) {
         this.currentUser = currentUser;
     }
-    public Output changeProfile(String flag, String newInfo) {
-    }
-
     public Output changePassword(String oldPassword, String newPassword) {
+        return null;
     }
 
-    public Output changeUsername(String username) {
-        if (username.equals(null)) return Output.EMPTY_FIELD;
-        if (!Validations.check(username, Validations.VALID_USERNAME)) return Output.INVALID_USERNAME;
-        if (currentUser.getUsername().equals(username)) return Output.DUPLICATE_USERNAME;
-        //TODO
-        currentUser.setUsername(username);
-        return Output.SUCCESSFUL_USERNAME_CHANGE;
-    }
-
+    public Output changeUsername(String Username) {return null; }
     public Output changeNickname(String nickname) {
+        return null;
     }
 
     public Output changeEmail(String email) {
+        return null;
     }
 
     public Output changeSlogan(String slogan) {
+        return null;
     }
-    public Output displayHighscore() {
+
+    public Output displayHighScore() {
+        return null;
     }
-    public Output displayRank() {}
-    public Output displaySlogan() {}
+
+    public Output displayRank() {
+        return null;
+    }
+
+    public Output displaySlogan() {
+        return null;
+    }
 
     public Output removeSlogan() {
+        return null;
     }
 
-    public Output displayProfile(String info) {
+
+    public Output displayAllProfile() {
+        return null;
     }
 
-    public Output displayAllProfile() {}
-
-    private Output displayHighScore() {}
-
-    private Output displayRank() {}
-
-    private Output displaySlogan() {}
 }
