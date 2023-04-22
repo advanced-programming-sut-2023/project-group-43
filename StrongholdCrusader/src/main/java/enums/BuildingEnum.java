@@ -76,6 +76,31 @@ package enums;
             this.hp = hp;
             this.laddernans = laddernans;
         }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getWood() {
+            return wood;
+        }
+
+        public int getStone() {
+            return stone;
+        }
+
+        public int getGold() {
+            return gold;
+        }
+
+        public int getHp() {
+            return hp;
+        }
+
+        public int getLaddernans() {
+            return laddernans;
+        }
+
         public static BuildingEnum getBuildingStructureByName(String name) {
             for(BuildingEnum value : BuildingEnum.values())
                 if(value.equals(name))

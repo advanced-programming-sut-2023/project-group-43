@@ -1,26 +1,33 @@
 package model.buildings;
-import enums.Buildings;
+import enums.BuildingEnum;
 import model.User;
 import model.units.Unit;
 
 import java.util.ArrayList;
 
 public class Building {
-    private final String name;
     private final User owner;
+    private final String name;
+    private final int wood;
+    private final int stone;
+    private final int gold;
+    private final int hp;
+    private final int ladderlans;
+
     //building
-    private final Buildings buildings;
     private ArrayList<Unit> units = new ArrayList<>();
     private static ArrayList<Building>buildings = new ArrayList<>();
-    //TODO make the cunstuctor like asal
 
-    public Building(String name, User owner, Buildings buildings) {
+    public Building(String name, User owner ) {
         this.name = name;
         this.owner = owner;
-        this.buildings = buildings;
+        this.wood = BuildingEnum.getBuildingStructureByName(name).getWood();
+        this.stone = BuildingEnum.getBuildingStructureByName(name).getStone();
+        this.gold = BuildingEnum.getBuildingStructureByName(name).getGold();
+        this.hp = BuildingEnum.getBuildingStructureByName(name).getHp();
+        this.ladderlans = BuildingEnum.getBuildingStructureByName(name).getLaddernans();
     }
 
-    public void hireEngineerAndWorker() {};
     public void addUnit(Unit unit){
         units.add(unit);
     };
@@ -33,10 +40,6 @@ public class Building {
     }
     public ArrayList<Unit> getUnits() {
         return units;
-    }
-
-    public Buildings getBuildingStructure() {
-        return buildings;
     }
 
     public static ArrayList<Building> getBuildings() {

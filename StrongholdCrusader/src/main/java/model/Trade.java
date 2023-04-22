@@ -1,9 +1,11 @@
 package model;
 
+import enums.Materials;
+
 public class Trade {
     private User sender;
     private User receiver;
-    private ResourceType resourceType;
+    private Materials resource;
     private int price;
     private String message;
 
@@ -12,10 +14,10 @@ public class Trade {
     private boolean isSeen;
     private boolean isAccepted;
 
-    public Trade(User sender, User receiver, ResourceType resourceType, int price, String message) {}
+    public Trade(User sender, User receiver, Materials resource, int price, String message) {}
 
-    public ResourceType getResourceType() {
-        return resourceType;
+    public Materials getResource() {
+        return resource;
     }
 
     public User getSender() {

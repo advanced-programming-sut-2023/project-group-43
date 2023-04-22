@@ -8,7 +8,7 @@ public class Storage {
     private int gold;
     private int wood;
     private int stone;
-    private HashMap<FoodType, Integer> food = new HashMap<>();
+    private HashMap<Materials, Integer> food = new HashMap<>();
 
     private HashMap<Materials, Integer> materials = new HashMap<>();
 
@@ -34,7 +34,7 @@ public class Storage {
         return wood;
     }
 
-    public HashMap<FoodType, Integer> getFood() {
+    public HashMap<Materials, Integer> getFood() {
         return food;
     }
 
@@ -42,7 +42,7 @@ public class Storage {
         this.stone = stone;
     }
 
-    public void setFood(HashMap<FoodType, Integer> food) {
+    public void setFood(HashMap<Materials, Integer> food) {
         this.food = food;
     }
 
@@ -50,15 +50,15 @@ public class Storage {
         this.wood = wood;
     }
 
-    public void addFood(FoodType type, int amount) {
+    public void addFood(Materials type, int amount) {
         food.put(type, amount);
     }
 
-    public int getAmountOfFood(FoodType type) {
+    public int getAmountOfFood(Materials type) {
         return food.get(type);
     }
 
-    public void changeFoodAmount(FoodType type, int amount) {
+    public void changeFoodAmount(Materials type, int amount) {
         food.replace(type, food.get(type) + amount);
     }
     public void addMaterial(Materials materials, int amount) {
