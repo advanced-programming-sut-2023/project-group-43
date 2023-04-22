@@ -1,9 +1,12 @@
 package model;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+
+import com.google.gson.*;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+
 
 public class DataBase {
 
@@ -13,12 +16,32 @@ public class DataBase {
     User loggedInUser;
 
     private DataBase() {
+        loadData();
+    }
+
+    private void loadData() {
+        Reader reader;
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("data.json"));
-            users = (ArrayList<User>) in.readObject();
-            in.close();
+            reader = new FileReader("data.json");
+        } catch (FileNotFoundException e) {
+            return;
         }
-        catch(Exception e) {}
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+        for (JsonElement jsonElement : jsonArray)
+            users.add(gson.fromJson(jsonElement, User.class));
+    }
+
+    public void saveData() {
+        Gson gson = new Gson();
+        String json = gson.toJson(users);
+        try {
+            FileWriter myWriter = new FileWriter("data.json");
+            myWriter.write(json);
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -63,18 +86,18 @@ public class DataBase {
         }
         return null;
     }
-    private static class sortUsers implements Comparator<User> {
+    private class sortUsers implements Comparator<User> {
         public int compare(User a, User b) {
             if (a.getScore() != b.getScore()) return b.getScore() - a.getScore();
             else return a.getScore() - b.getScore();
         }
     }
-    public static ArrayList<User> scoreboard() {
+    public ArrayList<User> scoreboard() {
         ArrayList<User> usersScoreboard = new ArrayList<>();
         usersScoreboard.sort(new sortUsers());
         return usersScoreboard;
     }
-    public static int getRank(User user) {
+    public int getRank(User user) {
         for (int i = 0; i < scoreboard().size(); i++) {
             if (scoreboard().get(i).equals(user))
                 return (i+1);

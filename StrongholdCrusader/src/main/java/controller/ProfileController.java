@@ -56,7 +56,7 @@ public class ProfileController {
         return currentUser.getScore();
     }
     public int displayRank() {
-        return DataBase.getRank(currentUser);
+        return DataBase.getInstance().getRank(currentUser);
     }
     public String displaySlogan() {
         return currentUser.getSlogan();

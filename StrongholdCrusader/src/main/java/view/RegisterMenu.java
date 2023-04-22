@@ -115,8 +115,7 @@ public class RegisterMenu extends Menu {
                 password = randomPassword;
                 passwordConfirmation = randomConfirmation;
             }
-            if (randomSlogan != null)
-                slogan = randomSlogan;
+            if (randomSlogan != null) slogan = randomSlogan;
             return RegisterAndLoginController.createUser(username,
                     password, passwordConfirmation, nickname, email, slogan, hasSlogan);
         } else {
