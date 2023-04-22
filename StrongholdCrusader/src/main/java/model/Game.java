@@ -2,7 +2,6 @@ package model;
 
 import model.buildings.Building;
 import model.units.Unit;
-import model.buildings.*;
 
 import java.util.ArrayList;
 
@@ -15,6 +14,7 @@ public class Game {
     private ArrayList<Trade> trades;
     private Cell[][] cells;
 
+    private Building selectedBuilding;
 
     private Unit selectedUnit;
 
@@ -56,6 +56,13 @@ public class Game {
         this.cells = cells;
     }
 
+    public Building getSelectedBuilding() {
+        return selectedBuilding;
+    }
+
+    public void setSelectedBuilding(Building building) {
+        selectedBuilding = building;
+    }
 
     public Unit getSelectedUnit() {
         return selectedUnit;

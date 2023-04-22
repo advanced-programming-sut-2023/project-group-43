@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class Menu {
     final protected static Scanner scanner = new Scanner(System.in);
-    protected void run() {}
+    public void run() {}
 
     protected static Matcher getMatcher(String input, String regex) {
             Pattern pattern = Pattern.compile(regex);

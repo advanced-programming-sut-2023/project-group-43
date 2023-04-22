@@ -1,5 +1,7 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -11,6 +13,12 @@ public class DataBase {
     User loggedInUser;
 
     private DataBase() {
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("data.json"));
+            users = (ArrayList<User>) in.readObject();
+            in.close();
+        }
+        catch(Exception e) {}
     }
 
 

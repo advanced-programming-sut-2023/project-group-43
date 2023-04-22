@@ -1,10 +1,9 @@
 package controller;
 
 import enums.Output;
-import enums.Texture;
-import enums.TreeType;
 import model.*;
 import view.GameMenu;
+import enums.environmentEnums.*;
 
 import java.util.ArrayList;
 
