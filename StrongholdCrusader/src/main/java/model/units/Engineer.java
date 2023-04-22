@@ -1,10 +1,10 @@
 package model.units;
 
-import enums.unitEnums.Units;
+import enums.unitEnums.UnitsEnum;
 import model.*;
 
 public class Engineer extends Unit{
-    public Engineer(User owner, Units name) {
+    public Engineer(User owner, UnitsEnum name) {
         super(owner, name);
         hasOil = false;
     }

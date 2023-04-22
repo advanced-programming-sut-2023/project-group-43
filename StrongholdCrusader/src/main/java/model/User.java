@@ -1,6 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+
+import model.buildings.Storage;
 
 public class User {
     private String username;
@@ -12,6 +16,7 @@ public class User {
     private String slogan;
 
     private int score;
+    private int rank;
 
     private Storage storage;
     private Governance governance;

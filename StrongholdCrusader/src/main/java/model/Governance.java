@@ -1,5 +1,7 @@
 package model;
 
+import enums.BuildingName;
+import model.buildings.Building;
 import model.units.Unit;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ public class Governance {
     private int fearRate;
 
     private ArrayList<Unit> units = new ArrayList<>();
+
+    private ArrayList<Building> buildings = new ArrayList<>();
 
     public int getPopularity() {
         return popularity;
@@ -68,5 +72,17 @@ public class Governance {
 
     public void removeUnit(Unit unit) {
 
+    }
+    public void addBuilding(Building building) {
+        buildings.add(building);
+    }
+
+    public Building findBuilding(BuildingName name) {
+        for(Building building: buildings) {
+            if(building.getName().equals(name)) {
+                return building;
+            }
+        }
+        return null;
     }
 }

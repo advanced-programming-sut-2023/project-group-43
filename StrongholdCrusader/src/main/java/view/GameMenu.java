@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.RegisterAndLoginController;
+import enums.Output;
 import enums.menuEnums.GameMenuCommands;
 import enums.menuEnums.GovernanceMenuCommands;
 import model.DataBase;
@@ -18,48 +19,88 @@ public class GameMenu extends Menu{
         this.gameController = gameController;
     }
 
-    public void run(Scanner scanner) {
+    public void run() {
+        Scanner scanner = Menu.getScanner();
         String input;
+        Output output;
+        Matcher matcher;
         while (true){
             input = scanner.nextLine();
+            output = null;
             //enter menu part
-            if(GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null)
-                System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null)
-                System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null)
-                System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_GOVERNANCE_MENU)!= null)
-                System.out.println();
+            if(GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null) {
+                System.out.println(enterChangeEnvironmentMenu());
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {
+                System.out.println(enterStoreMenu());
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
+                System.out.println(enterTradeMenu());
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_GOVERNANCE_MENU)!= null) {
+                System.out.println(enterGovernmentMenu());
+            }
             //game
-            if(GameMenuCommands.getMatcher(input,GameMenuCommands.SELECT_BUILDING)!= null)
+            if(GameMenuCommands.getMatcher(input,GameMenuCommands.SELECT_BUILDING)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.CREATE_UNIT)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.CREATE_UNIT)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.MOVE_UNIT)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.MOVE_UNIT)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.SET_UNITS_STATE)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.SET_UNITS_STATE)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.DIRECT_ATTACK)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.DIRECT_ATTACK)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.AERIAL_ATTACK)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.AERIAL_ATTACK)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.POUR_OIL)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.POUR_OIL)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.DIG_TUNNEL)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.DIG_TUNNEL)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.BUILD_EQUIPMENT)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.BUILD_EQUIPMENT)!= null) {
                 System.out.println();
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.DISBAND_UNIT)!= null)
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.DISBAND_UNIT)!= null) {
                 System.out.println();
+            }
             else System.out.println("Invalid Command!");
         }
     }
 
+    public Output enterChangeEnvironmentMenu() {
+        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
+        changeEnvironmentMenu.run();
+        return Output.ENTER_CHANGE_ENVIRONMENT_MENU;
+    }
+    public Output enterStoreMenu() {
+        StoreMenu storeMenu = new StoreMenu();
+        storeMenu.run();
+        return Output.ENTER_STORE_MENU;
+    }
+    private Output enterTradeMenu() {
+        TradeMenu tradeMenu = new TradeMenu();
+        tradeMenu.run();
+        return Output.ENTER_TRADE_MENU;
+    }
+    private Output enterGovernmentMenu() {
+        GovernanceMenu governanceMenu = new GovernanceMenu();
+        governanceMenu.run();
+        return Output.ENTER_GOVERNANCE_MENU;
+    }
     private String showMap(Matcher matcher) {return null;}
 
     private String dropBuilding(Matcher matcher) {
@@ -106,12 +147,5 @@ public class GameMenu extends Menu{
         return null;
     }
 
-    private void enterMapMenu() {}
-
-    private void enterStoreMenu() {}
-
-    private void enterTradeMenu() {}
-
-    private void enterGovernmentMenu() {}
 
 }
