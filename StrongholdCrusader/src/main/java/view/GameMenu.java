@@ -29,16 +29,16 @@ public class GameMenu extends Menu{
             output = null;
             //enter menu part
             if(GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null) {
-                System.out.println();
+                System.out.println(enterChangeEnvironmentMenu());
             }
             else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {
-                System.out.println();
+                System.out.println(enterStoreMenu());
             }
             else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
-                System.out.println();
+                System.out.println(enterTradeMenu());
             }
             else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_GOVERNANCE_MENU)!= null) {
-                System.out.println();
+                System.out.println(enterGovernmentMenu());
             }
             //game
             if(GameMenuCommands.getMatcher(input,GameMenuCommands.SELECT_BUILDING)!= null) {
@@ -81,22 +81,25 @@ public class GameMenu extends Menu{
         }
     }
 
-    public String enterLoginMenu() {
-        LoginMenu loginMenu = new LoginMenu();
-        loginMenu.run();
-        return "entered "
+    public Output enterChangeEnvironmentMenu() {
+        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
+        changeEnvironmentMenu.run();
+        return Output.ENTER_CHANGE_ENVIRONMENT_MENU;
     }
-    public void enterLoginMenu() {
-        LoginMenu loginMenu = new LoginMenu();
-        loginMenu.run();
+    public Output enterStoreMenu() {
+        StoreMenu storeMenu = new StoreMenu();
+        storeMenu.run();
+        return Output.ENTER_STORE_MENU;
     }
-    public void enterLoginMenu() {
-        LoginMenu loginMenu = new LoginMenu();
-        loginMenu.run();
+    private Output enterTradeMenu() {
+        TradeMenu tradeMenu = new TradeMenu();
+        tradeMenu.run();
+        return Output.ENTER_TRADE_MENU;
     }
-    public void enterLoginMenu() {
-        LoginMenu loginMenu = new LoginMenu();
-        loginMenu.run();
+    private Output enterGovernmentMenu() {
+        GovernanceMenu governanceMenu = new GovernanceMenu();
+        governanceMenu.run();
+        return Output.ENTER_GOVERNANCE_MENU;
     }
     private String showMap(Matcher matcher) {return null;}
 
@@ -144,12 +147,5 @@ public class GameMenu extends Menu{
         return null;
     }
 
-    private void enterMapMenu() {}
-
-    private void enterStoreMenu() {}
-
-    private void enterTradeMenu() {}
-
-    private void enterGovernmentMenu() {}
 
 }
