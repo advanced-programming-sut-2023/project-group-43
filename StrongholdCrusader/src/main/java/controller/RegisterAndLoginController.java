@@ -71,7 +71,7 @@ public class RegisterAndLoginController {
         return hexString.toString();
     }
 
-    private static Output checkPassword(String password) {
+    public static Output checkPassword(String password) {
         if (password.matches(".{1,5}")) {
             return Output.SHORT_PASSWORD;
         } else if (password.matches("[^A-Z]+")) {

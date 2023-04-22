@@ -30,6 +30,7 @@ public class RegisterMenu extends Menu {
                 return;
             } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.ENTER_LOGIN_MENU) != null) {
                 enterLoginMenu();
+                continue;
             }
             if (output != null) {
                 output = checkOutput(matcher, output);

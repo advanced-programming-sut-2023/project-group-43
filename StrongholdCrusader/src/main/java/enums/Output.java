@@ -38,7 +38,12 @@ public enum Output {
     INCORRECT_PASSWORD("Username and password didn't match!"),
     SUCCESSFUL_LOGIN("user logged in successfully!"),
     CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
-    WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect")
+    WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
+    SUCCESSFUL_PASSWORD_CHANGEING("password changed successfully"),
+    DUPLICATED_NEWPASSWORD("warning : you entered your previous password,enter a new password!"),
+    SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully"),
+    DUPLICATE_SLOGAN("warning : duplicate slogan!"),
+    SLOGAN_REMOVED_SUCCESSFULLY("slogan removed successfully")
     ;
     private String string;
 

@@ -29,7 +29,7 @@ public class LoginMenu extends Menu{
                 return;
             } if (output != null) System.out.println(output.getString());
             else System.out.println("invalid command");
-            if (output.equals(Output.SUCCESSFUL_LOGIN)) {
+            if (output != null && output.equals(Output.SUCCESSFUL_LOGIN)) {
                 enterMainMenu(matcher.group("username"), matcher.group("username2"));
             }
         }

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class DataBase {
 
@@ -53,5 +54,23 @@ public class DataBase {
             }
         }
         return null;
+    }
+    private static class sortUsers implements Comparator<User> {
+        public int compare(User a, User b) {
+            if (a.getScore() != b.getScore()) return b.getScore() - a.getScore();
+            else return a.getScore() - b.getScore();
+        }
+    }
+    public static ArrayList<User> scoreboard() {
+        ArrayList<User> usersScoreboard = new ArrayList<>();
+        usersScoreboard.sort(new sortUsers());
+        return usersScoreboard;
+    }
+    public static int getRank(User user) {
+        for (int i = 0; i < scoreboard().size(); i++) {
+            if (scoreboard().get(i).equals(user))
+                return (i+1);
+        }
+        return -1;
     }
 }

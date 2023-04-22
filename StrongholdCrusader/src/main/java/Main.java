@@ -1,4 +1,3 @@
-import model.DataBase;
 import view.RegisterMenu;
 
 public class Main {
