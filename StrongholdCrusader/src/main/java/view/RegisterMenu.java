@@ -13,9 +13,6 @@ import java.util.regex.Matcher;
 
 public class RegisterMenu extends Menu {
 
-
-    private RegisterAndLoginController registerAndLoginController;
-
     private String randomPassword;
 
     public void run() {
@@ -23,6 +20,7 @@ public class RegisterMenu extends Menu {
         String input;
         Output output;
         Matcher matcher;
+        System.out.println("register menu:");
         while (true) {
             input = scanner.nextLine();
             output = null;
