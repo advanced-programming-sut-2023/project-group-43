@@ -38,7 +38,24 @@ public enum Output {
     INCORRECT_PASSWORD("Username and password didn't match!"),
     SUCCESSFUL_LOGIN("user logged in successfully!"),
     CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
-    WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect")
+    WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
+    //game menu outputs enter menu successful: You are in the customer menu!
+    ENTER_CHANGE_ENVIRONMENT_MENU("enter menu successful: You are in the change environment menu!"),
+    ENTER_STORE_MENU("enter menu successful: You are in the store menu!"),
+    ENTER_TRADE_MENU("enter menu successful: You are in the trade menu!"),
+    ENTER_GOVERNANCE_MENU("enter menu successful: You are in the governance menu!"),
+    SELECT_BUILDING("The building successfully selected"),
+    CREATE_UNIT("The unit successfully created"),
+    REPAIR("repaired successfully!"),
+    SELECT_UNIT("The unit successfully selected"),
+    MOVE_UNIT("unit successfully moved to"),
+    SET_UNIT_STATE("unit state was successfully set to"),
+    DIRECT_ATTACK("direct attack command was successfully!"),
+    AERIAL_ATTACK("aerial attack command was successfully!"),
+    POUR_OIL("The oil successfully poured"),
+    DIG_TUNNEL("The tunnel successfully digged"),
+    BUILD_EQUIPMENT("The equipment successfully built"),
+    DISBAND_UNIT("The unit disbanded"),
     ;
     private String string;
 
