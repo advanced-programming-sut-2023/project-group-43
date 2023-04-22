@@ -1,19 +1,19 @@
-package enums;
+package enums.unitEnums;
 
 import model.units.Troop;
 
 public enum TroopType {
     ;
-     TroopType(boolean canHide, int damage, UnitWeapon weapon) {
+     TroopType(boolean canHide, int damage, String weapon) {
         this.canHide = canHide;
         this.damage = damage;
         this.weapon = weapon;
     }
     private boolean canHide;
     private int damage;
-    private UnitWeapon weapon;
+    private String weapon;
 
-    public UnitWeapon getWeapon() {
+    public String getWeapon() {
         return weapon;
     }
 

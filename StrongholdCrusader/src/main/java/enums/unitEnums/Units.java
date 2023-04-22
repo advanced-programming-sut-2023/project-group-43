@@ -1,6 +1,6 @@
-package enums;
+package enums.unitEnums;
 
-public enum UnitName {
+public enum Units {
     ;
     private int hitPoint;
     private int defense;
@@ -8,7 +8,7 @@ public enum UnitName {
     private int cost;
     boolean hasLadder;
 
-    UnitName(int hitPoint, int defense, int speed, int cost, boolean hasLadder) {
+    Units(int hitPoint, int defense, int speed, int cost, boolean hasLadder) {
         this.hitPoint = hitPoint;
         this.defense = defense;
         this.speed = speed;

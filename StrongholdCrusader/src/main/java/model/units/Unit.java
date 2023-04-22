@@ -1,18 +1,14 @@
 package model.units;
 
-import enums.UnitState;
-import enums.UnitName;
-import enums.UnitType;
-import enums.UnitWeapon;
+import enums.unitEnums.UnitState;
+import enums.unitEnums.Units;
 import model.Cell;
 import model.User;
 
 public class Unit {
     private User owner;
-    private UnitName name;
-
-    private UnitType type;
-
+    private Units name;
+    private String type;
     private Cell cell;
     private int hitPoint;
     private int damage;
@@ -23,7 +19,7 @@ public class Unit {
 
     private UnitState state;
 
-    public Unit(User owner, UnitName name) {
+    public Unit(User owner, Units name) {
         this.owner = owner;
         this.name = name;
         this.hitPoint = name.getHitPoint();
@@ -37,7 +33,7 @@ public class Unit {
         return owner;
     }
 
-    public UnitName getName() {
+    public Units getName() {
         return name;
     }
 
@@ -98,13 +94,6 @@ public class Unit {
         this.cell = cell;
     }
 
-    public void setType(UnitType type) {
-        this.type = type;
-    }
-
-    public UnitType getType() {
-        return type;
-    }
     public void defense() {}
     public void move() {}
     public void digDitch() {}

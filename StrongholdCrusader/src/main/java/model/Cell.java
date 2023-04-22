@@ -1,11 +1,11 @@
 package model;
 
-import enums.Texture;
-import enums.TreeType;
+import enums.environmentEnums.Texture;
+import enums.environmentEnums.TreeType;
+import enums.environmentEnums.WaterArea;
 import model.buildings.Building;
 import model.units.Unit;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Cell {
@@ -16,7 +16,8 @@ public class Cell {
     private TreeType treeType;
 
     private boolean hasRock;
-    private String rockDirection;
+
+    private WaterArea waterArea;
 
     private ArrayList<Unit> units = new ArrayList<>();
 
@@ -52,14 +53,6 @@ public class Cell {
         this.hasRock = hasRock;
     }
 
-    public String getRockDirection() {
-        return rockDirection;
-    }
-
-    public void setRockDirection(String rockDirection) {
-        this.rockDirection = rockDirection;
-    }
-
     public void setTreeType(TreeType treeType) {
         this.treeType = treeType;
     }
@@ -67,9 +60,19 @@ public class Cell {
     public void setUnits(ArrayList<Unit> units) {
         this.units = units;
     }
+
+    public void setWaterArea(WaterArea waterArea) {
+        this.waterArea = waterArea;
+    }
+
+    public WaterArea getWaterArea() {
+        return waterArea;
+    }
+
     public void addUnit(Unit unit) {
         units.add(unit);
     }
+
     public void removeUnit(Unit unit) {
 
     }

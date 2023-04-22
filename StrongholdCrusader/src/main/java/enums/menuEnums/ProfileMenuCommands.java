@@ -16,7 +16,7 @@ public enum ProfileMenuCommands {
     PROFILE_DISPLAY("profile display"),
     BACK("back")
     ;
-    private final String regex;
+    final String regex;
 
     private ProfileMenuCommands(String regex) {
         this.regex = regex;

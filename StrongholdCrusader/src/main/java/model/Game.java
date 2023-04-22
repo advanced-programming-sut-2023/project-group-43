@@ -15,7 +15,6 @@ public class Game {
     private ArrayList<Trade> trades;
     private Cell[][] cells;
 
-    private Building selectedBuilding;
 
     private Unit selectedUnit;
 
@@ -57,13 +56,6 @@ public class Game {
         this.cells = cells;
     }
 
-    public Building getSelectedBuilding() {
-        return selectedBuilding;
-    }
-
-    public void setSelectedBuilding(Building building) {
-        selectedBuilding = building;
-    }
 
     public Unit getSelectedUnit() {
         return selectedUnit;

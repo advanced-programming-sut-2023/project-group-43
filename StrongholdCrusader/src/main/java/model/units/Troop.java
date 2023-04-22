@@ -1,12 +1,11 @@
 package model.units;
 
-import enums.TroopType;
-import enums.UnitName;
-import enums.UnitWeapon;
+import enums.unitEnums.TroopType;
+import enums.unitEnums.Units;
 import model.*;
 
 public class Troop extends Unit{
-    public Troop(User owner, UnitName name, TroopType troopType) {
+    public Troop(User owner, Units name, TroopType troopType) {
         super(owner, name);
         this.canHide = troopType.canHide();
         this.damage = troopType.getDamage();

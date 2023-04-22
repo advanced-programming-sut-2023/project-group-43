@@ -1,21 +1,21 @@
 package model.buildings;
-
-import enums.BuildingName;
-import enums.Material;
+import enums.environmentEnums.Materials;
 import model.User;
 
 public class Manufacturer extends Building {
 
-    private final Material producedMaterial;
+    private final Materials producedMaterials;
     private final int productionRate;
-    public Manufacturer(User owner, BuildingName name, int hp, Material producedMaterial, int productionRate) {
-        super(owner, name, hp);
-        this.producedMaterial = producedMaterial;
+
+    public Manufacturer(String name, User owner, Materials producedMaterials, int productionRate) {
+        super(name, owner);
+        this.producedMaterials = producedMaterials;
         this.productionRate = productionRate;
     }
 
-    public Material getProducedMaterial() {
-        return producedMaterial;
+
+    public Materials getProducedMaterial() {
+        return producedMaterials;
     }
 
     public int getProductionRate() {

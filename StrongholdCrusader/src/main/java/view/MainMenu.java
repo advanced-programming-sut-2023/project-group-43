@@ -2,7 +2,10 @@ package view;
 
 import controller.MainController;
 import controller.RegisterAndLoginController;
+import enums.menuEnums.MainMenuCommands;
 import model.DataBase;
+
+import java.util.Scanner;
 
 public class MainMenu extends Menu{
 
@@ -12,7 +15,18 @@ public class MainMenu extends Menu{
         this.mainController = mainController;
     }
 
-    public void run(){}
+    public void run(Scanner scanner){
+        String input = scanner.nextLine();
+        while (true){
+            if(input.matches("back"))
+                return;
+            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_PROFILE_MENU) != null)
+                System.out.println("");
+            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU)!= null)
+                System.out.println("");
+            else System.out.println("Invalid Command!");
+        }
+    }
 
     private void enterChangeEnvironmentMenu() {
         mainController.enterChangeEnvironmentMenu();
