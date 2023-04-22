@@ -20,10 +20,12 @@ public class MainMenu extends Menu{
         while (true){
             if(input.matches("back"))
                 return;
-            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_PROFILE_MENU) != null)
+            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_PROFILE_MENU) != null) {
                 System.out.println("");
-            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU)!= null)
+            }
+            else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU)!= null) {
                 System.out.println("");
+            }
             else System.out.println("Invalid Command!");
         }
     }
