@@ -8,9 +8,7 @@ import model.User;
 public class Unit {
     private User owner;
     private Units name;
-
-    private UnitType type;
-
+    private String type;
     private Cell cell;
     private int hitPoint;
     private int damage;

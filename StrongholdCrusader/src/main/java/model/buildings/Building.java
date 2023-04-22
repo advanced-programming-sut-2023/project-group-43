@@ -12,6 +12,7 @@ public class Building {
     private final Buildings buildings;
     private ArrayList<Unit> units = new ArrayList<>();
     private static ArrayList<Building>buildings = new ArrayList<>();
+    //TODO make the cunstuctor like asal
 
     public Building(String name, User owner, Buildings buildings) {
         this.name = name;
