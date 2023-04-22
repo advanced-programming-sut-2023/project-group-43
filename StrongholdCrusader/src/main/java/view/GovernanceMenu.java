@@ -21,24 +21,31 @@ public class GovernanceMenu extends Menu{
             input = scanner.nextLine();
             if(input.matches("back"))
                 return;
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_POPULARITY_FACTORS)!= null)
+            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_POPULARITY_FACTORS)!= null) {
+                System.out.println(showPopularityFactors());
+            }
+            else if (GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_POPULARITY)!= null) {
                 System.out.println();
-            else if (GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_POPULARITY)!= null)
+            }
+            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_FOOD_LIST)!= null) {
                 System.out.println();
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_FOOD_LIST)!= null)
+            }
+            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.TAX_RATE)!= null) {
                 System.out.println();
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.TAX_RATE)!= null)
+            }
+            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.TAX_RATE_SHOW) != null) {
                 System.out.println();
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.TAX_RATE_SHOW) != null)
+            }
+            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.FEAR_RATE) != null) {
                 System.out.println();
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.FEAR_RATE) != null)
-                System.out.println();
+            }
             else System.out.println("Invalid Command!");
         }
     }
 
+    //TODO : i am not sure that popularity factors are completed
     private String showPopularityFactors() {
-        return null;
+        return "1)food\n2)tax\n3)religion4)fear";
     }
 
     private String showPopularity() {
