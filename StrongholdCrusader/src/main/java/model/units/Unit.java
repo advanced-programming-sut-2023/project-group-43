@@ -7,7 +7,7 @@ import model.User;
 
 public class Unit {
     private User owner;
-    private Units name;
+    private Units unit;
     private String type;
     private Cell cell;
     private int hitPoint;
@@ -19,9 +19,9 @@ public class Unit {
 
     private UnitState state;
 
-    public Unit(User owner, Units name) {
+    public Unit(User owner, Units unit) {
         this.owner = owner;
-        this.name = name;
+        this.unit = unit;
         this.hitPoint = name.getHitPoint();
         this.defense = name.getDefense();
         this.speed = name.getSpeed();

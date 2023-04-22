@@ -1,6 +1,7 @@
 package enums.unitEnums;
 
 public enum Units {
+
     ;
     private int hitPoint;
     private int defense;
