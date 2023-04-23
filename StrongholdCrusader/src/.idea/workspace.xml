@@ -1,101 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StrongholdCrusader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/StrongholdCrusader.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/ChangeEnvironmentController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/GameController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/GovernanceController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/MainController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/MapController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/ProfileController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/RegisterAndLoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/StoreController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/Tile/Tile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/Tile/TileManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/controller/TradeController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/BuildingEnums/BuildingEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/Output.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/RateNumber.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/Validations.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/environmentEnums/Materials.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/environmentEnums/Texture.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/environmentEnums/TreeType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/environmentEnums/WaterArea.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/menuEnums/EnvironmentChangeCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/menuEnums/GameMenuCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/menuEnums/GovernanceMenuCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/menuEnums/MainMenuCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/menuEnums/ProfileMenuCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/menuEnums/RegisterAndLoginCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/menuEnums/StoreMenuCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/unitEnums/TroopType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/unitEnums/UnitState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/enums/unitEnums/UnitsEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/Cell.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/DataBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/Game.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/Governance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/Storage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/Trade.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/Building.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/CastleDepartment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/Converter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/Manufacturer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/PopularityBooster.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/Storage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/Store.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/buildings/Stronghold.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/units/Engineer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/units/Troop.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/model/units/Unit.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/ChangeEnvironmentMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/GameMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/GovernanceMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/LoginMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/MainMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/MapMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/Menu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/ProfileMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/RegisterMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/StoreMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/java/view/TradeMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/controller/GameController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/controller/GovernanceController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/controller/MapController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/controller/StoreController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/controller/TradeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/BuildingName.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/BuildingType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/FoodType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/Material.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/ResourceType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/TroopType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/UnitName.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/UnitState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/UnitType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/enums/UnitWeapon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/model/Trade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/model/units/Engineer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/model/units/Troop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/model/units/Unit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/view/GameMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/view/GovernanceMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/view/LoginMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/view/MapMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/view/StoreMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../target/classes/view/TradeMenu.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,8 +41,16 @@
       <option name="presentableId" value="Default" />
       <updated>1682217468728</updated>
       <workItem from="1682217469843" duration="23000" />
-      <workItem from="1682217508479" duration="1846000" />
+      <workItem from="1682217508479" duration="4234000" />
     </task>
+    <task id="LOCAL-00001" summary="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root">
+      <created>1682219497647</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682219497647</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,5 +66,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root" />
+    <option name="LAST_COMMIT_MESSAGE" value="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root" />
   </component>
 </project>
