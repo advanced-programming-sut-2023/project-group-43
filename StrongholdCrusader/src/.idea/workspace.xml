@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root">
+    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="aida:add store menu commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/menuEnums/GameMenuCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/enums/menuEnums/GameMenuCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GameMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +44,7 @@
       <option name="presentableId" value="Default" />
       <updated>1682217468728</updated>
       <workItem from="1682217469843" duration="23000" />
-      <workItem from="1682217508479" duration="4234000" />
+      <workItem from="1682217508479" duration="7489000" />
     </task>
     <task id="LOCAL-00001" summary="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root">
       <created>1682219497647</created>
@@ -50,7 +53,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682219497647</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="aida:add store menu commands">
+      <created>1682246740391</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682246740391</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -69,6 +79,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root" />
-    <option name="LAST_COMMIT_MESSAGE" value="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root" />
+    <MESSAGE value="aida:add store menu commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="aida:add store menu commands" />
   </component>
 </project>

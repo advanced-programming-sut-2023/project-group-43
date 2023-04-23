@@ -1,8 +1,6 @@
 package view;
 
-import controller.GameController;
-import controller.RegisterAndLoginController;
-import controller.StoreController;
+import controller.*;
 import enums.Output;
 import enums.menuEnums.GameMenuCommands;
 import enums.menuEnums.GovernanceMenuCommands;
@@ -15,6 +13,10 @@ import java.util.regex.Matcher;
 public class GameMenu extends Menu{
 
     private GameController gameController;
+    private ChangeEnvironmentController changeEnvironmentController;
+    private GovernanceController governanceController;
+    private TradeController tradeController;
+    private StoreController storeController;
 
     public GameMenu(GameController gameController) {
         this.gameController = gameController;
@@ -49,7 +51,7 @@ public class GameMenu extends Menu{
             else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.CREATE_UNIT))!= null) {
                 System.out.println(createUnit(matcher));
             }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR)!= null) {
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR_Castle)!= null) {
                 System.out.println();
             }
             else if((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT))!= null) {
@@ -61,11 +63,8 @@ public class GameMenu extends Menu{
             else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.SET_UNITS_STATE))!= null) {
                 System.out.println(setUnitState(matcher));
             }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.DIRECT_ATTACK))!= null) {
-                System.out.println(aerialAttack(matcher));
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.AERIAL_ATTACK))!= null) {
-                System.out.println(directAttack(matcher));
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.ATTACK))!= null) {
+                System.out.println(attack(matcher));
             }
             else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.POUR_OIL))!= null) {
                 System.out.println(pourOil(matcher));
@@ -79,33 +78,32 @@ public class GameMenu extends Menu{
             else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.DISBAND_UNIT))!= null) {
                 System.out.println(disbandUnit(matcher));
             }
+            else if ((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.PATROL_UNIT)) != null) {
+                System.out.println(patrolUnit(matcher));
+            }
             else System.out.println("Invalid Command!");
         }
     }
 
     public String enterChangeEnvironmentMenu() {
-        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
+        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu(changeEnvironmentController);
         changeEnvironmentMenu.run();
         return Output.ENTER_CHANGE_ENVIRONMENT_MENU.getString();
     }
     public String enterStoreMenu() {
-        StoreMenu storeMenu = new StoreMenu();
+        StoreMenu storeMenu = new StoreMenu(storeController);
         storeMenu.run();
         return Output.ENTER_STORE_MENU.getString();
     }
     private String enterTradeMenu() {
-        TradeMenu tradeMenu = new TradeMenu();
+        TradeMenu tradeMenu = new TradeMenu(tradeController);
         tradeMenu.run();
         return Output.ENTER_TRADE_MENU.getString();
     }
     private String enterGovernmentMenu() {
-        GovernanceMenu governanceMenu = new GovernanceMenu();
+        GovernanceMenu governanceMenu = new GovernanceMenu(governanceController);
         governanceMenu.run();
         return Output.ENTER_GOVERNANCE_MENU.getString();
-    }
-
-    private String repair(){
-
     }
 
     private String selectBuilding(Matcher matcher) {
@@ -139,7 +137,6 @@ public class GameMenu extends Menu{
     }
 
     private String disbandUnit(Matcher matcher){
-        //TODO
         return gameController.disbandUnit();
     }
 
@@ -150,22 +147,24 @@ public class GameMenu extends Menu{
         return gameController.setUnitState(x,y,state);
     }
 
-    private String aerialAttack(Matcher matcher) {
-        return gameController.
+    private String attack(Matcher matcher) {
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        String item = matcher.group("item");
+        return gameController.attack(x , y , item);
     }
-
-    private String directAttack(Matcher matcher){return null;}
-
     private String pourOil(Matcher matcher) {
-        return null;
+        String direction = matcher.group("direction");
+        return gameController.pourOil(direction);
     }
-
     private String digTunnel(Matcher matcher) {
-        return null;
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        return gameController.digTunnel(x,y);
     }
-
     private String buildEquipment(Matcher matcher) {
-        return null;
+        String equipmentName = matcher.group("equipmentName");
+        return gameController.buildEquipment(equipmentName);
     }
 
 

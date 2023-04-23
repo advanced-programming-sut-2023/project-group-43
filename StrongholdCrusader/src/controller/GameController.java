@@ -33,7 +33,7 @@ public class GameController {
 
     public String setUnitState(int x, int y, String state) {return null;}
 
-    public String attack(int x, int y) {return null;}
+    public String attack(int x, int y ,String item) {return null;}
 
     private String attackToEnemy(int x, int y) {return null;}
 
