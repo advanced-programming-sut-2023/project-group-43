@@ -13,7 +13,6 @@ public class DataBase {
     private static DataBase dataBase = null;
 
     ArrayList<User> users = new ArrayList<>();
-    User loggedInUser;
 
     private DataBase() {
         loadData();
@@ -52,18 +51,10 @@ public class DataBase {
         return dataBase;
     }
 
-
-    public User getLoggedInUser() {
-        return loggedInUser;
-    }
-
     public ArrayList<User> getUsers() {
         return users;
     }
 
-    public void setLoggedInUser(User loggedInUser) {
-        this.loggedInUser = loggedInUser;
-    }
 
     public void addUser(User user) {
         users.add(user);

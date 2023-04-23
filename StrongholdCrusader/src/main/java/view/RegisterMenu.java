@@ -24,6 +24,7 @@ public class RegisterMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
+            randomPassword = null;
             if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.CREATE_USER)) != null) {
                 output = createUser(matcher, null, null, null);
             } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.BACK) != null) {
@@ -105,6 +106,7 @@ public class RegisterMenu extends Menu {
         String email = matcher.group("email");
         if ((passwordConfirmation = matcher.group("passwordConfirmation")) == null)
             passwordConfirmation = matcher.group("passwordConfirmation2");
+        if (randomSlogan != null) slogan = randomSlogan;
         if (recoveryMatcher == null) {
             boolean hasSlogan = matcher.group("sloganFlag") != null;
             if (matcher.group("random") != null) {
@@ -115,7 +117,6 @@ public class RegisterMenu extends Menu {
                 password = randomPassword;
                 passwordConfirmation = randomConfirmation;
             }
-            if (randomSlogan != null) slogan = randomSlogan;
             return RegisterAndLoginController.createUser(username,
                     password, passwordConfirmation, nickname, email, slogan, hasSlogan);
         } else {

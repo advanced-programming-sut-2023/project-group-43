@@ -92,7 +92,7 @@ public class RegisterAndLoginController {
         password = makeShaCode(password);
         if (!password.equals(user.getPassword()))
             return Output.INCORRECT_PASSWORD;
-        if (isStayLoggedIn) DataBase.getInstance().setLoggedInUser(user);
+        if (isStayLoggedIn) user.setLoggedIn(true);
         return Output.SUCCESSFUL_LOGIN;
     }
 

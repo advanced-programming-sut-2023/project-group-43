@@ -14,8 +14,8 @@ public enum RegisterAndLoginCommands {
             "(?<sloganFlag> -s (" +
             "(?<slogan>\\S+)|(\"(?<slogan2>.+)\")"+
             ")?)?"),
-    LOGIN_USER("user login -u (((?<username>\\S+)|(\"(?<username2>.+)\"))) " +
-            "(((?<password>\\S+)|(\"(?<password2>.+)\")))(?<stayLoggedIn> --stay-logged-in)?"),
+    LOGIN_USER("user login -u (((?<username>\\S+)|(\"(?<username2>.+)\"))) -p " +
+            "(((?<password>\\S+)|(\"(?<password2>.+)\")))((?<stayLoggedIn> --stay-logged-in)?)"),
     FORGET_PASSWORD("forgot my password - u (((?<username>\\S+)|(\"(?<username2>.+)\")))"),
     BACK("back"),
     ENTER_LOGIN_MENU("enter login menu"),

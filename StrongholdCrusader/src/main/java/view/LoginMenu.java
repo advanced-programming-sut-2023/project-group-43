@@ -3,14 +3,16 @@ package view;
 import controller.RegisterAndLoginController;
 import enums.Output;
 import enums.menuEnums.RegisterAndLoginCommands;
-import model.DataBase;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
-public class LoginMenu extends Menu{
+public class LoginMenu extends Menu {
 
-    public void run(){
+    private int incorrectPasswords = 0;
+
+    public void run() {
         Scanner scanner = Menu.getScanner();
         String input;
         Output output;
@@ -27,15 +29,17 @@ public class LoginMenu extends Menu{
             } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.BACK) != null) {
                 System.out.println("register menu:");
                 return;
-            } if (output != null) System.out.println(output.getString());
+            }
+            if (output != null) System.out.println(output.getString());
             else System.out.println("invalid command");
             if (output != null && output.equals(Output.SUCCESSFUL_LOGIN)) {
                 enterMainMenu(matcher.group("username"), matcher.group("username2"));
             }
+            checkForPause(output);
         }
     }
 
-    private Output loginUser(Matcher matcher){
+    private Output loginUser(Matcher matcher) {
         String username, password;
         if ((username = matcher.group("username")) == null)
             username = matcher.group("username2");
@@ -45,7 +49,7 @@ public class LoginMenu extends Menu{
         return RegisterAndLoginController.loginUser(username, password, isStayLoggedIn);
     }
 
-    private void forgetPassword(Matcher matcher){
+    private void forgetPassword(Matcher matcher) {
         String username;
         if ((username = matcher.group("username")) == null)
             username = matcher.group("username2");
@@ -67,6 +71,18 @@ public class LoginMenu extends Menu{
         if (username == null) username = username2;
         System.out.println("main menu:");
         RegisterAndLoginController.enterMainMenu(username);
+    }
+
+    private void checkForPause(Output output) {
+        if (output != null && output.equals(Output.INCORRECT_PASSWORD)) incorrectPasswords++;
+        else incorrectPasswords = 0;
+        if (incorrectPasswords > 0 && (incorrectPasswords % 5) == 0) {
+            try {
+                System.out.println("you have to wait for " + incorrectPasswords + "seconds");
+                TimeUnit.SECONDS.sleep(incorrectPasswords);
+            } catch (Exception e) {
+            }
+        }
     }
 
 }
