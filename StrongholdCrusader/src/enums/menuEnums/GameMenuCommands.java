@@ -13,7 +13,7 @@ public enum GameMenuCommands {
     //choose and change items inside game
     SELECT_BUILDING("select building -x (?<x>(\\d+)|(\"\\s*\\d+\\s*\")) -y (?<y>(\\d+)|(\"\\s*\\d+\\s*\")"),
     CREATE_UNIT("create unit -t (?<type>(\\.+)) -c (?<count>(\\d+)|(\"\\s*\\d+\\s*\")"),
-    REPAIR_Castle("repair"),
+    REPAIR_CASTLE("repair"),
     //people and units
     SELECT_UNIT("select unit -x (?<x>(\\d+)|(\"\\s*\\d+\\s*\")) -y (?<y>(\\d+)|(\"\\s*\\d+\\s*\"))"),
     MOVE_UNIT("move unit to -x (?<x>(\\d+)|(\"\\s*\\d+\\s*\")) -y (?<y>(\\d+)|(\"\\s*\\d+\\s*\"))"),

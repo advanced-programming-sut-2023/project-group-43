@@ -1,6 +1,6 @@
 package controller;
 
-import enums.Output;
+import java.lang.String;
 import model.*;
 
 public class GovernanceController {
@@ -11,22 +11,22 @@ public class GovernanceController {
         this.game = game;
     }
 
-    public Output showPopularityFactors() { return null;}
+    public String showPopularityFactors() { return null;}
 
-    public Output showPopularity() {return null;}
+    public String showPopularity() {return null;}
 
-    public Output showFoodList() {return null;}
+    public String showFoodList() {return null;}
 
-    public Output foodRate(int rate) {return null;}
+    public String foodRate(int rate) {return null;}
 
-    public Output showFoodRate() {return null;}
+    public String showFoodRate() {return null;}
 
-    public Output taxRate(int rate) {return null;}
+    public String taxRate(int rate) {return null;}
 
-    public Output showTaxRate() {return null;}
+    public String showTaxRate() {return null;}
 
-    public Output fearRate(int rate) {return null;}
+    public String fearRate(int rate) {return null;}
 
-    public Output showFearRate() {return null;}
+    public String showFearRate() {return null;}
 
 }

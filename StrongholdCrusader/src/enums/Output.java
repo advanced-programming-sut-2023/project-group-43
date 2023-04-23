@@ -39,11 +39,7 @@ public enum Output {
     SUCCESSFUL_LOGIN("user logged in successfully!"),
     CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
     WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
-    //game menu outputs enter menu successful: You are in the customer menu!
-    ENTER_CHANGE_ENVIRONMENT_MENU("enter menu successful: You are in the change environment menu!"),
-    ENTER_STORE_MENU("enter menu successful: You are in the store menu!"),
-    ENTER_TRADE_MENU("enter menu successful: You are in the trade menu!"),
-    ENTER_GOVERNANCE_MENU("enter menu successful: You are in the governance menu!"),
+    //
     SELECT_BUILDING("The building successfully selected"),
     CREATE_UNIT("The unit successfully created"),
     REPAIR("repaired successfully!"),

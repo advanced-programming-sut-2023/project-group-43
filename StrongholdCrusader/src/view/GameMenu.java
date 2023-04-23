@@ -33,16 +33,16 @@ public class GameMenu extends Menu{
             output = null;
             //enter menu part
             if(GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null) {
-                System.out.println(enterChangeEnvironmentMenu());
+                enterChangeEnvironmentMenu();
             }
             else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {
-                System.out.println(enterStoreMenu());
+                enterStoreMenu();
             }
             else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
-                System.out.println(enterTradeMenu());
+                enterTradeMenu();
             }
             else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_GOVERNANCE_MENU)!= null) {
-                System.out.println(enterGovernmentMenu());
+                enterGovernmentMenu();
             }
             //game
             if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.SELECT_BUILDING))!= null) {
@@ -51,8 +51,8 @@ public class GameMenu extends Menu{
             else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.CREATE_UNIT))!= null) {
                 System.out.println(createUnit(matcher));
             }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR_Castle)!= null) {
-                System.out.println();
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR_CASTLE)!= null) {
+                System.out.println(gameController.repairCastle());
             }
             else if((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT))!= null) {
                 System.out.println(selectUnit(matcher));
@@ -85,25 +85,21 @@ public class GameMenu extends Menu{
         }
     }
 
-    public String enterChangeEnvironmentMenu() {
+    public void enterChangeEnvironmentMenu() {
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu(changeEnvironmentController);
         changeEnvironmentMenu.run();
-        return Output.ENTER_CHANGE_ENVIRONMENT_MENU.getString();
     }
-    public String enterStoreMenu() {
+    public void enterStoreMenu() {
         StoreMenu storeMenu = new StoreMenu(storeController);
         storeMenu.run();
-        return Output.ENTER_STORE_MENU.getString();
     }
-    private String enterTradeMenu() {
+    private void enterTradeMenu() {
         TradeMenu tradeMenu = new TradeMenu(tradeController);
         tradeMenu.run();
-        return Output.ENTER_TRADE_MENU.getString();
     }
-    private String enterGovernmentMenu() {
+    private void enterGovernmentMenu() {
         GovernanceMenu governanceMenu = new GovernanceMenu(governanceController);
         governanceMenu.run();
-        return Output.ENTER_GOVERNANCE_MENU.getString();
     }
 
     private String selectBuilding(Matcher matcher) {
