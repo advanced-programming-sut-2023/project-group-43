@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9437b66c-8556-4196-9d3e-05767e350510" name="Changes" comment="test:merge aida and sana branch in to one branch for test" />
+    <list default="true" id="9437b66c-8556-4196-9d3e-05767e350510" name="Changes" comment="test:merge aida and sana branch in to one branch for test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +35,19 @@
     &quot;last_opened_file_path&quot;: &quot;G:/AP/Project/StrongholdCrusader/src&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -42,6 +57,8 @@
       <option name="presentableId" value="Default" />
       <updated>1682144277858</updated>
       <workItem from="1682144278984" duration="804000" />
+      <workItem from="1682186813716" duration="1216000" />
+      <workItem from="1682215005466" duration="82000" />
     </task>
     <task id="LOCAL-00001" summary="test:merge aida and sana branch in to one branch for test">
       <created>1682144726993</created>
@@ -50,7 +67,28 @@
       <option name="project" value="LOCAL" />
       <updated>1682144726993</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="test:merge aida and sana branch in to one branch for test">
+      <created>1682186867905</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682186867905</updated>
+    </task>
+    <task id="LOCAL-00003" summary="test:merge aida and sana branch in to one branch for test">
+      <created>1682186882293</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682186882293</updated>
+    </task>
+    <task id="LOCAL-00004" summary="test:merge aida and sana branch in to one branch for test">
+      <created>1682187051227</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682187051227</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
