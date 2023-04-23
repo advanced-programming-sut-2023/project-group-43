@@ -11,7 +11,7 @@ public enum StoreMenuCommands {
     ;
     private final String regex;
 
-    private StoreMenuCommands(String regex) {
+    StoreMenuCommands(String regex) {
         this.regex = regex;
     }
 
