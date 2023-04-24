@@ -1,9 +1,13 @@
 package controller;
 
+import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
+import enums.unitEnums.UnitsEnum;
 import model.*;
+import model.buildings.Building;
+import model.units.Unit;
 import view.GameMenu;
 
 import java.util.ArrayList;
@@ -19,20 +23,11 @@ public class ChangeEnvironmentController {
         this.currentUser = currentUser;
     }
 
-
-    public void showMap(int row, int column) {
-        //TODO
-    }
-    public void showMapDetails(int row, int column) {
-
-    }
-    public void moveMap(int horizontalDisplacement, int verticalDisplacement) {}
     public void generateMap(ArrayList<User> playersArraylist, int row, int column) {
         Cell[][] cells = new Cell[row][column];
         game.setCells(cells);
         game.setPlayers(playersArraylist);
     }
-
     public Output chooseMap(int numberOfPlayers, int size) {return null;}
 
     public Output setTexture(int x, int y, String texture) {
@@ -98,7 +93,7 @@ public class ChangeEnvironmentController {
             return Output.WRONG_COORDINATES;
         TreeType treeType = null;
         for (TreeType treeType1 : TreeType.values()) {
-            if (treeType1.equals(type)) {
+            if (treeType1.getTreeType().equals(type)) {
                 treeType = treeType1;
                 break;
             }
@@ -111,12 +106,47 @@ public class ChangeEnvironmentController {
     }
 
     public Output dropBuilding(int x, int y, String type) {
-        //if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
-            //return Output.WRONG_COORDINATES;
+        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            return Output.WRONG_COORDINATES;
+        String buildingName = null;
+        for (BuildingEnum buildingEnum : BuildingEnum.values()) {
+            if (buildingEnum.getName().equals(type)) {
+                buildingName = buildingEnum.getName();
+                break;
+            }
+        }
+        if (buildingName != null) {
+            Building building = new Building(buildingName, currentUser);
+            game.getCells()[x - 1][y - 1].setBuilding(building);
+            return Output.BUILDING_DROPPED_SUCCESSFULLY;
+        }
         return null;
     }
 
-    public Output dropUnit(int x, int y, String type, int count) {return null;}
+    public Output dropUnit(int x, int y, String type, int count) {
+        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            return Output.WRONG_COORDINATES;
+        if (count <= 0) return Output.WRONG_COUNT;
+        boolean found = false;
+        UnitsEnum unitEnum1 = null;
+        for (UnitsEnum unitsEnum : UnitsEnum.values()) {
+            if (unitsEnum.getName().equals(type)) {
+                found = true;
+                unitEnum1 = unitsEnum;
+                break;
+            }
+        }
+        if (found) {
+            ArrayList<Unit> droppedUnits = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                Unit unit = new Unit(currentUser, unitEnum1);
+                droppedUnits.add(unit);
+            }
+            game.getCells()[x - 1][y - 1].setUnits(droppedUnits);
+            return Output.UNIT_DROPPED_SUCCESSFULLY;
+        }
+        return null;
+    }
 
     public void enterGameMenu() {
         GameController gameController = new GameController(game);

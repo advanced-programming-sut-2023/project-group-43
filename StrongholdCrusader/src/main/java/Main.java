@@ -1,4 +1,3 @@
-import com.google.gson.Gson;
 import controller.MainController;
 import model.DataBase;
 import view.MainMenu;

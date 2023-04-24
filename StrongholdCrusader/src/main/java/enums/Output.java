@@ -56,8 +56,10 @@ public enum Output {
     SUCCESSFUL_PASSWORD_CHANGEING("password changed successfully"),
     DUPLICATED_NEWPASSWORD("warning : you entered your previous password,enter a new password!"),
     SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully"),
-    DUPLICATE_SLOGAN("warning : duplicate slogan!")
-
+    DUPLICATE_SLOGAN("warning : duplicate slogan!"),
+    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully"),
+    WRONG_COUNT("warning : invalid number!"),
+    UNIT_DROPPED_SUCCESSFULLY("unit droped successfully")
     ;
     private String string;
 

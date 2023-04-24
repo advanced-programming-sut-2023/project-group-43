@@ -37,6 +37,11 @@ public enum UnitsEnum {
         this.speed = speed;
         this.cost = cost;
     }
+
+    public String getName() {
+        return name;
+    }
+
     public int getHitPoint() {
         return hitPoint;
     }

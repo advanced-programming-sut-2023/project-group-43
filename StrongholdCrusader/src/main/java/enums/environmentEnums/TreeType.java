@@ -23,4 +23,8 @@ public enum TreeType {
     public void setTreeType(String treeType) {
         this.treeType = treeType;
     }
+
+    public String getTreeType() {
+        return treeType;
+    }
 }
