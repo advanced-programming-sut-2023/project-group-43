@@ -95,4 +95,11 @@ public class DataBase {
         }
         return -1;
     }
+
+    public User findLoggedInUser() {
+        for (User user: users) {
+            if (user.isLoggedIn) return user;
+        }
+        return null;
+    }
 }

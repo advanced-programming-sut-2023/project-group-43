@@ -5,22 +5,21 @@ import java.util.regex.Pattern;
 
 
 public enum RegisterAndLoginCommands {
-    CREATE_USER("user create -u " + "((?<username>\\S+)|(\"(?<username2>.+)\"))?" + " -p " +
+    CREATE_USER("user create(?<all>(( -(?<flag>(u|(email)|n|s))( ((?<group>\\S+)|(\"(?<group2>.+)\")))?)" +
+            "|( -p " +
             "((((?<password>\\S+)|(\"(?<password2>.+)\")) " +
             "((?<passwordConfirmation>\\S+)|(\"(?<passwordConfirmation2>.+)\")))" +
             "|(?<random>random))?" +
-            " -email (?<email>\\S+)?" +
-            " -n ((?<nickname>\\S+)|(\"(?<nickname2>.+)\"))?" +
-            "(?<sloganFlag> -s (" +
-            "(?<slogan>\\S+)|(\"(?<slogan2>.+)\")"+
-            ")?)?"),
+            "))){4,5}"),
+
     LOGIN_USER("user login -u (((?<username>\\S+)|(\"(?<username2>.+)\"))) -p " +
             "(((?<password>\\S+)|(\"(?<password2>.+)\")))((?<stayLoggedIn> --stay-logged-in)?)"),
     FORGET_PASSWORD("forgot my password - u (((?<username>\\S+)|(\"(?<username2>.+)\")))"),
     BACK("back"),
     ENTER_LOGIN_MENU("enter login menu"),
     CHOOSE_PASSWORD_RECOVERY_QUESTION("question pick -q (?<number>\\d+) -a (((?<answer>\\S+)|(\"(?<answer2>.+)\")))" +
-            " -c ((?<answerConfirm>\\S+)|(\"(?<answerConfirm2>.+)\"))")
+            " -c ((?<answerConfirm>\\S+)|(\"(?<answerConfirm2>.+)\"))"),
+    GROUP("\\-(?<flag>(u|(email)|n|s))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
     ;
     private final String regex;
 
@@ -31,7 +30,11 @@ public enum RegisterAndLoginCommands {
     public static Matcher getMatcher(String input, RegisterAndLoginCommands command) {
         Pattern pattern = Pattern.compile(command.regex);
         Matcher matcher = pattern.matcher(input);
-        if (matcher.matches()) return matcher;
+        if(matcher.matches()) return matcher;
         else return null;
+    }
+    public static Matcher getWholeMatcher(String input, RegisterAndLoginCommands command) {
+        Pattern pattern = Pattern.compile(command.regex);
+        return pattern.matcher(input);
     }
 }
