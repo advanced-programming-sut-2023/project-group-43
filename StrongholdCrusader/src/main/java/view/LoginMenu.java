@@ -40,11 +40,20 @@ public class LoginMenu extends Menu {
     }
 
     private Output loginUser(Matcher matcher) {
-        String username, password;
-        if ((username = matcher.group("username")) == null)
-            username = matcher.group("username2");
-        if ((password = matcher.group("password")) == null)
-            password = matcher.group("password2");
+        String username = null, password = null;
+        Matcher allMatcher = RegisterAndLoginCommands.getWholeMatcher(matcher.group(), RegisterAndLoginCommands.GROUP);
+        while (allMatcher.find()) {
+            switch (allMatcher.group("flag")) {
+                case "q":
+                    if (username != null) return null;
+                    if ((username = allMatcher.group("group")) == null) username = allMatcher.group("group2");
+                    break;
+                case "c":
+                    if (password != null) return null;
+                    if ((password = allMatcher.group("group")) == null)
+                        password = allMatcher.group("group2");
+            }
+        }
         Boolean isStayLoggedIn = (matcher.group("stayLoggedIn") != null);
         return RegisterAndLoginController.loginUser(username, password, isStayLoggedIn);
     }

@@ -10,16 +10,16 @@ public enum RegisterAndLoginCommands {
             "((((?<password>\\S+)|(\"(?<password2>.+)\")) " +
             "((?<passwordConfirmation>\\S+)|(\"(?<passwordConfirmation2>.+)\")))" +
             "|(?<random>random))?" +
-            "))){4,5}"),
+            "))){0,5}"),
 
-    LOGIN_USER("user login -u (((?<username>\\S+)|(\"(?<username2>.+)\"))) -p " +
-            "(((?<password>\\S+)|(\"(?<password2>.+)\")))((?<stayLoggedIn> --stay-logged-in)?)"),
+    LOGIN_USER("user login((( -(?<flag>(u|p))( ((?<group>\\S+)|(\"(?<group2>.+)\")))){2}" +
+            "((?<stayLoggedIn> --stay-logged-in)?)"),
     FORGET_PASSWORD("forgot my password - u (((?<username>\\S+)|(\"(?<username2>.+)\")))"),
     BACK("back"),
     ENTER_LOGIN_MENU("enter login menu"),
-    CHOOSE_PASSWORD_RECOVERY_QUESTION("question pick -q (?<number>\\d+) -a (((?<answer>\\S+)|(\"(?<answer2>.+)\")))" +
-            " -c ((?<answerConfirm>\\S+)|(\"(?<answerConfirm2>.+)\"))"),
-    GROUP("\\-(?<flag>(u|(email)|n|s))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
+    CHOOSE_PASSWORD_RECOVERY_QUESTION("question pick" +
+            "((( -(?<flag>(a|c|q))( ((?<group>\\S+)|(\"(?<group2>.+)\")))){3}"),
+    GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
     ;
     private final String regex;
 

@@ -87,6 +87,7 @@ public class RegisterAndLoginController {
     }
 
     public static Output loginUser(String username, String password, boolean isStayLoggedIn) {
+        if (username == null || password == null) return Output.EMPTY_FIELD;
         User user = DataBase.getInstance().getUserByUsername(username);
         if (user == null) return Output.NONEXISTENT_USERNAME;
         password = makeShaCode(password);

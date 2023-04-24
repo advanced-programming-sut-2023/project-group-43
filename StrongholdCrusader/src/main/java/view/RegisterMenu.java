@@ -92,11 +92,26 @@ public class RegisterMenu extends Menu {
             if ((recoveryMatcher = RegisterAndLoginCommands.getMatcher
                     (input, RegisterAndLoginCommands.CHOOSE_PASSWORD_RECOVERY_QUESTION)) != null) {
                 parseMatcher(matcher, randomSlogan);
-                String answer, answerConfirmation;
-                if ((answer = recoveryMatcher.group("answer")) == null)
-                    answer = recoveryMatcher.group("answer2");
-                if ((answerConfirmation = recoveryMatcher.group("answerConfirm")) == null)
-                    answerConfirmation = recoveryMatcher.group("answerConfirm2");
+                String answer = null, answerConfirmation = null, number = null;
+                Matcher allMatcher = RegisterAndLoginCommands.getWholeMatcher(matcher.group(), RegisterAndLoginCommands.GROUP);
+                while (allMatcher.find()) {
+                    switch (allMatcher.group("flag")) {
+                        case "q":
+                            if (number != null) return null;
+                            if ((number = allMatcher.group("group")) == null) number = allMatcher.group("group2");
+                            break;
+                        case "a":
+                            if (answer != null) return null;
+                            if ((answer = allMatcher.group("group")) == null) answer = allMatcher.group("group2");
+                            break;
+                        case "c":
+                            if (answerConfirmation != null) return null;
+                            if ((answerConfirmation = allMatcher.group("group")) == null)
+                                answerConfirmation = allMatcher.group("group2");
+                    }
+                }
+                if(!number.matches("\\d+"))
+                    return Output.INVALID_PASSWORD_RECOVERY_QUESTION;
                 int questionNumber = Integer.parseInt(recoveryMatcher.group("number"));
                 if (randomPassword != null) password = randomPassword;
                 if (randomSlogan != null) slogan = randomSlogan;

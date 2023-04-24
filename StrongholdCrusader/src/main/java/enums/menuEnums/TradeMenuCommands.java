@@ -4,8 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum TradeMenuCommands {
-    SEND_TRADE("trade -t (?<resourceType>\\S+) -a (?<amount>\\d+) -p (?<price>\\d+) -m (?<message>.+)"),
-    ACCEPT_TRADE("trade accept -i (?<id>\\d+) -m message")
+    SEND_TRADE("trade" +
+            "((( -(?<flag>(t|a|p|m))( ((?<group>\\S+)|(\"(?<group2>.+)\")))){4}"),
+    ACCEPT_TRADE("trade accept" +
+            "((( -(?<flag>(i|m))( ((?<group>\\S+)|(\"(?<group2>.+)\")))){2}"),
+    GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
     ;
     private final String regex;
 
@@ -15,8 +18,6 @@ public enum TradeMenuCommands {
 
     public static Matcher getMatcher(String input, TradeMenuCommands command) {
         Pattern pattern = Pattern.compile(command.regex);
-        Matcher matcher = pattern.matcher(input);
-        if (matcher.matches()) return matcher;
-        return null;
+        return pattern.matcher(input);
     }
 }
