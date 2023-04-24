@@ -1,8 +1,7 @@
 package controller;
 
 import enums.Output;
-import enums.environmentEnums.Texture;
-import enums.environmentEnums.TreeType;
+import enums.environmentEnums.*;
 import model.*;
 import view.GameMenu;
 

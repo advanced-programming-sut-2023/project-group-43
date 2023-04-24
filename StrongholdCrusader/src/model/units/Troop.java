@@ -9,7 +9,6 @@ public class Troop extends Unit{
         super(owner, name);
         this.canHide = troopType.canHide();
         this.damage = troopType.getDamage();
-        this.weapon = troopType.getWeapon();
     }
 
     private TroopType troopType;
