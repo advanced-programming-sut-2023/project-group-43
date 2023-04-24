@@ -11,25 +11,12 @@ public class ProfileController {
     public ProfileController(User currentUser) {
         this.currentUser = currentUser;
     }
-    public static Output checkPassword(String password) {
-        if (password.matches(".{1,5}")) {
-            return Output.SHORT_PASSWORD;
-        } else if (password.matches("[^A-Z]+")) {
-            return Output.WITHOUT_CAPITAL_CASE_LETTER;
-        } else if (password.matches("[^a-z]+")) {
-            return Output.WITHOUT_LOWER_CASE_LETTER;
-        } else if (password.matches("[^\\d]+")) {
-            return Output.WITHOUT_NUMBER;
-        } else if (password.matches("\\w+")) {
-            return Output.WITHOUT_SPECIAL_CHARACTER;
-        }
-        return null;
-    }
+
     public Output changePassword(String oldPassword, String newPassword) {
         if (oldPassword.equals(newPassword)) return Output.DUPLICATED_NEWPASSWORD;
-        Output output = checkPassword(newPassword);
+        Output output = RegisterAndLoginController.checkPassword(newPassword);
         if (output.equals(null)) {
-            currentUser.setPassword(newPassword);
+            currentUser.setPassword(RegisterAndLoginController.makeShaCode(newPassword));
             return Output.SUCCESSFUL_PASSWORD_CHANGEING;
         }
         else return output;
@@ -69,7 +56,7 @@ public class ProfileController {
         return currentUser.getScore();
     }
     public int displayRank() {
-        return DataBase.getRank(currentUser);
+        return DataBase.getInstance().getRank(currentUser);
     }
     public String displaySlogan() {
         return currentUser.getSlogan();

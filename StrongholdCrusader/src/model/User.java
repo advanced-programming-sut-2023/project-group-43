@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -20,6 +21,8 @@ public class User {
 
     private Storage storage;
     private Governance governance;
+
+    boolean isLoggedIn;
 
     private ArrayList<Trade> trades = new ArrayList<>();
 
@@ -129,5 +132,13 @@ public class User {
 
     public void setTrades(ArrayList<Trade> trades) {
         this.trades = trades;
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 }

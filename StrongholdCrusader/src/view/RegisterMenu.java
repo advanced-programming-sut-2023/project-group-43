@@ -1,12 +1,8 @@
 package view;
 
 import controller.RegisterAndLoginController;
-
-import model.DataBase;
-
 import enums.Output;
 import enums.menuEnums.RegisterAndLoginCommands;
-
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -14,6 +10,8 @@ import java.util.regex.Matcher;
 public class RegisterMenu extends Menu {
 
     private String randomPassword;
+    private String username, password, passwordConfirmation, email, slogan, nickname;
+    boolean hasSlogan;
 
     public void run() {
         Scanner scanner = Menu.getScanner();
@@ -24,12 +22,14 @@ public class RegisterMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
+            randomPassword = null;
             if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.CREATE_USER)) != null) {
                 output = createUser(matcher, null, null, null);
             } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.BACK) != null) {
                 return;
             } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.ENTER_LOGIN_MENU) != null) {
                 enterLoginMenu();
+                continue;
             }
             if (output != null) {
                 output = checkOutput(matcher, output);
@@ -39,7 +39,18 @@ public class RegisterMenu extends Menu {
     }
 
     private Output createUser(Matcher matcher, String randomPassword, String randomConfirmation, String randomSlogan) {
-        return parseMatcher(matcher, null, randomPassword, randomConfirmation, randomSlogan);
+        if (!parseMatcher(matcher, randomSlogan)) {
+            return null;
+        }
+        if (matcher.group("random") != null) {
+            password = "random";
+        }
+        if (randomPassword != null) {
+            password = randomPassword;
+            passwordConfirmation = randomConfirmation;
+        }
+        return RegisterAndLoginController.createUser(username,
+                password, passwordConfirmation, nickname, email, slogan, hasSlogan);
     }
 
     private Output createRandomPassword(Matcher matcher, Output output, String randomSlogan) {
@@ -51,18 +62,18 @@ public class RegisterMenu extends Menu {
     }
 
     private Output checkOutput(Matcher matcher, Output output) {
-        String slogan = null;
+        String randomSlogan = null;
         if (output.equals(Output.RANDOM_SLOGAN)) {
             System.out.print(output.getString());
-            slogan = RegisterAndLoginController.makeRandomSlogan();
-            System.out.println(slogan);
-            output = createUser(matcher, null, null, slogan);
+            randomSlogan = RegisterAndLoginController.makeRandomSlogan();
+            System.out.println(randomSlogan);
+            output = createUser(matcher, null, null, randomSlogan);
         }
         if (output.equals(Output.CONFIRM_PASSWORD)) {
-            output = createRandomPassword(matcher, output, slogan);
+            output = createRandomPassword(matcher, output, randomSlogan);
         }
         if (output.equals(Output.CHOOSE_PASSWORD_RECOVERY_QUESTION)) {
-            output = choosePasswordRecoveryQuestion(matcher, output, slogan);
+            output = choosePasswordRecoveryQuestion(matcher, output, randomSlogan);
         }
         return output;
     }
@@ -80,7 +91,32 @@ public class RegisterMenu extends Menu {
             output = null;
             if ((recoveryMatcher = RegisterAndLoginCommands.getMatcher
                     (input, RegisterAndLoginCommands.CHOOSE_PASSWORD_RECOVERY_QUESTION)) != null) {
-                output = parseMatcher(matcher, recoveryMatcher, randomPassword, null, randomSlogan);
+                parseMatcher(matcher, randomSlogan);
+                String answer = null, answerConfirmation = null, number = null;
+                Matcher allMatcher = RegisterAndLoginCommands.getWholeMatcher(matcher.group(), RegisterAndLoginCommands.GROUP);
+                while (allMatcher.find()) {
+                    switch (allMatcher.group("flag")) {
+                        case "q":
+                            if (number != null) return null;
+                            if ((number = allMatcher.group("group")) == null) number = allMatcher.group("group2");
+                            break;
+                        case "a":
+                            if (answer != null) return null;
+                            if ((answer = allMatcher.group("group")) == null) answer = allMatcher.group("group2");
+                            break;
+                        case "c":
+                            if (answerConfirmation != null) return null;
+                            if ((answerConfirmation = allMatcher.group("group")) == null)
+                                answerConfirmation = allMatcher.group("group2");
+                    }
+                }
+                if(!number.matches("\\d+"))
+                    return Output.INVALID_PASSWORD_RECOVERY_QUESTION;
+                int questionNumber = Integer.parseInt(recoveryMatcher.group("number"));
+                if (randomPassword != null) password = randomPassword;
+                if (randomSlogan != null) slogan = randomSlogan;
+                output = RegisterAndLoginController.choosePasswordRecoveryQuestion(username,
+                        password, nickname, email, slogan, questionNumber, answer, answerConfirmation);
             }
         }
         return output;
@@ -91,44 +127,40 @@ public class RegisterMenu extends Menu {
         loginMenu.run();
     }
 
-    private Output parseMatcher(Matcher matcher, Matcher recoveryMatcher, String randomPassword, String randomConfirmation, String randomSlogan) {
-        String username, password, passwordConfirmation, nickname, slogan;
-        if ((username = matcher.group("username")) == null)
-            username = matcher.group("username2");
-        if ((password = matcher.group("password")) == null)
-            password = matcher.group("password2");
-        if ((nickname = matcher.group("nickname")) == null)
-            nickname = matcher.group("nickname2");
-        if ((slogan = matcher.group("slogan")) == null)
-            slogan = matcher.group("slogan2");
-        String email = matcher.group("email");
+    private boolean parseMatcher(Matcher matcher, String randomSlogan) {
+        username = null;
+        password = null;
+        passwordConfirmation = null;
+        nickname = null;
+        slogan = null;
+        email = null;
+        hasSlogan = false;
+        if ((password = matcher.group("password")) == null) password = matcher.group("password2");
         if ((passwordConfirmation = matcher.group("passwordConfirmation")) == null)
             passwordConfirmation = matcher.group("passwordConfirmation2");
-        if (recoveryMatcher == null) {
-            boolean hasSlogan = matcher.group("sloganFlag") != null;
-            if (matcher.group("random") != null) {
-                password = "random";
-                passwordConfirmation = null;
+        if (matcher.group("random") != null) password = "random";
+        Matcher allMatcher = RegisterAndLoginCommands.getWholeMatcher(matcher.group(), RegisterAndLoginCommands.GROUP);
+        while (allMatcher.find()) {
+            switch (allMatcher.group("flag")) {
+                case "u":
+                    if (username != null) return false;
+                    if ((username = allMatcher.group("group")) == null) username = allMatcher.group("group2");
+                    break;
+                case "email":
+                    if (email != null) return false;
+                    if ((email = allMatcher.group("group")) == null) email = allMatcher.group("group2");
+                    break;
+                case "n":
+                    if (nickname != null) return false;
+                    if ((nickname = allMatcher.group("group")) == null) nickname = allMatcher.group("group2");
+                    break;
+                case "s":
+                    if (slogan != null) return false;
+                    if ((slogan = allMatcher.group("group")) == null) slogan = allMatcher.group("group2");
+                    hasSlogan = true;
             }
-            if (randomPassword != null) {
-                password = randomPassword;
-                passwordConfirmation = randomConfirmation;
-            }
-            if (randomSlogan != null)
-                slogan = randomSlogan;
-            return RegisterAndLoginController.createUser(username,
-                    password, passwordConfirmation, nickname, email, slogan, hasSlogan);
-        } else {
-            String answer, answerConfirmation;
-            if ((answer = recoveryMatcher.group("answer")) == null)
-                answer = recoveryMatcher.group("answer2");
-            if ((answerConfirmation = recoveryMatcher.group("answerConfirm")) == null)
-                answerConfirmation = recoveryMatcher.group("answerConfirm2");
-            int questionNumber = Integer.parseInt(recoveryMatcher.group("number"));
-            if (slogan == null) slogan = randomSlogan;
-            if (password == null) password = randomPassword;
-            return RegisterAndLoginController.choosePasswordRecoveryQuestion(username,
-                    password, nickname, email, slogan, questionNumber, answer, answerConfirmation);
         }
+        if (randomSlogan != null) slogan = randomSlogan;
+        return true;
     }
 }

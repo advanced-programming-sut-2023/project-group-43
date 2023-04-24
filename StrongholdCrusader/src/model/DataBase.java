@@ -1,15 +1,46 @@
 package model;
 
+
+import com.google.gson.*;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+
 
 public class DataBase {
 
     private static DataBase dataBase = null;
 
     ArrayList<User> users = new ArrayList<>();
-    User loggedInUser;
 
     private DataBase() {
+        loadData();
+    }
+
+    private void loadData() {
+        Reader reader;
+        try {
+            reader = new FileReader("data.json");
+        } catch (FileNotFoundException e) {
+            return;
+        }
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+        for (JsonElement jsonElement : jsonArray)
+            users.add(gson.fromJson(jsonElement, User.class));
+    }
+
+    public void saveData() {
+        Gson gson = new Gson();
+        String json = gson.toJson(users);
+        try {
+            FileWriter myWriter = new FileWriter("data.json");
+            myWriter.write(json);
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -20,18 +51,10 @@ public class DataBase {
         return dataBase;
     }
 
-
-    public User getLoggedInUser() {
-        return loggedInUser;
-    }
-
     public ArrayList<User> getUsers() {
         return users;
     }
 
-    public void setLoggedInUser(User loggedInUser) {
-        this.loggedInUser = loggedInUser;
-    }
 
     public void addUser(User user) {
         users.add(user);
@@ -51,6 +74,31 @@ public class DataBase {
             if(user.getEmail().toLowerCase().equals(email.toLowerCase())) {
                 return user;
             }
+        }
+        return null;
+    }
+    private class sortUsers implements Comparator<User> {
+        public int compare(User a, User b) {
+            if (a.getScore() != b.getScore()) return b.getScore() - a.getScore();
+            else return a.getScore() - b.getScore();
+        }
+    }
+    public ArrayList<User> scoreboard() {
+        ArrayList<User> usersScoreboard = new ArrayList<>();
+        usersScoreboard.sort(new sortUsers());
+        return usersScoreboard;
+    }
+    public int getRank(User user) {
+        for (int i = 0; i < scoreboard().size(); i++) {
+            if (scoreboard().get(i).equals(user))
+                return (i+1);
+        }
+        return -1;
+    }
+
+    public User findLoggedInUser() {
+        for (User user: users) {
+            if (user.isLoggedIn) return user;
         }
         return null;
     }

@@ -9,7 +9,7 @@ public enum StoreMenuCommands {
     BUY("buy"),
     SELL("sell")
     ;
-    private final String regex;
+    final String regex;
 
     StoreMenuCommands(String regex) {
         this.regex = regex;

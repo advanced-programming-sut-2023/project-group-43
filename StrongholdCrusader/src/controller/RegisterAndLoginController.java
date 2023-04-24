@@ -71,7 +71,7 @@ public class RegisterAndLoginController {
         return hexString.toString();
     }
 
-    private static Output checkPassword(String password) {
+    public static Output checkPassword(String password) {
         if (password.matches(".{1,5}")) {
             return Output.SHORT_PASSWORD;
         } else if (password.matches("[^A-Z]+")) {
@@ -87,12 +87,13 @@ public class RegisterAndLoginController {
     }
 
     public static Output loginUser(String username, String password, boolean isStayLoggedIn) {
+        if (username == null || password == null) return Output.EMPTY_FIELD;
         User user = DataBase.getInstance().getUserByUsername(username);
         if (user == null) return Output.NONEXISTENT_USERNAME;
         password = makeShaCode(password);
         if (!password.equals(user.getPassword()))
             return Output.INCORRECT_PASSWORD;
-        if (isStayLoggedIn) DataBase.getInstance().setLoggedInUser(user);
+        if (isStayLoggedIn) user.setLoggedIn(true);
         return Output.SUCCESSFUL_LOGIN;
     }
 

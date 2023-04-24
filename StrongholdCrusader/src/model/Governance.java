@@ -1,6 +1,5 @@
 package model;
 
-import enums.BuildingName;
 import model.buildings.Building;
 import model.units.Unit;
 
@@ -77,12 +76,4 @@ public class Governance {
         buildings.add(building);
     }
 
-    public Building findBuilding(BuildingName name) {
-        for(Building building: buildings) {
-            if(building.getName().equals(name)) {
-                return building;
-            }
-        }
-        return null;
-    }
 }
