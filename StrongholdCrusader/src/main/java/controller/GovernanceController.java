@@ -13,7 +13,7 @@ public class GovernanceController {
     }
 
     public String showPopularityFactors() {
-
+        return null;
     }
 
     public String showPopularity() {return null;}
