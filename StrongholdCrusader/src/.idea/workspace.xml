@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="aida:add WaterArea enum">
+    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="aida:governance menu completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/GovernanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GovernanceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums/Output.java" beforeDir="false" afterPath="$PROJECT_DIR$/enums/Output.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums/menuEnums/GameMenuCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/enums/menuEnums/GameMenuCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GameMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/GovernanceMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GovernanceMenu.java" afterDir="false" />
     </list>
@@ -46,7 +45,7 @@
       <option name="presentableId" value="Default" />
       <updated>1682217468728</updated>
       <workItem from="1682217469843" duration="23000" />
-      <workItem from="1682217508479" duration="9481000" />
+      <workItem from="1682217508479" duration="11132000" />
     </task>
     <task id="LOCAL-00001" summary="aida:edit matchers and add some function to game menu and fix some main problems in MAIN root">
       <created>1682219497647</created>
@@ -76,7 +75,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682261616497</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="aida:governance menu completed">
+      <created>1682262987650</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682262987650</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -98,6 +104,7 @@
     <MESSAGE value="aida:add store menu commands" />
     <MESSAGE value="aida:complete functions with matcher in game menu" />
     <MESSAGE value="aida:add WaterArea enum" />
-    <option name="LAST_COMMIT_MESSAGE" value="aida:add WaterArea enum" />
+    <MESSAGE value="aida:governance menu completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="aida:governance menu completed" />
   </component>
 </project>

@@ -77,27 +77,4 @@ public class GameController {
 
     public void clearGame() {}
 
-    public void enterStoreMenu() {
-        StoreController storeController = new StoreController(game);
-        StoreMenu storeMenu = new StoreMenu(storeController);
-        storeMenu.run();
-    }
-
-    public void enterTradeMenu() {
-        TradeController tradeController = new TradeController(game);
-        TradeMenu tradeMenu = new TradeMenu(tradeController);
-        tradeMenu.run();
-    }
-
-    public void enterGovernanceMenu() {
-        GovernanceController governanceController = new GovernanceController(game);
-        GovernanceMenu governanceMenu = new GovernanceMenu(governanceController);
-        governanceMenu.run();
-    }
-
-    public void enterMapMenu() {
-        MapController mapController = new MapController(game);
-        MapMenu mapMenu = new MapMenu(mapController);
-        mapMenu.run();
-    }
 }

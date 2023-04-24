@@ -1,6 +1,7 @@
 package controller;
 
 import java.lang.String;
+
 import model.*;
 
 public class GovernanceController {
@@ -11,7 +12,9 @@ public class GovernanceController {
         this.game = game;
     }
 
-    public String showPopularityFactors() { return null;}
+    public String showPopularityFactors() {
+
+    }
 
     public String showPopularity() {return null;}
 

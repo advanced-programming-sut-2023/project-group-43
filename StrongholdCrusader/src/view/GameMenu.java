@@ -32,7 +32,11 @@ public class GameMenu extends Menu{
             input = scanner.nextLine();
             output = null;
             //enter menu part
-            if(GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null) {
+            if(gameController.isGameEnded()){
+                System.out.println("The End!");
+                return;
+            }
+            else if(GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null) {
                 enterChangeEnvironmentMenu();
             }
             else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {

@@ -15,7 +15,7 @@ public class GovernanceMenu extends Menu{
         this.governanceController = governanceController;
     }
 
-    public void run(Scanner scanner) {
+    public void run() {
         String input;
         Matcher matcher;
         System.out.println("governance menu:");
