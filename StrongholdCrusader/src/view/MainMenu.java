@@ -15,10 +15,10 @@ public class MainMenu extends Menu{
         this.mainController = mainController;
     }
 
-    public void run(){
+    public void run(Scanner scanner){
+        String input = scanner.nextLine();
         System.out.println("main menu:");
         while (true){
-            input = scanner.nextLine();
             if(input.matches("back"))
                 return;
             else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_PROFILE_MENU) != null) {
