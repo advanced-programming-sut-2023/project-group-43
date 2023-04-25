@@ -17,35 +17,35 @@ public class GameController {
         this.game = game;
     }
 
-    public String selectBuilding(int x, int y) {
-        return Output.SELECT_BUILDING.getString();
+    public Output selectBuilding(int x, int y) {
+        return Output.SELECT_BUILDING;
     }
 
-    public String createUnit(String type, int count) {return null;}
+    public Output createUnit(String type, int count) {return null;}
 
-    public String repairCastle() {return null;}
+    public Output repairCastle() {return null;}
 
-    public String selectUnit(int x, int y) {return null;}
+    public Output selectUnit(int x, int y) {return null;}
 
-    public String moveUnit(int x, int y) {return null;}
+    public Output moveUnit(int x, int y) {return null;}
 
-    public String patrolUnit(int x1, int y1, int x2, int y2) {return null;}
+    public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
 
-    public String setUnitState(int x, int y, String state) {return null;}
+    public Output setUnitState(int x, int y, String state) {return null;}
 
-    public String attack(int x, int y ,String item) {return null;}
+    public Output attack(int x, int y ,String item) {return null;}
 
-    private String attackToEnemy(int x, int y) {return null;}
+    private Output attackToEnemy(int x, int y) {return null;}
 
-    private String aearialAttack(int x, int y) {return null;}
+    private Output aearialAttack(int x, int y) {return null;}
 
-    public String pourOil(String direction) {return null;}
+    public Output pourOil(String direction) {return null;}
 
-    public String digTunnel(int x, int y) {return null;}
+    public Output digTunnel(int x, int y) {return null;}
 
-    public String buildEquipment (String equipmentName) {return null;}
+    public Output buildEquipment (String equipmentName) {return null;}
 
-    public String disbandUnit() {return null;}
+    public Output disbandUnit() {return null;}
 
     public void applyChanges() {}
 
