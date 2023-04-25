@@ -7,8 +7,6 @@ import model.*;
 public class Troop extends Unit{
     public Troop(User owner, UnitsEnum name, TroopType troopType) {
         super(owner, name);
-        this.canHide = troopType.canHide();
-        this.damage = troopType.getDamage();
     }
 
     private TroopType troopType;
