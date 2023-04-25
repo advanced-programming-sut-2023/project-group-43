@@ -27,7 +27,7 @@ public class ChangeEnvironmentController {
         this.currentUser = currentUser;
     }
 
-    public Output generateMap(ArrayList<String> usernames, int row, int column) {
+    public Output generateMap(ArrayList<String> usernames, int row, int column, int turns) {
         game.addPlayer(currentUser);
         for (String username : usernames) {
             User user = DataBase.getInstance().getUserByUsername(username);
@@ -36,6 +36,7 @@ public class ChangeEnvironmentController {
         }
         Cell[][] cells = new Cell[row][column];
         game.setCells(cells);
+        game.setTurns(turns);
         return Output.SUCCESSFUL_MAP_GENERATION;
     }
 
@@ -151,6 +152,20 @@ public class ChangeEnvironmentController {
         GameController gameController = new GameController(game);
         GameMenu gameMenu = new GameMenu(gameController);
         gameMenu.run();
+    }
+
+    public String nextPerson() {
+        User user = null;
+        boolean isNextPlayerFound = false;
+        for (User player: game.getPlayers()) {
+            if (isNextPlayerFound)
+                game.setCurrentPlayer(player);
+            if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
+                isNextPlayerFound = true;
+            }
+        }
+        if (user == null) return "everyone has changed map please start game";
+        return currentUser.getUsername() + " can change map";
     }
 
 }
