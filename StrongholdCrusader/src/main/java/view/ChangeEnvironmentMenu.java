@@ -21,16 +21,8 @@ public class ChangeEnvironmentMenu extends Menu {
     }
 
     public void run() {
+        getReady();
         Scanner scanner = Menu.getScanner();
-        System.out.println("Enter the rows and columns of your desire battle ground : ");
-        int row = scanner.nextInt();
-        int column = scanner.nextInt();
-        System.out.println("Enter players username : ");
-        ArrayList<String> playersArraylist = new ArrayList<>();
-        while (scanner.hasNext()) {
-            playersArraylist.add(scanner.next());
-        }
-        System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column).getString());
         String input;
         Output output;
         Matcher matcher;
@@ -135,5 +127,22 @@ public class ChangeEnvironmentMenu extends Menu {
         y = Validations.getInfo("y", matcher.group());
         type = Validations.getInfo("t", matcher.group());
         return x != null && y != null && type != null && x.matches("\\d+") && y.matches("\\d+");
+    }
+
+    private void getReady() {
+        String input;
+        Scanner scanner = Menu.getScanner();
+        System.out.println("change environment menu:");
+        System.out.println("Enter the rows and columns of your desire battle ground : ");
+        int row = scanner.nextInt();
+        int column = scanner.nextInt();
+        System.out.println("Enter players username:");
+        ArrayList<String> playersArraylist = new ArrayList<>();
+        input = scanner.nextLine();
+        while (!input.equals("end")) {
+            playersArraylist.add(scanner.next());
+            input = scanner.nextLine();
+        }
+        System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column).getString());
     }
 }
