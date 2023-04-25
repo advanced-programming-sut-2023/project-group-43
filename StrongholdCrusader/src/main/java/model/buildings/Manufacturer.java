@@ -8,7 +8,7 @@ public class Manufacturer extends Producer {
     private final int productionRate;
 
     public Manufacturer(String name, User owner, Materials producedMaterials, int productionRate) {
-        super(name, owner, producedMaterials, productionRate);
+        super(name, owner, producedMaterials, productionRate, capacity);
         this.producedMaterials = producedMaterials;
         this.productionRate = productionRate;
     }

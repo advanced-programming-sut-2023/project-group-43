@@ -15,6 +15,7 @@ public enum Materials {
     BREAD("food" , "bread" , 0 , 0),
     HOP("food" , "hop"  ,0 ,0),
     FLOUR("food" , "flour" , 0 ,0),
+    BEER("food","beer",0,0),
     //weapons
     BOW("weapon" , "bow" , 0 ,0),
     SWORD("weapon" , "sword" , 0 ,0),
@@ -27,6 +28,10 @@ public enum Materials {
     //tools
     LADDER("tool" , "ladder" ,0,0),
     ARMOUR("tool" , "armour" , 0 ,0),
+    //else
+    HORSE("animal","horse",0,0),
+    PEASANT("human","peasant",0,0),
+    UNIT("human","unit",0,0),
 
     ;
     private String type;

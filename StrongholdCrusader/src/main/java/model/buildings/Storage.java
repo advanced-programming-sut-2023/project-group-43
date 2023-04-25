@@ -10,7 +10,7 @@ public class Storage extends Building{
     HashMap<String , Integer>stockpile = new HashMap<String, Integer>();
     HashMap<String , Integer>foodStockpile = new HashMap<String , Integer>();
     HashMap<String , Integer>armoury = new HashMap<String , Integer>();
-    public Storage(String name, User owner, BuildingEnum buildingEnum) {
+    public Storage(String name, User owner) {
         super(name, owner);
     }
 
