@@ -6,17 +6,20 @@ import java.util.ArrayList;
 
 public class Converter extends Producer {
 
-    private final Materials consumeMaterials;
+    private ArrayList<Materials> consumeMaterials = new ArrayList<>();
 
-    public Converter(String name, User owner, Materials producedMaterials,Materials consumeMaterials, int productionRate, int capacity) {
-        super(name, owner, producedMaterials, productionRate, capacity);
-        this.consumeMaterials = consumeMaterials;
+    public Converter(String name, User owner , int productionRate, int capacity) {
+        super(name, owner, productionRate, capacity);
     }
 
     public void produceMaterial() {};
     public void consumeResource() {};
 
-    public Materials getConsumeMaterials() {
+    public ArrayList<Materials> getConsumeMaterials() {
         return consumeMaterials;
+    }
+
+    public void addConsumeMaterial(Materials material){
+        consumeMaterials.add(material);
     }
 }

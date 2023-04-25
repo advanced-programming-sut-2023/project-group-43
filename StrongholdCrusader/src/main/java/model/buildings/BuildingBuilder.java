@@ -4,6 +4,8 @@ import enums.environmentEnums.Materials;
 import model.User;
 public class BuildingBuilder {
 
+    public static Converter converter;
+    public static Manufacturer manufacturer;
     public static Building BuildingBuilder(String name , User owner){
         //TODO : we should declare people capacity with details
         switch (name){
@@ -29,43 +31,86 @@ public class BuildingBuilder {
                 case "oil smelter":
                 return new Stronghold(name,owner);
             case "wheat farm":
-                return new Manufacturer(name,owner, Materials.WHEAT ,10);
+                manufacturer = new Manufacturer(name,owner,10,10);
+                manufacturer.addProducedMaterial(Materials.WHEAT);
+                return manufacturer;
             case "hop farm":
-                return new Manufacturer(name,owner,Materials.HOP,10);
+                manufacturer = new Manufacturer(name,owner,11,10);
+                manufacturer.addProducedMaterial(Materials.HOP);
+                return manufacturer;
             case "hunting post":
-                return new Manufacturer(name,owner,Materials.MEAT , 10);
+                manufacturer = new Manufacturer(name,owner,12 , 10);
+                manufacturer.addProducedMaterial(Materials.MEAT);
+                return manufacturer;
             case "apple garden":
-                return new Manufacturer(name,owner,Materials.APPLE,10);
+                manufacturer = new Manufacturer(name,owner,13,10);
+                manufacturer.addProducedMaterial(Materials.APPLE);
+                return manufacturer;
             case "stable":
-                return new Manufacturer(name,owner,Materials.HORSE,10);
+                manufacturer = new Manufacturer(name,owner,14,10);
+                manufacturer.addProducedMaterial(Materials.HORSE);
+                return manufacturer;
             case "howel":
-                return new Manufacturer(name,owner,Materials.PEASANT,10);
+                manufacturer = new Manufacturer(name,owner,15,10);
+                manufacturer.addProducedMaterial(Materials.PEASANT);
+                return manufacturer;
             case "wood cutter":
-                return new Manufacturer(name,owner,Materials.WOOD,10);
+                manufacturer = new Manufacturer(name,owner,16,10);
+                manufacturer.addProducedMaterial(Materials.WOOD);
+                return manufacturer;
             case "pitch rig":
-                return new Manufacturer(name,owner,Materials.TAR,10);
+                manufacturer = new Manufacturer(name,owner,17,10);
+                manufacturer.addProducedMaterial(Materials.TAR);
+                return manufacturer;
             case "quarry":
-                return new Manufacturer(name,owner,Materials.STONE,10);
+                manufacturer = new Manufacturer(name,owner,18,10);
+                manufacturer.addProducedMaterial(Materials.STONE);
+                return manufacturer;
             case "iron mine":
-                return new Manufacturer(name,owner,Materials.IRON,10);
+                manufacturer = new Manufacturer(name,owner,19,10);
+                manufacturer.addProducedMaterial(Materials.IRON);
+                return manufacturer;
             case "barrack":
-                return new Converter(name,owner,Materials.PEASANT,Materials.UNIT,10,10);
+                converter = new Converter(name,owner,10,10);
+                converter.addConsumeMaterial(Materials.PEASANT);
+                converter.addProducedMaterial(Materials.UNIT);
+                return converter;
             case "bakery":
-                return new Converter(name,owner,Materials.WHEAT,Materials.BREAD,10,10);
-            case "dairy products":
-                return new Building(name,owner);
+                converter = new Converter(name,owner,11,10);
+                converter.addConsumeMaterial(Materials.FLOUR);
+                converter.addProducedMaterial(Materials.BREAD);
+                return converter;
             case "beer brewing":
-                return new Converter(name,owner,Materials.HOP,Materials.BEER,10,10);
+                converter =  new Converter(name,owner,12,10);
+                converter.addConsumeMaterial(Materials.HOP);
+                converter.addProducedMaterial(Materials.BEER);
+                return converter;
             case "mill":
-                return new Converter(name,owner,Materials.WHEAT,Materials.FLOUR,10,10);
+                converter = new Converter(name,owner,13,10);
+                converter.addConsumeMaterial(Materials.WHEAT);
+                converter.addProducedMaterial(Materials.FLOUR);
+                return converter;
             case "poleturner":
-                return new Converter(name,owner,Materials.IRON,Materials.SPEAR,10,10);
+                converter = new Converter(name,owner,14,10);
+                converter.addConsumeMaterial(Materials.WOOD);
+                converter.addProducedMaterial(Materials.SPEAR);
+                return converter;
             case "fletcher":
-                return new Converter(name,owner,Materials.WOOD,Materials.BOW,10,10);
+                converter = new Converter(name,owner,15,10);
+                converter.addConsumeMaterial(Materials.WOOD);
+                converter.addProducedMaterial(Materials.BOW);
+                return converter;
             case "blacksmith":
-                return new Converter(name,owner,Materials.IRON,Materials.SWORD,10,10);
+                converter =  new Converter(name,owner,16,10);
+                converter.addConsumeMaterial(Materials.IRON);
+                converter.addProducedMaterial(Materials.SWORD);
+                converter.addProducedMaterial(Materials.CUDGEL);
+                return converter;
             case "armourer":
-                return new Converter(name,owner,Materials.IRON,Materials.ARMOUR,10,10);
+                converter = new Converter(name,owner,17,10);
+                converter.addProducedMaterial(Materials.IRON);
+                converter.addProducedMaterial(Materials.ARMOUR);
+                return converter;
             case "food stockpile":
             case "stockpile":
             case "armoury":
@@ -78,6 +123,7 @@ public class BuildingBuilder {
                 return new PopularityBooster(name,owner,12);
             case "market":
                 return new Store(name,owner);
+            case "dairy products":
             case "engineer guild":
             case "mercenary post":
             case "ox tether":

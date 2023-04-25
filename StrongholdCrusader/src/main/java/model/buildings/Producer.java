@@ -11,11 +11,14 @@ public class Producer extends Building{
     private final int productionRate;
     private final int capacity;
 
-    public Producer(String name, User owner, Materials producedMaterials, int productionRate, int capacity) {
+    public Producer(String name, User owner, int productionRate, int capacity) {
         super(name, owner);
-        this.producedMaterials = producedMaterials;
         this.productionRate = productionRate;
         this.capacity = capacity;
+    }
+
+    public void addProducedMaterial(Materials material){
+        producedMaterials.add(material);
     }
 
     public ArrayList<Materials> getProducedMaterials() {
