@@ -17,10 +17,16 @@ public enum Materials {
     FLOUR("food" , "flour" , 0 ,0),
     //weapons
     BOW("weapon" , "bow" , 0 ,0),
-    ARMOR("weapon" , "armor" , 0 ,0),
     SWORD("weapon" , "sword" , 0 ,0),
     SPEAR("weapon" , "spear" , 0 ,0),
-    LADDER("weapon" , "ladder" ,0,0)
+    CUDGEL("weapon" ,"cudgel",0,0),
+    GRENADE("weapon","grenade",0,0),
+    HOOK("weapon","hook",0,0),
+    TORCH("weapon","torch",0,0),
+    GRAVEL("weapon","gravel",0,0),
+    //tools
+    LADDER("tool" , "ladder" ,0,0),
+    ARMOUR("tool" , "armour" , 0 ,0),
 
     ;
     private String type;
@@ -33,6 +39,22 @@ public enum Materials {
         this.name = name;
         this.initialCost = initialCost;
         this.secondaryCost = secondaryCost;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getInitialCost() {
+        return initialCost;
+    }
+
+    public int getSecondaryCost() {
+        return secondaryCost;
     }
 
     public Materials getMaterialByName(String name){
