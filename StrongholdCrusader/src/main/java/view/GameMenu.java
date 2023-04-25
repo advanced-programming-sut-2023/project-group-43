@@ -4,25 +4,37 @@ import controller.*;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.GameMenuCommands;
-import enums.menuEnums.GovernanceMenuCommands;
-import model.DataBase;
 
-import javax.print.DocFlavor;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Menu{
 
     private GameController gameController;
-    private ChangeEnvironmentController changeEnvironmentController;
+    private MapController mapController;
     private GovernanceController governanceController;
     private TradeController tradeController;
     private StoreController storeController;
 
+    private int turns, numberOfPlayers;
+
     private String x, y;
 
     public GameMenu(GameController gameController) {
+
         this.gameController = gameController;
+        mapController = new MapController(gameController.getGame());
+        storeController = new StoreController(gameController.getGame());
+        governanceController = new GovernanceController(gameController.getGame());
+        tradeController = new TradeController(gameController.getGame());
+    }
+
+    public void setTurns(int turns) {
+        this.turns = turns;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public void run() {
@@ -31,77 +43,24 @@ public class GameMenu extends Menu{
         Output output;
         Matcher matcher;
         System.out.println("game menu:");
-        while (true){
-            input = scanner.nextLine();
-            output = null;
-            //enter menu part
+        while (turns > 0){
+            for (int i = 0; i < numberOfPlayers; i++) {
+                onePlayerTurn();
+                gameController.goToNextPerson();
+            }
+            gameController.applyChanges();
             if(gameController.isGameEnded()){
                 System.out.println("The End!");
-                return;
+                break;
             }
-            else if(GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null) {
-                enterChangeEnvironmentMenu();
-                continue;
-            }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {
-                enterStoreMenu();
-                continue;
-            }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
-                enterTradeMenu();
-                continue;
-            }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_GOVERNANCE_MENU)!= null) {
-                enterGovernmentMenu();
-                continue;
-            }
-            //game
-            if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.SELECT_BUILDING))!= null) {
-                output = selectBuilding(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.CREATE_UNIT))!= null) {
-                output = createUnit(matcher);
-            }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR_CASTLE)!= null) {
-                output = gameController.repairCastle();
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT))!= null) {
-                output = selectUnit(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.MOVE_UNIT))!= null) {
-                output = moveUnit(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.SET_UNITS_STATE))!= null) {
-                output = setUnitState(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.ATTACK))!= null) {
-                output = attack(matcher);
-            }
-            else if ((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.ATTACK_ENEMY))!= null) {
-                output = attackEnemy(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.POUR_OIL))!= null) {
-                output = pourOil(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.DIG_TUNNEL))!= null) {
-                output = digTunnel(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.BUILD_EQUIPMENT))!= null) {
-                output = buildEquipment(matcher);
-            }
-            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.DISBAND_UNIT))!= null) {
-                output = disbandUnit(matcher);
-            }
-            else if ((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.PATROL_UNIT)) != null) {
-                System.out.println(patrolUnit(matcher));
-            }if (output == null) System.out.println("Invalid Command!");
-            else System.out.println(output.getString());
+            turns--;
         }
+        System.out.println(gameController.showGameResult());
     }
 
-    public void enterChangeEnvironmentMenu() {
-        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu(changeEnvironmentController);
-        changeEnvironmentMenu.run();
+    public void enterMapMenu() {
+        MapMenu mapMenu = new MapMenu(mapController);
+        mapMenu.run();
     }
     public void enterStoreMenu() {
         StoreMenu storeMenu = new StoreMenu(storeController);
@@ -192,6 +151,76 @@ public class GameMenu extends Menu{
         if (x == null || y == null) return false;
         if (x.matches("\\d+") && y.matches("\\d+")) return true;
         return false;
+    }
+
+    private void onePlayerTurn() {
+        System.out.println(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
+        Scanner scanner = Menu.getScanner();
+        String input = "";
+        Output output;
+        Matcher matcher;
+        while (!input.equals("next person")) {
+            input = scanner.nextLine();
+            output = null;
+            //enter menu part
+            if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {
+                enterStoreMenu();
+                continue;
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
+                enterTradeMenu();
+                continue;
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_MAP_MENU)!= null) {
+                enterMapMenu();
+                continue;
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_GOVERNANCE_MENU)!= null) {
+                enterGovernmentMenu();
+                continue;
+            }
+            //game
+            if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.SELECT_BUILDING))!= null) {
+                output = selectBuilding(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.CREATE_UNIT))!= null) {
+                output = createUnit(matcher);
+            }
+            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.REPAIR_CASTLE)!= null) {
+                output = gameController.repairCastle();
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT))!= null) {
+                output = selectUnit(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.MOVE_UNIT))!= null) {
+                output = moveUnit(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.SET_UNITS_STATE))!= null) {
+                output = setUnitState(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.ATTACK))!= null) {
+                output = attack(matcher);
+            }
+            else if ((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.ATTACK_ENEMY))!= null) {
+                output = attackEnemy(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.POUR_OIL))!= null) {
+                output = pourOil(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.DIG_TUNNEL))!= null) {
+                output = digTunnel(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.BUILD_EQUIPMENT))!= null) {
+                output = buildEquipment(matcher);
+            }
+            else if((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.DISBAND_UNIT))!= null) {
+                output = disbandUnit(matcher);
+            }
+            else if ((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.PATROL_UNIT)) != null) {
+                System.out.println(patrolUnit(matcher));
+            }if (output == null) System.out.println("Invalid Command!");
+            else System.out.println(output.getString());
+        }
     }
 
 

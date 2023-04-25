@@ -4,7 +4,6 @@ import controller.ChangeEnvironmentController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
-import enums.menuEnums.RegisterAndLoginCommands;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -43,7 +42,11 @@ public class ChangeEnvironmentMenu extends Menu {
                 output = dropBuilding(matcher);
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_UNIT)) != null) {
                 output = dropUnit(matcher);
-            } else if (input.matches("back")) {
+            } else if (input.matches("next")) {
+                System.out.println(changeEnvironmentController.goToNextPerson());
+                continue;
+            }
+            else if (input.matches("back")) {
                 System.out.println("main menu:");
                 return;
             } else if (input.matches("start game")) {
@@ -143,6 +146,13 @@ public class ChangeEnvironmentMenu extends Menu {
             playersArraylist.add(scanner.next());
             input = scanner.nextLine();
         }
-        System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column).getString());
+        System.out.println("number of turns:");
+        input = scanner.nextLine();
+        while (!input.matches("\\d+")) {
+            System.out.println("wrong input");
+            input = scanner.nextLine();
+        }
+        int turns = Integer.parseInt(input);
+        System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns).getString());
     }
 }

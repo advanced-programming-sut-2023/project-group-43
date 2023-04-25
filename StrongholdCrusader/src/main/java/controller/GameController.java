@@ -17,6 +17,10 @@ public class GameController {
         this.game = game;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public Output selectBuilding(int x, int y) {
         return Output.SELECT_BUILDING;
     }
@@ -76,5 +80,18 @@ public class GameController {
     private void updateScores() {}
 
     public void clearGame() {}
+
+    public void goToNextPerson() {
+        User user = null;
+        boolean isNextPlayerFound = false;
+        for (User player: game.getPlayers()) {
+            if (isNextPlayerFound)
+                game.setCurrentPlayer(player);
+            if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
+                isNextPlayerFound = true;
+            }
+        }
+        if (user == null) game.setCurrentPlayer(game.getPlayers().get(0));
+    }
 
 }
