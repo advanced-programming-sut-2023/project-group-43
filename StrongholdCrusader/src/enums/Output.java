@@ -43,8 +43,7 @@ public enum Output {
     DUPLICATED_NEWPASSWORD("warning : you entered your previous password,enter a new password!"),
     SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully"),
     DUPLICATE_SLOGAN("warning : duplicate slogan!"),
-    SLOGAN_REMOVED_SUCCESSFULLY("slogan removed successfully")
-    WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
+    SLOGAN_REMOVED_SUCCESSFULLY("slogan removed successfully"),
     //
     SELECT_BUILDING("The building successfully selected"),
     CREATE_UNIT("The unit successfully created"),

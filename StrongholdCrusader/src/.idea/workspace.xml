@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="aida:governance menu completed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/GovernanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GovernanceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/GovernanceMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GovernanceMenu.java" afterDir="false" />
-    </list>
+    <list default="true" id="9fbfa138-a8d3-4f51-aca8-c17d55272bae" name="Changes" comment="merge completed" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/asal" />
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="asal" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -30,7 +32,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "G:/AP/Project/StrongholdCrusader/src",
+    "last_opened_file_path": "G:/AP/Project/StrongholdCrusader",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0"
@@ -82,7 +85,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682262987650</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="aida:last changes">
+      <created>1682332762326</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1682332762326</updated>
+    </task>
+    <task id="LOCAL-00007" summary="merge completed">
+      <created>1682333913546</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1682333913546</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -93,7 +110,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="aida" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -105,6 +134,9 @@
     <MESSAGE value="aida:complete functions with matcher in game menu" />
     <MESSAGE value="aida:add WaterArea enum" />
     <MESSAGE value="aida:governance menu completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="aida:governance menu completed" />
+    <MESSAGE value="aida:pull asal branch to test_aida" />
+    <MESSAGE value="aida:last changes" />
+    <MESSAGE value="merge completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge completed" />
   </component>
 </project>

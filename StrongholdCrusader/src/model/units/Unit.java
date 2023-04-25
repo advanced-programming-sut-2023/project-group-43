@@ -8,32 +8,31 @@ import model.User;
 public class Unit {
     private User owner;
     private UnitsEnum unit;
-    private String type;
     private Cell cell;
+    private String name;
     private int hitPoint;
     private int damage;
     private int defense;
     private int speed;
     private int cost;
-    private boolean hasLadder;
 
     private UnitState state;
 
-    public Unit(User owner, UnitsEnum unit) {
+    public Unit(User owner,String name) {
+        unit = unit.getUnitStructureByName(name);
         this.owner = owner;
-        this.unit = unit;
-        this.hitPoint = name.getHitPoint();
-        this.defense = name.getDefense();
-        this.speed = name.getSpeed();
-        this.cost = name.getCost();
-        this.hasLadder = name.HasLadder();
+        this.name = name;
+        this.hitPoint = unit.getHitPoint();
+        this.defense = unit.getDefense();
+        this.speed = unit.getSpeed();
+        this.cost = unit.getCost();
     }
 
     public User getOwner() {
         return owner;
     }
 
-    public UnitsEnum getName() {
+    public String getName() {
         return name;
     }
 
@@ -71,11 +70,6 @@ public class Unit {
 
     public int getCost() {
         return cost;
-    }
-
-
-    public boolean HasLadder() {
-        return hasLadder;
     }
 
     public UnitState getState() {

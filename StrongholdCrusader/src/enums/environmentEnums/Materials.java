@@ -17,10 +17,11 @@ public enum Materials {
     FLOUR("food" , "flour" , 0 ,0),
     //weapons
     BOW("weapon" , "bow" , 0 ,0),
-    ARMOR("weapon" , "armor" , 0 ,0),
     SWORD("weapon" , "sword" , 0 ,0),
     SPEAR("weapon" , "spear" , 0 ,0),
-    LADDER("weapon" , "ladder" ,0,0)
+    //tools
+    LADDER("tool" , "ladder" ,0,0),
+    ARMOR("tool" , "armor" , 0 ,0),
 
     ;
     private String type;
