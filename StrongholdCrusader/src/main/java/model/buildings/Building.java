@@ -1,5 +1,6 @@
 package model.buildings;
 import enums.BuildingEnums.BuildingEnum;
+import model.Cell;
 import model.User;
 import model.units.Unit;
 
@@ -13,6 +14,8 @@ public class Building {
     private final int gold;
     private final int hp;
     private final int ladderlans;
+
+    private Cell cell;
 
     //building
     private ArrayList<Unit> units = new ArrayList<>();
@@ -64,6 +67,14 @@ public class Building {
 
     public int getLadderlans() {
         return ladderlans;
+    }
+
+    public Cell getCell() {
+        return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 }
 

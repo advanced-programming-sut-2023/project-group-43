@@ -4,7 +4,7 @@ import enums.unitEnums.TroopType;
 import model.User;
 
 public class UnitsBuilder {
-    public Unit UnitsBuilder(String name, User owner) {
+    public static Unit UnitsBuilder(String name, User owner) {
         switch (name) {
             case "archer":
                 return new Armed(owner, name, TroopType.ARCHER);

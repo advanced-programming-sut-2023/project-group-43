@@ -4,7 +4,7 @@ import model.User;
 
 public class BuildingBuilder {
 
-    public Building BuildingBuilder(String name , User owner){
+    public static Building BuildingBuilder(String name , User owner){
         //TODO : we should declare people capacity with details
         switch (name){
             case "small stone gatehouse":

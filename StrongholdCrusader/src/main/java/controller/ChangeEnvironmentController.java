@@ -4,10 +4,14 @@ import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
-import enums.unitEnums.UnitsEnum;
-import model.*;
+import model.Cell;
+import model.DataBase;
+import model.Game;
+import model.User;
 import model.buildings.Building;
+import model.buildings.BuildingBuilder;
 import model.units.Unit;
+import model.units.UnitsBuilder;
 import view.GameMenu;
 
 import java.util.ArrayList;
@@ -25,7 +29,7 @@ public class ChangeEnvironmentController {
 
     public Output generateMap(ArrayList<String> usernames, int row, int column) {
         game.addPlayer(currentUser);
-        for (String username: usernames) {
+        for (String username : usernames) {
             User user = DataBase.getInstance().getUserByUsername(username);
             if (user == null) return Output.INVALID_USERNAME;
             game.addPlayer(user);
@@ -34,7 +38,10 @@ public class ChangeEnvironmentController {
         game.setCells(cells);
         return Output.SUCCESSFUL_MAP_GENERATION;
     }
-    public Output chooseMap(int numberOfPlayers, int size) {return null;}
+
+    public Output chooseMap(int numberOfPlayers, int size) {
+        return null;
+    }
 
     public Output setTexture(int x, int y, String texture) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
@@ -42,13 +49,13 @@ public class ChangeEnvironmentController {
         if (game.getCells()[x - 1][y - 1].getBuilding() != null)
             return Output.BUILDING_IN_THIS_AREA;
         Texture texture1 = Texture.GROUND;
-        for (Texture texture2: Texture.values()) {
+        for (Texture texture2 : Texture.values()) {
             if (texture2.equals(texture)) {
                 texture1 = texture2;
                 break;
             }
         }
-        game.getCells()[x-1][y-1].setTexture(texture1);
+        game.getCells()[x - 1][y - 1].setTexture(texture1);
         return Output.SET_TEXTURE;
     }
 
@@ -56,7 +63,7 @@ public class ChangeEnvironmentController {
         if (x1 <= 0 || y1 <= 0 || x2 <= 0 || y2 <= 0 || x1 > x2 || y1 < y2)
             return Output.WRONG_COORDINATES;
         Texture texture1 = Texture.GROUND;
-        for (Texture texture2: Texture.values()) {
+        for (Texture texture2 : Texture.values()) {
             if (texture2.equals(texture)) {
                 texture1 = texture2;
                 break;
@@ -89,8 +96,8 @@ public class ChangeEnvironmentController {
     public Output dropRock(int x, int y, String direction) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
-        game.getCells()[x- 1][y - 1].setHasRock(true);
-        game.getCells()[x- 1][y - 1].setRockDirection(direction);
+        game.getCells()[x - 1][y - 1].setHasRock(true);
+        game.getCells()[x - 1][y - 1].setRockDirection(direction);
         return Output.DROP_ROCK;
     }
 
@@ -114,17 +121,11 @@ public class ChangeEnvironmentController {
     public Output dropBuilding(int x, int y, String type) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
-        String buildingName = null;
-        for (BuildingEnum buildingEnum : BuildingEnum.values()) {
-            if (buildingEnum.getName().equals(type)) {
-                buildingName = buildingEnum.getName();
-                break;
-            }
-        }
-        if (buildingName != null) {
-            Building building = new Building(buildingName, currentUser);
-            game.getCells()[x - 1][y - 1].setBuilding(building);
-            return Output.BUILDING_DROPPED_SUCCESSFULLY;
+        boolean found = (UnitsBuilder.UnitsBuilder(type, game.getCurrentPlayer()) != null);
+        if (found) {
+            Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
+            building.setCell(game.getCells()[x - 1][y - 1]);
+            game.getCurrentPlayer().getGovernance().addBuilding(building);
         }
         return null;
     }
@@ -133,22 +134,14 @@ public class ChangeEnvironmentController {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (count <= 0) return Output.WRONG_COUNT;
-        boolean found = false;
-        UnitsEnum unitEnum1 = null;
-        for (UnitsEnum unitsEnum : UnitsEnum.values()) {
-            if (unitsEnum.getName().equals(type)) {
-                found = true;
-                unitEnum1 = unitsEnum;
-                break;
-            }
-        }
+        boolean found = (UnitsBuilder.UnitsBuilder(type, game.getCurrentPlayer()) != null);
         if (found) {
-            ArrayList<Unit> droppedUnits = new ArrayList<>();
             for (int i = 0; i < count; i++) {
-                Unit unit = new Unit(currentUser, unitEnum1);
-                droppedUnits.add(unit);
+                Unit unit = UnitsBuilder.UnitsBuilder(type, game.getCurrentPlayer());
+                game.getCells()[x - 1][y - 1].addUnit(unit);
+                unit.setCell(game.getCells()[x - 1][y - 1]);
+                game.getCurrentPlayer().getGovernance().addUnit(unit);
             }
-            game.getCells()[x - 1][y - 1].setUnits(droppedUnits);
             return Output.UNIT_DROPPED_SUCCESSFULLY;
         }
         return null;
