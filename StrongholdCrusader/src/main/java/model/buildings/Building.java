@@ -18,7 +18,7 @@ public class Building {
     private ArrayList<Unit> units = new ArrayList<>();
     private static ArrayList<Building>buildings = new ArrayList<>();
 
-    public Building(String name, User owner ) {
+    public Building(String name, User owner) {
         this.name = name;
         this.owner = owner;
         this.wood = BuildingEnum.getBuildingStructureByName(name).getWood();

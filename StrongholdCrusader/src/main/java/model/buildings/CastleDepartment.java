@@ -5,7 +5,7 @@ public class CastleDepartment extends Building {
 
     private final int hitPoint;
     private final int peopleCapacity;
-    public CastleDepartment(String name , User owner,int hitPoint, int peopleCapacity) {
+    public CastleDepartment(String name,User owner,int hitPoint,int peopleCapacity) {
         super(name , owner);
         this.hitPoint = hitPoint;
         this.peopleCapacity = peopleCapacity;
