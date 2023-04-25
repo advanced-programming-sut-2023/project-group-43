@@ -79,9 +79,7 @@ public class BuildingBuilder {
             case "market":
                 return new Store(name,owner);
             case "engineer guild":
-                return new Building(name,owner);
             case "mercenary post":
-                return new Building(name,owner);
             case "ox tether":
                 return new Building(name,owner);
         }
