@@ -43,7 +43,7 @@ public class ChangeEnvironmentMenu extends Menu {
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_UNIT)) != null) {
                 output = dropUnit(matcher);
             } else if (input.matches("next")) {
-                System.out.println(changeEnvironmentController.nextPerson());
+                System.out.println(changeEnvironmentController.goToNextPerson());
                 continue;
             }
             else if (input.matches("back")) {

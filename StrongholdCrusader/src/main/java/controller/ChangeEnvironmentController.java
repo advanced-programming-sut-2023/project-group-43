@@ -1,6 +1,5 @@
 package controller;
 
-import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
@@ -151,10 +150,12 @@ public class ChangeEnvironmentController {
     public void enterGameMenu() {
         GameController gameController = new GameController(game);
         GameMenu gameMenu = new GameMenu(gameController);
+        gameMenu.setTurns(game.getTurns());
+        gameMenu.setNumberOfPlayers(game.getPlayers().size());
         gameMenu.run();
     }
 
-    public String nextPerson() {
+    public String goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
         for (User player: game.getPlayers()) {

@@ -20,6 +20,7 @@ public class MapMenu extends Menu{
     }
 
     public void run(){
+        System.out.println("map menu:");
         Scanner scanner = Menu.getScanner();
         String input;
         Output output;

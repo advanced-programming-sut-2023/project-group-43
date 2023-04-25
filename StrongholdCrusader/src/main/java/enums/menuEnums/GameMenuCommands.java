@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public enum GameMenuCommands {
     //TODO -> how to handle dots inside ""
     //enter menu commands
-    ENTER_CHANGE_ENVIRONMENT_MENU("enter change environment menu"),
+    ENTER_MAP_MENU("enter map menu"),
     ENTER_STORE_MENU("enter store menu"),
     ENTER_TRADE_MENU("enter trade menu"),
     ENTER_GOVERNANCE_MENU("enter governance menu"),
