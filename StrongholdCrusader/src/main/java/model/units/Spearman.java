@@ -6,7 +6,7 @@ import model.User;
 
 public class Spearman extends Unarmed{
 
-    public Spearman(User owner, UnitsEnum name, TroopType troopType) {
+    public Spearman(User owner, String name, TroopType troopType) {
         super(owner, name, troopType);
     }
 }

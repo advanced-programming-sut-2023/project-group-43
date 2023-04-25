@@ -5,7 +5,7 @@ import enums.unitEnums.UnitsEnum;
 import model.*;
 
 public class Troop extends Unit{
-    public Troop(User owner, UnitsEnum name, TroopType troopType) {
+    public Troop(User owner, String name, TroopType troopType) {
         super(owner, name);
     }
 
