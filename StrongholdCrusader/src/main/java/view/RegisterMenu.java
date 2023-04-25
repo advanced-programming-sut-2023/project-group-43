@@ -2,6 +2,7 @@ package view;
 
 import controller.RegisterAndLoginController;
 import enums.Output;
+import enums.Validations;
 import enums.menuEnums.RegisterAndLoginCommands;
 
 import java.util.Scanner;
@@ -92,24 +93,10 @@ public class RegisterMenu extends Menu {
             if ((recoveryMatcher = RegisterAndLoginCommands.getMatcher
                     (input, RegisterAndLoginCommands.CHOOSE_PASSWORD_RECOVERY_QUESTION)) != null) {
                 parseMatcher(matcher, randomSlogan);
-                String answer = null, answerConfirmation = null, number = null;
-                Matcher allMatcher = RegisterAndLoginCommands.getWholeMatcher(matcher.group(), RegisterAndLoginCommands.GROUP);
-                while (allMatcher.find()) {
-                    switch (allMatcher.group("flag")) {
-                        case "q":
-                            if (number != null) return null;
-                            if ((number = allMatcher.group("group")) == null) number = allMatcher.group("group2");
-                            break;
-                        case "a":
-                            if (answer != null) return null;
-                            if ((answer = allMatcher.group("group")) == null) answer = allMatcher.group("group2");
-                            break;
-                        case "c":
-                            if (answerConfirmation != null) return null;
-                            if ((answerConfirmation = allMatcher.group("group")) == null)
-                                answerConfirmation = allMatcher.group("group2");
-                    }
-                }
+                String answer = Validations.getInfo("a", matcher.group());
+                String answerConfirmation = Validations.getInfo("c", matcher.group());
+                String number = Validations.getInfo("q", matcher.group());
+                if (number == null || answerConfirmation == null || answer == null) return null;
                 if(!number.matches("\\d+"))
                     return Output.INVALID_PASSWORD_RECOVERY_QUESTION;
                 int questionNumber = Integer.parseInt(recoveryMatcher.group("number"));

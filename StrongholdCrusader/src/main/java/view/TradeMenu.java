@@ -2,6 +2,7 @@ package view;
 
 import controller.TradeController;
 import enums.Output;
+import enums.Validations;
 import enums.menuEnums.TradeMenuCommands;
 
 import java.util.Scanner;
@@ -42,48 +43,20 @@ public class TradeMenu extends Menu{
     }
 
     private Output requestTrade(Matcher matcher) {
-        String resourceType = null, amount = null, price = null, message = null;
-        Matcher allMatcher = TradeMenuCommands.getMatcher(matcher.group(), TradeMenuCommands.GROUP);
-        while (allMatcher.find()) {
-            switch (matcher.group("flag")) {
-                case "t":
-                    if (resourceType != null) return null;
-                    if ((resourceType = allMatcher.group("group")) == null)
-                        resourceType = allMatcher.group("group2");
-                    break;
-                case "a":
-                    if (amount != null) return null;
-                    if ((amount = allMatcher.group("group")) == null) amount = allMatcher.group("group2");
-                    break;
-                case "p":
-                    if (price != null) return null;
-                    if ((price = allMatcher.group("group")) == null) price = allMatcher.group("group2");
-                    break;
-                case "m":
-                    if (message != null) return null;
-                    if ((message = allMatcher.group("group")) == null) message = allMatcher.group("group2");
-            }
-        }
+        String resourceType = Validations.getInfo("t", matcher.group());
+        String amount = Validations.getInfo("a", matcher.group());
+        String price = Validations.getInfo("p", matcher.group());
+        String message = Validations.getInfo("m", matcher.group());
+        if (resourceType == null || amount == null || price == null || message == null) return null;
         if (!amount.matches("\\d+")) return null;
         if (!price.matches("\\d+")) return null;
         return tradeController.requestTrade(resourceType, Integer.parseInt(amount), Integer.parseInt(price), message);
     }
 
     private Output acceptTrade(Matcher matcher) {
-        String id = null, message = null;
-        Matcher allMatcher = TradeMenuCommands.getMatcher(matcher.group(), TradeMenuCommands.GROUP);
-        while (allMatcher.find()) {
-            switch (matcher.group("flag")) {
-                case "i":
-                    if (id != null) return null;
-                    if ((id = allMatcher.group("group")) == null)
-                        id = allMatcher.group("group2");
-                    break;
-                case "m":
-                    if (message != null) return null;
-                    if ((message = allMatcher.group("group")) == null) message = allMatcher.group("group2");
-            }
-        }
+        String id = Validations.getInfo("i", matcher.group());
+        String message = Validations.getInfo("m", matcher.group());
+        if (id == null || message == null) return null;
         if (!id.matches("\\d+")) return null;
         return tradeController.acceptTrade(Integer.parseInt(id), message);
     }
