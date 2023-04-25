@@ -22,10 +22,10 @@ public class MainMenu extends Menu{
             if(input.matches("back"))
                 return;
             else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_PROFILE_MENU) != null) {
-                System.out.println("");
+                enterProfileMenu();
             }
             else if(MainMenuCommands.getMatcher(input,MainMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU)!= null) {
-                System.out.println("");
+                enterChangeEnvironmentMenu();
             }
             else System.out.println("Invalid Command!");
         }

@@ -12,6 +12,21 @@ public class ProfileController {
         this.currentUser = currentUser;
     }
 
+    public Output changeInfo(String flag, String info) {
+        switch (flag) {
+            case "u":
+                return changeUsername(info);
+            case "n":
+                return changeNickname(info);
+            case "e":
+                return changeEmail(info);
+            case "s":
+                return changeSlogan(info);
+        }
+        return null;
+    }
+
+
     public Output changePassword(String oldPassword, String newPassword) {
         if (oldPassword.equals(newPassword)) return Output.DUPLICATED_NEWPASSWORD;
         Output output = RegisterAndLoginController.checkPassword(newPassword);

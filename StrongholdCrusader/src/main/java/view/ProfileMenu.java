@@ -2,7 +2,9 @@ package view;
 
 import controller.ProfileController;
 import enums.Output;
+import enums.Validations;
 import enums.menuEnums.ProfileMenuCommands;
+import enums.menuEnums.RegisterAndLoginCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -23,20 +25,11 @@ public class ProfileMenu extends Menu{
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME)) != null) {
-                output = changeUsername(matcher);
-            }
-            else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME)) != null) {
-                output = changeNickname(matcher);
+            if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_INFO)) != null) {
+                output = changeInfo(matcher);
             }
             else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD)) != null) {
                 output = changePassword(matcher);
-            }
-            else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL)) != null) {
-                output = changeEmail(matcher);
-            }
-            else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN)) != null) {
-                output = changeSlogan(matcher);
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.REMOVE_SLOGAN) != null) {
                 output = removeSlogan();
@@ -57,6 +50,7 @@ public class ProfileMenu extends Menu{
                 System.out.println(displayProfile());
             }
             else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.BACK) != null) {
+                System.out.println("main menu:");
                 return;
             }
             if (output != null) System.out.println(output.getString());
@@ -65,27 +59,18 @@ public class ProfileMenu extends Menu{
     }
 
     private Output changePassword(Matcher matcher){
-        String oldPassword = matcher.group("oldPassword");
-        String newPassword = matcher.group("newPassword");
+        String oldPassword = Validations.getInfo("o", matcher.group());
+        String newPassword = Validations.getInfo("n", matcher.group());
+        if (oldPassword == null || newPassword == null) return null;
         return profileController.changePassword(oldPassword, newPassword);
     }
 
-    private Output changeUsername(Matcher matcher) {
-        return profileController.changeUsername(matcher.group("username"));
+    private Output changeInfo(Matcher matcher) {
+        String info = null, flag = null;
+        if ((info = matcher.group("info")) == null)
+            info = matcher.group("info");
+        return profileController.changeInfo(flag, info);
     }
-
-    private Output changeNickname(Matcher matcher) {
-        return profileController.changeNickname(matcher.group("nickname"));
-    }
-
-    private Output changeEmail(Matcher matcher) {
-        return profileController.changeEmail(matcher.group("email"));
-    }
-
-    private Output changeSlogan(Matcher matcher) {
-        return profileController.changeSlogan(matcher.group("slogan"));
-    }
-
     private Output removeSlogan(){
 
         return profileController.removeSlogan();

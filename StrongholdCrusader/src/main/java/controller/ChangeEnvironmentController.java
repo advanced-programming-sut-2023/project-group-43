@@ -23,10 +23,16 @@ public class ChangeEnvironmentController {
         this.currentUser = currentUser;
     }
 
-    public void generateMap(ArrayList<User> playersArraylist, int row, int column) {
+    public Output generateMap(ArrayList<String> usernames, int row, int column) {
+        game.addPlayer(currentUser);
+        for (String username: usernames) {
+            User user = DataBase.getInstance().getUserByUsername(username);
+            if (user == null) return Output.INVALID_USERNAME;
+            game.addPlayer(user);
+        }
         Cell[][] cells = new Cell[row][column];
         game.setCells(cells);
-        game.setPlayers(playersArraylist);
+        return Output.SUCCESSFUL_MAP_GENERATION;
     }
     public Output chooseMap(int numberOfPlayers, int size) {return null;}
 

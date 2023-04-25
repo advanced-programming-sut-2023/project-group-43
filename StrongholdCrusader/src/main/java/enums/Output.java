@@ -59,7 +59,8 @@ public enum Output {
     DUPLICATE_SLOGAN("warning : duplicate slogan!"),
     BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully"),
     WRONG_COUNT("warning : invalid number!"),
-    UNIT_DROPPED_SUCCESSFULLY("unit droped successfully")
+    UNIT_DROPPED_SUCCESSFULLY("unit droped successfully"),
+    SUCCESSFUL_MAP_GENERATION("you generate the map successfully"),
     ;
     private String string;
 
