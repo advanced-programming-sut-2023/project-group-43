@@ -4,6 +4,10 @@ import enums.Output;
 import model.Game;
 import model.Trade;
 import model.User;
+import model.buildings.Building;
+import model.buildings.Storage;
+
+import javax.swing.plaf.basic.BasicButtonUI;
 
 public class TradeController {
 
@@ -56,6 +60,14 @@ public class TradeController {
     public Output acceptTrade(int id, String message) {
         Trade trade = game.getTradeById(id);
         if (trade == null) return Output.INCORRECT_ID;
+        Storage senderStorage = (Storage) trade.getSender().getGovernance().getBuildingByName("stockpile");
+        Storage receiverStorage = (Storage) game.getCurrentPlayer().getGovernance().getBuildingByName("stockpile");
+        if (senderStorage.getAmountOfItemInStockpile("gold") < trade.getPrice())
+            return Output.NOT_ENOUGH_GOLD;
+        if (receiverStorage.getAmountOfItemInStockpile(trade.getResourceName()) < trade.getAmount())
+            return Output.NOT_ENOUGH_RESOURCE;
+        senderStorage.changeAmount(-trade.getPrice(), "gold");
+        receiverStorage.changeAmount(trade.getAmount(), trade.getResourceName());
         trade.setReceiver(game.getCurrentPlayer());
         trade.setAccepted(true);
         trade.setMessage(message);

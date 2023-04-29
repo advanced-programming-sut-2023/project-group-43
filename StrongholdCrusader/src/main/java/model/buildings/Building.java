@@ -19,7 +19,6 @@ public class Building {
 
     //building
     private ArrayList<Unit> units = new ArrayList<>();
-    private static ArrayList<Building>buildings = new ArrayList<>();
 
     public Building(String name, User owner) {
         this.name = name;
@@ -34,19 +33,12 @@ public class Building {
     public void addUnit(Unit unit){
         units.add(unit);
     };
-    public void addBuilding(Building building){
-        buildings.add(building);
-    };
     public String getName(){return name;}
     public User getOwner() {
         return owner;
     }
     public ArrayList<Unit> getUnits() {
         return units;
-    }
-
-    public static ArrayList<Building> getBuildings() {
-        return buildings;
     }
 
     public int getWood() {

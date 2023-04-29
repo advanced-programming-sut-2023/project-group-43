@@ -110,10 +110,6 @@ public class User {
         this.storage = storage;
     }
 
-    public Governance getGovernment() {
-        return governance;
-    }
-
     public void setGovernment(Governance governance) {
         this.governance = governance;
     }
