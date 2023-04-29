@@ -62,7 +62,7 @@ public enum Materials {
         return secondaryCost;
     }
 
-    public Materials getMaterialByName(String name){
+    public static Materials getMaterialByName(String name){
         for(Materials materials : Materials.values()){
             if(materials.name.equals(name))
                 return materials;

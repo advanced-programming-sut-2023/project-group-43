@@ -40,8 +40,7 @@ public class Storage extends Building {
     }
 
     public void changeAmount(int amount, String name) {
-        Materials materials = null;
-        materials =  materials.getMaterialByName(name);
+        Materials materials = Materials.getMaterialByName(name);
         storage.replace(materials, storage.get(name) + amount);
     }
 }

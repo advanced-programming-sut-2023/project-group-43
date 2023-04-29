@@ -1,6 +1,7 @@
 package controller;
 
 import enums.Output;
+import enums.environmentEnums.Materials;
 import model.Game;
 import model.Trade;
 import model.User;
@@ -60,8 +61,13 @@ public class TradeController {
     public Output acceptTrade(int id, String message) {
         Trade trade = game.getTradeById(id);
         if (trade == null) return Output.INCORRECT_ID;
+        return checkTrade(trade, message);
+    }
+
+    private Output checkTrade(Trade trade, String message) {
         Storage senderStorage = (Storage) trade.getSender().getGovernance().getBuildingByName("stockpile");
-        Storage receiverStorage = (Storage) game.getCurrentPlayer().getGovernance().getBuildingByName("stockpile");
+        Materials materials = Materials.getMaterialByName(trade.getResourceName());
+        Storage receiverStorage = (Storage) game.getCurrentPlayer().getGovernance().getBuildingByName(Storage.ChooseStorage(materials));
         if (senderStorage.getAmountOfItemInStockpile("gold") < trade.getPrice())
             return Output.NOT_ENOUGH_GOLD;
         if (receiverStorage.getAmountOfItemInStockpile(trade.getResourceName()) < trade.getAmount())
