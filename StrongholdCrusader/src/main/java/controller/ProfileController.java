@@ -4,6 +4,8 @@ import enums.Output;
 import enums.Validations;
 import model.*;
 
+import java.util.Random;
+
 public class ProfileController {
 
     User currentUser;
@@ -40,11 +42,11 @@ public class ProfileController {
     public Output changeUsername(String username) {
         if (username.equals(null)) return Output.EMPTY_FIELD;
         if (!Validations.check(username, Validations.VALID_USERNAME)) return Output.INVALID_USERNAME;
-        if (currentUser.getUsername().equals(username)) return Output.DUPLICATE_USERNAME;
-        //TODO
+        if (DataBase.getInstance().getUserByUsername(username) != null) return Output.DUPLICATE_USERNAME;
         currentUser.setUsername(username);
         return Output.SUCCESSFUL_USERNAME_CHANGE;
     }
+
 
     public Output changeNickname(String nickname) {
         if (nickname.equals(null)) return Output.EMPTY_FIELD;
