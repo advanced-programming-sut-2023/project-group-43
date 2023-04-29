@@ -16,6 +16,15 @@ public class Cell {
 
     private boolean hasRock;
     private String rockDirection;
+    private int cellSize;
+
+    public int getCellSize() {
+        return cellSize;
+    }
+
+    public void setCellSize(int cellSize) {
+        this.cellSize = cellSize;
+    }
 
     private ArrayList<Unit> units = new ArrayList<>();
 
