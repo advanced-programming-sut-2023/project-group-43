@@ -1,9 +1,9 @@
 package controller;
 
 import enums.Output;
-import model.DataBase;
 import model.Game;
 import model.Trade;
+import model.User;
 
 public class TradeController {
 
@@ -13,13 +13,65 @@ public class TradeController {
         this.game = game;
     }
 
-    public Output requestTrade(String resourceType, int resourceAmount, int price, String message) {return null;}
+    public Output requestTrade(String resource, int resourceAmount, int price, String message) {
+        Trade trade = new Trade(game.getCurrentPlayer(), resource, resourceAmount, price, message);
+        game.addTrade(trade);
+        return Output.TRADE_ADDED;
+    }
 
-    public Output showTradeList() {return null;}
+    public String showTradeList() {
+        StringBuilder output = new StringBuilder("trade list:");
+        for (Trade trade: game.getTrades()) {
+            if (!trade.isAccepted() && !game.getCurrentPlayer().getUsername().equals(trade.getSender().getUsername())) {
+                output.append(showTrade(trade));
+            }
+        }
+        return output.toString();
+    }
 
-    public Output showNotification() {return null;}
+    private String showTrade(Trade trade) {
+        String output = "";
+        output += "\ntrade id: " + trade.getId();
+        output += "\nsender: " + trade.getSender().getUsername();
+        output += "\nresource: " + trade.getResourceName();
+        output += "\namount: "  + trade.getAmount();
+        output += "\nprice: " + trade.getPrice();
+        output += "\nmessage: " + trade.getMessage();
+        return output;
+    }
 
-    public Output acceptTrade(int id, String message) {return null;}
+    public String showNotification() {
+        StringBuilder output = new StringBuilder("notification:");
+        for (Trade trade: game.getCurrentPlayer().getTrades()) {
+            if (!trade.isSeen(game.getCurrentPlayer())) {
+                if (!trade.getSender().getUsername().equals(game.getCurrentPlayer().getUsername())) {
+                    if (trade.isAccepted()) continue;
+                }
+                output.append(showTrade(trade));
+            }
+        }
+        return output.toString();
+    }
 
-    public Output showTradeHistory() {return null;}
+    public Output acceptTrade(int id, String message) {
+        Trade trade = game.getTradeById(id);
+        if (trade == null) return Output.INCORRECT_ID;
+        trade.setReceiver(game.getCurrentPlayer());
+        trade.setAccepted(true);
+        trade.setMessage(message);
+        trade.getSender().addTrade(trade);
+        return Output.TRADE_ACCEPTED;
+    }
+
+    public String showTradeHistory() {
+        User user = game.getCurrentPlayer();
+        StringBuilder output = new StringBuilder("trade history:");
+        for (Trade trade: user.getTrades()) {
+            if (trade.getSender().getUsername().equals(user.getUsername())) {
+                output.append(showTrade(trade));
+            } else if (trade.isAccepted() && trade.getReceiver().getUsername().equals(user.getUsername()))
+                output.append(showTrade(trade));
+        }
+        return output.toString();
+    }
 }

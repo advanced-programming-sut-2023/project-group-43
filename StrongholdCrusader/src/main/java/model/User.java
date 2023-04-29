@@ -141,4 +141,8 @@ public class User {
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
+
+    public void addTrade(Trade trade) {
+        trades.add(trade);
+    }
 }

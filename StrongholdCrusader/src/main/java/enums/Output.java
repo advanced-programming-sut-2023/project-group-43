@@ -61,6 +61,13 @@ public enum Output {
     WRONG_COUNT("warning : invalid number!"),
     UNIT_DROPPED_SUCCESSFULLY("unit droped successfully"),
     SUCCESSFUL_MAP_GENERATION("you generate the map successfully"),
+
+    //trade controller
+    TRADE_ADDED("your trade request has added"),
+    INCORRECT_ID("the trade doesn't exist"),
+    TRADE_ACCEPTED("trade accepted successfully"),
+    NOT_ENOUGH_RESOURCE("you don't have enough resource to send others")
+    //end of trade controller
     ;
     private String string;
 

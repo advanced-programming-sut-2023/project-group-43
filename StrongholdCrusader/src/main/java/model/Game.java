@@ -12,6 +12,8 @@ public class Game {
     private ArrayList<User> players;
 
     private ArrayList<Trade> trades;
+
+    private static int tradeId = 0;
     private Cell[][] cells;
 
     private Building selectedBuilding;
@@ -76,10 +78,6 @@ public class Game {
         this.players = players;
     }
 
-    public void setTrades(ArrayList<Trade> trades) {
-        this.trades = trades;
-    }
-
     public ArrayList<Trade> getTrades() {
         return trades;
     }
@@ -88,7 +86,22 @@ public class Game {
         players.add(player);
     }
 
-    public void addTrade(Trade trade) {}
+    public void addTrade(Trade trade) {
+        trade.setId(tradeId);
+        tradeId++;
+        trades.add(trade);
+        for(User user: players) {
+            if (!user.getUsername().equals(currentPlayer.getUsername())) {
+                user.addTrade(trade);
+            }
+        }
+    }
 
-    public void removeTrade(Trade trade) {}
+    public Trade getTradeById(int id) {
+        for (Trade trade: trades) {
+            if (trade.getId() == id && !trade.isAccepted())
+                return trade;
+        }
+        return null;
+    }
 }
