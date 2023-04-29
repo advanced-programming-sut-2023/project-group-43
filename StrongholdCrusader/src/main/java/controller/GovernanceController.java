@@ -2,7 +2,10 @@ package controller;
 
 import java.lang.String;
 
+import enums.Output;
 import model.*;
+
+import javax.print.DocFlavor;
 
 public class GovernanceController {
 
@@ -13,23 +16,55 @@ public class GovernanceController {
     }
 
     public String showPopularityFactors() {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<<<Popularity Factors>>");
+        stringBuilder.append("Food");
+        stringBuilder.append("Tax");
+        stringBuilder.append("Fear");
+        stringBuilder.append("Religion");
+        return String.valueOf(stringBuilder);
     }
 
-    public String showPopularity() {return null;}
+    public String showPopularity() {
+        return String.valueOf(game.getCurrentPlayer().getGovernance().getPopularity());
+    }
 
-    public String showFoodList() {return null;}
+    public String showFoodList() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<<<Food List>>>");
+        stringBuilder.append("meat");
+        stringBuilder.append("cheese");
+        stringBuilder.append("apple");
+        stringBuilder.append("bread");
+        return String.valueOf(stringBuilder);
+    }
 
-    public String foodRate(int rate) {return null;}
+    public Output foodRate(int rate) {
+        game.getCurrentPlayer().getGovernance().setFoodRate(rate);
+        return Output.SUCCESSFUL_FOOD_RATE_CHANGE;
+        //TODO
+    }
 
-    public String showFoodRate() {return null;}
+    public String showFoodRate() {
+        return String.valueOf(game.getCurrentPlayer().getGovernance().getFoodRate());
+    }
 
-    public String taxRate(int rate) {return null;}
+    public Output taxRate(int rate) {
+        game.getCurrentPlayer().getGovernance().setTaxRate(rate);
+        return Output.SUCCESSFUL_TAX_RATE_CHANGE;
+    }
 
-    public String showTaxRate() {return null;}
+    public String showTaxRate() {
+        return String.valueOf(game.getCurrentPlayer().getGovernance().getTaxRate());
+    }
 
-    public String fearRate(int rate) {return null;}
+    public Output fearRate(int rate) {
+        game.getCurrentPlayer().getGovernance().setFearRate(rate);
+        return Output.SUCCESSFUL_FEAR_RATE_CHANGE;
+    }
 
-    public String showFearRate() {return null;}
+    public String showFearRate() {
+        return String.valueOf(game.getCurrentPlayer().getGovernance().getFearRate());
+    }
 
 }
