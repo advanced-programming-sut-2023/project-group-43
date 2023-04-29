@@ -34,6 +34,31 @@ public class ChangeEnvironmentController {
             game.addPlayer(user);
         }
         Cell[][] cells = new Cell[row][column];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (i % 9 == 0) cells[i][j].setTexture(Texture.GROUND);
+                else if (i % 9 == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
+                else if (i % 9 == 2) cells[i][j].setTexture(Texture.BOULDER);
+                else if (i % 9 == 3) cells[i][j].setTexture(Texture.ROCK);
+                else if (i % 9 == 4) cells[i][j].setTexture(Texture.IRON);
+                else if (i % 9 == 5) cells[i][j].setTexture(Texture.GRASS);
+                else if (i % 9 == 6) cells[i][j].setTexture(Texture.MEADOW);
+                else if (i % 9 == 7) cells[i][j].setTexture(Texture.DENSE_GRASSLAND);
+                else if (i % 9 == 8) cells[i][j].setTexture(Texture.PLAIN);
+        }
+    }
+        for (int i = 0; i < column; i++) {
+            if (i % 9 == 0) cells[0][i].setTexture(Texture.OIL);
+            else if (i % 9 == 1) cells[0][i].setTexture(Texture.SHALLOW_WATER);
+            else if (i % 9 == 2) cells[0][i].setTexture(Texture.RIVER);
+            else if (i % 9 == 3) cells[0][i].setTexture(Texture.SMALL_POND);
+            else if (i % 9 == 4) cells[0][i].setTexture(Texture.BIG_POND);
+            else if (i % 9 == 5) cells[0][i].setTexture(Texture.BEACH);
+            else if (i % 9 == 6)  {
+                cells[0][i].setTexture(Texture.SEA);
+                break;
+            }
+        }
         game.setCells(cells);
         game.setTurns(turns);
         return Output.SUCCESSFUL_MAP_GENERATION;
