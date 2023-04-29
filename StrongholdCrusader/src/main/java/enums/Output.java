@@ -52,22 +52,22 @@ public enum Output {
     DIG_TUNNEL("The tunnel successfully digged"),
     BUILD_EQUIPMENT("The equipment successfully built"),
     DISBAND_UNIT("The unit disbanded"),
-    SLOGAN_REMOVED_SUCCESSFULLY("slogan removed successfully"),
-    SUCCESSFUL_PASSWORD_CHANGEING("password changed successfully"),
+    SLOGAN_REMOVED_SUCCESSFULLY("slogan removed successfully!"),
+    SUCCESSFUL_PASSWORD_CHANGEING("password changed successfully!"),
     DUPLICATED_NEWPASSWORD("warning : you entered your previous password,enter a new password!"),
-    SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully"),
+    SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully!"),
     DUPLICATE_SLOGAN("warning : duplicate slogan!"),
-    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully"),
+    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully!"),
     WRONG_COUNT("warning : invalid number!"),
-    UNIT_DROPPED_SUCCESSFULLY("unit droped successfully"),
-    SUCCESSFUL_MAP_GENERATION("you generate the map successfully"),
+    UNIT_DROPPED_SUCCESSFULLY("unit droped successfully!"),
+    SUCCESSFUL_MAP_GENERATION("you generate the map successfully!"),
+    //Governance outputs
+    SUCCESSFUL_FOOD_RATE_CHANGE("food rate changed successfully!"),
+    SUCCESSFUL_TAX_RATE_CHANGE("tax rate changed successfully!"),
+    SUCCESSFUL_FEAR_RATE_CHANGE("fear rate changed successfully!"),
 
-    //trade controller
-    TRADE_ADDED("your trade request has added"),
-    INCORRECT_ID("the trade doesn't exist"),
-    TRADE_ACCEPTED("trade accepted successfully"),
-    NOT_ENOUGH_RESOURCE("you don't have enough resource to send others")
-    //end of trade controller
+
+
     ;
     private String string;
 

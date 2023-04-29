@@ -16,5 +16,11 @@ public class Storage extends Building{
 
     //TODO
     //before starting game you should set items for stockpile based on material enum
-}
+
+    public int getAmountOfItemInStockpile(String item){
+        return stockpile.get(item);
+        //TODO : what about nulls?
+        }
+    }
+
 
