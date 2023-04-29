@@ -12,7 +12,10 @@ public class StoreController {
         this.game = game;
     }
 
-    public String showPriceList() {return null;}
+    public String showPriceList() {
+        StringBuilder stringBuilder;
+        stringBuilder.append("");
+    }
 
     public String buy(String itemName, int amount) {return null;}
 

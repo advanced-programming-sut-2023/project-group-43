@@ -2,6 +2,8 @@ package enums.BuildingEnums;
 
     public enum BuildingEnum {
         //<<<----------castle department---------->>>
+        //------> headquarter
+        HEADQUARTER("headquarter" , 0 , 0 ,0  ,0 ,0),
         //------> 1) gatehouses
         SMALL_STONE_GATEHOUSE("small stone gatehouse",0 , 0 ,0 , 0,0),
         BIG_STONE_GATEHOUSE("big stone gatehouse",0 ,20,0 , 0,0),

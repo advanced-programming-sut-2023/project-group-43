@@ -1,25 +1,37 @@
 package model.buildings;
 
 import enums.BuildingEnums.BuildingEnum;
+import enums.environmentEnums.Materials;
 import model.User;
 import java.util.HashMap;
 
 public class Storage extends Building{
 
     //look after using Integer instead of int during the game
-    HashMap<String , Integer>stockpile = new HashMap<String, Integer>();
-    HashMap<String , Integer>foodStockpile = new HashMap<String , Integer>();
-    HashMap<String , Integer>armoury = new HashMap<String , Integer>();
+    HashMap<Materials , Integer>storage = new HashMap<Materials, Integer>();
     public Storage(String name, User owner) {
         super(name, owner);
     }
 
     //TODO
     //before starting game you should set items for stockpile based on material enum
+    public static String ChooseStorage(Materials material){
+        return switch (material.getType()) {
+            case "mineral" -> "stockpile";
+            case "food" -> "foodStockpile";
+            case "weapon", "tool" ->
+                // tools are ladder and armourer
+                    "armoury";
+            default -> null;
+        };
+    }
+
+    public void addToStorage(Materials material){
+        storage.put(material , 0);
+    }
 
     public int getAmountOfItemInStockpile(String item){
-        return stockpile.get(item);
-        //TODO : what about nulls?
+        return storage.get(item);
         }
     }
 
