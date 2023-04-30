@@ -1,15 +1,19 @@
 package controller;
 
 import java.lang.String;
+import java.util.ArrayList;
 
 import enums.Output;
 import model.*;
 import model.buildings.Building;
+import model.units.Unit;
 
 public class GameController {
 
     private Game game;
     private Building currentSelectedBuilding;
+    private int unitDeathHitPoint;
+    private int BuildingDeathHitPoint;
 
     public GameController(Game game) {
         this.game = game;
@@ -19,6 +23,21 @@ public class GameController {
         return game;
     }
 
+    public int getUnitDeathHitPoint() {
+        return unitDeathHitPoint;
+    }
+
+    public void setUnitDeathHitPoint(int unitDeathHitPoint) {
+        this.unitDeathHitPoint = unitDeathHitPoint;
+    }
+
+    public int getBuildingDeathHitPoint() {
+        return BuildingDeathHitPoint;
+    }
+
+    public void setBuildingDeathHitPoint(int buildingDeathHitPoint) {
+        BuildingDeathHitPoint = buildingDeathHitPoint;
+    }
 
     public Output selectBuilding(int row, int column) {
         if (!this.validCordinate(row, column)) return Output.WRONG_COORDINATES;
@@ -60,7 +79,27 @@ public class GameController {
 
     private void applyHitPointChange() {}
 
-    private void applyDeathChange() {}
+    private void applyDeathChange() {
+        Cell[][] cell = game.getCells();
+        for (int i = 0 ; i < cell.length; i++) {
+            for (int j = 0; j < cell[0].length; j++) {
+                if (cell[i][j].getBuilding() != null) {
+                    if (cell[i][j].getBuilding().getHp() == getBuildingDeathHitPoint()) {
+                        cell[i][j].getBuilding().getOwner().getGovernance().removeBuilding(cell[i][j].getBuilding());
+                    cell[i][j].setBuilding(null);
+                    }
+                }
+                if (cell[i][j].getUnits() != null) {
+                    for (int k = 0; k < cell[i][j].getUnits().size(); k++) {
+                        if (cell[i][j].getUnits().get(k).getHitPoint() == getUnitDeathHitPoint()) {
+                            cell[i][j].getUnits().get(k).getOwner().getGovernance().removeUnit(cell[i][j].getUnits().get(k));
+                            cell[i][j].getUnits().remove(k);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void updateForNextTurn() {}
 
