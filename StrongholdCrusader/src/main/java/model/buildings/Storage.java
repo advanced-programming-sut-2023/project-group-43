@@ -19,7 +19,6 @@ public class Storage extends Building{
             case "mineral" -> "stockpile";
             case "food" -> "foodStockpile";
             case "weapon", "tool" ->
-                // tools are ladder and armourer
                     "armoury";
             default -> null;
         };
@@ -29,8 +28,8 @@ public class Storage extends Building{
         storage.put(material , 0);
     }
 
-    public int getAmountOfItemInStockpile(String item){
-        return storage.get(item);
+    public int getAmountOfItemInStockpile(Material material){
+        return storage.get(material);
         }
     }
 

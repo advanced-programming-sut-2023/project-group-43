@@ -1,7 +1,9 @@
 package controller;
 
+import enums.Output;
 import enums.environmentEnums.Material;
 import model.Game;
+import model.buildings.Storage;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,22 @@ public class StoreController {
         return String.valueOf(stringBuilder);
     }
 
-    public String buy(String itemName, int amount) {return null;}
+    public Output buy(String itemName, int amount) {
+        Material material = Material.getMaterialByName(itemName);
+        Storage storage = game.getCurrentPlayer().getStorage();
+        if(material == null)
+            return Output.ITEM_NOR_FOUND;
+        if(storage.getAmountOfItemInStockpile(material) != amount)
+            return Output.NOT_ENOUGH_QUANTITY;
+        if(storage.getGold() != amount * material.getInitialCost())
+            return Output.NOT_ENOUGH_MONEY;
 
-    public String sell(String itemName, int amount) {return null;}
+        storage.getGold() = storage.getAmountOfItemInStockpile(material) + amount;
+        storage.getGold() = amount * material.getInitialCost();
+        return Output.SUCCESSFUL_PURCHASE;
+    }
+
+    public String sell(String itemName, int amount) {
+
+    }
 }
