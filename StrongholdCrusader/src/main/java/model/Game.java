@@ -21,6 +21,24 @@ public class Game {
     private Unit selectedUnit;
 
     private int turns;
+    private int currentMapX;
+    private int getCurrentMapY;
+
+    public int getCurrentMapX() {
+        return currentMapX;
+    }
+
+    public void setCurrentMapX(int currentMapX) {
+        this.currentMapX = currentMapX;
+    }
+
+    public int getGetCurrentMapY() {
+        return getCurrentMapY;
+    }
+
+    public void setGetCurrentMapY(int getCurrentMapY) {
+        this.getCurrentMapY = getCurrentMapY;
+    }
 
     public int getTurns() {
         return turns;
