@@ -7,7 +7,13 @@ import model.User;
 import view.MainMenu;
 
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -150,10 +156,78 @@ public class RegisterAndLoginController {
         Random random = new Random();
         return slogans[random.nextInt(7)];
     }
-
-    private static String makeCaptcha() {
-        return null;
+    public static String generateCaptcha(int n) {
+        Random rand = new Random(62);
+        String chrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String captcha = "";
+        while (n-->0){
+            int index = (int)(Math.random()*62);
+            captcha+=chrs.charAt(index);
+        }
+        return captcha;
     }
+    public static Output checkCaptcha(String captcha, String user_captcha) {
+        if (captcha.equals(user_captcha))
+            return Output.CAPTCHA_MATCHED;
+        return Output.CAPTCHA_NOT_MATCHED;
+    }
+    /*public static String makePictureWithoutNoise(String value){
+        char[] valueChars = value.toCharArray();
+        String[] picture = {"", "", "", "", "", ""};
+        for (int i = 0; i < valueChars.length; i++) {
+            String[] output = getStringOfCaptcha(valueChars[i]).split("\r\n");
+            for (int j = 0; j < 6; j++) {
+                output[j] = fixSize(output[j]);
+                picture[j] += output[j];
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            result.append(picture[i]).append("\n");
+        }
+        return result.toString();
+    }*/
+
+    private static String fixSize(String str) {
+        StringBuilder result = new StringBuilder(str);
+        if (str.length() < 10) {
+            result.append(" ".repeat(10 - str.length()));
+        }
+        return result.toString();
+    }
+
+    public static String addNoise(String picture, String value) {
+        String[] output = picture.split("\n");
+        int length = value.length() * 10;
+        int width = 6;
+        Random random = new Random();
+        for (int i = 0; i < value.length() * 6; i++) {
+            int y = random.nextInt(width);
+            int x = random.nextInt(length);
+            output[y] = output[y].substring(0, x) + "#" + output[y].substring(x + 1);
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            result.append(output[i]).append("\n");
+        }
+        return result.toString();
+    }
+
+    /*public static Captcha createCaptcha() {
+        try {
+            Captcha captcha = new Captcha();
+            System.out.println(captcha.getCaptchaImage());
+            return captcha;
+        }catch (InvalidAlgorithmParameterException| NoSuchPaddingException| IllegalBlockSizeException| IOException| NoSuchAlgorithmException| BadPaddingException |InvalidKeyException e){
+            System.out.println("An error occurred.[make captcha]");
+        }
+        return null;
+    }*/
+    /*public String getCaptchaImage() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        String picture = CaptchaController.makePictureWithoutNoise(value);
+        return CaptchaController.addNoise(picture, value);
+    }*/
     public static void enterMainMenu(String username) {
         User currentUser = DataBase.getInstance().getUserByUsername(username);
         MainController mainController = new MainController(currentUser);

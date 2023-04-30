@@ -4,14 +4,12 @@ import java.lang.String;
 
 import enums.Output;
 import model.*;
-import view.GovernanceMenu;
-import view.MapMenu;
-import view.StoreMenu;
-import view.TradeMenu;
+import model.buildings.Building;
 
 public class GameController {
 
     private Game game;
+    private Building currentSelectedBuilding;
 
     public GameController(Game game) {
         this.game = game;
@@ -21,8 +19,15 @@ public class GameController {
         return game;
     }
 
-    public Output selectBuilding(int x, int y) {
-        return Output.SELECT_BUILDING;
+
+    public Output selectBuilding(int row, int column) {
+        if (!this.validCordinate(row, column)) return Output.WRONG_COORDINATES;
+        Building building = game.getCells()[row - 1][column - 1].getBuilding();
+        if (building != null) {
+            this.currentSelectedBuilding = building;
+            return Output.SELECT_BUILDING;
+        }
+        return Output.NO_BUILDING;
     }
 
     public Output createUnit(String type, int count) {return null;}
@@ -93,5 +98,9 @@ public class GameController {
         }
         if (user == null) game.setCurrentPlayer(game.getPlayers().get(0));
     }
-
+    public boolean validCordinate(int x, int y) {
+        if (x >= 1 && x <= game.getCells().length && y >= 1 && y <= game.getCells()[0].length)
+            return true;
+        return false;
+    }
 }

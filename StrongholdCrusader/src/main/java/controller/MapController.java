@@ -23,16 +23,16 @@ public class MapController {
                 drawTile(cell, y, x);
             }
         }
-        game.getCells().drawImage(atlasImage, 192, 0, 64, 64, 128, 320, 64, 64);
+        //game.getCells().drawImage(atlasImage, 192, 0, 64, 64, 128, 320, 64, 64);
     }
     public void drawImage(Image image, int a, int b, int c, int d, int row, int column, int e, int f) {}
     public void drawTile(Cell cell, int row, int column) {}
     public void worldToScreen(int x, int y) {
-        return { x: x - camera.getRow(), y: y - camera.getColumn() };
+        //return { x: x - camera.getRow(), y: y - camera.getColumn() };
     }
 
     public void screenToWorld(int x, int y) {
-        return { x: x + camera.getRow(), y: y + camera.getColumn() };
+        //return { x: x + camera.getRow(), y: y + camera.getColumn() };
     }
     public String showMapDetails(int row, int column) {
         Cell cell = game.getCells()[row - 1][column - 1];
