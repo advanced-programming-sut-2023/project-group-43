@@ -1,6 +1,6 @@
 package model.buildings;
 
-import enums.environmentEnums.Materials;
+import enums.environmentEnums.Material;
 import model.User;
 public class BuildingBuilder {
 
@@ -32,84 +32,84 @@ public class BuildingBuilder {
                 return new Stronghold(name,owner);
             case "wheat farm":
                 manufacturer = new Manufacturer(name,owner,10,10);
-                manufacturer.addProducedMaterial(Materials.WHEAT);
+                manufacturer.addProducedMaterial(Material.WHEAT);
                 return manufacturer;
             case "hop farm":
                 manufacturer = new Manufacturer(name,owner,11,10);
-                manufacturer.addProducedMaterial(Materials.HOP);
+                manufacturer.addProducedMaterial(Material.HOP);
                 return manufacturer;
             case "hunting post":
                 manufacturer = new Manufacturer(name,owner,12 , 10);
-                manufacturer.addProducedMaterial(Materials.MEAT);
+                manufacturer.addProducedMaterial(Material.MEAT);
                 return manufacturer;
             case "apple garden":
                 manufacturer = new Manufacturer(name,owner,13,10);
-                manufacturer.addProducedMaterial(Materials.APPLE);
+                manufacturer.addProducedMaterial(Material.APPLE);
                 return manufacturer;
             case "stable":
                 manufacturer = new Manufacturer(name,owner,14,10);
-                manufacturer.addProducedMaterial(Materials.HORSE);
+                manufacturer.addProducedMaterial(Material.HORSE);
                 return manufacturer;
             case "howel":
                 manufacturer = new Manufacturer(name,owner,15,10);
-                manufacturer.addProducedMaterial(Materials.PEASANT);
+                manufacturer.addProducedMaterial(Material.PEASANT);
                 return manufacturer;
             case "wood cutter":
                 manufacturer = new Manufacturer(name,owner,16,10);
-                manufacturer.addProducedMaterial(Materials.WOOD);
+                manufacturer.addProducedMaterial(Material.WOOD);
                 return manufacturer;
             case "pitch rig":
                 manufacturer = new Manufacturer(name,owner,17,10);
-                manufacturer.addProducedMaterial(Materials.TAR);
+                manufacturer.addProducedMaterial(Material.TAR);
                 return manufacturer;
             case "quarry":
                 manufacturer = new Manufacturer(name,owner,18,10);
-                manufacturer.addProducedMaterial(Materials.STONE);
+                manufacturer.addProducedMaterial(Material.STONE);
                 return manufacturer;
             case "iron mine":
                 manufacturer = new Manufacturer(name,owner,19,10);
-                manufacturer.addProducedMaterial(Materials.IRON);
+                manufacturer.addProducedMaterial(Material.IRON);
                 return manufacturer;
             case "barrack":
                 converter = new Converter(name,owner,10,10);
-                converter.addConsumeMaterial(Materials.PEASANT);
-                converter.addProducedMaterial(Materials.UNIT);
+                converter.addConsumeMaterial(Material.PEASANT);
+                converter.addProducedMaterial(Material.UNIT);
                 return converter;
             case "bakery":
                 converter = new Converter(name,owner,11,10);
-                converter.addConsumeMaterial(Materials.FLOUR);
-                converter.addProducedMaterial(Materials.BREAD);
+                converter.addConsumeMaterial(Material.FLOUR);
+                converter.addProducedMaterial(Material.BREAD);
                 return converter;
             case "beer brewing":
                 converter =  new Converter(name,owner,12,10);
-                converter.addConsumeMaterial(Materials.HOP);
-                converter.addProducedMaterial(Materials.BEER);
+                converter.addConsumeMaterial(Material.HOP);
+                converter.addProducedMaterial(Material.BEER);
                 return converter;
             case "mill":
                 converter = new Converter(name,owner,13,10);
-                converter.addConsumeMaterial(Materials.WHEAT);
-                converter.addProducedMaterial(Materials.FLOUR);
+                converter.addConsumeMaterial(Material.WHEAT);
+                converter.addProducedMaterial(Material.FLOUR);
                 return converter;
             case "poleturner":
                 converter = new Converter(name,owner,14,10);
-                converter.addConsumeMaterial(Materials.WOOD);
-                converter.addProducedMaterial(Materials.SPEAR);
+                converter.addConsumeMaterial(Material.WOOD);
+                converter.addProducedMaterial(Material.SPEAR);
                 return converter;
             case "fletcher":
                 converter = new Converter(name,owner,15,10);
-                converter.addConsumeMaterial(Materials.WOOD);
-                converter.addProducedMaterial(Materials.BOW);
+                converter.addConsumeMaterial(Material.WOOD);
+                converter.addProducedMaterial(Material.BOW);
                 return converter;
             case "blacksmith":
                 converter =  new Converter(name,owner,16,10);
-                converter.addConsumeMaterial(Materials.IRON);
-                converter.addProducedMaterial(Materials.SWORD);
-                converter.addProducedMaterial(Materials.CUDGEL);
+                converter.addConsumeMaterial(Material.IRON);
+                converter.addProducedMaterial(Material.SWORD);
+                converter.addProducedMaterial(Material.CUDGEL);
                 return converter;
             case "armourer":
                 converter = new Converter(name,owner,17,10);
-                converter.addProducedMaterial(Materials.IRON);
-                converter.addProducedMaterial(Materials.ARMOUR);
+                converter.addProducedMaterial(Material.IRON);
+                converter.addProducedMaterial(Material.ARMOUR);
                 return converter;
             case "food stockpile":
             case "stockpile":

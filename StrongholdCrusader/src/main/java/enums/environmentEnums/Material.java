@@ -1,6 +1,8 @@
 package enums.environmentEnums;
 
-public enum Materials {
+import java.util.ArrayList;
+
+public enum Material {
     //minerals
     STONE("mineral" , "stone" , 0 , 0),
     WOOD("mineral" , "wood" , 0 , 0),
@@ -39,7 +41,7 @@ public enum Materials {
     private int initialCost;
     private int secondaryCost;
 
-    Materials(String type, String name, int initialCost , int secondaryCost) {
+    Material(String type, String name, int initialCost , int secondaryCost) {
         this.type = type;
         this.name = name;
         this.initialCost = initialCost;
@@ -62,11 +64,20 @@ public enum Materials {
         return secondaryCost;
     }
 
-    public Materials getMaterialByName(String name){
-        for(Materials materials : Materials.values()){
-            if(materials.name.equals(name))
-                return materials;
+    public static Material getMaterialByName(String name){
+        for(Material material : Material.values()){
+            if(material.name.equals(name))
+                return material;
         }
         return null;
+    }
+
+    public static ArrayList getMaterialsByType(String type){
+        ArrayList<Material> materialsWithType = new ArrayList<>();
+        for(Material material : Material.values()){
+            if(material.type.equals(type))
+                materialsWithType.add(material);
+        }
+        return materialsWithType;
     }
 }

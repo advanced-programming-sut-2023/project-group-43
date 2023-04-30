@@ -1,12 +1,12 @@
 package model.buildings;
-import enums.environmentEnums.Materials;
+import enums.environmentEnums.Material;
 import model.User;
 
 import java.util.ArrayList;
 
 public class Converter extends Producer {
 
-    private ArrayList<Materials> consumeMaterials = new ArrayList<>();
+    private ArrayList<Material> consumeMaterials = new ArrayList<>();
 
     public Converter(String name, User owner , int productionRate, int capacity) {
         super(name, owner, productionRate, capacity);
@@ -15,11 +15,11 @@ public class Converter extends Producer {
     public void produceMaterial() {};
     public void consumeResource() {};
 
-    public ArrayList<Materials> getConsumeMaterials() {
+    public ArrayList<Material> getConsumeMaterials() {
         return consumeMaterials;
     }
 
-    public void addConsumeMaterial(Materials material){
+    public void addConsumeMaterial(Material material){
         consumeMaterials.add(material);
     }
 }
