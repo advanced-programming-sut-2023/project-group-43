@@ -11,7 +11,7 @@ public class Building {
     private final String name;
     private final int wood;
     private final int stone;
-    private final int gold;
+    private final int cost;
     private final int hp;
     private final int ladderlans;
 
@@ -26,7 +26,7 @@ public class Building {
         this.owner = owner;
         this.wood = BuildingEnum.getBuildingStructureByName(name).getWood();
         this.stone = BuildingEnum.getBuildingStructureByName(name).getStone();
-        this.gold = BuildingEnum.getBuildingStructureByName(name).getGold();
+        this.cost = BuildingEnum.getBuildingStructureByName(name).getCost();
         this.hp = BuildingEnum.getBuildingStructureByName(name).getHp();
         this.ladderlans = BuildingEnum.getBuildingStructureByName(name).getLaddernans();
     }
@@ -57,8 +57,8 @@ public class Building {
         return stone;
     }
 
-    public int getGold() {
-        return gold;
+    public int getCost() {
+        return cost;
     }
 
     public int getHp() {

@@ -1,9 +1,7 @@
 package controller;
 
 import enums.Output;
-import model.DataBase;
 import model.Game;
-import model.Trade;
 
 public class TradeController {
 

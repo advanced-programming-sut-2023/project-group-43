@@ -42,17 +42,22 @@ public class StoreController {
         Storage storage = game.getCurrentPlayer().getStorage();
         if(material == null)
             return Output.ITEM_NOR_FOUND;
-        if(storage.getAmountOfItemInStockpile(material) != amount)
-            return Output.NOT_ENOUGH_QUANTITY;
-        if(storage.getGold() != amount * material.getInitialCost())
+        if(game.getCurrentPlayer().getGold() != amount * material.getInitialCost())
             return Output.NOT_ENOUGH_MONEY;
-
-        storage.getGold() = storage.getAmountOfItemInStockpile(material) + amount;
-        storage.getGold() = amount * material.getInitialCost();
+        game.getCurrentPlayer().setGold(game.getCurrentPlayer().getGold() - amount * material.getInitialCost());
+        storage.changeAmountOfItemInStockpile(material,amount);
         return Output.SUCCESSFUL_PURCHASE;
     }
 
-    public String sell(String itemName, int amount) {
-
+    public Output sell(String itemName, int amount) {
+        Material material = Material.getMaterialByName(itemName);
+        Storage storage = game.getCurrentPlayer().getStorage();
+        if(material == null)
+            return Output.ITEM_NOR_FOUND;
+        if(storage.getAmountOfItemInStockpile(material) != amount)
+            return Output.NOT_ENOUGH_QUANTITY;
+        game.getCurrentPlayer().setGold(game.getCurrentPlayer().getGold() + amount * material.getSecondaryCost());
+        storage.changeAmountOfItemInStockpile(material,-amount);
+        return Output.SUCCESSFUL_SALE;
     }
 }

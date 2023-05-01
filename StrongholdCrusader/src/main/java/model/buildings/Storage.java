@@ -31,6 +31,10 @@ public class Storage extends Building{
     public int getAmountOfItemInStockpile(Material material){
         return storage.get(material);
         }
+
+        public void changeAmountOfItemInStockpile(Material material,int amount){
+            storage.put(material,getAmountOfItemInStockpile(material) + amount);
+    }
     }
 
 

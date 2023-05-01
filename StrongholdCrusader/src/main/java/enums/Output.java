@@ -70,6 +70,7 @@ public enum Output {
     NOT_ENOUGH_QUANTITY("Insufficient quantity!"),
     NOT_ENOUGH_MONEY("Not enough money!"),
     SUCCESSFUL_PURCHASE("The purchase was successful!"),
+    SUCCESSFUL_SALE("The sale was successful!"),
 
 
 
