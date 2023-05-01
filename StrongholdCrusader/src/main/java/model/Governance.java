@@ -76,4 +76,12 @@ public class Governance {
         buildings.add(building);
     }
 
+    public Building getBuildingByName(String name) {
+        for (Building building: buildings) {
+            if (building.getName().equals(name))
+               return building;
+        }
+        return null;
+    }
+
 }

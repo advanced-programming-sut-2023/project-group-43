@@ -111,10 +111,6 @@ public class User {
         this.storage = storage;
     }
 
-    public Governance getGovernment() {
-        return governance;
-    }
-
     public void setGovernment(Governance governance) {
         this.governance = governance;
     }
@@ -157,5 +153,9 @@ public class User {
 
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
+    }
+
+    public void addTrade(Trade trade) {
+        trades.add(trade);
     }
 }

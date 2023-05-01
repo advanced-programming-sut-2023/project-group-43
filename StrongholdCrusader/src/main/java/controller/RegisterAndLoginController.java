@@ -118,6 +118,13 @@ public class RegisterAndLoginController {
         return Output.SUCCESSFUL_PASSWORD_CHANGE;
     }
 
+    public static String suggestUsername(String username) {
+        Random random = new Random();
+        while (DataBase.getInstance().getUserByUsername(username) != null)
+            username += (char)(random.nextInt(9) + '0');
+        return username;
+    }
+
     public static String makeRandomPassword() {
         String password = "";
         Random random = new Random();

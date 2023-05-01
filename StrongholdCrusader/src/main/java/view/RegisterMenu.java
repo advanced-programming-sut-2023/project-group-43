@@ -64,6 +64,16 @@ public class RegisterMenu extends Menu {
 
     private Output checkOutput(Matcher matcher, Output output) {
         String randomSlogan = null;
+        if (output.equals(Output.DUPLICATE_USERNAME)) {
+            username = RegisterAndLoginController.suggestUsername(username);
+            System.out.println("your username can be: " + username);
+            System.out.println("do you want to choose it?");
+            String input = Menu.getScanner().nextLine();
+            if (input.matches("y(es)?"))
+                output = createUser(matcher, null, null, null);
+            else if (!input.matches("n(o)?"))
+                output = null;
+        }
         if (output.equals(Output.RANDOM_SLOGAN)) {
             System.out.print(output.getString());
             randomSlogan = RegisterAndLoginController.makeRandomSlogan();

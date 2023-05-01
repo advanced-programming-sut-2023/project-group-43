@@ -78,7 +78,13 @@ public enum Output {
 
 
 
-
+    //trade controller
+    TRADE_ADDED("your trade request has added"),
+    INCORRECT_ID("the trade doesn't exist"),
+    TRADE_ACCEPTED("trade accepted successfully"),
+    NOT_ENOUGH_RESOURCE("you don't have enough resource to send others"),
+    NOT_ENOUGH_GOLD("the sender doesnt have enough gold")
+    //end of trade controller
 
     ;
     private String string;

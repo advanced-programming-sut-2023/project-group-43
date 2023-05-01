@@ -2,13 +2,15 @@ package model.buildings;
 
 import enums.environmentEnums.Material;
 import model.User;
+
 import java.util.HashMap;
 
-public class Storage extends Building{
+public class Storage extends Building {
 
     //look after using Integer instead of int during the game
     HashMap<Material, Integer>storage = new HashMap<Material, Integer>();
     public Storage(String name, User owner) {
+
         super(name, owner);
     }
 
@@ -19,12 +21,13 @@ public class Storage extends Building{
             case "mineral" -> "stockpile";
             case "food" -> "foodStockpile";
             case "weapon", "tool" ->
+                // tools are ladder and armourer
                     "armoury";
             default -> null;
         };
     }
 
-    public void addToStorage(Material material){
+    public void addToStorage(Materials material){
         storage.put(material , 0);
     }
 
@@ -34,7 +37,6 @@ public class Storage extends Building{
 
         public void changeAmountOfItemInStockpile(Material material,int amount){
             storage.put(material,getAmountOfItemInStockpile(material) + amount);
-    }
     }
 
 

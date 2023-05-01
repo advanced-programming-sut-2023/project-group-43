@@ -22,7 +22,7 @@ public class TradeMenu extends Menu{
         Output output;
         Matcher matcher;
         System.out.println("trade menu:");
-        tradeController.showNotification();
+        System.out.println(tradeController.showNotification());
         while (true) {
             input = scanner.nextLine();
             output = null;
@@ -31,9 +31,11 @@ public class TradeMenu extends Menu{
             } else if ((matcher = TradeMenuCommands.getMatcher(input, TradeMenuCommands.ACCEPT_TRADE)).matches()) {
                 output = acceptTrade(matcher);
             } else if (input.matches("trade list")) {
-                output = tradeController.showTradeList();
+                System.out.println(tradeController.showTradeList());
+                continue;
             } else if (input.matches("trade history")) {
-                output = tradeController.showTradeHistory();
+                System.out.println(tradeController.showTradeHistory());
+                continue;
             } else if (input.matches("back")) {
                 System.out.println("main menu:");
                 return;
