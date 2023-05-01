@@ -4,14 +4,14 @@ import java.lang.String;
 
 import enums.Output;
 import model.*;
-import view.GovernanceMenu;
-import view.MapMenu;
-import view.StoreMenu;
-import view.TradeMenu;
+import model.units.Unit;
 
 public class GameController {
 
     private Game game;
+    private boolean selected;
+    private int selectedX;
+    private int selectedY;
 
     public GameController(Game game) {
         this.game = game;
@@ -22,10 +22,15 @@ public class GameController {
     }
 
     public Output selectBuilding(int x, int y) {
+        //TODO: if x and y ---> invalid ---> error
+        selectedX = x;
+        selectedY = y;
         return Output.SELECT_BUILDING;
     }
 
-    public Output createUnit(String type, int count) {return null;}
+    public Output createUnit(String name, int count) {
+        Unit unit = ;
+    }
 
     public Output repairCastle() {return null;}
 
@@ -47,7 +52,7 @@ public class GameController {
 
     public Output digTunnel(int x, int y) {return null;}
 
-    public Output buildEquipment (String equipmentName) {return null;}
+    public Output buildWeapon (String ) {return null;}
 
     public Output disbandUnit() {return null;}
 
@@ -80,6 +85,11 @@ public class GameController {
     private void updateScores() {}
 
     public void clearGame() {}
+
+    public void resetSelectCell(){
+        selectedX = 0;
+        selectedY = 0;
+    }
 
     public void goToNextPerson() {
         User user = null;
