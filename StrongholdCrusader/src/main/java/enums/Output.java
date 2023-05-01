@@ -1,6 +1,9 @@
 package enums;
 
 public enum Output {
+    CAPTCHA_MATCHED("captcha matched"),
+    CAPTCHA_NOT_MATCHED("warning : captcha not matched!"),
+    NO_BUILDING("warning : no building in this coordination!"),
     EMPTY_FIELD("warning : empty field!"),
     INVALID_USERNAME("warning : invalid username!"),
     DUPLICATE_USERNAME("warning : duplicated username!"),
@@ -40,7 +43,7 @@ public enum Output {
     CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
     WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
     //
-    SELECT_BUILDING("The building successfully selected"),
+    SELECT_BUILDING("The building selected successfully "),
     CREATE_UNIT("The unit successfully created"),
     REPAIR("repaired successfully!"),
     SELECT_UNIT("The unit successfully selected"),
@@ -85,7 +88,6 @@ public enum Output {
     NOT_ENOUGH_RESOURCE("you don't have enough resource to send others"),
     NOT_ENOUGH_GOLD("the sender doesnt have enough gold")
     //end of trade controller
-
     ;
     private String string;
 

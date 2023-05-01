@@ -4,10 +4,7 @@ import java.lang.String;
 
 import enums.Output;
 import model.*;
-import model.units.Armed;
-import model.units.Troop;
-import model.units.Unit;
-import model.units.UnitsBuilder;
+import model.buildings.Building;
 
 public class GameController {
 
@@ -15,6 +12,7 @@ public class GameController {
     private boolean selected;
     private int selectedX;
     private int selectedY;
+    private Building currentSelectedBuilding;
 
     public GameController(Game game) {
         this.game = game;
@@ -25,23 +23,10 @@ public class GameController {
     }
 
     public Output selectBuilding(int x, int y) {
-        //TODO: if x and y ---> invalid ---> error
-        selectedX = x;
-        selectedY = y;
         return Output.SELECT_BUILDING;
     }
 
-    public Output createUnit(String name, int count) {
-        //TODO :  I'm not sure this type casting is valid
-        Troop troop = (Troop) UnitsBuilder.UnitsBuilder(name,game.getCurrentPlayer());
-        if(troop == null)
-            return Output.WRONG_UNIT_NAME;
-        if(troop.getCost() * count > game.getCurrentPlayer().getGold())
-            return Output.NOT_ENOUGH_MONEY;
-        if(game.getCurrentPlayer().getGovernance().getPopulation() < count)
-            return Output.NOT_ENOUGH_POPULATION;
-        return Output.SUCCESSFUL_UNIT_CREATION;
-    }
+    public Output createUnit(String type, int count) {return null;}
 
     public Output repairCastle() {return null;}
 
@@ -53,12 +38,7 @@ public class GameController {
 
     public Output setUnitState(int x, int y, String state) {return null;}
 
-    public Output attack(int x, int y ,String item) {
-        if(item.equals())
-            attackToEnemy(x,y);
-        if(item.equals())
-            aearialAttack(x,y);
-    }
+    public Output attack(int x, int y ,String item) {return null;}
 
     private Output attackToEnemy(int x, int y) {return null;}
 
@@ -101,11 +81,6 @@ public class GameController {
     private void updateScores() {}
 
     public void clearGame() {}
-
-    public void resetSelectCell(){
-        selectedX = 0;
-        selectedY = 0;
-    }
 
     public void goToNextPerson() {
         User user = null;
