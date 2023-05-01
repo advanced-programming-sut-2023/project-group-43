@@ -4,7 +4,10 @@ import java.lang.String;
 
 import enums.Output;
 import model.*;
+import model.units.Armed;
+import model.units.Troop;
 import model.units.Unit;
+import model.units.UnitsBuilder;
 
 public class GameController {
 
@@ -29,7 +32,15 @@ public class GameController {
     }
 
     public Output createUnit(String name, int count) {
-        Unit unit = ;
+        //TODO :  I'm not sure this type casting is valid
+        Troop troop = (Troop) UnitsBuilder.UnitsBuilder(name,game.getCurrentPlayer());
+        if(troop == null)
+            return Output.WRONG_UNIT_NAME;
+        if(troop.getCost() * count > game.getCurrentPlayer().getGold())
+            return Output.NOT_ENOUGH_MONEY;
+        if(game.getCurrentPlayer().getGovernance().getPopulation() < count)
+            return Output.NOT_ENOUGH_POPULATION;
+        return Output.SUCCESSFUL_UNIT_CREATION;
     }
 
     public Output repairCastle() {return null;}
@@ -42,7 +53,12 @@ public class GameController {
 
     public Output setUnitState(int x, int y, String state) {return null;}
 
-    public Output attack(int x, int y ,String item) {return null;}
+    public Output attack(int x, int y ,String item) {
+        if(item.equals())
+            attackToEnemy(x,y);
+        if(item.equals())
+            aearialAttack(x,y);
+    }
 
     private Output attackToEnemy(int x, int y) {return null;}
 
@@ -52,7 +68,7 @@ public class GameController {
 
     public Output digTunnel(int x, int y) {return null;}
 
-    public Output buildWeapon (String ) {return null;}
+    public Output buildWeapon (String name) {return null;}
 
     public Output disbandUnit() {return null;}
 
