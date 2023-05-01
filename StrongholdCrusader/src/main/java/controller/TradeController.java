@@ -1,14 +1,13 @@
 package controller;
 
 import enums.Output;
-import enums.environmentEnums.Materials;
+import enums.environmentEnums.Material;
 import model.Game;
+import model.GovernanceResource;
 import model.Trade;
 import model.User;
-import model.buildings.Building;
 import model.buildings.Storage;
 
-import javax.swing.plaf.basic.BasicButtonUI;
 
 public class TradeController {
 
@@ -65,15 +64,14 @@ public class TradeController {
     }
 
     private Output checkTrade(Trade trade, String message) {
-        Storage senderStorage = (Storage) trade.getSender().getGovernance().getBuildingByName("stockpile");
-        Materials materials = Materials.getMaterialByName(trade.getResourceName());
-        Storage receiverStorage = (Storage) game.getCurrentPlayer().getGovernance().getBuildingByName(Storage.ChooseStorage(materials));
-        if (senderStorage.getAmountOfItemInStockpile("gold") < trade.getPrice())
+        GovernanceResource receiverStorage = game.getCurrentPlayer().getGovernance().getGovernanceResource();
+        Material materials = Material.getMaterialByName(trade.getResourceName());
+        if (trade.getSender().getGovernance().getGold() < trade.getPrice())
             return Output.NOT_ENOUGH_GOLD;
-        if (receiverStorage.getAmountOfItemInStockpile(trade.getResourceName()) < trade.getAmount())
+        if (receiverStorage.getAmountOfItemInStockpile(trade.getResource()) < trade.getAmount())
             return Output.NOT_ENOUGH_RESOURCE;
-        senderStorage.changeAmount(-trade.getPrice(), "gold");
-        receiverStorage.changeAmount(trade.getAmount(), trade.getResourceName());
+        trade.getSender().getGovernance().changeGoldAmount(-trade.getPrice());
+        receiverStorage.changeAmountOfItemInStockpile(trade.getResource(), trade.getAmount());
         trade.setReceiver(game.getCurrentPlayer());
         trade.setAccepted(true);
         trade.setMessage(message);

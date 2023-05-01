@@ -142,7 +142,7 @@ public class GameMenu extends Menu{
     }
     private Output buildEquipment(Matcher matcher) {
         String equipmentName = matcher.group("equipmentName");
-        return gameController.buildEquipment(equipmentName);
+        return gameController.buildWeapon(equipmentName);
     }
 
     private boolean parseMatcher(Matcher matcher) {

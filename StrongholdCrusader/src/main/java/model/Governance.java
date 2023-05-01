@@ -7,11 +7,12 @@ import java.util.ArrayList;
 
 public class Governance {
     private int popularity;
-
     private int population;
     private int foodRate;
     private int taxRate;
     private int fearRate;
+    private int gold;
+    private GovernanceResource governanceResource;
 
     private ArrayList<Unit> units = new ArrayList<>();
 
@@ -53,6 +54,14 @@ public class Governance {
         return population;
     }
 
+    public int getGold() {
+        return gold;
+    }
+
+    public GovernanceResource getGovernanceResource() {
+        return governanceResource;
+    }
+
     public void setPopulation(int population) {
         this.population = population;
     }
@@ -69,9 +78,7 @@ public class Governance {
         units.add(unit);
     }
 
-    public void removeUnit(Unit unit) {
-
-    }
+    public void removeUnit(Unit unit) {units.remove(unit);}
     public void addBuilding(Building building) {
         buildings.add(building);
     }
@@ -82,6 +89,10 @@ public class Governance {
                return building;
         }
         return null;
+    }
+
+    public void changeGoldAmount(int amount) {
+        gold += amount;
     }
 
 }

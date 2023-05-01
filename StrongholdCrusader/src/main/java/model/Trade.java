@@ -1,15 +1,14 @@
 package model;
 
-import enums.environmentEnums.Materials;
+import enums.environmentEnums.Material;
 
 import java.util.ArrayList;
 
 public class Trade {
     private User sender;
     private User receiver;
-    private Materials resource;
+    private Material resource;
     private int price;
-
     private int amount;
     private String message;
 
@@ -28,7 +27,7 @@ public class Trade {
         this.message = message;
     }
 
-    public Materials getResource() {
+    public Material getResource() {
         return resource;
     }
 

@@ -17,7 +17,7 @@ public class MapController {
     }
 
     public String showMap(int row, int column) {
-        if (gameController.validCordinate(row, column)) return Output.WRONG_COORDINATES.getString();
+        if (validCordinate(row, column)) return Output.WRONG_COORDINATES.getString();
         game.setCurrentMapX(row--);
         game.setGetCurrentMapY(column--);
         StringBuilder output = new StringBuilder();
@@ -83,5 +83,11 @@ public class MapController {
     }
     public String moveMap(int horizontalDisplacement, int verticalDisplacement) {
         return showMap(game.getCurrentMapX() + verticalDisplacement, game.getGetCurrentMapY() + horizontalDisplacement);
+    }
+
+    public boolean validCordinate(int x, int y) {
+        if (x >= 1 && x <= game.getCells().length && y >= 1 && y <= game.getCells()[0].length)
+            return true;
+        return false;
     }
 }
