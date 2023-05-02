@@ -12,7 +12,8 @@ public enum RegisterAndLoginCommands {
             "|(?<random>random))?" +
             "))){0,5}"),
 
-    LOGIN_USER("user login((( -(?<flag>(u|p))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}" +
+    LOGIN_USER("user login" +
+            "( \\-(?<flag>[up])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"+
             "((?<stayLoggedIn> --stay-logged-in)?)"),
     FORGET_PASSWORD("forgot my password - u (((?<username>\\S+)|(\"(?<username2>[^\"]+)\")))"),
     BACK("back"),

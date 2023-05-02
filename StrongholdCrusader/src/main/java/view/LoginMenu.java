@@ -2,6 +2,7 @@ package view;
 
 import controller.RegisterAndLoginController;
 import enums.Output;
+import enums.Validations;
 import enums.menuEnums.RegisterAndLoginCommands;
 
 import java.util.Scanner;
@@ -33,27 +34,16 @@ public class LoginMenu extends Menu {
             if (output != null) System.out.println(output.getString());
             else System.out.println("invalid command");
             if (output != null && output.equals(Output.SUCCESSFUL_LOGIN)) {
-                enterMainMenu(matcher.group("username"), matcher.group("username2"));
+                String username = Validations.getInfo("u", matcher.group());
+                enterMainMenu(username);
             }
             checkForPause(output);
         }
     }
 
     private Output loginUser(Matcher matcher) {
-        String username = null, password = null;
-        Matcher allMatcher = RegisterAndLoginCommands.getWholeMatcher(matcher.group(), RegisterAndLoginCommands.GROUP);
-        while (allMatcher.find()) {
-            switch (allMatcher.group("flag")) {
-                case "q":
-                    if (username != null) return null;
-                    if ((username = allMatcher.group("group")) == null) username = allMatcher.group("group2");
-                    break;
-                case "c":
-                    if (password != null) return null;
-                    if ((password = allMatcher.group("group")) == null)
-                        password = allMatcher.group("group2");
-            }
-        }
+        String username = Validations.getInfo("u", matcher.group());
+        String password = Validations.getInfo("p", matcher.group());
         Boolean isStayLoggedIn = (matcher.group("stayLoggedIn") != null);
         return RegisterAndLoginController.loginUser(username, password, isStayLoggedIn);
     }
@@ -76,8 +66,7 @@ public class LoginMenu extends Menu {
         }
     }
 
-    private void enterMainMenu(String username, String username2) {
-        if (username == null) username = username2;
+    private void enterMainMenu(String username) {
         System.out.println("main menu:");
         RegisterAndLoginController.enterMainMenu(username);
     }
