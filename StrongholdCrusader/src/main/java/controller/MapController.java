@@ -17,7 +17,7 @@ public class MapController {
     }
 
     public String showMap(int row, int column) {
-        if (gameController.validCordinate(row, column)) return Output.WRONG_COORDINATES.getString();
+        //if (gameController.validCordinate(row, column)) return Output.WRONG_COORDINATES.getString();
         game.setCurrentMapX(row--);
         game.setGetCurrentMapY(column--);
         StringBuilder output = new StringBuilder();

@@ -1,6 +1,6 @@
-import controller.MainController;
-import model.DataBase;
-import view.MainMenu;
+import controller.*;
+import model.*;
+import view.*;
 import view.RegisterMenu;
 
 public class Main {

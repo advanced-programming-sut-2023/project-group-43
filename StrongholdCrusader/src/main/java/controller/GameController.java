@@ -29,7 +29,7 @@ public class GameController {
     }
 
     public Output createUnit(String name, int count) {
-        Unit unit = ;
+        return null;
     }
 
     public Output repairCastle() {return null;}
@@ -52,7 +52,7 @@ public class GameController {
 
     public Output digTunnel(int x, int y) {return null;}
 
-    public Output buildWeapon (String ) {return null;}
+    public Output buildWeapon (String weapon) {return null;}
 
     public Output disbandUnit() {return null;}
 

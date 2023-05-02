@@ -18,7 +18,7 @@ public enum RegisterAndLoginCommands {
     BACK("back"),
     ENTER_LOGIN_MENU("enter login menu"),
     CHOOSE_PASSWORD_RECOVERY_QUESTION("question pick" +
-            "((( -(?<flag>(a|c|q))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){3}"),
+            "( \\-(?<flag>[acq])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
     ;
     private final String regex;

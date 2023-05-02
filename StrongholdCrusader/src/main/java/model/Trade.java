@@ -52,6 +52,10 @@ public class Trade {
         isAccepted = accepted;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

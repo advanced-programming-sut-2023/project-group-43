@@ -19,7 +19,7 @@ public enum Validations {
         Matcher matcher = RegisterAndLoginCommands.getWholeMatcher(input, RegisterAndLoginCommands.GROUP);
         String info = null;
         while (matcher.find()) {
-            if (flag.equals(matcher.group(flag))) {
+            if (flag.equals(matcher.group("flag"))) {
                 if (info != null) return null;
                 if ((info = matcher.group("group")) == null)
                     info = matcher.group("group2");
