@@ -1,10 +1,12 @@
 package controller;
 
 import java.lang.String;
+import java.util.ArrayList;
 
 import enums.Output;
 import model.*;
 import model.buildings.Building;
+import model.units.Unit;
 
 public class GameController {
 
@@ -26,7 +28,9 @@ public class GameController {
         return Output.SELECT_BUILDING;
     }
 
-    public Output createUnit(String type, int count) {return null;}
+    public Output createUnit(String type, int count) {
+
+    }
 
     public Output repairCastle() {return null;}
 
@@ -52,8 +56,23 @@ public class GameController {
 
     public Output disbandUnit() {return null;}
 
-    public void applyChanges() {}
+    //Update handler
+    public void applyChanges() {
+        for(int i=0 ; i < game.getCells().length ; i++){
+            for (int j = 0 ; j < game.getCells().length ; j++){
+                applyUnitChanges(game.getCells()[i][j].getUnits());
+                if(game.getCells()[i][j].getBuilding() != null)
+                    applyBuildingChanges(game.getCells()[i][j].getBuilding());
+            }
+        }
+    }
 
+    public void applyUnitChanges(ArrayList<Unit>units){
+
+    }
+    public void applyBuildingChanges(Building building){
+
+    }
     private void applyHitPointChange() {}
 
     private void applyDeathChange() {}
