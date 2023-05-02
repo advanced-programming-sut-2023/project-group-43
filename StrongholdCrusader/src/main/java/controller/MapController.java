@@ -33,8 +33,9 @@ public class MapController {
                         output.append(game.getCells()[row - 6 + h][column - 6 + i].getTexture().getColor());
                         output.append("#").append("\u001B[0m");
                     }
-                    output.append("|").append("\n");
+                    output.append("|");
                 }
+                output.append("\n");
             }
         }
         for (int i = 0; i < 11 * 7; i++) {

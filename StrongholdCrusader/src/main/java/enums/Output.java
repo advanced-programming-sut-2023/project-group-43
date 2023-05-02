@@ -19,7 +19,7 @@ public enum Output {
     INVALID_EMAIL_FORMAT("warning: email format is invalid"),
     CONFIRM_PASSWORD("please re-enter your password here:"),
     RANDOM_SLOGAN("your slogan is: "),
-    CHOOSE_PASSWORD_RECOVERY_QUESTION("Pick your security question: 1. What is my father’s name? 2. What" +
+    CHOOSE_PASSWORD_RECOVERY_QUESTION("Pick your security question: 1. What is my father’s name? 2. What " +
             "was my first pet’s name? 3. What is my mother’s last name?"),
     INVALID_PASSWORD_RECOVERY_QUESTION("warning: you have to choose a number between 1 to 3"),
     SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("user sign up successfully!"),

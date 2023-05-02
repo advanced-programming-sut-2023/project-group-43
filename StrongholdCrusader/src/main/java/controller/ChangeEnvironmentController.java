@@ -28,14 +28,18 @@ public class ChangeEnvironmentController {
 
     public Output generateMap(ArrayList<String> usernames, int row, int column, int turns) {
         game.addPlayer(currentUser);
+        game.setCurrentUser(currentUser);
         for (String username : usernames) {
             User user = DataBase.getInstance().getUserByUsername(username);
-            if (user == null) return Output.INVALID_USERNAME;
+            if (user == null)
+                return Output.INVALID_USERNAME;
             game.addPlayer(user);
         }
+        game.setCells(new Cell[row][column]);
         Cell[][] cells = new Cell[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
+                cells[i][j] = new Cell();
                 if (i % 9 == 0) cells[i][j].setTexture(Texture.GROUND);
                 else if (i % 9 == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
                 else if (i % 9 == 2) cells[i][j].setTexture(Texture.BOULDER);
@@ -184,14 +188,19 @@ public class ChangeEnvironmentController {
         User user = null;
         boolean isNextPlayerFound = false;
         for (User player: game.getPlayers()) {
-            if (isNextPlayerFound)
+            if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);
+                break;
+            }
             if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
                 isNextPlayerFound = true;
             }
         }
-        if (user == null) return "everyone has changed map please start game";
-        return currentUser.getUsername() + " can change map";
+        if (user == null) {
+            game.setCurrentPlayer(game.getPlayers().get(0));
+            return "everyone has changed map please start game";
+        }
+        return game.getCurrentPlayer() + " can change map";
     }
 
 }

@@ -94,11 +94,11 @@ public class RegisterMenu extends Menu {
         String input;
         Matcher recoveryMatcher;
         while (output == null || !output.equals(Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION)) {
-            input = scanner.nextLine();
             if (output != null)
                 System.out.println(output.getString());
             else
                 System.out.println("invalid command");
+            input = scanner.nextLine();
             output = null;
             if ((recoveryMatcher = RegisterAndLoginCommands.getMatcher
                     (input, RegisterAndLoginCommands.CHOOSE_PASSWORD_RECOVERY_QUESTION)) != null) {
@@ -126,8 +126,6 @@ public class RegisterMenu extends Menu {
 
     private boolean parseMatcher(Matcher matcher, String randomSlogan) {
         username = null;
-        password = null;
-        passwordConfirmation = null;
         nickname = null;
         slogan = null;
         email = null;

@@ -12,28 +12,28 @@ public enum GameMenuCommands {
     ENTER_GOVERNANCE_MENU("enter governance menu"),
     //choose and change items inside game
     SELECT_BUILDING("select building" +
-            "((( -(?<flag>(x|y))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     CREATE_UNIT("create unit" +
-            "((( -(?<flag>(c|t))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[ct])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     REPAIR_CASTLE("repair"),
     //people and units
     SELECT_UNIT("select unit" +
-            "((( -(?<flag>(x|y))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     MOVE_UNIT("move unit to" +
-            "((( -(?<flag>(x|y))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     SET_UNITS_STATE("set" +
-            "((( -(?<flag>(x|y|s))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){3}"),
+            "( \\-(?<flag>[xys])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     ATTACK("attack" +
-            "((( -(?<flag>(x|y))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     ATTACK_ENEMY("attack -e" +
-            "((( -(?<flag>(x|y))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     POUR_OIL("pour oil -d (?<direction>(up)|(down)|(left)|(right))"),
     DIG_TUNNEL("dig tunnel" +
-            "((( -(?<flag>(x|y))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     BUILD_EQUIPMENT("build -q (?<equipmentName>\\.+)"),
     DISBAND_UNIT("disband unit"),
     PATROL_UNIT("patrol unit" +
-            "((( -(?<flag>((x1)|(y1)|(x2)|(y2)))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){2}"),
+            "( \\-(?<flag>[(x1)|(y1)|(x2)|(y2)|(t)])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     ;
     private final String regex;
     private GameMenuCommands(String regex) {

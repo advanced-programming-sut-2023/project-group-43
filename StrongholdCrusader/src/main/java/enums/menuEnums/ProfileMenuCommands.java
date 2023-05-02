@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public enum ProfileMenuCommands {
     CHANGE_INFO("profile change -(?<flag>\\S+) " + "((?<info>\\S+)|(\"(?<info2>[^\"]+)\"))?"),
     CHANGE_PASSWORD("profile change password" +
-            "((( -(?<flag>(o|n))( ((?<group>\\S+)|(\"(?<group2>.+)\")))){2}"),
+            "( \\-(?<flag>[on])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     REMOVE_SLOGAN("Profile remove slogan"),
     DISPLAY_HIGHSCORE("profile display highscore"),
     DISPLAY_RANK("profile display rank"),

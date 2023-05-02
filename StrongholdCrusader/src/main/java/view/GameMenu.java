@@ -43,6 +43,7 @@ public class GameMenu extends Menu{
         Output output;
         Matcher matcher;
         System.out.println("game menu:");
+        gameController.getGame().setCurrentPlayer(gameController.getGame().getCurrentUser());
         while (turns > 0){
             for (int i = 0; i < numberOfPlayers; i++) {
                 onePlayerTurn();

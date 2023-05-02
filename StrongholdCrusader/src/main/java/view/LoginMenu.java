@@ -67,7 +67,6 @@ public class LoginMenu extends Menu {
     }
 
     private void enterMainMenu(String username) {
-        System.out.println("main menu:");
         RegisterAndLoginController.enterMainMenu(username);
     }
 
