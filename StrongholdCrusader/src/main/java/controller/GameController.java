@@ -86,7 +86,7 @@ public class GameController {
                 if (cell[i][j].getBuilding() != null) {
                     if (cell[i][j].getBuilding().getHp() == getBuildingDeathHitPoint()) {
                         cell[i][j].getBuilding().getOwner().getGovernance().removeBuilding(cell[i][j].getBuilding());
-                    cell[i][j].setBuilding(null);
+                        cell[i][j].setBuilding(null);
                     }
                 }
                 if (cell[i][j].getUnits() != null) {
