@@ -1,24 +1,23 @@
 package enums.unitEnums;
 
-import enums.Degrees.DamageDegree;
-import enums.environmentEnums.Materials;
+import enums.environmentEnums.Material;
 
 public enum ArmedWeapons {
     //TODO
     //tools ?
     //knight --> sword?
-    ARCHER("archer",Materials.BOW.getName()),
-    CROSSBOWMAN("crossbowman",Materials.BOW.getName()),
-    SPEARMAN("spearman",Materials.SPEAR.getName()),
-    SWORDSMAN("swordsman",Materials.SWORD.getName()),
-    KNIGHT("knight",Materials.SPEAR.getName()),
-    BLACK_MONK("black monk",Materials.CUDGEL.getName()),
-    ARCHER_BOW("archer bow",Materials.BOW.getName()),
-    SLAVE("slave",Materials.TORCH.getName()),
-    SLINGER("slinger",Materials.GRAVEL.getName()),
-    HORSE_ARCHER("horse archer",Materials.BOW.getName()),
-    ARABIAN_SWORDSMAN("arabian swordsman" ,Materials.SWORD.getName()),
-    FIRE_THROWER("fire thrower",Materials.TORCH.getName())
+    ARCHER("archer", Material.BOW.getName()),
+    CROSSBOWMAN("crossbowman", Material.BOW.getName()),
+    SPEARMAN("spearman", Material.SPEAR.getName()),
+    SWORDSMAN("swordsman", Material.SWORD.getName()),
+    KNIGHT("knight", Material.SPEAR.getName()),
+    BLACK_MONK("black monk", Material.CUDGEL.getName()),
+    ARCHER_BOW("archer bow", Material.BOW.getName()),
+    SLAVE("slave", Material.TORCH.getName()),
+    SLINGER("slinger", Material.GRAVEL.getName()),
+    HORSE_ARCHER("horse archer", Material.BOW.getName()),
+    ARABIAN_SWORDSMAN("arabian swordsman" , Material.SWORD.getName()),
+    FIRE_THROWER("fire thrower", Material.TORCH.getName())
     ;
     private String name;
     private String weapon;

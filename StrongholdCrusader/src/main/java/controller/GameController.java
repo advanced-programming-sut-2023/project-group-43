@@ -4,12 +4,14 @@ import java.lang.String;
 
 import enums.Output;
 import model.*;
-import model.buildings.Building;
+import model.units.Unit;
 
 public class GameController {
 
     private Game game;
-    private Building currentSelectedBuilding;
+    private boolean selected;
+    private int selectedX;
+    private int selectedY;
 
     public GameController(Game game) {
         this.game = game;
@@ -19,18 +21,16 @@ public class GameController {
         return game;
     }
 
-
-    public Output selectBuilding(int row, int column) {
-        if (!this.validCordinate(row, column)) return Output.WRONG_COORDINATES;
-        Building building = game.getCells()[row - 1][column - 1].getBuilding();
-        if (building != null) {
-            this.currentSelectedBuilding = building;
-            return Output.SELECT_BUILDING;
-        }
-        return Output.NO_BUILDING;
+    public Output selectBuilding(int x, int y) {
+        //TODO: if x and y ---> invalid ---> error
+        selectedX = x;
+        selectedY = y;
+        return Output.SELECT_BUILDING;
     }
 
-    public Output createUnit(String type, int count) {return null;}
+    public Output createUnit(String name, int count) {
+        Unit unit = ;
+    }
 
     public Output repairCastle() {return null;}
 
@@ -52,7 +52,7 @@ public class GameController {
 
     public Output digTunnel(int x, int y) {return null;}
 
-    public Output buildEquipment (String equipmentName) {return null;}
+    public Output buildWeapon (String ) {return null;}
 
     public Output disbandUnit() {return null;}
 
@@ -86,6 +86,11 @@ public class GameController {
 
     public void clearGame() {}
 
+    public void resetSelectCell(){
+        selectedX = 0;
+        selectedY = 0;
+    }
+
     public void goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
@@ -98,9 +103,5 @@ public class GameController {
         }
         if (user == null) game.setCurrentPlayer(game.getPlayers().get(0));
     }
-    public boolean validCordinate(int x, int y) {
-        if (x >= 1 && x <= game.getCells().length && y >= 1 && y <= game.getCells()[0].length)
-            return true;
-        return false;
-    }
+
 }

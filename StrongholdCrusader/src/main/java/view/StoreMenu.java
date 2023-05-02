@@ -1,10 +1,8 @@
 package view;
 
-import controller.GameController;
 import controller.StoreController;
-import enums.Output;
 import enums.menuEnums.StoreMenuCommands;
-import model.DataBase;
+
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -43,12 +41,12 @@ public class StoreMenu extends Menu{
     private String buy(Matcher matcher) {
         String itemName = matcher.group("itemName");
         int amount = Integer.parseInt(matcher.group("amount"));
-        return storeController.buy(itemName,amount);
+        return String.valueOf(storeController.buy(itemName,amount));
     }
 
     private String sell(Matcher matcher) {
         String itemName = matcher.group("itemName");
         int amount = Integer.parseInt(matcher.group("amount"));
-        return storeController.sell(itemName,amount);
+        return String.valueOf(storeController.sell(itemName,amount));
     }
 }

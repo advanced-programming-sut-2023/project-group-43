@@ -68,6 +68,14 @@ public enum Output {
     SUCCESSFUL_FOOD_RATE_CHANGE("food rate changed successfully!"),
     SUCCESSFUL_TAX_RATE_CHANGE("tax rate changed successfully!"),
     SUCCESSFUL_FEAR_RATE_CHANGE("fear rate changed successfully!"),
+    //Store outputs
+    ITEM_NOR_FOUND("Item not found!"),
+    NOT_ENOUGH_QUANTITY("Insufficient quantity!"),
+    NOT_ENOUGH_MONEY("Not enough money!"),
+    SUCCESSFUL_PURCHASE("The purchase was successful!"),
+    SUCCESSFUL_SALE("The sale was successful!"),
+
+
 
     //trade controller
     TRADE_ADDED("your trade request has added"),
