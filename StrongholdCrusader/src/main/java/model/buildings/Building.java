@@ -18,6 +18,14 @@ public class Building {
     private Cell cell;
 
     //building
+    private boolean hasLadder = false;
+
+    public boolean HasLadder() {
+        return hasLadder;
+    }
+    public void setLadder(boolean hasLadder) {
+        this.hasLadder = hasLadder;
+    }
     private ArrayList<Unit> units = new ArrayList<>();
 
     public Building(String name, User owner) {
