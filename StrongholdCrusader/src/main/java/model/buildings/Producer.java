@@ -32,5 +32,11 @@ public class Producer extends Building{
     public int getCapacity() {
         return capacity;
     }
+
+    public void produceMaterials() {
+        for(Material material: producedMaterials) {
+            getOwner().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(material, productionRate);
+        }
+    }
 }
 

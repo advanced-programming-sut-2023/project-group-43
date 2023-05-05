@@ -11,9 +11,11 @@ public class Converter extends Producer {
     public Converter(String name, User owner , int productionRate, int capacity) {
         super(name, owner, productionRate, capacity);
     }
-
-    public void produceMaterial() {};
-    public void consumeResource() {};
+    public void consumeResource() {
+        for(Material material: consumeMaterials) {
+            getOwner().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(material, getProductionRate());
+        }
+    }
 
     public ArrayList<Material> getConsumeMaterials() {
         return consumeMaterials;

@@ -12,16 +12,19 @@ public class BuildingBuilder {
         //TODO : we should declare people capacity with details
         switch (name) {
             case "small stone gatehouse":
-                return new CastleDepartment(name, owner, 8);
+                return new CastleDepartment(name, owner, 8, 0, 0);
             case "big stone gatehouse":
-                return new CastleDepartment(name, owner, 10);
+                return new CastleDepartment(name, owner, 10, 0, 0);
             case "draw bridge":
+                return new CastleDepartment(name, owner, 5, 0, 0);
             case "look out tower":
+                return new CastleDepartment(name, owner, 15, 10, 2);
             case "perimeter tower":
             case "defensive turret":
+                return new CastleDepartment(name, owner, 15, 20, 1);
             case "square tower":
             case "circle tower":
-                return new CastleDepartment(name, owner, 15);
+                return new CastleDepartment(name, owner, 15, 10, 1);
             case "siege tent":
             case "caged war dogs":
             case "pitch ditch":
