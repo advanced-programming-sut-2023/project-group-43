@@ -146,9 +146,9 @@ public class ChangeEnvironmentController {
     public Output dropBuilding(int x, int y, String type) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
-        boolean found = (UnitsBuilder.UnitsBuilder(type, game.getCurrentPlayer()) != null);
+        boolean found = (UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer()) != null);
         if (found) {
-            Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
+            Building building = BuildingBuilder.buildingBuilder(type, game.getCurrentPlayer());
             building.setCell(game.getCells()[x - 1][y - 1]);
             game.getCurrentPlayer().getGovernance().addBuilding(building);
         }
@@ -159,10 +159,10 @@ public class ChangeEnvironmentController {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (count <= 0) return Output.WRONG_COUNT;
-        boolean found = (UnitsBuilder.UnitsBuilder(type, game.getCurrentPlayer()) != null);
+        boolean found = (UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer()) != null);
         if (found) {
             for (int i = 0; i < count; i++) {
-                Unit unit = UnitsBuilder.UnitsBuilder(type, game.getCurrentPlayer());
+                Unit unit = UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer());
                 game.getCells()[x - 1][y - 1].addUnit(unit);
                 unit.setCell(game.getCells()[x - 1][y - 1]);
                 game.getCurrentPlayer().getGovernance().addUnit(unit);

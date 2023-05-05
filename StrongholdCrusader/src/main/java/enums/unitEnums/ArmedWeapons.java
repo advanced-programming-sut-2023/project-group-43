@@ -26,4 +26,12 @@ public enum ArmedWeapons {
         this.name = name;
         this.weapon = weapon;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getWeapon() {
+        return weapon;
+    }
 }

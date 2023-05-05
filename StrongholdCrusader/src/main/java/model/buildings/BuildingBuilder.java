@@ -6,7 +6,7 @@ public class BuildingBuilder {
 
     public static Converter converter;
     public static Manufacturer manufacturer;
-    public static Building BuildingBuilder(String name , User owner){
+    public static Building buildingBuilder(String name , User owner){
         //TODO : we should declare people capacity with details
         switch (name){
             case "small stone gatehouse":
