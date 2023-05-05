@@ -11,7 +11,6 @@ import model.units.Unit;
 public class GameController {
 
     private Game game;
-    private Building currentSelectedBuilding;
 
     public GameController(Game game) {
         this.game = game;
@@ -25,7 +24,7 @@ public class GameController {
             return Output.WRONG_COORDINATES;
         Building building = game.getCells()[row - 1][column - 1].getBuilding();
         if (building != null) {
-            this.currentSelectedBuilding = building;
+            game.setSelectedBuilding(building);
             return Output.SELECT_BUILDING;
         }
         return Output.NO_BUILDING;
