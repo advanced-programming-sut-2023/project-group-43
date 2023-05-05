@@ -29,6 +29,8 @@ public class ChangeEnvironmentController {
     public Output generateMap(ArrayList<String> usernames, int row, int column, int turns) {
         game.addPlayer(currentUser);
         game.setCurrentUser(currentUser);
+        game.setRow(row);
+        game.setColumn(column);
         for (String username : usernames) {
             User user = DataBase.getInstance().getUserByUsername(username);
             if (user == null)

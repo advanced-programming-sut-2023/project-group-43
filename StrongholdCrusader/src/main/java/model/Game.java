@@ -9,6 +9,9 @@ public class Game {
     private User currentUser;
 
     private User currentPlayer;
+
+    private int row;
+    private int column;
     private ArrayList<User> players = new ArrayList<>();
 
     private ArrayList<Trade> trades = new ArrayList<>();
@@ -102,6 +105,22 @@ public class Game {
 
     public void addPlayer(User player) {
         players.add(player);
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public int getColumn() {
+        return column;
     }
 
     public void addTrade(Trade trade) {

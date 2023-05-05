@@ -1,13 +1,11 @@
 package controller;
 
-import java.lang.String;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import enums.Output;
-import model.*;
-import model.units.Unit;
+import model.Cell;
+import model.Game;
+import model.User;
+
+import java.util.ArrayList;
 
 public class GameController {
 
@@ -35,61 +33,102 @@ public class GameController {
         return null;
     }
 
-    public Output repairCastle() {return null;}
+    public Output repairCastle() {
+        return null;
+    }
 
-    public Output selectUnit(int x, int y) {return null;}
+    public Output selectUnit(int x, int y) {
+        return null;
+    }
 
-    public Output moveUnit(int x, int y) {return null;}
+    public Output moveUnit(int x, int y) {
+        return null;
+    }
 
-    public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
+    public Output patrolUnit(int x1, int y1, int x2, int y2) {
+        return null;
+    }
 
-    public Output setUnitState(int x, int y, String state) {return null;}
+    public Output setUnitState(int x, int y, String state) {
+        return null;
+    }
 
-    public Output attack(int x, int y ,String item) {return null;}
+    public Output attack(int x, int y, String item) {
+        return null;
+    }
 
-    private Output attackToEnemy(int x, int y) {return null;}
+    private Output attackToEnemy(int x, int y) {
+        return null;
+    }
 
-    private Output aearialAttack(int x, int y) {return null;}
+    private Output aearialAttack(int x, int y) {
+        return null;
+    }
 
-    public Output pourOil(String direction) {return null;}
+    public Output pourOil(String direction) {
+        return null;
+    }
 
-    public Output digTunnel(int x, int y) {return null;}
+    public Output digTunnel(int x, int y) {
+        return null;
+    }
 
-    public Output buildWeapon (String weapon) {return null;}
+    public Output buildWeapon(String weapon) {
+        return null;
+    }
 
-    public Output disbandUnit() {return null;}
+    public Output disbandUnit() {
+        return null;
+    }
 
-    public void applyChanges() {}
+    public void applyChanges() {
+    }
 
-    private void applyHitPointChange() {}
+    private void applyHitPointChange() {
+    }
 
-    private void applyDeathChange() {}
+    private void applyDeathChange() {
+    }
 
-    public void updateForNextTurn() {}
+    public void updateForNextTurn() {
+    }
 
-    private void updateResources() {}
+    private void updateResources() {
+    }
 
-    private void updateUnemployedPopulation() {}
+    private void updateUnemployedPopulation() {
+    }
 
-    private void updateTaxIncome() {}
+    private void updateTaxIncome() {
+    }
 
-    private void updatePopularity() {}
+    private void updatePopularity() {
+    }
 
-    private void updateFoodRate() {}
+    private void updateFoodRate() {
+    }
 
-    private void updateTaxRate() {}
+    private void updateTaxRate() {
+    }
 
-    private void updateEfficiency() {}
+    private void updateEfficiency() {
+    }
 
-    public boolean isGameEnded() {return false;}
+    public boolean isGameEnded() {
+        return false;
+    }
 
-    public String showGameResult() {return null;}
+    public String showGameResult() {
+        return null;
+    }
 
-    private void updateScores() {}
+    private void updateScores() {
+    }
 
-    public void clearGame() {}
+    public void clearGame() {
+    }
 
-    public void resetSelectCell(){
+    public void resetSelectCell() {
         selectedX = 0;
         selectedY = 0;
     }
@@ -97,7 +136,7 @@ public class GameController {
     public void goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
-        for (User player: game.getPlayers()) {
+        for (User player : game.getPlayers()) {
             if (isNextPlayerFound)
                 game.setCurrentPlayer(player);
             if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
@@ -107,4 +146,49 @@ public class GameController {
         if (user == null) game.setCurrentPlayer(game.getPlayers().get(0));
     }
 
+    public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty) {
+        Cell[][] cells = game.getCells();
+        ArrayList<Cell> path = new ArrayList<>();
+        if (cells[tx][ty].isBlocked()) return null;
+        int currentX = sx;
+        int currentY = sy;
+        path.add(cells[tx][ty]);
+        if (backTrack(cells, path, tx, ty)) return path;
+        return null;
+    }
+
+    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int tx, int ty) {
+        Cell currentCell = path.get(path.size() - 1);
+        int currentX = currentCell.getX();
+        int currentY = currentCell.getY();
+        if (currentX == tx && currentY == ty) return true;
+        int[][] array = prioritizePathFinding(currentX, currentY, tx, ty);
+        for (int i = 0; i < 4; i++) {
+            if (currentX + array[0][i] >= 0 && currentX + array[0][i] < game.getRow() &&
+                    currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn())  {
+                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked()) {
+                    path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                    if (backTrack(cells, path, tx, ty)) return true;
+                    path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                }
+            }
+        }
+        return false;
+    }
+
+    private int[][] prioritizePathFinding(int currentX, int currentY, int tx, int ty) {
+        if (currentX > tx && currentY > ty) {
+            int[][] array = {{-1, 0, 1, 0}, {0, -1, 0, 1}};
+            return array;
+        } else if (currentX > tx && currentY < ty) {
+            int[][] array = {{-1, 0, 1, 0}, {0, 1, 0, -1}};
+            return array;
+        } else if (currentX < tx && currentY > ty) {
+            int[][] array = {{1, 0, -1, 0}, {0, -1, 0, 1}};
+            return array;
+        } else {
+            int[][] array = {{1, 0, -1, 0}, {0, 1, 0, -1}};
+            return array;
+        }
+    }
 }

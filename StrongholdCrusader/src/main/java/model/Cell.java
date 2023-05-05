@@ -1,10 +1,10 @@
 package model;
 
-import enums.environmentEnums.*;
+import enums.environmentEnums.Texture;
+import enums.environmentEnums.TreeType;
 import model.buildings.Building;
 import model.units.Unit;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Cell {
@@ -17,6 +17,25 @@ public class Cell {
     private boolean hasRock;
     private String rockDirection;
     private int cellSize;
+
+    private int x;
+    private int y;
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public int getCellSize() {
         return cellSize;
@@ -75,10 +94,19 @@ public class Cell {
     public void setUnits(ArrayList<Unit> units) {
         this.units = units;
     }
+
     public void addUnit(Unit unit) {
         units.add(unit);
     }
-    public void removeUnit(Unit unit) {
 
+    public void removeUnit(Unit unit) {
+        units.remove(unit);
+    }
+
+    public boolean isBlocked() {
+        if (this.building != null) return true;
+        if (this.hasRock) return true;
+        if (this.texture.isPassable()) return false;
+        return true;
     }
 }
