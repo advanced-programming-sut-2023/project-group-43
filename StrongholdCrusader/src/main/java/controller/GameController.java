@@ -10,7 +10,6 @@ import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
-import model.buildings.Storage;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 
@@ -73,7 +72,11 @@ public class GameController {
     }
 
     public Output attack(int x, int y ,String item) {
-
+        if(item.equals("e"))
+            return attackToEnemy(x,y);
+        if(item.equals("x"))
+            return aearialAttack(x,y);
+        return null;
     }
 
     private Output attackToEnemy(int x, int y) {return null;}
@@ -84,7 +87,8 @@ public class GameController {
 
     public Output digTunnel(int x, int y) {return null;}
 
-    public Output buildEquipment (String equipmentName) {return null;}
+    public Output buildEquipment(String weaponName) {
+    }
 
     public Output disbandUnit() {return null;}
 
