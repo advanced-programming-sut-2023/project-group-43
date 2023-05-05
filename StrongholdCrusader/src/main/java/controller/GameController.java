@@ -3,7 +3,9 @@ package controller;
 import java.lang.String;
 import java.util.ArrayList;
 
+import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
+import enums.environmentEnums.Material;
 import model.*;
 import model.buildings.Building;
 
@@ -34,7 +36,15 @@ public class GameController {
 
     public Output createUnit(String type, int count) {return null;}
 
-    public Output repairCastle() {return null;}
+    public Output repairCastle() {
+        if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
+            return Output.NOT_ENOUGH_STONE;
+        else {
+            game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
+            game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
+            return Output.SUCCESSFUL_REPAIRMENT;
+        }
+    }
 
     public Output selectUnit(int x, int y) {return null;}
 

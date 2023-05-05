@@ -1,6 +1,8 @@
 package enums;
 
 public enum Output {
+    NOT_ENOUGH_STONE("warning : not enough stone for repairment!"),
+    SUCCESSFUL_REPAIRMENT("repairment done successfully"),
     CAPTCHA_MATCHED("captcha matched"),
     CAPTCHA_NOT_MATCHED("warning : captcha not matched!"),
     NO_BUILDING("warning : no building in this coordination!"),
@@ -78,7 +80,6 @@ public enum Output {
     WRONG_UNIT_NAME("wrong unit name"),
     SUCCESSFUL_UNIT_CREATION("Unit created successfully!"),
     NOT_ENOUGH_POPULATION("Not enough population!"),
-
 
 
     //trade controller
