@@ -16,9 +16,9 @@ public class CastleDepartment extends Building {
     private String gateName;
     private CastleDepartment drawBridge;
 
-    public CastleDepartment(String name, User owner, int hitPoint, int peopleCapacity) {
+    public CastleDepartment(String name, User owner, int peopleCapacity) {
         super(name , owner);
-        this.hitPoint = hitPoint;
+        this.hitPoint = BuildingEnum.getBuildingStructureByName(name).getHp();
         this.peopleCapacity = peopleCapacity;
     }
 
