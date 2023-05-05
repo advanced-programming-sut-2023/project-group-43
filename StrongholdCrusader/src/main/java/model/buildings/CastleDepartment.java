@@ -3,6 +3,7 @@ import enums.BuildingEnums.BuildingEnum;
 import model.Cell;
 import model.Game;
 import model.User;
+import model.units.Unit;
 
 public class CastleDepartment extends Building {
 
@@ -10,13 +11,18 @@ public class CastleDepartment extends Building {
     private final int peopleCapacity;
     private boolean rightEntrance;
     private boolean gateIsOpen = true;
+
+    private int defendRange;
+    private int fireRange;
     private String gateName;
     private CastleDepartment drawBridge;
 
-    public CastleDepartment(String name, User owner, int peopleCapacity) {
+    public CastleDepartment(String name, User owner, int peopleCapacity, int defendRange, int fireRange) {
         super(name , owner);
         this.hitPoint = BuildingEnum.getBuildingStructureByName(name).getHp();
         this.peopleCapacity = peopleCapacity;
+        this.defendRange = defendRange;
+        this.fireRange = fireRange;
     }
 
     public void reduceEnemySpeed(Cell cell) {
@@ -27,7 +33,19 @@ public class CastleDepartment extends Building {
             }
         }
     }
-    public void attackEnemy() {}
+    public void attackEnemy(Game game, int x, int y) {
+        int[][] array = {{1, 0, -1, 0, -1, -1, 1, 1}, {0, 1, 0, -1, -1, 1, -1, 1}};
+        Cell[][] cells = game.getCells();
+        for (int i = 0; i < 8; i++) {
+            if (x + array[0][i] > 0 && x + array[0][i] < game.getRow() && y + array[1][i] > 0 && y + array[1][i] < game.getColumn()) {
+                for (Unit unit: cells[x + array[0][i]][y + array[1][i]].getUnits()) {
+                    if (!unit.getOwner().getUsername().equals(game.getCurrentPlayer().getUsername())) {
+                        unit.setHitPoint(unit.getHitPoint() - this.defendRange);
+                    }
+                }
+            }
+        }
+    }
 
     public int getHitPoint() {
         return hitPoint;
@@ -75,29 +93,16 @@ public class CastleDepartment extends Building {
     }
     public CastleDepartment dropDrawBridge (Game game, int x, int y) {
         Cell[][] cell = game.getCells();
-        Building building = cell[x + 1][y].getBuilding();
-        if (building instanceof CastleDepartment &&
-                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
-                !((CastleDepartment)building).isRightEntrance()) {
-            return (CastleDepartment) building;
-        }
-        building = cell[x - 1][y].getBuilding();
-        if (building instanceof CastleDepartment &&
-                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
-                !((CastleDepartment)building).isRightEntrance()) {
-            return (CastleDepartment) building;
-        }
-        building = cell[x][y + 1].getBuilding();
-        if (building instanceof CastleDepartment &&
-                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
-                ((CastleDepartment)building).isRightEntrance()) {
-            return (CastleDepartment) building;
-        }
-        building = cell[x][y - 1].getBuilding();
-        if (building instanceof CastleDepartment &&
-                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
-                ((CastleDepartment)building).isRightEntrance()) {
-            return (CastleDepartment) building;
+        int[][] array = {{1, 0, -1, 0}, {0, 1, 0, -1}};
+        for (int i = 0; i < 4; i++) {
+            if (x + array[0][i] > 0 && x + array[0][i] < game.getRow() && y + array[1][i] > 0 && y + array[1][i] < game.getColumn()) {
+                Building building = cell[x + array[0][i]][y + array[1][i]].getBuilding();
+                if (building instanceof CastleDepartment &&
+                        (building.getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || building.getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
+                        !((CastleDepartment) building).isRightEntrance()) {
+                    return (CastleDepartment) building;
+                }
+            }
         }
         return null;
     }

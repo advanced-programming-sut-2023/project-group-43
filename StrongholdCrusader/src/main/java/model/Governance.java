@@ -91,6 +91,15 @@ public class Governance {
         return null;
     }
 
+    public ArrayList<Building> getAllBuildingsByName(String name) {
+        ArrayList<Building> allBuildings = new ArrayList<>();
+        for (Building building: buildings) {
+            if (building.getName().equals(name))
+                allBuildings.add(building);
+        }
+        return allBuildings;
+    }
+
     public void changeGoldAmount(int amount) {
         gold += amount;
     }

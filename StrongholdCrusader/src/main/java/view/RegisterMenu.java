@@ -84,12 +84,20 @@ public class RegisterMenu extends Menu {
             output = createRandomPassword(matcher, output, randomSlogan);
         }
         if (output.equals(Output.CHOOSE_PASSWORD_RECOVERY_QUESTION)) {
-            output = choosePasswordRecoveryQuestion(matcher, output, randomSlogan);
+            output = choosePasswordRecoveryQuestion(matcher, output, randomSlogan, false);
+        } if (output.equals(Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION)) {
+            String captcha = RegisterAndLoginController.generateCaptcha();
+            System.out.println(RegisterAndLoginController.asciiArt(captcha));
+            System.out.println("enter captcha:");
+            String input = scanner.nextLine();
+            output = RegisterAndLoginController.checkCaptcha(captcha, input);
+        } if (output.equals(Output.CAPTCHA_MATCHED)) {
+            output = choosePasswordRecoveryQuestion(matcher, output, randomSlogan, true);
         }
         return output;
     }
 
-    private Output choosePasswordRecoveryQuestion(Matcher matcher, Output output, String randomSlogan) {
+    private Output choosePasswordRecoveryQuestion(Matcher matcher, Output output, String randomSlogan, boolean hasCaptcha) {
         Scanner scanner = Menu.getScanner();
         String input;
         Matcher recoveryMatcher;
@@ -112,8 +120,10 @@ public class RegisterMenu extends Menu {
                 int questionNumber = Integer.parseInt(number);
                 if (randomPassword != null) password = randomPassword;
                 if (randomSlogan != null) slogan = randomSlogan;
-                output = RegisterAndLoginController.choosePasswordRecoveryQuestion(username,
-                        password, nickname, email, slogan, questionNumber, answer, answerConfirmation);
+                if (!hasCaptcha)
+                output = RegisterAndLoginController.choosePasswordRecoveryQuestion(questionNumber, answer, answerConfirmation);
+                else
+                    output = RegisterAndLoginController.completeRegister(username, password, nickname, email, slogan, questionNumber, answer);
             }
         }
         return output;

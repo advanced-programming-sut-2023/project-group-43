@@ -1,10 +1,7 @@
 package controller;
 import enums.Output;
-import model.Camera;
 import model.Cell;
 import model.Game;
-
-import java.awt.*;
 
 public class MapController {
 
