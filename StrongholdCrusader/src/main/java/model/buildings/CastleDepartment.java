@@ -29,6 +29,7 @@ public class CastleDepartment extends Building {
     }
     public void incearseFireRange(ArrayList<Unit> units) {
         for (Unit unit: units) {
+
         }
     }
 

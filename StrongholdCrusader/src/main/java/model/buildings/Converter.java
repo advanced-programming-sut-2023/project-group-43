@@ -12,7 +12,9 @@ public class Converter extends Producer {
         super(name, owner, productionRate, capacity);
     }
 
-    public void produceMaterial() {};
+    public void produceMaterial() {
+
+    }
     public void consumeResource() {};
 
     public ArrayList<Material> getConsumeMaterials() {
