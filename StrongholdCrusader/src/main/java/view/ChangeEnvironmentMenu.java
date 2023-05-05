@@ -142,9 +142,10 @@ public class ChangeEnvironmentMenu extends Menu {
         System.out.println("Enter players username:");
         ArrayList<String> playersArraylist = new ArrayList<>();
         input = scanner.nextLine();
-        while (!input.equals("end")) {
-            playersArraylist.add(scanner.next());
+        while (true) {
             input = scanner.nextLine();
+            if(input.matches("\\S*end\\S*")) break;
+            playersArraylist.add(input);
         }
         System.out.println("number of turns:");
         input = scanner.nextLine();

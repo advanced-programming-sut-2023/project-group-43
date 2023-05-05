@@ -97,4 +97,13 @@ public class Governance {
         return null;
     }
 
+    public ArrayList<Building> getListOfBuildingByName(String name) {
+        ArrayList<Building> listOfBuildings = new ArrayList<>();
+        for (Building building: buildings) {
+            if (building.getName().equals(name))
+                listOfBuildings.add(building);
+        }
+        return listOfBuildings;
+    }
+
 }

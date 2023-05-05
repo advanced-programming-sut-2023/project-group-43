@@ -1,5 +1,4 @@
 package model.buildings;
-import enums.environmentEnums.Materials;
 import model.User;
 
 public class Manufacturer extends Producer {

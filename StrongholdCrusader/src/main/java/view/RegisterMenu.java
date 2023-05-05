@@ -34,8 +34,8 @@ public class RegisterMenu extends Menu {
             }
             if (output != null) {
                 output = checkOutput(matcher, output);
-                System.out.println(output.getString());
-            } else System.out.println("invalid command");
+            } if (output == null) System.out.println("invalid command");
+            else System.out.println(output.getString());
         }
     }
 
@@ -103,13 +103,13 @@ public class RegisterMenu extends Menu {
             if ((recoveryMatcher = RegisterAndLoginCommands.getMatcher
                     (input, RegisterAndLoginCommands.CHOOSE_PASSWORD_RECOVERY_QUESTION)) != null) {
                 parseMatcher(matcher, randomSlogan);
-                String answer = Validations.getInfo("a", matcher.group());
-                String answerConfirmation = Validations.getInfo("c", matcher.group());
-                String number = Validations.getInfo("q", matcher.group());
+                String answer = Validations.getInfo("a", recoveryMatcher.group());
+                String answerConfirmation = Validations.getInfo("c", recoveryMatcher.group());
+                String number = Validations.getInfo("q", recoveryMatcher.group());
                 if (number == null || answerConfirmation == null || answer == null) return null;
                 if(!number.matches("\\d+"))
                     return Output.INVALID_PASSWORD_RECOVERY_QUESTION;
-                int questionNumber = Integer.parseInt(recoveryMatcher.group("number"));
+                int questionNumber = Integer.parseInt(number);
                 if (randomPassword != null) password = randomPassword;
                 if (randomSlogan != null) slogan = randomSlogan;
                 output = RegisterAndLoginController.choosePasswordRecoveryQuestion(username,
@@ -126,8 +126,6 @@ public class RegisterMenu extends Menu {
 
     private boolean parseMatcher(Matcher matcher, String randomSlogan) {
         username = null;
-        password = null;
-        passwordConfirmation = null;
         nickname = null;
         slogan = null;
         email = null;

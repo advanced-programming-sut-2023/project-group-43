@@ -1,13 +1,13 @@
 package model.buildings;
 
-import enums.environmentEnums.Materials;
+import enums.environmentEnums.Material;
 import model.User;
 
 import java.util.ArrayList;
 
 public class Producer extends Building{
 
-    private ArrayList<Materials> producedMaterials = new ArrayList<>();
+    private ArrayList<Material> producedMaterials = new ArrayList<>();
     private final int productionRate;
     private final int capacity;
 
@@ -17,11 +17,11 @@ public class Producer extends Building{
         this.capacity = capacity;
     }
 
-    public void addProducedMaterial(Materials material){
+    public void addProducedMaterial(Material material){
         producedMaterials.add(material);
     }
 
-    public ArrayList<Materials> getProducedMaterials() {
+    public ArrayList<Material> getProducedMaterials() {
         return producedMaterials;
     }
 

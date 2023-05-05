@@ -9,9 +9,9 @@ public class Game {
     private User currentUser;
 
     private User currentPlayer;
-    private ArrayList<User> players;
+    private ArrayList<User> players = new ArrayList<>();
 
-    private ArrayList<Trade> trades;
+    private ArrayList<Trade> trades = new ArrayList<>();
 
     private static int tradeId = 0;
     private Cell[][] cells;

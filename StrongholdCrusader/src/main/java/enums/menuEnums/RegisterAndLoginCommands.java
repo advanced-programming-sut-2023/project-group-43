@@ -12,13 +12,14 @@ public enum RegisterAndLoginCommands {
             "|(?<random>random))?" +
             "))){0,5}"),
 
-    LOGIN_USER("user login((( -(?<flag>(u|p))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}" +
+    LOGIN_USER("user login" +
+            "( \\-(?<flag>[up])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"+
             "((?<stayLoggedIn> --stay-logged-in)?)"),
     FORGET_PASSWORD("forgot my password - u (((?<username>\\S+)|(\"(?<username2>[^\"]+)\")))"),
     BACK("back"),
     ENTER_LOGIN_MENU("enter login menu"),
     CHOOSE_PASSWORD_RECOVERY_QUESTION("question pick" +
-            "((( -(?<flag>(a|c|q))( ((?<group>\\S+)|(\"(?<group2[^\"].+)\")))){3}"),
+            "( \\-(?<flag>[acq])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
     ;
     private final String regex;

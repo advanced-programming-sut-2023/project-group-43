@@ -43,6 +43,7 @@ public class GameMenu extends Menu{
         Output output;
         Matcher matcher;
         System.out.println("game menu:");
+        gameController.getGame().setCurrentPlayer(gameController.getGame().getCurrentUser());
         while (turns > 0){
             for (int i = 0; i < numberOfPlayers; i++) {
                 onePlayerTurn();
@@ -142,7 +143,8 @@ public class GameMenu extends Menu{
     }
     private Output buildEquipment(Matcher matcher) {
         String equipmentName = matcher.group("equipmentName");
-        return gameController.buildEquipment(equipmentName);
+        return null;
+        //return gameController.buildEquipment(equipmentName);
     }
 
     private boolean parseMatcher(Matcher matcher) {

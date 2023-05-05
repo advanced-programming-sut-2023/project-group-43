@@ -3,6 +3,7 @@ package view;
 import controller.GameController;
 import controller.MapController;
 import enums.Output;
+import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
 import model.DataBase;
 import model.User;
@@ -44,15 +45,15 @@ public class MapMenu extends Menu{
     }
 
     public void showMap(Matcher matcher) {
-        int row = Integer.parseInt(matcher.group("x"));
-        int column = Integer.parseInt(matcher.group("y"));
+        String row = Validations.getInfo("x", matcher.group());
+        String column = Validations.getInfo("x", matcher.group());
 
-        mapController.showMap(row, column);
+        System.out.println(mapController.showMap(Integer.parseInt(row), Integer.parseInt(column)));
     }
     public void showMapDetails(Matcher matcher) {
-        int row = Integer.parseInt(matcher.group("x"));
-        int column = Integer.parseInt(matcher.group("y"));
-        mapController.showMapDetails(row, column);
+        int row = Integer.parseInt(Validations.getInfo("x", matcher.group()));
+        int column = Integer.parseInt(Validations.getInfo("y", matcher.group()));
+        System.out.println(mapController.showMapDetails(row, column));
     }
     public void moveMap(Matcher matcher) {
         int horizontalDisplacement = 0;
@@ -106,6 +107,6 @@ public class MapMenu extends Menu{
             }
             else horizontalDisplacement = -1;
         }
-        mapController.moveMap(horizontalDisplacement, verticalDisplacement);
+        System.out.println(mapController.moveMap(horizontalDisplacement, verticalDisplacement));
     }
 }

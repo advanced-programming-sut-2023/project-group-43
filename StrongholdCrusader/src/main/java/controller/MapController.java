@@ -17,7 +17,7 @@ public class MapController {
     }
 
     public String showMap(int row, int column) {
-        if (gameController.validCordinate(row, column)) return Output.WRONG_COORDINATES.getString();
+        //if (gameController.validCordinate(row, column)) return Output.WRONG_COORDINATES.getString();
         game.setCurrentMapX(row--);
         game.setGetCurrentMapY(column--);
         StringBuilder output = new StringBuilder();
@@ -33,8 +33,9 @@ public class MapController {
                         output.append(game.getCells()[row - 6 + h][column - 6 + i].getTexture().getColor());
                         output.append("#").append("\u001B[0m");
                     }
-                    output.append("|").append("\n");
+                    output.append("|");
                 }
+                output.append("\n");
             }
         }
         for (int i = 0; i < 11 * 7; i++) {
