@@ -22,9 +22,9 @@ public enum Output {
     CHOOSE_PASSWORD_RECOVERY_QUESTION("Pick your security question: 1. What is my father’s name? 2. What " +
             "was my first pet’s name? 3. What is my mother’s last name?"),
     INVALID_PASSWORD_RECOVERY_QUESTION("warning: you have to choose a number between 1 to 3"),
-    SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("user sign up successfully!"),
-    INCORRECT_ANSWER_CONFIRMATION("warning: answer and answer confirmation aren't matched")
-    ,
+    SUCCESSFUL_PASSWORD_RECOVERY_QUESTION("password recovery question has chosen successfully!"),
+    SUCCESSFUL_REGISTER("user sign up successfully!"),
+    INCORRECT_ANSWER_CONFIRMATION("warning: answer and answer confirmation aren't matched"),
     DUPLICATE_NICKNAME("warning : duplicate nickname!"),
     SUCCESSFUL_EMAIL_CHANGE("email changed successfully"),
     SUCCESSFUL_NICKNAME_CHANGE("nickname changed successfully"),
@@ -39,7 +39,7 @@ public enum Output {
     INAPPROPRIATE_GROUND_FOR_TREE("warning : the soil is not suitable for dropping the tree"),
     NONEXISTENT_USERNAME("warning: this username does not exist"),
     INCORRECT_PASSWORD("Username and password didn't match!"),
-    SUCCESSFUL_LOGIN("user logged in successfully!"),
+    SUCCESSFUL_LOGIN("enter captcha to login"),
     CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
     WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
     //
@@ -86,9 +86,9 @@ public enum Output {
     INCORRECT_ID("the trade doesn't exist"),
     TRADE_ACCEPTED("trade accepted successfully"),
     NOT_ENOUGH_RESOURCE("you don't have enough resource to send others"),
-    NOT_ENOUGH_GOLD("the sender doesnt have enough gold")
+    NOT_ENOUGH_GOLD("the sender doesnt have enough gold"),
     //end of trade controller
-    ;
+    INVALID_NUMBER("invalid number");
     private String string;
 
     private Output(String string) {

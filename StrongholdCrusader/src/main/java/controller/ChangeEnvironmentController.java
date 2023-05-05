@@ -154,7 +154,7 @@ public class ChangeEnvironmentController {
             return Output.WRONG_COORDINATES;
         boolean found = (UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer()) != null);
         if (found) {
-            Building building = BuildingBuilder.buildingBuilder(type, game.getCurrentPlayer());
+            Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
             building.setCell(game.getCells()[x - 1][y - 1]);
             game.getCurrentPlayer().getGovernance().addBuilding(building);
         }

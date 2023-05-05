@@ -157,7 +157,8 @@ public class RegisterAndLoginController {
         return slogans[random.nextInt(7)];
     }
 
-    public static void asciiArt(String captcha) {
+    public static String asciiArt(String captcha) {
+        String output = "";
         String[] line = new String[8];
         for (int i = 1; i < 8; i++) {
             line[i] = "";
@@ -282,8 +283,9 @@ public class RegisterAndLoginController {
             }
         }
         for (int i = 1; i < 8; i++) {
-            System.out.println(line[i]);
+            output += line[i] + "\n";
         }
+        return output;
     }
     public static String generateCaptcha() {
         int n = 4;
@@ -308,12 +310,7 @@ public class RegisterAndLoginController {
         mainMenu.run();
     }
 
-    public static Output choosePasswordRecoveryQuestion(String username,
-                                                        String password,
-                                                        String nickname,
-                                                        String email,
-                                                        String slogan,
-                                                        int passwordRecoveryQuestionNumber,
+    public static Output choosePasswordRecoveryQuestion(int passwordRecoveryQuestionNumber,
                                                         String passwordRecoveryAnswer,
                                                         String answerConfirmation) {
         String passwordRecoveryQuestion = makePasswordRecoveryQuestion(passwordRecoveryQuestionNumber);
@@ -321,10 +318,21 @@ public class RegisterAndLoginController {
             return Output.INVALID_PASSWORD_RECOVERY_QUESTION;
         if (!passwordRecoveryAnswer.equals(answerConfirmation))
             return Output.INCORRECT_ANSWER_CONFIRMATION;
+        return Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION;
+    }
+
+    public static Output completeRegister(String username,
+                                          String password,
+                                          String nickname,
+                                          String email,
+                                          String slogan,
+                                          int passwordRecoveryQuestionNumber,
+                                          String passwordRecoveryAnswer) {
+        String passwordRecoveryQuestion = makePasswordRecoveryQuestion(passwordRecoveryQuestionNumber);
         String SHA = makeShaCode(password);
         User user = new User(username, SHA, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan);
         DataBase.getInstance().addUser(user);
-        return Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION;
+        return Output.SUCCESSFUL_REGISTER;
     }
 
     private static String makePasswordRecoveryQuestion(int number) {

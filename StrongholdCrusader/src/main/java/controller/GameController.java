@@ -4,8 +4,13 @@ import java.lang.String;
 import java.util.ArrayList;
 
 import enums.Output;
+import enums.environmentEnums.Material;
+import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
+import model.units.Troop;
+import model.units.Unit;
+import model.units.UnitsBuilder;
 
 public class GameController {
 
@@ -32,7 +37,26 @@ public class GameController {
         return Output.NO_BUILDING;
     }
 
-    public Output createUnit(String type, int count) {return null;}
+
+    //create unit function should run during the turn and after updating add the users that has been built.
+    public Output createUnit(String unitName, int count) {
+        if(UnitsEnum.getUnitByName(unitName).equals(null))
+            return Output.WRONG_UNIT_NAME;
+        if(count <= 0)
+            return Output.INVALID_NUMBER; //TODO
+        Unit unit = UnitsBuilder.unitsBuilder(unitName , game.getCurrentPlayer());
+        return checkUnitSupplies(unit);
+    }
+
+    public Output checkUnitSupplies(Unit unit){
+        if(unit.getCost() > game.getCurrentPlayer().getGovernance().getGold())
+            return Output.NOT_ENOUGH_MONEY;
+        if(unit instanceof Troop){
+
+        }
+
+        return null;
+    }
 
     public Output repairCastle() {return null;}
 
