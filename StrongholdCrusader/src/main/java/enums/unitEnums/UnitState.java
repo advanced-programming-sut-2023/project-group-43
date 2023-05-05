@@ -4,6 +4,5 @@ public enum UnitState {
     STANDING,
     DEFENSIVE,
     OFFENSIVE;
-
 }
 

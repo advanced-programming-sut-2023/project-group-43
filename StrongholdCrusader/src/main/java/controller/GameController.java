@@ -4,18 +4,20 @@ import java.lang.String;
 import java.util.ArrayList;
 
 import enums.Output;
+import enums.environmentEnums.Material;
+import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
+import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
+import model.buildings.Storage;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 
 public class GameController {
 
     private Game game;
-    private boolean selected;
-    private int selectedX;
-    private int selectedY;
+
 
     public GameController(Game game) {
         this.game = game;
@@ -35,9 +37,25 @@ public class GameController {
         return Output.NO_BUILDING;
     }
 
-    public Output createUnit(String name, int count) {
+    public Output createUnit(String name, int number) {
+        if(number <= 0)return Output.INVALID_NUMBER;
+        if(!game.getSelectedBuilding().getName().equals("barrack"))
+            return Output.WRONG_SELECT_FOR_BUILDING;
         Unit unit = UnitsBuilder.unitsBuilder(name , game.getCurrentUser());
-
+        String unitType = UnitsEnum.getTypeByUnitName(unit.getName());
+        if(unitType == null)
+            return Output.WRONG_UNIT_NAME;
+        //Optional: Even if we could do it, we wouldn't make less than the number
+        if(unit.getCost() * number> game.getCurrentUser().getGovernance().getGold())
+            return Output.NOT_ENOUGH_MONEY;
+        if(unitType.equals("armed")) {
+            Material weapon = ArmedWeapon.getWeaponByUnitName(unit.getName());
+            //TODO -> How to check the number og sth in storage?
+        }
+        for(int i = 0 ; i < number ; i++){
+            game.getCurrentUser().getGovernance().addUnit(unit);
+        }
+        return Output.SUCCESSFUL_UNIT_CREATION;
     }
 
     public Output repairCastle() {return null;}
@@ -50,9 +68,13 @@ public class GameController {
 
     public Output setUnitState(int x, int y, UnitState unitState) {
         game.getSelectedUnit().setState(unitState);
+        return Output.UNIT_STATE_IS_SET;
+        //TODO -> Converting uppercase letters to lowercase may be a bug
     }
 
-    public Output attack(int x, int y ,String item) {return null;}
+    public Output attack(int x, int y ,String item) {
+
+    }
 
     private Output attackToEnemy(int x, int y) {return null;}
 
