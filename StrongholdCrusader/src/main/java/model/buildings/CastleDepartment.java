@@ -12,15 +12,6 @@ public class CastleDepartment extends Building {
     private boolean gateIsOpen = true;
     private String gateName;
     private CastleDepartment drawBridge;
-    private boolean hasLadder = false;
-
-    public boolean HasLadder() {
-        return hasLadder;
-    }
-
-    public void setLadder(boolean hasLadder) {
-        this.hasLadder = hasLadder;
-    }
 
     public CastleDepartment(String name, User owner, int hitPoint, int peopleCapacity) {
         super(name , owner);
