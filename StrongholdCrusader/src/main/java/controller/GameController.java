@@ -111,21 +111,7 @@ public class GameController {
 
     private void updatePopularity() {}
 
-    private void updateFoodRate() {
-        Cell[][] cell = game.getCells();
-        for (int i = 0; i < cell.length; i++) {
-            for (int j = 0; j < cell[i].length; j++) {
-                if (cell[i][j].getUnits().size() != 0)
-                    for (int h = 0; h < game.getPlayers().size(); h++) {
-                        for (int k = 0; k < cell[i][j].getUnits().size(); k++) {
-                            if (cell[i][j].getUnits().get(k).getOwner().equals(game.getPlayers().get(h))) {
-                                game.getPlayers().get(h);
-                            }
-                        }
-                    }
-            }
-        }
-    }
+    private void updateFoodRate() {}
 
     private void updateTaxRate() {}
 
