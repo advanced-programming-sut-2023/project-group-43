@@ -57,10 +57,12 @@ public enum UnitsEnum {
         return speed;
     }
 
-    public UnitsEnum getUnitStructureByName(String name) {
+
+    public static UnitsEnum getUnitByName(String name) {
         for(UnitsEnum value : UnitsEnum.values())
             if(value.equals(name))
                 return value;
         return null;
     }
+
 }

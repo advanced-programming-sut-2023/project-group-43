@@ -74,6 +74,10 @@ public enum Output {
     NOT_ENOUGH_MONEY("Not enough money!"),
     SUCCESSFUL_PURCHASE("The purchase was successful!"),
     SUCCESSFUL_SALE("The sale was successful!"),
+    //Game outputs
+    WRONG_UNIT_NAME("wrong unit name"),
+    SUCCESSFUL_UNIT_CREATION("Unit created successfully!"),
+    NOT_ENOUGH_POPULATION("Not enough population!"),
 
 
 
