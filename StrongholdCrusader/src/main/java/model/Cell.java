@@ -104,7 +104,7 @@ public class Cell {
     }
 
     public boolean isBlocked() {
-        if (this.building != null) return true;
+        if (this.building != null && !building.HasLadder()) return true;
         if (this.hasRock) return true;
         if (this.texture.isPassable()) return false;
         return true;
