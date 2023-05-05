@@ -1,8 +1,6 @@
 package controller;
-
 import java.lang.String;
 import java.util.ArrayList;
-
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Material;
@@ -125,7 +123,27 @@ public class GameController {
 
     private void applyHitPointChange() {}
 
-    private void applyDeathChange() {}
+    private void applyDeathChange() {
+        Cell[][] cells = game.getCells();
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                if (cells[i][j].getBuilding() != null) {
+                    if (cells[i][j].getBuilding().getHp() <= 0) {
+                        cells[i][j].getBuilding().getOwner().getGovernance().deleteBuilding(cells[i][j].getBuilding());
+                        cells[i][j].setBuilding(null);
+                    }
+                }
+                if (cells[i][j].getUnits().size() != 0) {
+                    for (int k = 0; k < cells[i][j].getUnits().size(); k++) {
+                        if (cells[i][j].getUnits().get(k).getHitPoint() <= 0) {
+                            cells[i][j].getUnits().get(k).getOwner().getGovernance().removeUnit(cells[i][j].getUnits().get(k));
+                            cells[i][j].removeUnit(cells[i][j].getUnits().get(k));
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void updateForNextTurn() {}
 
@@ -149,23 +167,25 @@ public class GameController {
 
     private void updateScores() {}
 
-
-    public void clearGame() {
-    }
+    public void clearGame() {}
 
     public void goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
         for (User player: game.getPlayers()) {
-            if (isNextPlayerFound)
+            if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);
+                game.setSelectedUnit(new ArrayList<>());
+        }
             if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
                 isNextPlayerFound = true;
             }
         }
-        if (user == null) game.setCurrentPlayer(game.getPlayers().get(0));
+        if (user == null) {
+            game.setCurrentPlayer(game.getPlayers().get(0));
+            game.setSelectedUnit(new ArrayList<>());
+        }
     }
-
 
     public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty) {
         Cell[][] cells = game.getCells();
