@@ -105,4 +105,7 @@ public class CastleDepartment extends Building {
         }
         return null;
     }
+    public void changeTaxRate() {
+
+    }
 }

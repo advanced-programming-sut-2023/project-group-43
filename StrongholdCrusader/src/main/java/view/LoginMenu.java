@@ -75,7 +75,7 @@ public class LoginMenu extends Menu {
         else incorrectPasswords = 0;
         if (incorrectPasswords > 0 && (incorrectPasswords % 5) == 0) {
             try {
-                System.out.println("you have to wait for " + incorrectPasswords + "seconds");
+                System.out.println("you have to wait for " + incorrectPasswords + " seconds");
                 TimeUnit.SECONDS.sleep(incorrectPasswords);
             } catch (Exception e) {
             }
