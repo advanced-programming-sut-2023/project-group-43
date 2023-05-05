@@ -12,8 +12,6 @@ public class GameController {
 
     private Game game;
     private Building currentSelectedBuilding;
-    private int unitDeathHitPoint;
-    private int BuildingDeathHitPoint;
 
     public GameController(Game game) {
         this.game = game;
@@ -22,25 +20,9 @@ public class GameController {
     public Game getGame() {
         return game;
     }
-
-    public int getUnitDeathHitPoint() {
-        return unitDeathHitPoint;
-    }
-
-    public void setUnitDeathHitPoint(int unitDeathHitPoint) {
-        this.unitDeathHitPoint = unitDeathHitPoint;
-    }
-
-    public int getBuildingDeathHitPoint() {
-        return BuildingDeathHitPoint;
-    }
-
-    public void setBuildingDeathHitPoint(int buildingDeathHitPoint) {
-        BuildingDeathHitPoint = buildingDeathHitPoint;
-    }
-
     public Output selectBuilding(int row, int column) {
-        if (!this.validCordinate(row, column)) return Output.WRONG_COORDINATES;
+        if (!(row >= 1 && row <= game.getCells().length && column >= 1 && column <= game.getCells()[0].length))
+            return Output.WRONG_COORDINATES;
         Building building = game.getCells()[row - 1][column - 1].getBuilding();
         if (building != null) {
             this.currentSelectedBuilding = building;
@@ -84,14 +66,14 @@ public class GameController {
         for (int i = 0 ; i < cell.length; i++) {
             for (int j = 0; j < cell[0].length; j++) {
                 if (cell[i][j].getBuilding() != null) {
-                    if (cell[i][j].getBuilding().getHp() == getBuildingDeathHitPoint()) {
+                    if (cell[i][j].getBuilding().getHp() <= 0) {
                         cell[i][j].getBuilding().getOwner().getGovernance().removeBuilding(cell[i][j].getBuilding());
                         cell[i][j].setBuilding(null);
                     }
                 }
                 if (cell[i][j].getUnits() != null) {
                     for (int k = 0; k < cell[i][j].getUnits().size(); k++) {
-                        if (cell[i][j].getUnits().get(k).getHitPoint() == getUnitDeathHitPoint()) {
+                        if (cell[i][j].getUnits().get(k).getHitPoint() <= 0) {
                             cell[i][j].getUnits().get(k).getOwner().getGovernance().removeUnit(cell[i][j].getUnits().get(k));
                             cell[i][j].getUnits().remove(k);
                         }
@@ -136,10 +118,5 @@ public class GameController {
             }
         }
         if (user == null) game.setCurrentPlayer(game.getPlayers().get(0));
-    }
-    public boolean validCordinate(int x, int y) {
-        if (x >= 1 && x <= game.getCells().length && y >= 1 && y <= game.getCells()[0].length)
-            return true;
-        return false;
     }
 }

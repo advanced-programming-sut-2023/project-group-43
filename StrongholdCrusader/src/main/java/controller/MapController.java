@@ -17,42 +17,45 @@ public class MapController {
     }
 
     public String showMap(int row, int column) {
-        //if (gameController.validCordinate(row, column)) return Output.WRONG_COORDINATES.getString();
+        if (!(row >= 1 && row <= game.getCells().length && column >= 1 && column <= game.getCells()[0].length))
+            return Output.WRONG_COORDINATES.toString();
         game.setCurrentMapX(row--);
         game.setGetCurrentMapY(column--);
         StringBuilder output = new StringBuilder();
-        for (int i = 0; i < 11 * 7; i++) {
+        for (int i = 0; i < 11 * 6; i++) {
             output.append("-");
         }
         output.append("\n");
-        for (int h = 0 ; h < 11; h++) {
+        for (int h = 0; h < 11; h++) {
             for (int k = 0; k < 3; k++) {
                 output.append("|");
                 for (int i = 0; i < 11; i++) {
                     for (int j = 0; j < 5; j++) {
-                        output.append(game.getCells()[row - 6 + h][column - 6 + i].getTexture().getColor());
-                        output.append("#").append("\u001B[0m");
+                        if ((row - 6 + h) >= 0 && (column - 6 + i) >= 0 && (column - 6 + i) <= game.getCells()[0].length && (row - 6 + h) <= game.getCells().length) {
+                            output.append(game.getCells()[row - 6 + h][column - 6 + i].getTexture().getColor());
+                            output.append("#").append("\u001B[0m");
+                        }
                     }
                     output.append("|");
                 }
                 output.append("\n");
             }
         }
-        for (int i = 0; i < 11 * 7; i++) {
+        for (int i = 0; i < 11 * 6; i++) {
             output.append("-");
         }
         return output.toString();
-        /*
-        for (column = 0; column < game.getCells()[0].length; column++) {
-            for (row = 0; row < game.getCells().length; row++) {
-                Cell cell = game.getCells()[row][column];
-                int x = column * cell.getCellSize();
-                int y = row * cell.getCellSize();
-                drawTile(cell, y, x);
-            }
-        }
-        //game.getCells().drawImage(atlasImage, 192, 0, 64, 64, 128, 320, 64, 64);*/
     }
+    /*
+    for (column = 0; column < game.getCells()[0].length; column++) {
+        for (row = 0; row < game.getCells().length; row++) {
+            Cell cell = game.getCells()[row][column];
+            int x = column * cell.getCellSize();
+            int y = row * cell.getCellSize();
+            drawTile(cell, y, x);
+        }
+    }
+    //game.getCells().drawImage(atlasImage, 192, 0, 64, 64, 128, 320, 64, 64);*/
     /*public void drawImage(Image image, int a, int b, int c, int d, int row, int column, int e, int f) {}
     public void drawTile(Cell cell, int row, int column) {}
     public void worldToScreen(int x, int y) {
