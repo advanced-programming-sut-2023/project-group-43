@@ -122,7 +122,6 @@ public class BuildingBuilder {
             case "inn":
                 return new PopularityBooster(name,owner,12);
             case "market":
-                return new Store(name,owner);
             case "dairy products":
             case "engineer guild":
             case "mercenary post":

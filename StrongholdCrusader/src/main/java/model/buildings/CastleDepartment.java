@@ -3,6 +3,9 @@ import enums.BuildingEnums.BuildingEnum;
 import model.Cell;
 import model.Game;
 import model.User;
+import model.units.Unit;
+
+import java.util.ArrayList;
 
 public class CastleDepartment extends Building {
 
@@ -19,15 +22,15 @@ public class CastleDepartment extends Building {
         this.peopleCapacity = peopleCapacity;
     }
 
-    public void reduceEnemySpeed(Cell cell) {
-        if (cell.getUnits().size() != 0) {
-            for (int i = 0; i < cell.getUnits().size(); i++) {
-                if (this.getOwner() != cell.getUnits().get(i).getOwner())
-                    cell.getUnits().get(i).setSpeed(cell.getUnits().get(i).getSpeed() - 1);//TODO
-            }
+    public void reduceEnemySpeed(ArrayList<Unit> units) {
+        for (Unit unit: units) {
+            unit.setSpeed(unit.getSpeed() - 1);
         }
     }
-    public void attackEnemy() {}
+    public void incearseFireRange(ArrayList<Unit> units) {
+        for (Unit unit: units) {
+        }
+    }
 
     public int getHitPoint() {
         return hitPoint;
