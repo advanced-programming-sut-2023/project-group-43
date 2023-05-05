@@ -1,17 +1,19 @@
 package controller;
-
 import java.lang.String;
 import java.util.ArrayList;
-
+import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Material;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitsEnum;
+import enums.environmentEnums.Material;
 import model.*;
 import model.buildings.Building;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 
+import model.units.Engineer;
+import model.units.Unit;
 
 public class GameController {
 
@@ -57,18 +59,52 @@ public class GameController {
         return Output.SUCCESSFUL_UNIT_CREATION;
     }
 
-    public Output repairCastle() {return null;}
+    public Output repairCastle() {
+        if (!game.getSelectedBuilding().getOwner().equals(game.getCurrentPlayer()))
+            return Output.THIS_IS_NOT_YOUR_BUILDING;
+        else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
+            return Output.NOT_ENOUGH_STONE;
+        else {
+            game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
+            game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
+            return Output.SUCCESSFUL_REPAIRMENT;
+        }
+    }
 
-    public Output selectUnit(int x, int y) {return null;}
+    public Output selectUnit(int x, int y, String type) {
+        ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
+        ArrayList<Unit> resultcellUnits = new ArrayList<>();
+        if (cellUnits.size() == 0) return Output.NO_UNIT;
+        else {
+            for (int i = 0; i < cellUnits.size(); i++) {
+                if ((false == cellUnits.get(i).isHidden()) && cellUnits.get(i).getName().equals(type) && cellUnits.get(i).getOwner().equals(game.getCurrentPlayer())) {
+                    resultcellUnits.add(cellUnits.get(i));
+                }
+            }
+            if (resultcellUnits.size() == 0)
+                return Output.NO_THIS_TYPE_UNIT;
+            else {
+                game.setSelectedUnit(resultcellUnits);
+                return Output.SELECT_UNIT;
+            }
+        }
+    }
 
     public Output moveUnit(int x, int y) {return null;}
 
     public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
 
-    public Output setUnitState(int x, int y, UnitState unitState) {
-        game.getSelectedUnit().setState(unitState);
-        return Output.UNIT_STATE_IS_SET;
-        //TODO -> Converting uppercase letters to lowercase may be a bug
+    public Output setUnitState(int x, int y, String state) {
+        ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
+        int flag = 0;
+        for (int i = 0; i < cellUnits.size(); i++) {
+            if ((false == cellUnits.get(i).isHidden()) && cellUnits.get(i).getOwner().equals(game.getCurrentPlayer())) {
+                flag = 1;
+                //cellUnits.get(i).setState();
+            }
+        }
+        if (flag == 0) return Output.NO_THIS_TYPE_UNIT;
+        else  return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
     }
 
     public Output attack(int x, int y ,String item) {
@@ -83,20 +119,61 @@ public class GameController {
 
     private Output aearialAttack(int x, int y) {return null;}
 
-    public Output pourOil(String direction) {return null;}
+    public Output pourOil(String direction) {
+        Engineer engineer = null;
+        for (int i = 0; i < game.getSelectedUnit().size(); i++) {
+            if (game.getSelectedUnit().get(i) instanceof Engineer) {
+                engineer = (Engineer) game.getSelectedUnit().get(i);
+                break;
+            }
+        }
+        if (engineer == null) return Output.NO_ENGINEER_HERE;
+        else {
+            //TODO pouring oil and go to oil
+        }
+        return null;
+    }
 
     public Output digTunnel(int x, int y) {return null;}
 
     public Output buildEquipment(String weaponName) {
     }
 
-    public Output disbandUnit() {return null;}
+    public Output disbandUnit() {
+        if (game.getSelectedUnit().size() == 0) return Output.NO_UNIT_FOR_DISBANDING;
+        else {
+            for (int i = 0; i < game.getSelectedUnit().size(); i++) {
+                game.getSelectedUnit().get(i).setHidden(true);
+            }
+            return Output.UNIT_DISBANDED_SUCCESSFULLY;
+        }
+    }
 
     public void applyChanges() {}
 
     private void applyHitPointChange() {}
 
-    private void applyDeathChange() {}
+    private void applyDeathChange() {
+        Cell[][] cells = game.getCells();
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                if (cells[i][j].getBuilding() != null) {
+                    if (cells[i][j].getBuilding().getHp() <= 0) {
+                        cells[i][j].getBuilding().getOwner().getGovernance().deleteBuilding(cells[i][j].getBuilding());
+                        cells[i][j].setBuilding(null);
+                    }
+                }
+                if (cells[i][j].getUnits().size() != 0) {
+                    for (int k = 0; k < cells[i][j].getUnits().size(); k++) {
+                        if (cells[i][j].getUnits().get(k).getHitPoint() <= 0) {
+                            cells[i][j].getUnits().get(k).getOwner().getGovernance().removeUnit(cells[i][j].getUnits().get(k));
+                            cells[i][j].removeUnit(cells[i][j].getUnits().get(k));
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void updateForNextTurn() {}
 
@@ -120,21 +197,24 @@ public class GameController {
 
     private void updateScores() {}
 
-
-    public void clearGame() {
-    }
+    public void clearGame() {}
 
     public void goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
         for (User player: game.getPlayers()) {
-            if (isNextPlayerFound)
+            if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);
+                game.setSelectedUnit(new ArrayList<>());
+        }
             if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
                 isNextPlayerFound = true;
             }
         }
-        if (user == null) game.setCurrentPlayer(game.getPlayers().get(0));
+        if (user == null) {
+            game.setCurrentPlayer(game.getPlayers().get(0));
+            game.setSelectedUnit(new ArrayList<>());
+        }
     }
 
 

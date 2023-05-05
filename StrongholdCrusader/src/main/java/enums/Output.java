@@ -1,6 +1,19 @@
 package enums;
 
 public enum Output {
+    WRONG_TYPE_OF_UNIT("warning : no unit with this type!"),
+    NOT_ENOUGH_BALANCE_FOR_DROPPING_UNIT("warning : not enough balance for dropping unit/units!"),
+    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully"),
+    NOT_ENOUGH_BALANCE_FOR_DROPPING_BUILDING("warning : not enough balance for dropping this building!"),
+    UNIT_DISBANDED_SUCCESSFULLY("unit/units disbanded successfully"),
+    NO_UNIT_FOR_DISBANDING("warning : no unit available for disbanding!"),
+    NO_ENGINEER_HERE("warning : no engineer selected for pouring oil!"),
+    UNIT_STATE_SETTED_SUCCESSFULLY("unit state setted successfully"),
+    THIS_IS_NOT_YOUR_BUILDING("warning : the selected building is not yours!"),
+    NO_THIS_TYPE_UNIT("warning : no unit with given type in this cell"),
+    NO_UNIT("warning : no unit in this cell"),
+    NOT_ENOUGH_STONE("warning : not enough stone for repairment!"),
+    SUCCESSFUL_REPAIRMENT("repairment done successfully"),
     CAPTCHA_MATCHED("captcha matched"),
     CAPTCHA_NOT_MATCHED("warning : captcha not matched!"),
     NO_BUILDING("warning : no building in this coordination!"),
@@ -60,7 +73,6 @@ public enum Output {
     DUPLICATED_NEWPASSWORD("warning : you entered your previous password,enter a new password!"),
     SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully!"),
     DUPLICATE_SLOGAN("warning : duplicate slogan!"),
-    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully!"),
     WRONG_COUNT("warning : invalid number!"),
     UNIT_DROPPED_SUCCESSFULLY("unit droped successfully!"),
     SUCCESSFUL_MAP_GENERATION("you generate the map successfully!"),
@@ -82,7 +94,6 @@ public enum Output {
     UNIT_STATE_IS_SET("Unit state is set"),
     //some Output for all the project
     INVALID_NUMBER("Invalid number!"),
-
 
 
     //trade controller

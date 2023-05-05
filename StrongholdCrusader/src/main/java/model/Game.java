@@ -21,7 +21,7 @@ public class Game {
 
     private Building selectedBuilding;
 
-    private Unit selectedUnit;
+    private ArrayList<Unit> selectedUnit = new ArrayList<>();
 
     private int turns;
     private int currentMapX;
@@ -87,11 +87,11 @@ public class Game {
         selectedBuilding = building;
     }
 
-    public Unit getSelectedUnit() {
+    public ArrayList<Unit> getSelectedUnit() {
         return selectedUnit;
     }
 
-    public void setSelectedUnit(Unit selectedUnit) {
+    public void setSelectedUnit(ArrayList<Unit> selectedUnit) {
         this.selectedUnit = selectedUnit;
     }
 

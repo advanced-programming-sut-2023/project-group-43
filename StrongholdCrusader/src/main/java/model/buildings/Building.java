@@ -12,7 +12,7 @@ public class Building {
     private final int wood;
     private final int stone;
     private final int cost;
-    private final int hp;
+    private int hp;
     private final int ladderlans;
 
     private Cell cell;
@@ -64,7 +64,9 @@ public class Building {
     public int getHp() {
         return hp;
     }
-
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
     public int getLadderlans() {
         return ladderlans;
     }
