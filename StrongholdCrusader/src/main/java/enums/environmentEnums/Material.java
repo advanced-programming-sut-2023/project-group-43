@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public enum Material {
     //minerals
-    STONE("mineral" , "stone" , 0 , 0, 0),
-    WOOD("mineral" , "wood" , 0 , 0, 0),
-    IRON("mineral" , "iron" , 0 , 0, 0),
-    TAR("mineral" , "tar" , 0  , 0, 0),
+    STONE("mineral" , "stone" , 50 , 40, 0),
+    WOOD("mineral" , "wood" , 50 , 40, 0),
+    IRON("mineral" , "iron" , 50 , 40, 0),
+    TAR("mineral" , "tar" , 50  , 40, 0),
     //foods
     WHEAT("food" , "wheat" , 0 ,0, 0),
     APPLE("food" , "apple" , 0 ,0, 0),

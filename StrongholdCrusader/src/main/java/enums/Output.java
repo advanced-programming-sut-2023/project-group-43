@@ -1,6 +1,10 @@
 package enums;
 
 public enum Output {
+    WRONG_TYPE_OF_UNIT("warning : no unit with this type!"),
+    NOT_ENOUGH_BALANCE_FOR_DROPPING_UNIT("warning : not enough balance for dropping unit/units!"),
+    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully"),
+    NOT_ENOUGH_BALANCE_FOR_DROPPING_BUILDING("warning : not enough balance for dropping this building!"),
     UNIT_DISBANDED_SUCCESSFULLY("unit/units disbanded successfully"),
     NO_UNIT_FOR_DISBANDING("warning : no unit available for disbanding!"),
     NO_ENGINEER_HERE("warning : no engineer selected for pouring oil!"),
@@ -69,7 +73,6 @@ public enum Output {
     DUPLICATED_NEWPASSWORD("warning : you entered your previous password,enter a new password!"),
     SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully!"),
     DUPLICATE_SLOGAN("warning : duplicate slogan!"),
-    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully!"),
     WRONG_COUNT("warning : invalid number!"),
     UNIT_DROPPED_SUCCESSFULLY("unit droped successfully!"),
     SUCCESSFUL_MAP_GENERATION("you generate the map successfully!"),
