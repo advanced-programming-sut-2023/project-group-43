@@ -15,6 +15,7 @@ public class Unit {
     private int defense;
     private int speed;
     private int cost;
+    private boolean isHidden = false;
 
     private UnitState state;
 
@@ -26,6 +27,14 @@ public class Unit {
         this.defense = unit.getDefense();
         this.speed = unit.getSpeed();
         this.cost = unit.getCost();
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
     }
 
     public User getOwner() {

@@ -18,7 +18,7 @@ public enum GameMenuCommands {
     REPAIR_CASTLE("repair"),
     //people and units
     SELECT_UNIT("select unit" +
-            "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
+            "( \\-(?<flag>[xyt])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     MOVE_UNIT("move unit to" +
             "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     SET_UNITS_STATE("set" +

@@ -8,6 +8,8 @@ import enums.Output;
 import enums.environmentEnums.Material;
 import model.*;
 import model.buildings.Building;
+import model.units.Engineer;
+import model.units.Unit;
 
 public class GameController {
 
@@ -37,7 +39,9 @@ public class GameController {
     public Output createUnit(String type, int count) {return null;}
 
     public Output repairCastle() {
-        if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
+        if (!game.getSelectedBuilding().getOwner().equals(game.getCurrentPlayer()))
+            return Output.THIS_IS_NOT_YOUR_BUILDING;
+        else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
             return Output.NOT_ENOUGH_STONE;
         else {
             game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
@@ -46,13 +50,41 @@ public class GameController {
         }
     }
 
-    public Output selectUnit(int x, int y) {return null;}
+    public Output selectUnit(int x, int y, String type) {
+        ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
+        ArrayList<Unit> resultcellUnits = new ArrayList<>();
+        if (cellUnits.size() == 0) return Output.NO_UNIT;
+        else {
+            for (int i = 0; i < cellUnits.size(); i++) {
+                if ((false == cellUnits.get(i).isHidden()) && cellUnits.get(i).getName().equals(type) && cellUnits.get(i).getOwner().equals(game.getCurrentPlayer())) {
+                    resultcellUnits.add(cellUnits.get(i));
+                }
+            }
+            if (resultcellUnits.size() == 0)
+                return Output.NO_THIS_TYPE_UNIT;
+            else {
+                game.setSelectedUnit(resultcellUnits);
+                return Output.SELECT_UNIT;
+            }
+        }
+    }
 
     public Output moveUnit(int x, int y) {return null;}
 
     public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
 
-    public Output setUnitState(int x, int y, String state) {return null;}
+    public Output setUnitState(int x, int y, String state) {
+        ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
+        int flag = 0;
+        for (int i = 0; i < cellUnits.size(); i++) {
+            if ((false == cellUnits.get(i).isHidden()) && cellUnits.get(i).getOwner().equals(game.getCurrentPlayer())) {
+                flag = 1;
+                //cellUnits.get(i).setState();
+            }
+        }
+        if (flag == 0) return Output.NO_THIS_TYPE_UNIT;
+        else  return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
+    }
 
     public Output attack(int x, int y ,String item) {return null;}
 
@@ -60,13 +92,34 @@ public class GameController {
 
     private Output aearialAttack(int x, int y) {return null;}
 
-    public Output pourOil(String direction) {return null;}
+    public Output pourOil(String direction) {
+        Engineer engineer = null;
+        for (int i = 0; i < game.getSelectedUnit().size(); i++) {
+            if (game.getSelectedUnit().get(i) instanceof Engineer) {
+                engineer = (Engineer) game.getSelectedUnit().get(i);
+                break;
+            }
+        }
+        if (engineer == null) return Output.NO_ENGINEER_HERE;
+        else {
+            //TODO pouring oil and go to oil
+        }
+        return null;
+    }
 
     public Output digTunnel(int x, int y) {return null;}
 
     public Output buildEquipment (String equipmentName) {return null;}
 
-    public Output disbandUnit() {return null;}
+    public Output disbandUnit() {
+        if (game.getSelectedUnit().size() == 0) return Output.NO_UNIT_FOR_DISBANDING;
+        else {
+            for (int i = 0; i < game.getSelectedUnit().size(); i++) {
+                game.getSelectedUnit().get(i).setHidden(true);
+            }
+            return Output.UNIT_DISBANDED_SUCCESSFULLY;
+        }
+    }
 
     public void applyChanges() {}
 

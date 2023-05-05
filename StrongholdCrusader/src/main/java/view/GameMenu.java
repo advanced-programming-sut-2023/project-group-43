@@ -89,8 +89,9 @@ public class GameMenu extends Menu{
     }
 
     private Output selectUnit(Matcher matcher) {
-        if (parseMatcher(matcher))
-            return gameController.selectUnit(Integer.getInteger(x),Integer.parseInt(y));
+        String type = Validations.getInfo("t", matcher.group());
+        if (parseMatcher(matcher) && type != null)
+            return gameController.selectUnit(Integer.getInteger(x),Integer.parseInt(y),type);
         return null;
     }
 

@@ -1,6 +1,13 @@
 package enums;
 
 public enum Output {
+    UNIT_DISBANDED_SUCCESSFULLY("unit/units disbanded successfully"),
+    NO_UNIT_FOR_DISBANDING("warning : no unit available for disbanding!"),
+    NO_ENGINEER_HERE("warning : no engineer selected for pouring oil!"),
+    UNIT_STATE_SETTED_SUCCESSFULLY("unit state setted successfully"),
+    THIS_IS_NOT_YOUR_BUILDING("warning : the selected building is not yours!"),
+    NO_THIS_TYPE_UNIT("warning : no unit with given type in this cell"),
+    NO_UNIT("warning : no unit in this cell"),
     NOT_ENOUGH_STONE("warning : not enough stone for repairment!"),
     SUCCESSFUL_REPAIRMENT("repairment done successfully"),
     CAPTCHA_MATCHED("captcha matched"),
