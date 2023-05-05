@@ -15,8 +15,7 @@ public class Unit {
     private int defense;
     private int speed;
     private int cost;
-
-    private UnitState state;
+    private UnitState state = UnitState.STANDING;
 
     public Unit(User owner,String name) {
         unit = UnitsEnum.getUnitByName(name);

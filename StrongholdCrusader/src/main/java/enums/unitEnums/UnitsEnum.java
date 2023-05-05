@@ -5,7 +5,6 @@ import enums.Degrees.DefenseDegree;
 import enums.Degrees.SpeedDegree;
 
 public enum UnitsEnum {
-    //TODO : I defined 0 as average and -2 -1 --- > 1 2 and -10 as null
     ARCHER("archer","armed" ,-2, DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
     CROSSBOWMAN("crossbowman","armed",-1,DefenseDegree.AVERAGE.getDegree() , SpeedDegree.LOW.getDegree(),  0),
     SPEARMAN("spearman","spearman",0,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),

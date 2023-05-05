@@ -4,8 +4,11 @@ import java.lang.String;
 import java.util.ArrayList;
 
 import enums.Output;
+import enums.unitEnums.UnitState;
 import model.*;
 import model.buildings.Building;
+import model.units.Unit;
+import model.units.UnitsBuilder;
 
 public class GameController {
 
@@ -32,7 +35,10 @@ public class GameController {
         return Output.NO_BUILDING;
     }
 
-    public Output createUnit(String type, int count) {return null;}
+    public Output createUnit(String name, int count) {
+        Unit unit = UnitsBuilder.unitsBuilder(name , game.getCurrentUser());
+
+    }
 
     public Output repairCastle() {return null;}
 
@@ -42,7 +48,9 @@ public class GameController {
 
     public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
 
-    public Output setUnitState(int x, int y, String state) {return null;}
+    public Output setUnitState(int x, int y, UnitState unitState) {
+        game.getSelectedUnit().setState(unitState);
+    }
 
     public Output attack(int x, int y ,String item) {return null;}
 
