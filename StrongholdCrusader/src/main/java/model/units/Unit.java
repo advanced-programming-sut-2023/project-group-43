@@ -19,7 +19,7 @@ public class Unit {
     private UnitState state;
 
     public Unit(User owner,String name) {
-        unit = unit.getUnitStructureByName(name);
+        unit = UnitsEnum.getUnitByName(name);
         this.owner = owner;
         this.name = name;
         this.hitPoint = unit.getHitPoint();

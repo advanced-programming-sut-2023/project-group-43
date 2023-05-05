@@ -10,6 +10,9 @@ import model.buildings.Building;
 public class GameController {
 
     private Game game;
+    private boolean selected;
+    private int selectedX;
+    private int selectedY;
 
     public GameController(Game game) {
         this.game = game;

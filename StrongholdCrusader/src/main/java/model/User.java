@@ -15,8 +15,6 @@ public class User {
     private String passwordRecoveryQuestion;
     private String PasswordRecoveryAnswer;
     private String slogan;
-    private int gold = 0;
-
     private int score;
     private int rank;
 
@@ -129,14 +127,6 @@ public class User {
 
     public void setTrades(ArrayList<Trade> trades) {
         this.trades = trades;
-    }
-
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
     }
 
     public int getRank() {

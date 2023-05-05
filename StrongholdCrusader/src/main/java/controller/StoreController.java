@@ -3,6 +3,7 @@ package controller;
 import enums.Output;
 import enums.environmentEnums.Material;
 import model.Game;
+import model.Governance;
 import model.buildings.Storage;
 
 import java.util.ArrayList;
@@ -39,25 +40,25 @@ public class StoreController {
 
     public Output buy(String itemName, int amount) {
         Material material = Material.getMaterialByName(itemName);
-        Storage storage = game.getCurrentPlayer().getStorage();
+        Governance governance = game.getCurrentPlayer().getGovernance();
         if(material == null)
             return Output.ITEM_NOR_FOUND;
-        if(game.getCurrentPlayer().getGold() != amount * material.getInitialCost())
+        if(governance.getGold() != amount * material.getInitialCost())
             return Output.NOT_ENOUGH_MONEY;
-        game.getCurrentPlayer().setGold(game.getCurrentPlayer().getGold() - amount * material.getInitialCost());
-        storage.changeAmountOfItemInStockpile(material,amount);
+        governance.changeGoldAmount(- amount * material.getInitialCost());
+        governance.getGovernanceResource().changeAmountOfItemInStockpile(material,amount);
         return Output.SUCCESSFUL_PURCHASE;
     }
 
     public Output sell(String itemName, int amount) {
         Material material = Material.getMaterialByName(itemName);
-        Storage storage = game.getCurrentPlayer().getStorage();
+        Governance governance = game.getCurrentPlayer().getGovernance();
         if(material == null)
             return Output.ITEM_NOR_FOUND;
-        if(storage.getAmountOfItemInStockpile(material) != amount)
+        if(governance.getGovernanceResource().getAmountOfItemInStockpile(material) != amount)
             return Output.NOT_ENOUGH_QUANTITY;
-        game.getCurrentPlayer().setGold(game.getCurrentPlayer().getGold() + amount * material.getSecondaryCost());
-        storage.changeAmountOfItemInStockpile(material,-amount);
+        game.getCurrentPlayer().getGovernance().changeGoldAmount(amount * material.getSecondaryCost());
+        governance.getGovernanceResource().changeAmountOfItemInStockpile(material,-amount);
         return Output.SUCCESSFUL_SALE;
     }
 }
