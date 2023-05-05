@@ -1,18 +1,42 @@
 package model.buildings;
+import enums.BuildingEnums.BuildingEnum;
+import model.Cell;
+import model.Game;
 import model.User;
 
 public class CastleDepartment extends Building {
 
     private final int hitPoint;
     private final int peopleCapacity;
-    public CastleDepartment(String name,User owner,int hitPoint,int peopleCapacity) {
+    private boolean rightEntrance;
+    private boolean gateIsOpen = true;
+    private String gateName;
+    private CastleDepartment drawBridge;
+    private boolean hasLadder = false;
+
+    public boolean HasLadder() {
+        return hasLadder;
+    }
+
+    public void setLadder(boolean hasLadder) {
+        this.hasLadder = hasLadder;
+    }
+
+    public CastleDepartment(String name, User owner, int hitPoint, int peopleCapacity) {
         super(name , owner);
         this.hitPoint = hitPoint;
         this.peopleCapacity = peopleCapacity;
     }
 
-    public void reduceEnemySpeed() {};
-    public void attackEnemy() {};
+    public void reduceEnemySpeed(Cell cell) {
+        if (cell.getUnits().size() != 0) {
+            for (int i = 0; i < cell.getUnits().size(); i++) {
+                if (this.getOwner() != cell.getUnits().get(i).getOwner())
+                    cell.getUnits().get(i).setSpeed(cell.getUnits().get(i).getSpeed() - 1);//TODO
+            }
+        }
+    }
+    public void attackEnemy() {}
 
     public int getHitPoint() {
         return hitPoint;
@@ -20,5 +44,70 @@ public class CastleDepartment extends Building {
 
     public int getPeopleCapacity() {
         return peopleCapacity;
+    }
+
+    public boolean isRightEntrance() {
+        return rightEntrance;
+    }
+
+    public void setRightEntrance(boolean rightEntrance) {
+        this.rightEntrance = rightEntrance;
+    }
+
+    public boolean isGateIsOpen() {
+        return gateIsOpen;
+    }
+
+    public void gateIsOpen(boolean gateIsOpen) {
+        this.gateIsOpen = gateIsOpen;
+    }
+
+    public String getGateName() {
+        return gateName;
+    }
+
+    public void setGateName(String gateName) {
+        this.gateName = gateName;
+    }
+
+    public CastleDepartment getDrawBridge() {
+        return drawBridge;
+    }
+
+    public void setDrawBridge(CastleDepartment drawBridge) {
+        this.drawBridge = drawBridge;
+    }
+
+    public void openOrCloseGatehouse(boolean openIt) {
+        this.gateIsOpen(openIt);
+        this.drawBridge.gateIsOpen(openIt);
+    }
+    public CastleDepartment dropDrawBridge (Game game, int x, int y) {
+        Cell[][] cell = game.getCells();
+        Building building = cell[x + 1][y].getBuilding();
+        if (building instanceof CastleDepartment &&
+                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
+                !((CastleDepartment)building).isRightEntrance()) {
+            return (CastleDepartment) building;
+        }
+        building = cell[x - 1][y].getBuilding();
+        if (building instanceof CastleDepartment &&
+                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
+                !((CastleDepartment)building).isRightEntrance()) {
+            return (CastleDepartment) building;
+        }
+        building = cell[x][y + 1].getBuilding();
+        if (building instanceof CastleDepartment &&
+                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
+                ((CastleDepartment)building).isRightEntrance()) {
+            return (CastleDepartment) building;
+        }
+        building = cell[x][y - 1].getBuilding();
+        if (building instanceof CastleDepartment &&
+                (((CastleDepartment) building).getName().equals(BuildingEnum.SMALL_STONE_GATEHOUSE.getName()) || ((CastleDepartment) building).getName().equals(BuildingEnum.BIG_STONE_GATEHOUSE.getName())) &&
+                ((CastleDepartment)building).isRightEntrance()) {
+            return (CastleDepartment) building;
+        }
+        return null;
     }
 }

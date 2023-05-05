@@ -70,7 +70,20 @@ public class Governance {
     }
 
     public void removeUnit(Unit unit) {
-
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).equals(unit)) {
+                units.remove(i);
+                break;
+            }
+        }
+    }
+    public void removeBuilding(Building building) {
+        for (int i = 0; i < buildings.size(); i++) {
+            if (buildings.get(i).equals(building)) {
+                buildings.remove(i);
+                break;
+            }
+        }
     }
     public void addBuilding(Building building) {
         buildings.add(building);
