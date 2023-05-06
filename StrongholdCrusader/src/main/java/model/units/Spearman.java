@@ -10,8 +10,4 @@ public class Spearman extends Unarmed{
         super(owner, name, troopType);
     }
 
-    @Override
-    public void digDitch() {
-
-    }
 }

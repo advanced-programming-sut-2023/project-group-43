@@ -8,7 +8,6 @@ import model.DataBase;
 import model.Game;
 import model.User;
 import model.buildings.Building;
-import model.buildings.BuildingBuilder;
 import model.buildings.CastleDepartment;
 import model.units.Unit;
 import model.units.UnitsBuilder;
@@ -160,23 +159,6 @@ public class ChangeEnvironmentController {
         return null;
     }
 
-    public Output dropUnit(int x, int y, String type, int count) {
-        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
-            return Output.WRONG_COORDINATES;
-        if (count <= 0) return Output.WRONG_COUNT;
-        boolean found = (UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer()) != null);
-        if (found) {
-            for (int i = 0; i < count; i++) {
-                Unit unit = UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer());
-                game.getCells()[x - 1][y - 1].addUnit(unit);
-                unit.setCell(game.getCells()[x - 1][y - 1]);
-                game.getCurrentPlayer().getGovernance().addUnit(unit);
-            }
-            return Output.UNIT_DROPPED_SUCCESSFULLY;
-        }
-        return null;
-    }
-
     public void enterGameMenu() {
         GameController gameController = new GameController(game);
         GameMenu gameMenu = new GameMenu(gameController);
@@ -188,6 +170,9 @@ public class ChangeEnvironmentController {
     public String goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
+        if(game.getCurrentPlayer().getGovernance().getBuildingByName("headquarter") == null) {
+            return "you haven't selected your headquarter yet";
+        }
         for (User player: game.getPlayers()) {
             if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);
