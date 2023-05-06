@@ -9,6 +9,7 @@ public class Assassin extends Troop {
     private boolean onTopOfTheWall = false;
     public Assassin(User owner, String name, TroopType troopType) {
         super(owner, name, troopType);
+        this.setHidden(true);
     }
 
     public void climbWall() {
