@@ -12,10 +12,7 @@ import model.Governance;
 import model.User;
 import model.buildings.Building;
 import model.buildings.Converter;
-import model.units.Armed;
-import model.units.Engineer;
-import model.units.Unit;
-import model.units.UnitsBuilder;
+import model.units.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -224,6 +221,8 @@ public class GameController {
                 if (unit instanceof Armed) {
                     int range = ((Armed) unit).getWeapon().getRange();
                     setVariables(currentX, currentY, range, true, user, unit);
+                } else if (unit instanceof Unarmed) {
+                    setVariables(currentX, currentY, 1, true, user, unit);
                 }
             }
         }
