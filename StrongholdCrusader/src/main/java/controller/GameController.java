@@ -232,9 +232,9 @@ public class GameController {
     }
 
     public void updateMovements(){
-        for(int i = 0 ; i < game.getPlayers().size();i++){
-            for(int j = 0 ; j < game.getPlayers().get(i).getGovernance().getUnits().size() ; j++){
-                //TODO -> how to call move function for every unit asal?
+        for(User user: game.getPlayers()) {
+            for (Unit unit: user.getGovernance().getUnits()) {
+                unit.move(this);
             }
         }
     }
@@ -254,7 +254,8 @@ public class GameController {
 
     private void updateUnemployedPopulation() {}
 
-    private void updateTaxIncome() {}
+    private void updateTaxIncome() {
+    }
 
     private void updatePopularity() {}
 
