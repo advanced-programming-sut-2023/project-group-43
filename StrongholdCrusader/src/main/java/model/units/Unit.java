@@ -1,9 +1,13 @@
 package model.units;
 
+import controller.GameController;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.Cell;
+import model.Game;
 import model.User;
+
+import java.util.ArrayList;
 
 public class Unit {
     private User owner;
@@ -16,6 +20,11 @@ public class Unit {
     private int speed;
     private int cost;
     private boolean isHidden = false;
+
+    private int currentTargetX = -1;
+    private int currentTargetY = -1;
+    private int nextTargetX = -1;
+    private int nextTargetY = -1;
 
     private UnitState state;
 
@@ -97,8 +106,67 @@ public class Unit {
         this.cell = cell;
     }
 
-    public void defense() {}
-    public void move() {}
+    public int getCurrentTargetX() {
+        return currentTargetX;
+    }
+
+    public void setCurrentTargetX(int currentTargetX) {
+        this.currentTargetX = currentTargetX;
+    }
+
+    public int getCurrentTargetY() {
+        return currentTargetY;
+    }
+
+    public void setCurrentTargetY(int currentTargetY) {
+        this.currentTargetY = currentTargetY;
+    }
+
+    public int getNextTargetX() {
+        return nextTargetX;
+    }
+
+    public void setNextTargetX(int nextTargetX) {
+        this.nextTargetX = nextTargetX;
+    }
+
+    public int getNextTargetY() {
+        return nextTargetY;
+    }
+
+    public void setNextTargetY(int nextTargetY) {
+        this.nextTargetY = nextTargetY;
+    }
+
+    public void move(GameController gameController) {
+        if (currentTargetX >= 0 && currentTargetY >= 0) {
+            ArrayList<Cell> path = gameController.findPath(cell.getX(), cell.getY(), currentTargetX, currentTargetY);
+            if (path != null)  {
+                if (speed <= path.size() - 1) {
+                    cell.removeUnit(this);
+                    path.get(speed).addUnit(this);
+                    cell = path.get(speed);
+                } else {
+                    cell.removeUnit(this);
+                    path.get(path.size() - 1).addUnit(this);
+                    cell = path.get(path.size() - 1);
+                }
+            }
+            if (currentTargetY == cell.getX() && currentTargetY == cell.getY()) {
+                if (nextTargetX == -1 && nextTargetX == -1) {
+                    currentTargetY = -1;
+                    currentTargetX = -1;
+                } else {
+                    int temp = currentTargetX;
+                    currentTargetX = nextTargetX;
+                    nextTargetX = currentTargetX;
+                    temp = currentTargetY;
+                    currentTargetY = nextTargetY;
+                    nextTargetY = currentTargetY;
+                }
+            }
+        }
+    }
 
 }
 

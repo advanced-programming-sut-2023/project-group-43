@@ -89,9 +89,30 @@ public class GameController {
         }
     }
 
-    public Output moveUnit(int x, int y) {return null;}
+    public Output moveUnit(int x, int y) {
+        if (isCoordinateInvalid(x, y)) return Output.INVALID_NUMBER;
+        for(Unit unit: game.getSelectedUnit()) {
+            unit.setCurrentTargetX(x - 1);
+            unit.setCurrentTargetY(y - 1);
+        }
+        return Output.SUCCESSFUL_ACTION;
+    }
 
-    public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
+    public Output patrolUnit(int x1, int y1, int x2, int y2) {
+        if (isCoordinateInvalid(x1, y1) || isCoordinateInvalid(x2, y2))
+        return Output.INVALID_NUMBER;
+        for(Unit unit: game.getSelectedUnit()) {
+            unit.setCurrentTargetX(x1 - 1);
+            unit.setCurrentTargetY(y1 - 1);
+            unit.setNextTargetX(x2 - 1);
+            unit.setNextTargetY(y2 - 1);
+        }
+        return Output.SUCCESSFUL_ACTION;
+    }
+
+    private boolean isCoordinateInvalid(int x, int y) {
+        return (x <= 0 || y <= 0 || x >= game.getRow() || y >= game.getColumn());
+    }
 
     public Output setUnitState(int x, int y, String state) {
         ArrayList<Unit> units = game.getCells()[x - 1][y - 1].getUnits();
