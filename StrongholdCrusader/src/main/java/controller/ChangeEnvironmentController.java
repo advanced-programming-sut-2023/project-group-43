@@ -9,6 +9,7 @@ import model.Game;
 import model.User;
 import model.buildings.Building;
 import model.buildings.BuildingBuilder;
+import model.buildings.CastleDepartment;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 import view.GameMenu;
@@ -152,12 +153,10 @@ public class ChangeEnvironmentController {
     public Output dropBuilding(int x, int y, String type) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
-        boolean found = (UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer()) != null);
-        if (found) {
-            Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
+        if (!type.matches("headquarter")) return Output.INVALID_BUILDING;
+            Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
             building.setCell(game.getCells()[x - 1][y - 1]);
             game.getCurrentPlayer().getGovernance().addBuilding(building);
-        }
         return null;
     }
 

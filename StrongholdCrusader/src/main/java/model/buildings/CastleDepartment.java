@@ -12,6 +12,8 @@ public class CastleDepartment extends Building {
     private boolean rightEntrance;
     private boolean gateIsOpen = true;
 
+    private boolean isHidden = false;
+
     private int defendRange;
     private int fireRange;
     private String gateName;
@@ -23,6 +25,14 @@ public class CastleDepartment extends Building {
         this.peopleCapacity = peopleCapacity;
         this.defendRange = defendRange;
         this.fireRange = fireRange;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
     }
 
     public void reduceEnemySpeed(Cell cell) {
