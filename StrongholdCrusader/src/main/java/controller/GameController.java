@@ -96,7 +96,7 @@ public class GameController {
     public Output setUnitState(int x, int y, String state) {
         ArrayList<Unit> units = game.getCells()[x - 1][y - 1].getUnits();
         UnitState unitState = UnitState.getUnitStateByName(state);
-        if (UnitState == null) return Output
+        if (unitState == null) return Output.INVALID_STATE;
         for (Unit unit: units) {
             unit.setState(unitState);
         }
