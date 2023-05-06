@@ -100,6 +100,10 @@ public class Governance {
         this.gold = gold;
     }
 
+    public ArrayList<Building> getBuildings() {
+        return buildings;
+    }
+
     public void setGovernanceResource(GovernanceResource governanceResource) {
         this.governanceResource = governanceResource;
     }

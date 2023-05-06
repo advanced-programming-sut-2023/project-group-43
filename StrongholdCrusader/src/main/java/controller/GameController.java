@@ -11,9 +11,11 @@ import model.Game;
 import model.Governance;
 import model.User;
 import model.buildings.Building;
+import model.buildings.CagedWarDogs;
 import model.buildings.Converter;
 import model.units.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -247,7 +249,7 @@ public class GameController {
             for (int yIterator = sy; yIterator <= fy; yIterator++) {
                 Cell currentCell = game.getCells()[xIterator][yIterator];
                 for (Unit potentialEnemy : currentCell.getUnits()) {
-                    if (!potentialEnemy.getOwner().getUsername().equals(user.getUsername())) {
+                    if (!potentialEnemy.getOwner().getUsername().equals(user.getUsername()) && potentialEnemy.getCell().getBuilding() == null) {
                         potentialEnemy.setHitPoint(potentialEnemy.getHitPoint() - unit.getDamage());
                     }
                 }
@@ -270,28 +272,23 @@ public class GameController {
     }
 
     private void applyDeathChange() {
-        Cell[][] cells = game.getCells();
-        int newUnemployedUnit = 0;
-        for (Cell[] cell : cells) {
-            for (int j = 0; j < cells[0].length; j++) {
-                if (cell[j].getBuilding() != null) {
-                    if (cell[j].getBuilding().getHp() <= 0) {
-                        cell[j].getBuilding().getOwner().getGovernance().deleteBuilding(cell[j].getBuilding());
-                        cell[j].setBuilding(null);
-                    }
+        for (User user: game.getPlayers()) {
+            for (Building building: user.getGovernance().getBuildings()) {
+                if (building.getHp() <= 0) {
+                    if (building instanceof CagedWarDogs) ((CagedWarDogs) building).freeDogs();
+                    user.getGovernance().setUnemployedPopulation(user.getGovernance().getUnemployedPopulation() + building.getLadderlans());
+                    user.getGovernance().deleteBuilding(building);
+                    building.getCell().setBuilding(null);
                 }
-                if (cell[j].getUnits().size() != 0) {
-                    for (int k = 0; k < cell[j].getUnits().size(); k++) {
-                        if (cell[j].getUnits().get(k).getHitPoint() <= 0) {
-                            cell[j].getUnits().get(k).getOwner().getGovernance().removeUnit(cell[j].getUnits().get(k));
-                            cell[j].removeUnit(cell[j].getUnits().get(k));
-                            newUnemployedUnit++;
-                        }
-                    }
+            }
+            for (Unit unit: user.getGovernance().getUnits()) {
+                if (unit.getHitPoint() <= 0) {
+                    unit.getCell().removeUnit(unit);
+                    user.getGovernance().removeUnit(unit);
+                    user.getGovernance().setPopulation(user.getGovernance().getPopulation() - 1);
                 }
             }
         }
-        game.getCurrentPlayer().getGovernance().setUnemployedPopulation(game.getCurrentPlayer().getGovernance().getUnemployedPopulation() + newUnemployedUnit);
     }
 
     public void updateUnitTargets() {
