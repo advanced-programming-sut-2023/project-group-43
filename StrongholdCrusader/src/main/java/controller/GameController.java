@@ -48,9 +48,12 @@ public class GameController {
         //Optional: Even if we could do it, we wouldn't make less than the number
         if(unit.getCost() * number> game.getCurrentUser().getGovernance().getGold())
             return Output.NOT_ENOUGH_MONEY;
+        if(number > game.getCurrentPlayer().getGovernance().getUnemployedPopulation())
+            return Output.NOT_ENOUGH_POPULATION;
         if(unitType.equals("armed")) {
             Material weapon = ArmedWeapon.getWeaponByUnitName(unit.getName());
-            //TODO -> How to check the number og sth in storage?
+            if(game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(weapon) < number)
+                return Output.NOT_ENOUGH_WEAPON;
         }
         for(int i = 0 ; i < number ; i++){
             game.getCurrentUser().getGovernance().addUnit(unit);
