@@ -39,13 +39,11 @@ public class GameMenu extends Menu{
     }
 
     public void run() {
-        Scanner scanner = Menu.getScanner();
-        String input;
-        Output output;
-        Matcher matcher;
         System.out.println("game menu:");
         gameController.getGame().setCurrentPlayer(gameController.getGame().getCurrentUser());
         while (turns > 0){
+            System.out.println("turn " + (gameController.getGame().getTurns() - turns + 1) + ":");
+            System.out.println("turns left: "+ turns);
             for (int i = 0; i < numberOfPlayers; i++) {
                 onePlayerTurn();
                 gameController.goToNextPerson();
