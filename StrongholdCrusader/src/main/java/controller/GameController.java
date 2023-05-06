@@ -101,7 +101,6 @@ public class GameController {
         for(Unit unit: game.getSelectedUnit()) {
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
-            unit.setState(UnitState.MOVING);
         }
         return Output.SUCCESSFUL_ACTION;
     }
@@ -114,7 +113,6 @@ public class GameController {
             unit.setCurrentTargetY(y1 - 1);
             unit.setNextTargetX(x2 - 1);
             unit.setNextTargetY(y2 - 1);
-            unit.setState(UnitState.MOVING);
         }
         return Output.SUCCESSFUL_ACTION;
     }
@@ -196,7 +194,6 @@ public class GameController {
     public void applyChanges() {
         applyHitPointChange();
         applyDeathChange();
-        updateUnitTargets();
         updateMovements();
         updateResources();
         updateUnemployedPopulation();
@@ -284,9 +281,9 @@ public class GameController {
     }
 
     public void updateMovements(){
-        for(User user: game.getPlayers()) {
-            for (Unit unit: user.getGovernance().getUnits()) {
-                unit.move(this);
+        for(int i = 0 ; i < game.getPlayers().size();i++){
+            for(int j = 0 ; j < game.getPlayers().get(i).getGovernance().getUnits().size() ; j++){
+                //TODO -> how to call move function for every unit asal?
             }
         }
     }
@@ -296,9 +293,49 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++){
-                //switch (cells[i][j]){
-
-                //}
+                Converter converter = (Converter)cells[i][j].getBuilding();
+                switch (converter.getName()){
+                    case "wheat farm":
+                        converter.produceMaterials();
+                    case "hop farm":
+                        converter.produceMaterials();
+                    case "hunting post":
+                        converter.produceMaterials();
+                    case "apple garden":
+                        converter.produceMaterials();
+                    case "wood cutter":
+                        converter.produceMaterials();
+                    case "pitch rig":
+                        converter.produceMaterials();
+                    case "quarry":
+                        converter.produceMaterials();
+                    case "iron mine":
+                        converter.produceMaterials();
+                    case "bakery":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "dairy products":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "beer brewing":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "mill":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "poleturner":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "fletcher":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "blacksmith":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "armourer":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                }
             }
         }
     }
@@ -306,8 +343,7 @@ public class GameController {
 
     private void updateUnemployedPopulation() {}
 
-    private void updateTaxIncome() {
-    }
+    private void updateTaxIncome() {}
 
     private void updatePopularity() {}
 

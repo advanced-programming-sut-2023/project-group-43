@@ -20,7 +20,8 @@ package enums.BuildingEnums;
         CAGED_WAR_DOGS("caged war dogs",10,0,100,400,0),
         PITCH_DITCH("pitch ditch",0,0,0,500,0),
         OIL_SMELTER("oil smelter",0,10,100,400,1),
-        //<<<----------manufacture---------->>>
+        //<<<----------converter---------->>>
+        //part 1
         //------> 1) foods
         WHEAT_FARM("wheat farm",15,0,0,100,1),
         HOP_FARM("hop farm",15,0,0,100,1),
@@ -35,7 +36,7 @@ package enums.BuildingEnums;
         PITCH_RIG("pitch rig",20,0,0,400,1),
         QUARYY("quarry",20,0,0,400,3),
         IRON_MINE("iron mine",20,0,0,400,2),
-        //<<<----------converter---------->>>
+        //part 2
         //------> 1) humans
         BARRACK("barrack",0 , 15 , 0,300,0),
         //------> 2) foods
