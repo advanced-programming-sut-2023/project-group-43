@@ -1,5 +1,6 @@
 package model;
 
+import enums.RateNumber;
 import model.buildings.Building;
 import model.units.Unit;
 
@@ -10,10 +11,10 @@ public class Governance {
     private int population;
 
     private int unemployedPopulation;
-    private int foodRate;
-    private int taxRate;
+    private RateNumber foodRate;
+    private RateNumber taxRate;
     private int fearRate;
-    private int gold;
+    private double gold;
     private GovernanceResource governanceResource;
 
     private ArrayList<Unit> units = new ArrayList<>();
@@ -28,19 +29,19 @@ public class Governance {
         this.popularity = popularity;
     }
 
-    public int getFoodRate() {
+    public RateNumber getFoodRate() {
         return foodRate;
     }
 
-    public void setFoodRate(int foodRate) {
+    public void setFoodRate(RateNumber foodRate) {
         this.foodRate = foodRate;
     }
 
-    public int getTaxRate() {
+    public RateNumber getTaxRate() {
         return taxRate;
     }
 
-    public void setTaxRate(int taxRate) {
+    public void setTaxRate(RateNumber taxRate) {
         this.taxRate = taxRate;
     }
 
@@ -52,11 +53,19 @@ public class Governance {
         this.fearRate = fearRate;
     }
 
+    public ArrayList<Building> getBuildings() {
+        return buildings;
+    }
+
+    public void setBuildings(ArrayList<Building> buildings) {
+        this.buildings = buildings;
+    }
+
     public int getPopulation() {
         return population;
     }
 
-    public int getGold() {
+    public double getGold() {
         return gold;
     }
 
@@ -96,7 +105,7 @@ public class Governance {
         this.unemployedPopulation = unemployedPopulation;
     }
 
-    public void setGold(int gold) {
+    public void setGold(double gold) {
         this.gold = gold;
     }
 

@@ -3,6 +3,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
+import enums.RateNumber;
 import enums.environmentEnums.Material;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
@@ -108,7 +109,7 @@ public class GameController {
 
     public Output patrolUnit(int x1, int y1, int x2, int y2) {
         if (isCoordinateInvalid(x1, y1) || isCoordinateInvalid(x2, y2))
-        return Output.INVALID_NUMBER;
+            return Output.INVALID_NUMBER;
         for(Unit unit: game.getSelectedUnit()) {
             unit.setCurrentTargetX(x1 - 1);
             unit.setCurrentTargetY(y1 - 1);
@@ -295,7 +296,28 @@ public class GameController {
 
     private void updateUnemployedPopulation() {}
 
-    private void updateTaxIncome() {}
+    private void updateTaxIncome() {
+        Governance governance;
+        for(int i = 0 ; i< game.getPlayers().size() ; i++){
+            governance = game.getPlayers().get(i).getGovernance();
+            if(governance.getTaxRate().getRateNumber() > 0) {
+                governance.setGold(governance.getGold() + (governance.getPopulation() * governance.getTaxRate().getRateNumber()));
+                governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
+            }
+            if(governance.getTaxRate().getRateNumber() == 0)
+                governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
+            if(governance.getTaxRate().getRateNumber() < 0) {
+                if(governance.getGold() < -(governance.getPopulation() * governance.getTaxRate().getRateNumber())) {
+                    governance.setTaxRate(RateNumber.TAX_RATE_0);
+                    governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
+                }
+                else{
+                    governance.setGold(governance.getGold() - (governance.getPopulation() * governance.getTaxRate().getPayment()));
+                    governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
+                }
+            }
+        }
+    }
 
     private void updatePopularity() {}
 
