@@ -99,8 +99,6 @@ public class Unit {
 
     public void defense() {}
     public void move() {}
-    public void digDitch() {}
-    public void climbWall() {}
 
 }
 

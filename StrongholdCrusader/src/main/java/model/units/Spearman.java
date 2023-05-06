@@ -9,4 +9,9 @@ public class Spearman extends Unarmed{
     public Spearman(User owner, String name, TroopType troopType) {
         super(owner, name, troopType);
     }
+
+    @Override
+    public void digDitch() {
+
+    }
 }

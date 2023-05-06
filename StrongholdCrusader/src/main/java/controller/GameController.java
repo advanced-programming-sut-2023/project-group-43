@@ -6,14 +6,12 @@ import enums.Output;
 import enums.environmentEnums.Material;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitsEnum;
-import enums.environmentEnums.Material;
 import model.*;
 import model.buildings.Building;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 
 import model.units.Engineer;
-import model.units.Unit;
 
 public class GameController {
 
