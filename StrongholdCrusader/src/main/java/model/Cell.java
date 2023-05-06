@@ -18,9 +18,18 @@ public class Cell {
     private boolean hasRock;
     private String rockDirection;
     private int cellSize;
+    private boolean tunelHere = false;
 
     private int x;
     private int y;
+
+    public boolean isTunelHere() {
+        return tunelHere;
+    }
+
+    public void setTunelHere(boolean tunelHere) {
+        this.tunelHere = tunelHere;
+    }
 
     public int getX() {
         return x;

@@ -1,6 +1,8 @@
 package enums;
 
 public enum Output {
+    DIG_TUNNEL_FAILED("warning : digging tunnel failed!"),
+    DIG_TUNNEL_SUCCESSFUL("digging tunnel done successfully"),
     WRONG_TYPE_OF_UNIT("warning : no unit with this type!"),
     NOT_ENOUGH_BALANCE_FOR_DROPPING_UNIT("warning : not enough balance for dropping unit/units!"),
     BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully"),

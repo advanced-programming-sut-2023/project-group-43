@@ -133,7 +133,22 @@ public class GameController {
         return null;
     }
 
-    public Output digTunnel(int x, int y) {return null;}
+    public Output digTunnel(int x, int y) {
+        Cell cell = game.getCells()[x - 1][y - 1];
+        if (cell.getBuilding() != null && (cell.getBuilding().getName().equals("lookout tower") ||
+                cell.getBuilding().getName().equals("perimeter tower") ||
+                cell.getBuilding().getName().equals("defensive tower") ||
+                cell.getBuilding().getName().equals("square tower") ||
+                cell.getBuilding().getName().equals("circle tower") ||
+                cell.getBuilding().getName().equals("pitch ditch")
+                )) {
+            return Output.DIG_TUNNEL_FAILED;
+        }
+        else {
+            cell.setTunelHere(true);
+            return Output.DIG_TUNNEL_SUCCESSFUL;
+        }
+    }
 
     public Output buildEquipment(String weaponName) {
         return null;
