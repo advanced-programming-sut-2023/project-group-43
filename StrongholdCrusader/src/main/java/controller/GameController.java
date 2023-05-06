@@ -9,6 +9,7 @@ import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
+import model.buildings.Converter;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 
@@ -244,8 +245,48 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++){
-                switch (cells[i][j]){
-
+                Converter converter = (Converter)cells[i][j].getBuilding();
+                switch (converter.getName()){
+                    case "wheat farm":
+                        converter.produceMaterials();
+                    case "hop farm":
+                        converter.produceMaterials();
+                    case "hunting post":
+                        converter.produceMaterials();
+                    case "apple garden":
+                        converter.produceMaterials();
+                    case "wood cutter":
+                        converter.produceMaterials();
+                    case "pitch rig":
+                        converter.produceMaterials();
+                    case "quarry":
+                        converter.produceMaterials();
+                    case "iron mine":
+                        converter.produceMaterials();
+                    case "bakery":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "dairy products":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "beer brewing":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "mill":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "poleturner":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "fletcher":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "blacksmith":
+                        converter.consumeResource();
+                        converter.produceMaterials();
+                    case "armourer":
+                        converter.consumeResource();
+                        converter.produceMaterials();
                 }
             }
         }
