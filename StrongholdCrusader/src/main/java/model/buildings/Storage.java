@@ -6,9 +6,16 @@ import model.User;
 import java.util.HashMap;
 
 public class Storage extends Building {
-    public Storage(String name, User owner) {
+
+    private int capacity;
+    public Storage(String name, User owner, int capacity) {
 
         super(name, owner);
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }
 

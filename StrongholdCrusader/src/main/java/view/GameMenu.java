@@ -4,6 +4,7 @@ import controller.*;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.GameMenuCommands;
+import enums.unitEnums.UnitState;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -119,7 +120,7 @@ public class GameMenu extends Menu{
     private Output setUnitState(Matcher matcher) {
         String state = Validations.getInfo("s", matcher.group());
         if (parseMatcher(matcher) && state != null)
-        return gameController.setUnitState(Integer.parseInt(x),Integer.parseInt(y),state);
+        return gameController.setUnitState(Integer.parseInt(x),Integer.parseInt(y), state);
         return null;
     }
 

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Governance {
     private int popularity;
     private int population;
+
+    private int unemployedPopulation;
     private int foodRate;
     private int taxRate;
     private int fearRate;
@@ -86,12 +88,29 @@ public class Governance {
         buildings.remove(building);
     }
 
+    public int getUnemployedPopulation() {
+        return unemployedPopulation;
+    }
+
+    public void setUnemployedPopulation(int unemployedPopulation) {
+        this.unemployedPopulation = unemployedPopulation;
+    }
+
     public Building getBuildingByName(String name) {
         for (Building building: buildings) {
             if (building.getName().equals(name))
                return building;
         }
         return null;
+    }
+
+    public ArrayList<Building> getAllBuildingsByName(String name) {
+        ArrayList<Building> allBuildings = new ArrayList<>();
+        for (Building building: buildings) {
+            if (building.getName().equals(name))
+                allBuildings.add(building);
+        }
+        return allBuildings;
     }
 
     public void changeGoldAmount(int amount) {

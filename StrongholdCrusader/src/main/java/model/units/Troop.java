@@ -11,7 +11,6 @@ public class Troop extends Unit{
 
     private TroopType troopType;
     private boolean canHide;
-    private String weapon;
     private int damage;
 
     public void attack() {

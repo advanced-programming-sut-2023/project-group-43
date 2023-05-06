@@ -34,8 +34,15 @@ public class LoginMenu extends Menu {
             if (output != null) System.out.println(output.getString());
             else System.out.println("invalid command");
             if (output != null && output.equals(Output.SUCCESSFUL_LOGIN)) {
-                String username = Validations.getInfo("u", matcher.group());
-                enterMainMenu(username);
+                String captcha = RegisterAndLoginController.generateCaptcha();
+                System.out.println(RegisterAndLoginController.asciiArt(captcha));
+                input = scanner.nextLine();
+                output = RegisterAndLoginController.checkCaptcha(captcha, input);
+                System.out.println(output.getString());
+                if (output.equals(Output.CAPTCHA_MATCHED)) {
+                    String username = Validations.getInfo("u", matcher.group());
+                    enterMainMenu(username);
+                }
             }
             checkForPause(output);
         }

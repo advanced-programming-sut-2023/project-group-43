@@ -6,67 +6,70 @@ import model.User;
 public class BuildingBuilder {
 
     public static Converter converter;
-    public static Manufacturer manufacturer;
+    public static Producer producer;
 
     public static Building BuildingBuilder(String name, User owner) {
         //TODO : we should declare people capacity with details
         switch (name) {
             case "small stone gatehouse":
-                return new CastleDepartment(name, owner, 8);
+                return new CastleDepartment(name, owner, 8, 0, 0);
             case "big stone gatehouse":
-                return new CastleDepartment(name, owner, 10);
+                return new CastleDepartment(name, owner, 10, 0, 0);
             case "draw bridge":
+                return new CastleDepartment(name, owner, 5, 0, 0);
             case "look out tower":
+                return new CastleDepartment(name, owner, 15, 10, 2);
             case "perimeter tower":
             case "defensive turret":
+                return new CastleDepartment(name, owner, 15, 20, 1);
             case "square tower":
             case "circle tower":
-                return new CastleDepartment(name, owner, 15);
+                return new CastleDepartment(name, owner, 15, 10, 1);
             case "siege tent":
             case "caged war dogs":
             case "pitch ditch":
             case "oil smelter":
                 return new Stronghold(name, owner);
             case "wheat farm":
-                manufacturer = new Manufacturer(name, owner, 10, 10);
-                manufacturer.addProducedMaterial(Material.WHEAT);
-                return manufacturer;
+                producer = new Producer(name, owner, 10, 10);
+                producer.addProducedMaterial(Material.WHEAT);
+                return producer;
             case "hop farm":
-                manufacturer = new Manufacturer(name, owner, 11, 10);
-                manufacturer.addProducedMaterial(Material.HOP);
-                return manufacturer;
+                producer = new Producer(name, owner, 11, 10);
+                producer.addProducedMaterial(Material.HOP);
+                return producer;
             case "hunting post":
-                manufacturer = new Manufacturer(name, owner, 12, 10);
-                manufacturer.addProducedMaterial(Material.MEAT);
-                return manufacturer;
+                producer = new Producer(name, owner, 12, 10);
+                producer.addProducedMaterial(Material.MEAT);
+                return producer;
             case "apple garden":
-                manufacturer = new Manufacturer(name, owner, 13, 10);
-                manufacturer.addProducedMaterial(Material.APPLE);
-                return manufacturer;
+                producer = new Producer(name, owner, 13, 10);
+                producer.addProducedMaterial(Material.APPLE);
+                return producer;
             case "stable":
-                manufacturer = new Manufacturer(name, owner, 14, 10);
-                manufacturer.addProducedMaterial(Material.HORSE);
-                return manufacturer;
+                producer = new Producer(name, owner, 14, 10);
+                producer.addProducedMaterial(Material.HORSE);
+                return producer;
             case "howel":
-                manufacturer = new Manufacturer(name, owner, 15, 10);
-                manufacturer.addProducedMaterial(Material.PEASANT);
-                return manufacturer;
+                producer = new Producer(name, owner, 15, 10);
+                producer.addProducedMaterial(Material.PEASANT);
+                return producer;
             case "wood cutter":
-                manufacturer = new Manufacturer(name, owner, 16, 10);
-                manufacturer.addProducedMaterial(Material.WOOD);
-                return manufacturer;
+                producer = new Producer(name, owner, 16, 10);
+                producer.addProducedMaterial(Material.WOOD);
+                return producer;
             case "pitch rig":
-                manufacturer = new Manufacturer(name, owner, 17, 10);
-                manufacturer.addProducedMaterial(Material.TAR);
-                return manufacturer;
+                producer = new Producer(name, owner, 17, 10);
+                producer.addProducedMaterial(Material.TAR);
+                return producer;
             case "quarry":
-                manufacturer = new Manufacturer(name, owner, 18, 10);
-                manufacturer.addProducedMaterial(Material.STONE);
-                return manufacturer;
+                producer = new Producer(name, owner, 18, 10);
+                producer.addProducedMaterial(Material.STONE);
+                return producer;
             case "iron mine":
-                manufacturer = new Manufacturer(name, owner, 19, 10);
-                manufacturer.addProducedMaterial(Material.IRON);
-                return manufacturer;
+                producer = new Producer(name, owner, 19, 10);
+                producer.addProducedMaterial(Material.IRON);
+                return producer;
             case "barrack":
                 converter = new Converter(name, owner, 10, 10);
                 converter.addConsumeMaterial(Material.PEASANT);
@@ -109,9 +112,10 @@ public class BuildingBuilder {
                 converter.addProducedMaterial(Material.ARMOUR);
                 return converter;
             case "food stockpile":
+                return new Storage(name, owner, 100);
             case "stockpile":
             case "armoury":
-                return new Storage(name, owner);
+                return new Storage(name, owner, 1000);
             case "church":
                 return new PopularityBooster(name, owner, 10);
             case "cathedral":

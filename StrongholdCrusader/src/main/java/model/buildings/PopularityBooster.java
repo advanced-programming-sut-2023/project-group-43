@@ -10,7 +10,9 @@ public class PopularityBooster extends Building {
         this.rate = rate;
     }
 
-    public void increasePopularity() {};
+    public void increasePopularity() {
+        getOwner().getGovernance().setPopularity(getOwner().getGovernance().getPopularity() + rate);
+    }
 
     public int getRate() {
         return rate;

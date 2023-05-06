@@ -1,16 +1,12 @@
 package controller;
 import enums.Output;
-import model.Camera;
 import model.Cell;
 import model.Game;
-
-import java.awt.*;
 
 public class MapController {
 
     private Game game;
     private GameController gameController;
-    private Camera camera = new Camera();
 
     public MapController(Game game) {
         this.game = game;

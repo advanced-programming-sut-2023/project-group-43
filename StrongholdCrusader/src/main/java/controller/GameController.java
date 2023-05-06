@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Material;
+import enums.unitEnums.ArmedWeapon;
+import enums.unitEnums.UnitState;
+import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
-import model.units.Engineer;
 import model.units.Unit;
+import model.units.UnitsBuilder;
+
+import model.units.Engineer;
 
 public class GameController {
 
     private Game game;
-    private boolean selected;
-    private int selectedX;
-    private int selectedY;
+
 
     public GameController(Game game) {
         this.game = game;
@@ -34,7 +37,26 @@ public class GameController {
         return Output.NO_BUILDING;
     }
 
-    public Output createUnit(String type, int count) {return null;}
+    public Output createUnit(String name, int number) {
+        if(number <= 0)return Output.INVALID_NUMBER;
+        if(!game.getSelectedBuilding().getName().equals("barrack"))
+            return Output.WRONG_SELECT_FOR_BUILDING;
+        Unit unit = UnitsBuilder.unitsBuilder(name , game.getCurrentUser());
+        String unitType = UnitsEnum.getTypeByUnitName(unit.getName());
+        if(unitType == null)
+            return Output.WRONG_UNIT_NAME;
+        //Optional: Even if we could do it, we wouldn't make less than the number
+        if(unit.getCost() * number> game.getCurrentUser().getGovernance().getGold())
+            return Output.NOT_ENOUGH_MONEY;
+        if(unitType.equals("armed")) {
+            Material weapon = ArmedWeapon.getWeaponByUnitName(unit.getName());
+            //TODO -> How to check the number og sth in storage?
+        }
+        for(int i = 0 ; i < number ; i++){
+            game.getCurrentUser().getGovernance().addUnit(unit);
+        }
+        return Output.SUCCESSFUL_UNIT_CREATION;
+    }
 
     public Output repairCastle() {
         if (!game.getSelectedBuilding().getOwner().equals(game.getCurrentPlayer()))
@@ -72,19 +94,22 @@ public class GameController {
     public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
 
     public Output setUnitState(int x, int y, String state) {
-        ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
-        int flag = 0;
-        for (int i = 0; i < cellUnits.size(); i++) {
-            if ((false == cellUnits.get(i).isHidden()) && cellUnits.get(i).getOwner().equals(game.getCurrentPlayer())) {
-                flag = 1;
-                //cellUnits.get(i).setState();
-            }
+        ArrayList<Unit> units = game.getCells()[x - 1][y - 1].getUnits();
+        UnitState unitState = UnitState.getUnitStateByName(state);
+        if (unitState == null) return Output.INVALID_STATE;
+        for (Unit unit: units) {
+            unit.setState(unitState);
         }
-        if (flag == 0) return Output.NO_THIS_TYPE_UNIT;
-        else  return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
+        return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
     }
 
-    public Output attack(int x, int y ,String item) {return null;}
+    public Output attack(int x, int y ,String item) {
+        if(item.equals("e"))
+            return attackToEnemy(x,y);
+        if(item.equals("x"))
+            return aearialAttack(x,y);
+        return null;
+    }
 
     private Output attackToEnemy(int x, int y) {return null;}
 
@@ -122,7 +147,9 @@ public class GameController {
         }
     }
 
-    public Output buildEquipment (String equipmentName) {return null;}
+    public Output buildEquipment(String weaponName) {
+        return null;
+    }
 
     public Output disbandUnit() {
         if (game.getSelectedUnit().size() == 0) return Output.NO_UNIT_FOR_DISBANDING;
@@ -201,6 +228,7 @@ public class GameController {
             game.setSelectedUnit(new ArrayList<>());
         }
     }
+
 
     public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty) {
         Cell[][] cells = game.getCells();
