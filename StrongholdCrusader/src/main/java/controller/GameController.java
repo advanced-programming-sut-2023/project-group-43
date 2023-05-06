@@ -8,6 +8,7 @@ import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
+import model.buildings.Storage;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 
@@ -134,7 +135,10 @@ public class GameController {
 
     public Output digTunnel(int x, int y) {return null;}
 
-    public Output buildEquipment(String weaponName) {
+    public Output buildEquipment(String equipmentName) {
+        Material equipment = Material.getMaterialByName(equipmentName);
+        game.getCurrentPlayer().getGovernance().getGovernanceResource().addToStorage(equipment);
+        return Output.EQUIPMENT_CREATED_SUCCESSFULLY;
     }
 
     public Output disbandUnit() {

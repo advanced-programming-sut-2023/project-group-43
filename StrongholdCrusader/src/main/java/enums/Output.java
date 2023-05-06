@@ -92,6 +92,7 @@ public enum Output {
     SUCCESSFUL_UNIT_CREATION("Unit created successfully!"),
     NOT_ENOUGH_POPULATION("Not enough population!"),
     UNIT_STATE_IS_SET("Unit state is set"),
+    EQUIPMENT_CREATED_SUCCESSFULLY("equipment created successfully!"),
     //some Output for all the project
     INVALID_NUMBER("Invalid number!"),
 
