@@ -3,7 +3,7 @@ package enums.BuildingEnums;
     public enum BuildingEnum {
         //<<<----------castle department---------->>>
         //------> headquarter
-        HEADQUARTER("headquarter" , 0 , 0 ,0  ,500 ,0),
+        HEADQUARTER("headquarter" , 0 , 0 ,0  ,600 ,0),
         //------> 1) gatehouses
         SMALL_STONE_GATEHOUSE("small stone gatehouse",0 , 0 ,100 , 0,0),
         BIG_STONE_GATEHOUSE("big stone gatehouse",0 ,20,0 , 200,0),
@@ -16,10 +16,10 @@ package enums.BuildingEnums;
         SQUARE_TOWER("square tower",0,35,0,300,0),
         CIRCLE_TOWER("circle tower",0,40,0,300,0),
         //<<<----------keeps and strongholds---------->>>
-        SIEGE_TENT("siege tent",0,0,0,100,0),
+        SIEGE_TENT("siege tent",0,0,0,500,0),
         CAGED_WAR_DOGS("caged war dogs",10,0,100,400,0),
-        PITCH_DITCH("pitch ditch",0,0,0,100,0),
-        OIL_SMELTER("oil smelter",0,10,100,300,1),
+        PITCH_DITCH("pitch ditch",0,0,0,500,0),
+        OIL_SMELTER("oil smelter",0,10,100,400,1),
         //<<<----------manufacture---------->>>
         //------> 1) foods
         WHEAT_FARM("wheat farm",15,0,0,100,1),

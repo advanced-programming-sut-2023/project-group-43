@@ -4,6 +4,7 @@ import controller.*;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.GameMenuCommands;
+import enums.unitEnums.UnitState;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -89,8 +90,9 @@ public class GameMenu extends Menu{
     }
 
     private Output selectUnit(Matcher matcher) {
-        if (parseMatcher(matcher))
-            return gameController.selectUnit(Integer.getInteger(x),Integer.parseInt(y));
+        String type = Validations.getInfo("t", matcher.group());
+        if (parseMatcher(matcher) && type != null)
+            return gameController.selectUnit(Integer.getInteger(x),Integer.parseInt(y),type);
         return null;
     }
 
@@ -118,7 +120,7 @@ public class GameMenu extends Menu{
     private Output setUnitState(Matcher matcher) {
         String state = Validations.getInfo("s", matcher.group());
         if (parseMatcher(matcher) && state != null)
-        return gameController.setUnitState(Integer.parseInt(x),Integer.parseInt(y),state);
+        return gameController.setUnitState(Integer.parseInt(x),Integer.parseInt(y), UnitState.valueOf(state));
         return null;
     }
 

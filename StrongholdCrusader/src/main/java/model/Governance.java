@@ -82,6 +82,9 @@ public class Governance {
     public void addBuilding(Building building) {
         buildings.add(building);
     }
+    public void deleteBuilding(Building building) {
+        buildings.remove(building);
+    }
 
     public Building getBuildingByName(String name) {
         for (Building building: buildings) {

@@ -25,16 +25,16 @@ public class StoreController {
         stringBuilder.append("<<<Price List>>>");
         stringBuilder.append("~Minerals~");
         for(int i = 0 ; i < minerals.size() ; i++)
-            stringBuilder.append(i).append(minerals.get(i).getName()).append("  :  ").append(minerals.get(i).getInitialCost());
+            stringBuilder.append(i).append(minerals.get(i).getName()).append("  :  ").append(minerals.get(i).getBuyingPrice());
         stringBuilder.append("~Foods~");
         for(int i = 0 ; i < foods.size() ; i++)
-            stringBuilder.append(i).append(foods.get(i).getName()).append("  :  ").append(foods.get(i).getInitialCost());
+            stringBuilder.append(i).append(foods.get(i).getName()).append("  :  ").append(foods.get(i).getBuyingPrice());
         stringBuilder.append("~weapons~");
         for(int i = 0 ; i < weapons.size() ; i++)
-            stringBuilder.append(i).append(weapons.get(i).getName()).append("  :  ").append(weapons.get(i).getInitialCost());
+            stringBuilder.append(i).append(weapons.get(i).getName()).append("  :  ").append(weapons.get(i).getBuyingPrice());
         stringBuilder.append("~tools~");
         for(int i = 0 ; i < tools.size() ; i++)
-            stringBuilder.append(i).append(tools.get(i).getName()).append("  :  ").append(tools.get(i).getInitialCost());
+            stringBuilder.append(i).append(tools.get(i).getName()).append("  :  ").append(tools.get(i).getBuyingPrice());
         return String.valueOf(stringBuilder);
     }
 
@@ -43,9 +43,9 @@ public class StoreController {
         Governance governance = game.getCurrentPlayer().getGovernance();
         if(material == null)
             return Output.ITEM_NOR_FOUND;
-        if(governance.getGold() != amount * material.getInitialCost())
+        if(governance.getGold() != amount * material.getBuyingPrice())
             return Output.NOT_ENOUGH_MONEY;
-        governance.changeGoldAmount(- amount * material.getInitialCost());
+        governance.changeGoldAmount(- amount * material.getBuyingPrice());
         governance.getGovernanceResource().changeAmountOfItemInStockpile(material,amount);
         return Output.SUCCESSFUL_PURCHASE;
     }
@@ -57,7 +57,7 @@ public class StoreController {
             return Output.ITEM_NOR_FOUND;
         if(governance.getGovernanceResource().getAmountOfItemInStockpile(material) != amount)
             return Output.NOT_ENOUGH_QUANTITY;
-        game.getCurrentPlayer().getGovernance().changeGoldAmount(amount * material.getSecondaryCost());
+        game.getCurrentPlayer().getGovernance().changeGoldAmount(amount * material.getSellingPrice());
         governance.getGovernanceResource().changeAmountOfItemInStockpile(material,-amount);
         return Output.SUCCESSFUL_SALE;
     }
