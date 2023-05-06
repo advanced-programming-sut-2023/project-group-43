@@ -2,6 +2,7 @@ package model.units;
 
 import enums.unitEnums.TroopType;
 import enums.unitEnums.UnitsEnum;
+import model.Game;
 import model.User;
 
 public class Spearman extends Unarmed{
@@ -10,8 +11,4 @@ public class Spearman extends Unarmed{
         super(owner, name, troopType);
     }
 
-    @Override
-    public void digDitch() {
-
-    }
 }
