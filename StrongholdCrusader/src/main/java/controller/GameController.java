@@ -5,10 +5,10 @@ import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Material;
 import enums.unitEnums.ArmedWeapon;
+import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
-import model.buildings.Storage;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 
@@ -94,16 +94,13 @@ public class GameController {
     public Output patrolUnit(int x1, int y1, int x2, int y2) {return null;}
 
     public Output setUnitState(int x, int y, String state) {
-        ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
-        int flag = 0;
-        for (int i = 0; i < cellUnits.size(); i++) {
-            if ((false == cellUnits.get(i).isHidden()) && cellUnits.get(i).getOwner().equals(game.getCurrentPlayer())) {
-                flag = 1;
-                //cellUnits.get(i).setState();
-            }
+        ArrayList<Unit> units = game.getCells()[x - 1][y - 1].getUnits();
+        UnitState unitState = UnitState.getUnitStateByName(state);
+        if (unitState == null) return Output.INVALID_STATE;
+        for (Unit unit: units) {
+            unit.setState(unitState);
         }
-        if (flag == 0) return Output.NO_THIS_TYPE_UNIT;
-        else  return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
+        return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
     }
 
     public Output attack(int x, int y ,String item) {
@@ -135,10 +132,8 @@ public class GameController {
 
     public Output digTunnel(int x, int y) {return null;}
 
-    public Output buildEquipment(String equipmentName) {
-        Material equipment = Material.getMaterialByName(equipmentName);
-        game.getCurrentPlayer().getGovernance().getGovernanceResource().addToStorage(equipment);
-        return Output.EQUIPMENT_CREATED_SUCCESSFULLY;
+    public Output buildEquipment(String weaponName) {
+        return null;
     }
 
     public Output disbandUnit() {

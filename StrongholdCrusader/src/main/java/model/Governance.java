@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Governance {
     private int popularity;
     private int population;
+
+    private int unemployedPopulation;
     private int foodRate;
     private int taxRate;
     private int fearRate;
@@ -84,6 +86,14 @@ public class Governance {
     }
     public void deleteBuilding(Building building) {
         buildings.remove(building);
+    }
+
+    public int getUnemployedPopulation() {
+        return unemployedPopulation;
+    }
+
+    public void setUnemployedPopulation(int unemployedPopulation) {
+        this.unemployedPopulation = unemployedPopulation;
     }
 
     public Building getBuildingByName(String name) {

@@ -1,7 +1,6 @@
 package controller;
 
 import enums.Output;
-import enums.environmentEnums.Material;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
 import model.Cell;
@@ -9,14 +8,12 @@ import model.DataBase;
 import model.Game;
 import model.User;
 import model.buildings.Building;
-import model.buildings.BuildingBuilder;
+import model.buildings.CastleDepartment;
 import model.units.Unit;
 import model.units.UnitsBuilder;
 import view.GameMenu;
 
 import java.util.ArrayList;
-
-import static enums.Output.NOT_ENOUGH_BALANCE_FOR_DROPPING_BUILDING;
 
 
 public class ChangeEnvironmentController {
@@ -155,43 +152,11 @@ public class ChangeEnvironmentController {
     public Output dropBuilding(int x, int y, String type) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
-        boolean found = (UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer()) != null);
-        if (found) {
-            Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
-            if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.WOOD) < building.getWood() ||
-                    game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < building.getStone() ||
-                    game.getCurrentPlayer().getGovernance().getGold() < building.getCost()) {
-                return NOT_ENOUGH_BALANCE_FOR_DROPPING_BUILDING;
-            }
+        if (!type.matches("headquarter")) return Output.INVALID_BUILDING;
+            Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
             building.setCell(game.getCells()[x - 1][y - 1]);
             game.getCurrentPlayer().getGovernance().addBuilding(building);
-            game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, (-1 * building.getWood()));
-            game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * building.getStone()));
-            game.getCurrentPlayer().getGovernance().changeGoldAmount(- building.getCost());
-        }
-        return Output.BUILDING_DROPPED_SUCCESSFULLY;
-    }
-
-    public Output dropUnit(int x, int y, String type, int count) {
-        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
-            return Output.WRONG_COORDINATES;
-        if (count <= 0) return Output.WRONG_COUNT;
-        boolean found = (UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer()) != null);
-        if (found) {
-            Unit unit = UnitsBuilder.unitsBuilder(type, game.getCurrentPlayer());
-            if (game.getCurrentPlayer().getGovernance().getGold() < (count * unit.getCost()))
-                return Output.NOT_ENOUGH_BALANCE_FOR_DROPPING_UNIT;
-            else {
-                for (int i = 0; i < count; i++) {
-                    game.getCells()[x - 1][y - 1].addUnit(unit);
-                    unit.setCell(game.getCells()[x - 1][y - 1]);
-                    game.getCurrentPlayer().getGovernance().addUnit(unit);
-                }
-                game.getCurrentPlayer().getGovernance().changeGoldAmount((-1 * count * unit.getCost()));
-                return Output.UNIT_DROPPED_SUCCESSFULLY;
-            }
-        }
-        else return Output.WRONG_TYPE_OF_UNIT;
+        return null;
     }
 
     public void enterGameMenu() {
@@ -205,6 +170,9 @@ public class ChangeEnvironmentController {
     public String goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
+        if(game.getCurrentPlayer().getGovernance().getBuildingByName("headquarter") == null) {
+            return "you haven't selected your headquarter yet";
+        }
         for (User player: game.getPlayers()) {
             if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);

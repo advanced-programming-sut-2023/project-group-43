@@ -40,8 +40,6 @@ public class ChangeEnvironmentMenu extends Menu {
                 output = dropTree(matcher);
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_BUILDING)) != null) {
                 output = dropBuilding(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_UNIT)) != null) {
-                output = dropUnit(matcher);
             } else if (input.matches("next")) {
                 System.out.println(changeEnvironmentController.goToNextPerson());
                 continue;
@@ -107,14 +105,6 @@ public class ChangeEnvironmentMenu extends Menu {
     private Output dropBuilding(Matcher matcher) {
         if (parseMatcher(matcher))
             return changeEnvironmentController.dropBuilding(Integer.parseInt(x), Integer.parseInt(y), type);
-        return null;
-    }
-
-    private Output dropUnit(Matcher matcher) {
-        String count = Validations.getInfo("c", matcher.group());
-        if (parseMatcher(matcher) && count != null && count.matches("\\d+"))
-            return changeEnvironmentController.dropUnit(Integer.parseInt(x),
-                    Integer.parseInt(y), type, Integer.parseInt(count));
         return null;
     }
 

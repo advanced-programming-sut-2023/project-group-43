@@ -3,6 +3,7 @@ package model;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
 import model.buildings.Building;
+import model.buildings.CastleDepartment;
 import model.units.Unit;
 
 import java.util.ArrayList;
@@ -104,7 +105,10 @@ public class Cell {
     }
 
     public boolean isBlocked() {
-        if (this.building != null && !building.HasLadder()) return true;
+        if (this.building != null && !building.HasLadder()) {
+            if ((!(building instanceof CastleDepartment)) || (!((CastleDepartment) building).isHidden()))
+            return true;
+        }
         if (this.hasRock) return true;
         if (this.texture.isPassable()) return false;
         return true;

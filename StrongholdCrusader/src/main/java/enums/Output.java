@@ -104,7 +104,11 @@ public enum Output {
     NOT_ENOUGH_RESOURCE("you don't have enough resource to send others"),
     NOT_ENOUGH_GOLD("the sender doesnt have enough gold"),
     //end of trade controller
-    INVALID_NUMBER("invalid number");
+
+    //change environment
+    INVALID_BUILDING("you only can drop headquarter now"),
+    INVALID_STATE("please enter a valid state")
+    ;
     private String string;
 
     private Output(String string) {
