@@ -9,8 +9,6 @@ import model.Game;
 import model.User;
 import model.buildings.Building;
 import model.buildings.CastleDepartment;
-import model.units.Unit;
-import model.units.UnitsBuilder;
 import view.GameMenu;
 
 import java.util.ArrayList;
