@@ -1,11 +1,7 @@
 package view;
 
 import controller.MainController;
-import controller.RegisterAndLoginController;
 import enums.menuEnums.MainMenuCommands;
-import model.DataBase;
-
-import java.util.Scanner;
 
 public class MainMenu extends Menu{
 

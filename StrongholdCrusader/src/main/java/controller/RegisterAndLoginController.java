@@ -1,19 +1,10 @@
 package controller;
 
 import enums.Output;
-import enums.menuEnums.RegisterAndLoginCommands;
 import model.DataBase;
 import model.User;
 import view.MainMenu;
-
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -335,7 +326,7 @@ public class RegisterAndLoginController {
         return Output.SUCCESSFUL_REGISTER;
     }
 
-    private static String makePasswordRecoveryQuestion(int number) {
+    public static String makePasswordRecoveryQuestion(int number) {
         String[] questions = new String[3];
         questions[0] = "What is my father’s name?";
         questions[1] = "What was my first pet’s name?";
