@@ -194,7 +194,7 @@ public class GameController {
     public void applyChanges() {
         applyHitPointChange();
         applyDeathChange();
-        updateForNextTurn();
+        updateMovements();
         updateResources();
         updateUnemployedPopulation();
         updateTaxIncome();
@@ -231,9 +231,26 @@ public class GameController {
         game.getCurrentPlayer().getGovernance().setUnemployedPopulation(game.getCurrentPlayer().getGovernance().getUnemployedPopulation() + newUnemployedUnit);
     }
 
-    public void updateForNextTurn() {}
+    public void updateMovements(){
+        for(int i = 0 ; i < game.getPlayers().size();i++){
+            for(int j = 0 ; j < game.getPlayers().get(i).getGovernance().getUnits().size() ; j++){
+                //TODO -> how to call move function for every unit asal?
+            }
+        }
+    }
 
-    private void updateResources() {}
+    private void updateResources() {
+        //some building should update automatically
+        Cell[][] cells = game.getCells();
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++){
+                switch (cells[i][j]){
+
+                }
+            }
+        }
+    }
+
 
     private void updateUnemployedPopulation() {}
 
