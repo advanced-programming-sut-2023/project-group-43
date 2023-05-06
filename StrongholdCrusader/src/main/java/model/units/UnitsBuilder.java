@@ -7,6 +7,8 @@ public class UnitsBuilder {
     public static Unit unitsBuilder(String name, User owner) {
         switch (name) {
             case "lord":
+            case "worker":
+            case "dog":
                 return new Unit(owner,name);
             case "archer":
                 return new Armed(owner, name, TroopType.ARCHER);

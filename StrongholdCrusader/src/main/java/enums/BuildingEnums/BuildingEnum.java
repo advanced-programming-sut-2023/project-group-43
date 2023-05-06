@@ -68,15 +68,15 @@ package enums.BuildingEnums;
         private int stone;
         private int cost;
         private int hp;
-        private int laddernans;
+        private int workerNumber;
 
-        BuildingEnum(String name, int wood, int stone, int cost, int hp , int laddernans) {
+        BuildingEnum(String name, int wood, int stone, int cost, int hp , int workNumber) {
             this.name = name;
             this.wood = wood;
             this.stone = stone;
             this.cost = cost;
             this.hp = hp;
-            this.laddernans = laddernans;
+            this.workerNumber = workNumber;
         }
 
         public String getName() {
@@ -99,8 +99,8 @@ package enums.BuildingEnums;
             return hp;
         }
 
-        public int getLaddernans() {
-            return laddernans;
+        public int getWorkerNumber() {
+            return workerNumber;
         }
 
         public static BuildingEnum getBuildingStructureByName(String name) {

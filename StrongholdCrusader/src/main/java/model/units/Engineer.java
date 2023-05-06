@@ -10,11 +10,7 @@ public class Engineer extends Unit{
     }
     private boolean hasOil;
 
-    public void setHasOil(boolean hasOil) {
-        this.hasOil = hasOil;
-    }
+    public void chargeTar(){
 
-    public boolean hasOIl() {
-        return hasOil;
     }
 }
