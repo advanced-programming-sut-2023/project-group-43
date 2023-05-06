@@ -6,4 +6,10 @@ public class Ladderman extends Unit {
     public Ladderman(User owner, String name) {
         super(owner, name);
     }
+
+    private boolean onTheWall = false;
+
+    public boolean isOnTheWall() {
+        return onTheWall;
+    }
 }

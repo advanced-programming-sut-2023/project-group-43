@@ -3,6 +3,10 @@ import enums.Degrees.DefenseDegree;
 import enums.Degrees.SpeedDegree;
 
 public enum UnitsEnum {
+    //lord
+    LORD("lord","lord",2,DefenseDegree.HIGH.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
+    //worker
+    WORKER("worker","worker",1,DefenseDegree.VERY_VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
     //armed
     ARCHER("archer","armed" ,-2, DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
     CROSSBOWMAN("crossbowman","armed",-1,DefenseDegree.AVERAGE.getDegree() , SpeedDegree.LOW.getDegree(),  0),
@@ -28,6 +32,8 @@ public enum UnitsEnum {
     ENGINEER("engineer","engineer",-10,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
     //assassin
     ASSASSIN("assassin","assassin",0,DefenseDegree.AVERAGE.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
+    //dog
+    DOG("dog","dog",0,DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 0)
 
     ;
     private final String name;
@@ -80,6 +86,10 @@ public enum UnitsEnum {
 
     //TODO :  we might have a better place for this function -> getTypeByUnitName
     public static String getTypeByUnitName(String unitName){
+        if(unitName.matches("lord"))
+            return "lord";
+        if(unitName.matches("worker"))
+            return "worker";
         if(unitName.matches("(archer)|(crossbowman)|(swordsman)|(archer bow)|(black monk)|(slave)|(slinger)|(horse archer)|(arabian swordsman)|(fire thrower)"))
             return "armed";
         if(unitName.matches("(pikeman)|(maceman)|(knight)"))
