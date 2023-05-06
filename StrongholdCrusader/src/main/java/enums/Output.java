@@ -58,6 +58,11 @@ public enum Output {
     CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
     WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
     //
+    WRONG_UNIT_NAME("wrong unit name"),
+    WRONG_SELECT_FOR_BUILDING("The wrong building is selected"),
+    SUCCESSFUL_UNIT_CREATION("Unit created successfully!"),
+    NOT_ENOUGH_POPULATION("Not enough population!"),
+    NOT_ENOUGH_WEAPON("Not enough weapon!"),
     SELECT_BUILDING("The building selected successfully "),
     CREATE_UNIT("The unit successfully created"),
     REPAIR("repaired successfully!"),
@@ -88,12 +93,7 @@ public enum Output {
     NOT_ENOUGH_MONEY("Not enough money!"),
     SUCCESSFUL_PURCHASE("The purchase was successful!"),
     SUCCESSFUL_SALE("The sale was successful!"),
-    //Game outputs
-    WRONG_UNIT_NAME("wrong unit name"),
-    WRONG_SELECT_FOR_BUILDING("The wrong building is selected"),
-    SUCCESSFUL_UNIT_CREATION("Unit created successfully!"),
-    NOT_ENOUGH_POPULATION("Not enough population!"),
-    UNIT_STATE_IS_SET("Unit state is set"),
+    EQUIPMENT_CREATED_SUCCESSFULLY("equipment created successfully!"),
     //some Output for all the project
     INVALID_NUMBER("Invalid number!"),
 

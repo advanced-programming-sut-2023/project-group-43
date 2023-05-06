@@ -12,4 +12,8 @@ public class Armed extends Troop{
 
     Material weapon = ArmedWeapon.getWeaponByUnitName(this.getName());
 
+    public Material getWeapon() {
+        return weapon;
+    }
+
 }
