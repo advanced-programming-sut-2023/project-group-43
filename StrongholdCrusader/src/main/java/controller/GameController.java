@@ -101,6 +101,7 @@ public class GameController {
         for(Unit unit: game.getSelectedUnit()) {
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
+            unit.setState(UnitState.MOVING);
         }
         return Output.SUCCESSFUL_ACTION;
     }
@@ -113,6 +114,7 @@ public class GameController {
             unit.setCurrentTargetY(y1 - 1);
             unit.setNextTargetX(x2 - 1);
             unit.setNextTargetY(y2 - 1);
+            unit.setState(UnitState.MOVING);
         }
         return Output.SUCCESSFUL_ACTION;
     }
@@ -194,6 +196,7 @@ public class GameController {
     public void applyChanges() {
         applyHitPointChange();
         applyDeathChange();
+        updateUnitTargets();
         updateMovements();
         updateResources();
         updateUnemployedPopulation();
@@ -231,6 +234,55 @@ public class GameController {
         game.getCurrentPlayer().getGovernance().setUnemployedPopulation(game.getCurrentPlayer().getGovernance().getUnemployedPopulation() + newUnemployedUnit);
     }
 
+    public void updateUnitTargets() {
+        for(User user: game.getPlayers()) {
+            for (Unit unit: user.getGovernance().getUnits()) {
+                if (unit.getState().equals(UnitState.STANDING)) {
+                    unit.setCurrentTargetX(-1);
+                    unit.setCurrentTargetY(-1);
+                    unit.setNextTargetY(-1);
+                    unit.setNextTargetX(-1);
+                } else if (unit.getState().equals(UnitState.OFFENSIVE)) {
+                    Cell enemyCell = findEnemy(1000, unit.getCell().getX(), unit.getCell().getY());
+                    unit.setCurrentTargetX(enemyCell.getX());
+                    unit.setCurrentTargetY(enemyCell.getY());
+                    unit.setNextTargetY(-1);
+                    unit.setNextTargetX(-1);
+                } else if (unit.getState().equals(UnitState.OFFENSIVE)) {
+                    Cell enemyCell = findEnemy(3, unit.getCell().getX(), unit.getCell().getY()));
+                    unit.setCurrentTargetX(enemyCell.getX());
+                    unit.setCurrentTargetY(enemyCell.getY());
+                    unit.setNextTargetY(-1);
+                    unit.setNextTargetX(-1);
+                }
+            }
+        }
+    }
+
+    private Cell findEnemy(int distance, int currentX, int currentY) {
+        for (int i = 0; i < distance; i++) {
+            int sx = currentX - i;
+            int fx = currentX + i;
+            int sy = currentY - i;
+            int fy = currentY + i;
+            if (sx < 0) sx = 0;
+            if (sy < 0) sy = 0;
+            if (fx >= game.getRow()) fx = game.getRow() - 1;
+            if (fy >= game.getColumn()) fy = game.getColumn() - 1;
+            for (int xIterator = sx; xIterator <= fx; xIterator++) {
+                for (int yIterator = sy; yIterator <= fy; yIterator++) {
+                    Cell currentCell = game.getCells()[xIterator][yIterator];
+                    for (Unit unit: currentCell.getUnits()) {
+                        if (!unit.getOwner().getUsername().equals(game.getCurrentPlayer().getUsername())) {
+                            return currentCell;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public void updateMovements(){
         for(User user: game.getPlayers()) {
             for (Unit unit: user.getGovernance().getUnits()) {
@@ -244,9 +296,9 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++){
-                switch (cells[i][j]){
+                //switch (cells[i][j]){
 
-                }
+                //}
             }
         }
     }
