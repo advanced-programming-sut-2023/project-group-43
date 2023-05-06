@@ -96,6 +96,14 @@ public class Governance {
         this.unemployedPopulation = unemployedPopulation;
     }
 
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public void setGovernanceResource(GovernanceResource governanceResource) {
+        this.governanceResource = governanceResource;
+    }
+
     public Building getBuildingByName(String name) {
         for (Building building: buildings) {
             if (building.getName().equals(name))

@@ -38,6 +38,7 @@ public class GameController {
     }
 
     public Output createUnit(String name, int number) {
+        Governance governance = game.getCurrentPlayer().getGovernance();
         if(number <= 0)return Output.INVALID_NUMBER;
         if(!game.getSelectedBuilding().getName().equals("barrack"))
             return Output.WRONG_SELECT_FOR_BUILDING;
@@ -46,18 +47,21 @@ public class GameController {
         if(unitType == null)
             return Output.WRONG_UNIT_NAME;
         //Optional: Even if we could do it, we wouldn't make less than the number
-        if(unit.getCost() * number> game.getCurrentUser().getGovernance().getGold())
+        if(unit.getCost() * number> governance.getGold())
             return Output.NOT_ENOUGH_MONEY;
-        if(number > game.getCurrentPlayer().getGovernance().getUnemployedPopulation())
+        if(number > governance.getUnemployedPopulation())
             return Output.NOT_ENOUGH_POPULATION;
         if(unitType.equals("armed")) {
             Material weapon = ArmedWeapon.getWeaponByUnitName(unit.getName());
-            if(game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(weapon) < number)
+            if(governance.getGovernanceResource().getAmountOfItemInStockpile(weapon) < number)
                 return Output.NOT_ENOUGH_WEAPON;
+            governance.getGovernanceResource().changeAmountOfItemInStockpile(weapon,number);
         }
         for(int i = 0 ; i < number ; i++){
             game.getCurrentUser().getGovernance().addUnit(unit);
         }
+        governance.setGold(governance.getGold() - unit.getCost() * number);
+        governance.setUnemployedPopulation(governance.getUnemployedPopulation() - number);
         return Output.SUCCESSFUL_UNIT_CREATION;
     }
 
@@ -150,8 +154,10 @@ public class GameController {
         }
     }
 
-    public Output buildEquipment(String weaponName) {
-        return null;
+    public Output buildEquipment(String equipmentName) {
+        Material equipment = Material.getMaterialByName(equipmentName);
+        game.getCurrentPlayer().getGovernance().getGovernanceResource().addToStorage(equipment);
+        return Output.EQUIPMENT_CREATED_SUCCESSFULLY;
     }
 
     public Output disbandUnit() {
@@ -164,12 +170,24 @@ public class GameController {
         }
     }
 
-    public void applyChanges() {}
+    public void applyChanges() {
+        applyHitPointChange();
+        applyDeathChange();
+        updateForNextTurn();
+        updateResources();
+        updateUnemployedPopulation();
+        updateTaxIncome();
+        updatePopularity();
+        updateFoodRate();
+        updateTaxRate();
+        updateEfficiency();
+    }
 
     private void applyHitPointChange() {}
 
     private void applyDeathChange() {
         Cell[][] cells = game.getCells();
+        int newUnemployedUnit = 0;
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 if (cells[i][j].getBuilding() != null) {
@@ -183,11 +201,13 @@ public class GameController {
                         if (cells[i][j].getUnits().get(k).getHitPoint() <= 0) {
                             cells[i][j].getUnits().get(k).getOwner().getGovernance().removeUnit(cells[i][j].getUnits().get(k));
                             cells[i][j].removeUnit(cells[i][j].getUnits().get(k));
+                            newUnemployedUnit++ ;
                         }
                     }
                 }
             }
         }
+        game.getCurrentPlayer().getGovernance().setUnemployedPopulation(game.getCurrentPlayer().getGovernance().getUnemployedPopulation() + newUnemployedUnit);
     }
 
     public void updateForNextTurn() {}
