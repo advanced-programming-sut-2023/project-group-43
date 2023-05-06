@@ -35,7 +35,7 @@ public class Building {
         this.stone = BuildingEnum.getBuildingStructureByName(name).getStone();
         this.cost = BuildingEnum.getBuildingStructureByName(name).getCost();
         this.hp = BuildingEnum.getBuildingStructureByName(name).getHp();
-        this.ladderlans = BuildingEnum.getBuildingStructureByName(name).getLaddernans();
+        this.ladderlans = BuildingEnum.getBuildingStructureByName(name).getWorkerNumber();
     }
 
     public void addUnit(Unit unit){
