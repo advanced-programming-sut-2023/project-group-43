@@ -502,18 +502,18 @@ public class GameController {
     }
 
 
-    public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty) {
+    public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty, Unit unit) {
         Cell[][] cells = game.getCells();
         ArrayList<Cell> path = new ArrayList<>();
-        if (cells[tx][ty].isBlocked()) return null;
+        if (cells[tx][ty].isBlocked(unit)) return null;
         int currentX = sx;
         int currentY = sy;
         path.add(cells[tx][ty]);
-        if (backTrack(cells, path, tx, ty)) return path;
+        if (backTrack(cells, path, tx, ty, unit)) return path;
         return null;
     }
 
-    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int tx, int ty) {
+    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int tx, int ty, Unit unit) {
         Cell currentCell = path.get(path.size() - 1);
         int currentX = currentCell.getX();
         int currentY = currentCell.getY();
@@ -522,9 +522,9 @@ public class GameController {
         for (int i = 0; i < 4; i++) {
             if (currentX + array[0][i] >= 0 && currentX + array[0][i] < game.getRow() &&
                     currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn())  {
-                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked()) {
+                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit)) {
                     path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
-                    if (backTrack(cells, path, tx, ty)) return true;
+                    if (backTrack(cells, path, tx, ty, unit)) return true;
                     path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
                 }
             }

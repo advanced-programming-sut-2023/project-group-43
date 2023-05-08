@@ -20,7 +20,7 @@ public class Building {
     //building
     private boolean hasLadder = false;
 
-    public boolean HasLadder() {
+    public boolean hasLadder() {
         return hasLadder;
     }
     public void setLadder(boolean hasLadder) {

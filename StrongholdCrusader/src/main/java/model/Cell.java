@@ -4,6 +4,9 @@ import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
 import model.buildings.Building;
 import model.buildings.CastleDepartment;
+import model.units.Assassin;
+import model.units.Spearman;
+import model.units.Tunneler;
 import model.units.Unit;
 
 import java.util.ArrayList;
@@ -113,10 +116,21 @@ public class Cell {
         units.remove(unit);
     }
 
-    public boolean isBlocked() {
-        if (this.building != null && !building.HasLadder()) {
-            if ((!(building instanceof CastleDepartment)) || (!((CastleDepartment) building).isHidden()))
-            return true;
+    public boolean isBlocked(Unit unit) {
+        if (this.building != null && !building.hasLadder() && !building.getOwner().getUsername().equals(unit.getOwner().getUsername())) {
+            if (!(unit instanceof Assassin)) {
+                if ((!(building instanceof CastleDepartment)) || (!((CastleDepartment) building).isHidden())) {
+                    if (!(unit instanceof Tunneler)) {
+                        if (!(unit.getName().equals("pikeman")) || !(building instanceof CastleDepartment))
+                            return true;
+                    }
+                }
+            }
+        }
+        if (this.building != null && building.hasLadder()) {
+            if (!(unit instanceof Spearman || unit.getName().equals("maceman"))) {
+                return true;
+            }
         }
         if (this.hasRock) return true;
         if (this.texture.isPassable()) return false;
