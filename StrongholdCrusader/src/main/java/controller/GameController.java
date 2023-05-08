@@ -7,14 +7,12 @@ import enums.environmentEnums.Material;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
-import model.Cell;
-import model.Game;
-import model.Governance;
-import model.User;
+import model.*;
 import model.buildings.Building;
 import model.buildings.CagedWarDogs;
 import model.buildings.Converter;
 import model.units.*;
+
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,6 +21,8 @@ import java.util.Objects;
 public class GameController {
 
     private Game game;
+
+    private Cell village = new Cell();
 
 
     public GameController(Game game) {
@@ -90,7 +90,7 @@ public class GameController {
         if (cellUnits.size() == 0) return Output.NO_UNIT;
         else {
             for (Unit cellUnit : cellUnits) {
-                if ((!cellUnit.isHidden()) && cellUnit.getName().equals(type) && cellUnit.getOwner().equals(game.getCurrentPlayer())) {
+                if (cellUnit.getName().equals(type) && cellUnit.getOwner().equals(game.getCurrentPlayer())) {
                     resultcellUnits.add(cellUnit);
                 }
             }
@@ -106,6 +106,7 @@ public class GameController {
     public Output moveUnit(int x, int y) {
         if (isCoordinateInvalid(x, y)) return Output.INVALID_NUMBER;
         for (Unit unit : game.getSelectedUnit()) {
+            if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
         }
@@ -116,6 +117,7 @@ public class GameController {
         if (isCoordinateInvalid(x1, y1) || isCoordinateInvalid(x2, y2))
             return Output.INVALID_NUMBER;
         for (Unit unit : game.getSelectedUnit()) {
+            if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
             unit.setCurrentTargetX(x1 - 1);
             unit.setCurrentTargetY(y1 - 1);
             unit.setNextTargetX(x2 - 1);
@@ -164,7 +166,7 @@ public class GameController {
         }
         if (engineer == null) return Output.NO_ENGINEER_HERE;
         else {
-            //TODO pouring oil and go to oil
+            engineer.pourOil(game, direction);
         }
         return null;
     }
@@ -194,8 +196,9 @@ public class GameController {
     public Output disbandUnit() {
         if (game.getSelectedUnit().size() == 0) return Output.NO_UNIT_FOR_DISBANDING;
         else {
-            for (int i = 0; i < game.getSelectedUnit().size(); i++) {
-                game.getSelectedUnit().get(i).setHidden(true);
+            for (Unit unit: game.getSelectedUnit()) {
+                unit.setPreviousCell(unit.getCell());
+                unit.setCell(village);
             }
             return Output.UNIT_DISBANDED_SUCCESSFULLY;
         }
@@ -389,8 +392,6 @@ public class GameController {
 
     private void updateUnemployedPopulation() {
     }
-
-    private void updateTaxIncome() {}
 
     private void updatePopularity() {}
 

@@ -19,7 +19,8 @@ public enum TroopType {
     HORSE_ARCHER("horse archer", DamageDegree.LOW.getDegree(), true, true, false),
     ARABIAN_SWORDSMAN("arabian swordsman", DamageDegree.HIGH.getDegree(), true, true, false),
     FIRE_THROWER("fire thrower", DamageDegree.HIGH.getDegree(), true, false, false),
-    DOG("dog", DamageDegree.HIGH.getDegree(), false, false, false);
+    DOG("dog", DamageDegree.HIGH.getDegree(), false, false, false),
+    LORD("lord", DamageDegree.HIGH.getDegree(), false, false, false);
 
     private String name;
     private int damage;

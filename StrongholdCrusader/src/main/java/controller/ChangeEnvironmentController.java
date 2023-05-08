@@ -3,14 +3,16 @@ package controller;
 import enums.Output;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
+import enums.unitEnums.TroopType;
+import enums.unitEnums.UnitState;
 import model.Cell;
 import model.DataBase;
 import model.Game;
 import model.User;
 import model.buildings.Building;
 import model.buildings.CastleDepartment;
+import model.units.Unarmed;
 import model.units.Unit;
-import model.units.UnitsBuilder;
 import view.GameMenu;
 
 import java.util.ArrayList;
@@ -156,7 +158,10 @@ public class ChangeEnvironmentController {
             Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
             building.setCell(game.getCells()[x - 1][y - 1]);
             game.getCurrentPlayer().getGovernance().addBuilding(building);
-        return null;
+            Unit unit = new Unarmed(game.getCurrentPlayer(), "lord", TroopType.LORD);
+            unit.setState(UnitState.STANDING);
+            unit.setCell(building.getCell());
+        return Output.SUCCESSFUL_ACTION;
     }
 
     public void enterGameMenu() {

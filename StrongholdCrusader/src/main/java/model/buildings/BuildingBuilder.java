@@ -27,9 +27,6 @@ public class BuildingBuilder {
                 return new CastleDepartment(name, owner, 15, 10, 1);
             case "caged war dogs":
                 return new CagedWarDogs(name , owner);
-            //case "pitch ditch":
-            case "oil smelter":
-                //return new Stronghold(name, owner);
             case "wheat farm":
                 producer = new Producer(name, owner, 10, 10);
                 producer.addProducedMaterial(Material.WHEAT);
@@ -122,6 +119,8 @@ public class BuildingBuilder {
                 return new PopularityBooster(name, owner, 11);
             case "inn":
                 return new PopularityBooster(name, owner, 12);
+            case "pitch ditch":
+            case "oil smelter":
             case "siege tent":
             case "market":
             case "dairy products":

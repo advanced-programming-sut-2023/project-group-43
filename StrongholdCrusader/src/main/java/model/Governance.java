@@ -53,10 +53,6 @@ public class Governance {
         this.fearRate = fearRate;
     }
 
-    public ArrayList<Building> getBuildings() {
-        return buildings;
-    }
-
     public void setBuildings(ArrayList<Building> buildings) {
         this.buildings = buildings;
     }
