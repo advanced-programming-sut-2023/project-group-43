@@ -228,6 +228,11 @@ public class GameController {
                     setVariables(currentX, currentY, range, true, user, unit);
                 } else if (unit instanceof Unarmed) {
                     setVariables(currentX, currentY, 1, true, user, unit);
+                } else if (unit instanceof Engineer) {
+                    ((Engineer) unit).chargeTar();;
+                }
+                if (unit instanceof Spearman) {
+                    ((Spearman) unit).dropLadder(game);
                 }
             }
         }
