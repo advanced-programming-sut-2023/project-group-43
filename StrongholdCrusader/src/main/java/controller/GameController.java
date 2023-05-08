@@ -231,9 +231,11 @@ public class GameController {
                     ((Engineer) unit).chargeTar();;
                 } else if (unit instanceof Tunneler) {
                     ((Tunneler) unit).destroyBuilding(game);
+                } else if (unit instanceof Ladderman) {
+                    ((Ladderman) unit).addLadder(findBuildingsAround(unit));
                 }
                 if (unit instanceof Spearman) {
-                    ((Spearman) unit).dropLadder(game);
+                    ((Spearman) unit).dropLadder(findBuildingsAround(unit));
                 }
             }
         }
@@ -278,6 +280,25 @@ public class GameController {
             }
         }
         return null;
+    }
+
+    private ArrayList<Building> findBuildingsAround(Unit unit) {
+        ArrayList<Building> buildings = new ArrayList<>();
+        int sx = unit.getCell().getX() - 1;
+        int sy = unit.getCell().getY() - 1;
+        if (sx < 0) sx = 0;
+        if (sy < 0) sy = 0;
+        int fx = unit.getCell().getX() + 1;
+        int fy = unit.getCell().getY() + 1;
+        if (fx >= game.getRow()) fx--;
+        if (fy >= game.getColumn()) fy--;
+        for (int x = sx; x <= fx; x++) {
+            for (int y = sy; y <= fy;y++) {
+                if (game.getCells()[x][y].getBuilding() != null)
+                    buildings.add(game.getCells()[x][y].getBuilding());
+            }
+        }
+        return buildings;
     }
 
     private void applyDeathChange() {
