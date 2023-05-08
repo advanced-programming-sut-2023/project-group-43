@@ -200,7 +200,7 @@ public class GameController {
         updateResources();
         updateUnemployedPopulation();
         updateTaxIncome();
-        updatePopularity();
+        //updatePopularity();
         updateFoodRate();
         updateTaxRate();
         updateEfficiency();
@@ -296,32 +296,76 @@ public class GameController {
 
     private void updateUnemployedPopulation() {}
 
+    private void updatePopulation() {}
+
+
     private void updateTaxIncome() {
         Governance governance;
         for(int i = 0 ; i< game.getPlayers().size() ; i++){
             governance = game.getPlayers().get(i).getGovernance();
-            if(governance.getTaxRate().getRateNumber() > 0) {
+            if(governance.getTaxRate().getRateNumber() > 0)
                 governance.setGold(governance.getGold() + (governance.getPopulation() * governance.getTaxRate().getRateNumber()));
-                governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
-            }
             if(governance.getTaxRate().getRateNumber() == 0)
                 governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
             if(governance.getTaxRate().getRateNumber() < 0) {
-                if(governance.getGold() < -(governance.getPopulation() * governance.getTaxRate().getRateNumber())) {
+                if(governance.getGold() < -(governance.getPopulation() * governance.getTaxRate().getRateNumber()))
                     governance.setTaxRate(RateNumber.TAX_RATE_0);
-                    governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
-                }
-                else{
+                else
                     governance.setGold(governance.getGold() - (governance.getPopulation() * governance.getTaxRate().getPayment()));
-                    governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
-                }
             }
+            governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
         }
     }
 
-    private void updatePopularity() {}
-
-    private void updateFoodRate() {}
+    private void updateFoodRate() {
+        Governance governance;
+        GovernanceResource governanceResource;
+        int amountOfFood;
+        int appleDelta; //we use delta to calculate the difference between amount of foods and amount of cheese,bread,meat and apple
+        int breadDelta;
+        int cheeseDelta;
+        int meatDelta;
+        for(int i = 0 ; i < game.getPlayers().size() ;i++){
+            governance = game.getPlayers().get(i).getGovernance();
+            governanceResource = governance.getGovernanceResource();
+            amountOfFood = governance.getFoodRate().getRateNumber() * governance.getPopulation();
+            if(governanceResource.amountOfFoodInStorage() < amountOfFood)
+                governance.setFoodRate(RateNumber.FOOD_RATE_2);
+            breadDelta = governanceResource.getAmountOfItemInStockpile(Material.BREAD);
+            if(breadDelta > 0) {
+                governanceResource.changeAmountOfItemInStockpile(Material.BREAD, breadDelta);
+                amountOfFood = 0;
+            }
+            if(breadDelta < 0){
+                governanceResource.changeAmountOfItemInStockpile(Material.BREAD,0);
+                amountOfFood = -(breadDelta);
+            }
+            appleDelta = governanceResource.getAmountOfItemInStockpile(Material.APPLE) - amountOfFood;
+            if(appleDelta > 0) {
+                governanceResource.changeAmountOfItemInStockpile(Material.APPLE, appleDelta);
+                amountOfFood = 0;
+            }
+            if(appleDelta < 0){
+                governanceResource.changeAmountOfItemInStockpile(Material.APPLE,0);
+                amountOfFood = -(appleDelta);
+            }
+            cheeseDelta = governanceResource.getAmountOfItemInStockpile(Material.CHEESE) - amountOfFood;
+            if(cheeseDelta > 0) {
+                governanceResource.changeAmountOfItemInStockpile(Material.CHEESE, cheeseDelta);
+                amountOfFood = 0;
+            }
+            if(cheeseDelta < 0){
+                governanceResource.changeAmountOfItemInStockpile(Material.CHEESE,0);
+                amountOfFood = -(cheeseDelta);
+            }
+            meatDelta = governanceResource.getAmountOfItemInStockpile(Material.MEAT) - amountOfFood;
+            if(meatDelta > 0)
+                governanceResource.changeAmountOfItemInStockpile(Material.MEAT, meatDelta);
+            if(meatDelta < 0)
+                governanceResource.changeAmountOfItemInStockpile(Material.MEAT,0);
+            governance.setPopularity(governance.getPopularity() + governance.getFoodRate().getPopularityIncrement());
+        }
+    }
 
     private void updateTaxRate() {}
 

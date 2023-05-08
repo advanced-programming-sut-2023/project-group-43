@@ -4,6 +4,7 @@ import enums.environmentEnums.Material;
 import model.buildings.Building;
 import model.buildings.Storage;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +12,6 @@ public class GovernanceResource {
         //look after using Integer instead of int during the game
         HashMap<Material, Integer> storage = new HashMap<Material, Integer>();
         private User owner;
-
         //TODO
         //before starting game you should set items for stockpile based on material enum
         public static String chooseStorage(Material material){
@@ -30,7 +30,10 @@ public class GovernanceResource {
     }
 
     public void addToStorage(Material material){
-            storage.put(material , 0);
+            if(storage.get(material).equals(null))
+                storage.put(material,1);
+            else
+                storage.put(material , storage.get(material) + 1);
         }
 
         public int getAmountOfItemInStockpile(Material material){
@@ -45,6 +48,10 @@ public class GovernanceResource {
             storage.put(material,getAmountOfItemInStockpile(material) + amount);
         }
 
-
-
+        public int amountOfFoodInStorage(){
+            return getAmountOfItemInStockpile(Material.BREAD) +
+                    getAmountOfItemInStockpile(Material.CHEESE) +
+                    getAmountOfItemInStockpile(Material.APPLE) +
+                    getAmountOfItemInStockpile(Material.MEAT);
     }
+}
