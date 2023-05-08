@@ -2,6 +2,7 @@ package controller;
 
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
+import enums.RateNumber;
 import enums.environmentEnums.Material;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
@@ -21,7 +22,7 @@ import java.util.Objects;
 
 public class GameController {
 
-    private final Game game;
+    private Game game;
 
 
     public GameController(Game game) {
@@ -31,7 +32,6 @@ public class GameController {
     public Game getGame() {
         return game;
     }
-
     public Output selectBuilding(int row, int column) {
         if (!(row >= 1 && row <= game.getCells().length && column >= 1 && column <= game.getCells()[0].length))
             return Output.WRONG_COORDINATES;
@@ -60,11 +60,11 @@ public class GameController {
             return Output.NOT_ENOUGH_POPULATION;
         if (unitType.equals("armed")) {
             Material weapon = ArmedWeapon.getWeaponByUnitName(unit.getName());
-            if (governance.getGovernanceResource().getAmountOfItemInStockpile(weapon) < number)
+            if(governance.getGovernanceResource().getAmountOfItemInStockpile(weapon) < number)
                 return Output.NOT_ENOUGH_WEAPON;
-            governance.getGovernanceResource().changeAmountOfItemInStockpile(weapon, number);
+            governance.getGovernanceResource().changeAmountOfItemInStockpile(weapon,number);
         }
-        for (int i = 0; i < number; i++) {
+        for(int i = 0 ; i < number ; i++){
             game.getCurrentUser().getGovernance().addUnit(unit);
         }
         governance.setGold(governance.getGold() - unit.getCost() * number);
@@ -78,7 +78,7 @@ public class GameController {
         else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
             return Output.NOT_ENOUGH_STONE;
         else {
-            game.getSelectedBuilding().setHp(Objects.requireNonNull(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName())).getHp());
+            game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
             game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
             return Output.SUCCESSFUL_REPAIRMENT;
         }
@@ -390,46 +390,99 @@ public class GameController {
     private void updateUnemployedPopulation() {
     }
 
-    private void updateTaxIncome() {
-    }
+    private void updateTaxIncome() {}
 
-    private void updatePopularity() {
+    private void updatePopularity() {}
+
+    private void updateTaxIncome() {
+        Governance governance;
+        for(int i = 0 ; i< game.getPlayers().size() ; i++){
+            governance = game.getPlayers().get(i).getGovernance();
+            if(governance.getTaxRate().getRateNumber() > 0)
+                governance.setGold(governance.getGold() + (governance.getPopulation() * governance.getTaxRate().getRateNumber()));
+            if(governance.getTaxRate().getRateNumber() == 0)
+                governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
+            if(governance.getTaxRate().getRateNumber() < 0) {
+                if(governance.getGold() < -(governance.getPopulation() * governance.getTaxRate().getRateNumber()))
+                    governance.setTaxRate(RateNumber.TAX_RATE_0);
+                else
+                    governance.setGold(governance.getGold() - (governance.getPopulation() * governance.getTaxRate().getPayment()));
+            }
+            governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
+        }
     }
 
     private void updateFoodRate() {
+        Governance governance;
+        GovernanceResource governanceResource;
+        int amountOfFood;
+        int appleDelta; //we use delta to calculate the difference between amount of foods and amount of cheese,bread,meat and apple
+        int breadDelta;
+        int cheeseDelta;
+        int meatDelta;
+        for(int i = 0 ; i < game.getPlayers().size() ;i++){
+            governance = game.getPlayers().get(i).getGovernance();
+            governanceResource = governance.getGovernanceResource();
+            amountOfFood = governance.getFoodRate().getRateNumber() * governance.getPopulation();
+            if(governanceResource.amountOfFoodInStorage() < amountOfFood)
+                governance.setFoodRate(RateNumber.FOOD_RATE_2);
+            breadDelta = governanceResource.getAmountOfItemInStockpile(Material.BREAD);
+            if(breadDelta > 0) {
+                governanceResource.changeAmountOfItemInStockpile(Material.BREAD, breadDelta);
+                amountOfFood = 0;
+            }
+            if(breadDelta < 0){
+                governanceResource.changeAmountOfItemInStockpile(Material.BREAD,0);
+                amountOfFood = -(breadDelta);
+            }
+            appleDelta = governanceResource.getAmountOfItemInStockpile(Material.APPLE) - amountOfFood;
+            if(appleDelta > 0) {
+                governanceResource.changeAmountOfItemInStockpile(Material.APPLE, appleDelta);
+                amountOfFood = 0;
+            }
+            if(appleDelta < 0){
+                governanceResource.changeAmountOfItemInStockpile(Material.APPLE,0);
+                amountOfFood = -(appleDelta);
+            }
+            cheeseDelta = governanceResource.getAmountOfItemInStockpile(Material.CHEESE) - amountOfFood;
+            if(cheeseDelta > 0) {
+                governanceResource.changeAmountOfItemInStockpile(Material.CHEESE, cheeseDelta);
+                amountOfFood = 0;
+            }
+            if(cheeseDelta < 0){
+                governanceResource.changeAmountOfItemInStockpile(Material.CHEESE,0);
+                amountOfFood = -(cheeseDelta);
+            }
+            meatDelta = governanceResource.getAmountOfItemInStockpile(Material.MEAT) - amountOfFood;
+            if(meatDelta > 0)
+                governanceResource.changeAmountOfItemInStockpile(Material.MEAT, meatDelta);
+            if(meatDelta < 0)
+                governanceResource.changeAmountOfItemInStockpile(Material.MEAT,0);
+            governance.setPopularity(governance.getPopularity() + governance.getFoodRate().getPopularityIncrement());
+        }
     }
 
-    private void updateTaxRate() {
-    }
+    private void updateTaxRate() {}
 
-    private void updateEfficiency() {
-    }
+    private void updateEfficiency() {}
 
-    public boolean isGameEnded() {
-        return false;
-    }
+    public boolean isGameEnded() {return false;}
 
-    public String showGameResult() {
-        return null;
-    }
+    public String showGameResult() {return null;}
 
-    private void updateScores() {
-    }
+    private void updateScores() {}
 
-    public void clearGame() {
-    }
+    public void clearGame() {}
 
     public void goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
-        for (User player : game.getPlayers()) {
+        for (User player: game.getPlayers()) {
             if (isNextPlayerFound) {
                 user = player;
                 game.setCurrentPlayer(player);
                 game.setSelectedUnit(new ArrayList<>());
-                game.setSelectedBuilding(null);
-                break;
-            }
+        }
             if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
                 isNextPlayerFound = true;
             }
@@ -446,7 +499,9 @@ public class GameController {
         Cell[][] cells = game.getCells();
         ArrayList<Cell> path = new ArrayList<>();
         if (cells[tx][ty].isBlocked()) return null;
-        path.add(cells[sx][sy]);
+        int currentX = sx;
+        int currentY = sy;
+        path.add(cells[tx][ty]);
         if (backTrack(cells, path, tx, ty)) return path;
         return null;
     }
@@ -459,7 +514,7 @@ public class GameController {
         int[][] array = prioritizePathFinding(currentX, currentY, tx, ty);
         for (int i = 0; i < 4; i++) {
             if (currentX + array[0][i] >= 0 && currentX + array[0][i] < game.getRow() &&
-                    currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn()) {
+                    currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn())  {
                 if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked()) {
                     path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
                     if (backTrack(cells, path, tx, ty)) return true;
@@ -472,13 +527,17 @@ public class GameController {
 
     private int[][] prioritizePathFinding(int currentX, int currentY, int tx, int ty) {
         if (currentX > tx && currentY > ty) {
-            return new int[][]{{-1, 0, 1, 0}, {0, -1, 0, 1}};
+            int[][] array = {{-1, 0, 1, 0}, {0, -1, 0, 1}};
+            return array;
         } else if (currentX > tx && currentY < ty) {
-            return new int[][]{{-1, 0, 1, 0}, {0, 1, 0, -1}};
+            int[][] array = {{-1, 0, 1, 0}, {0, 1, 0, -1}};
+            return array;
         } else if (currentX < tx && currentY > ty) {
-            return new int[][]{{1, 0, -1, 0}, {0, -1, 0, 1}};
+            int[][] array = {{1, 0, -1, 0}, {0, -1, 0, 1}};
+            return array;
         } else {
-            return new int[][]{{1, 0, -1, 0}, {0, 1, 0, -1}};
+            int[][] array = {{1, 0, -1, 0}, {0, 1, 0, -1}};
+            return array;
         }
     }
 

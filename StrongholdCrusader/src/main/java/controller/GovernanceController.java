@@ -3,6 +3,7 @@ package controller;
 import java.lang.String;
 
 import enums.Output;
+import enums.RateNumber;
 import model.*;
 
 import javax.print.DocFlavor;
@@ -40,7 +41,8 @@ public class GovernanceController {
     }
 
     public Output foodRate(int rate) {
-        game.getCurrentPlayer().getGovernance().setFoodRate(rate);
+        RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("food" , rate);
+        game.getCurrentPlayer().getGovernance().setFoodRate(rateNumber);
         return Output.SUCCESSFUL_FOOD_RATE_CHANGE;
         //TODO
     }
@@ -50,7 +52,8 @@ public class GovernanceController {
     }
 
     public Output taxRate(int rate) {
-        game.getCurrentPlayer().getGovernance().setTaxRate(rate);
+        RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("tax" , rate);
+        game.getCurrentPlayer().getGovernance().setTaxRate(rateNumber);
         return Output.SUCCESSFUL_TAX_RATE_CHANGE;
     }
 
