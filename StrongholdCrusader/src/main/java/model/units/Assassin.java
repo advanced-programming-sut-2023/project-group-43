@@ -3,19 +3,34 @@ package model.units;
 import enums.unitEnums.TroopType;
 import enums.unitEnums.UnitsEnum;
 import model.User;
+import model.buildings.Building;
+import model.buildings.CastleDepartment;
+
+import java.util.ArrayList;
 
 public class Assassin extends Troop {
 
-    private boolean onTopOfTheWall = false;
+    private boolean isHidden = true;
     public Assassin(User owner, String name, TroopType troopType) {
         super(owner, name, troopType);
-        this.setHidden(true);
     }
 
-    public void climbWall() {
-        onTopOfTheWall = true;
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
     }
 
-    //TODO---> When seen by the enemy --> ishidden = false;
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void getCastleDepartment(ArrayList<Building> buildings) {
+        for (Building building: buildings) {
+            if (building instanceof CastleDepartment) {
+                CastleDepartment castleDepartment = (CastleDepartment) building;
+                if (!castleDepartment.getOwner().getUsername().equals(getOwner().getUsername()))
+                    castleDepartment.setHidden(true);
+            }
+        }
+    }
 
 }

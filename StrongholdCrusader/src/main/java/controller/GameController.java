@@ -237,6 +237,9 @@ public class GameController {
                 if (unit instanceof Spearman) {
                     ((Spearman) unit).dropLadder(findBuildingsAround(unit));
                 }
+                if (unit instanceof Assassin) {
+                    ((Assassin) unit).getCastleDepartment(findBuildingsAround(unit));
+                }
             }
         }
     }
@@ -274,6 +277,7 @@ public class GameController {
                 Cell currentCell = game.getCells()[xIterator][yIterator];
                 for (Unit enemy : currentCell.getUnits()) {
                     if (!enemy.getOwner().getUsername().equals(user.getUsername())) {
+                        if (enemy instanceof Assassin) ((Assassin) enemy).setHidden(false);
                         return currentCell;
                     }
                 }

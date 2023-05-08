@@ -2,6 +2,8 @@ package controller;
 import enums.Output;
 import model.Cell;
 import model.Game;
+import model.units.Assassin;
+import model.units.Unit;
 
 public class MapController {
 
@@ -42,25 +44,6 @@ public class MapController {
         }
         return output.toString();
     }
-    /*
-    for (column = 0; column < game.getCells()[0].length; column++) {
-        for (row = 0; row < game.getCells().length; row++) {
-            Cell cell = game.getCells()[row][column];
-            int x = column * cell.getCellSize();
-            int y = row * cell.getCellSize();
-            drawTile(cell, y, x);
-        }
-    }
-    //game.getCells().drawImage(atlasImage, 192, 0, 64, 64, 128, 320, 64, 64);*/
-    /*public void drawImage(Image image, int a, int b, int c, int d, int row, int column, int e, int f) {}
-    public void drawTile(Cell cell, int row, int column) {}
-    public void worldToScreen(int x, int y) {
-        //return { x: x - camera.getRow(), y: y - camera.getColumn() };
-    }
-
-    public void screenToWorld(int x, int y) {
-        //return { x: x + camera.getRow(), y: y + camera.getColumn() };
-    }*/
     public String showMapDetails(int row, int column) {
         Cell cell = game.getCells()[row - 1][column - 1];
         StringBuilder details = new StringBuilder();
@@ -74,9 +57,10 @@ public class MapController {
         }
         if (cell.getUnits().size() > 0) {
             details.append("\nUnits : ").append(cell.getUnits().size()).append(" units");
-            for (int i = 0; i < cell.getUnits().size(); i++) {
-                details.append("\n").append(cell.getUnits().get(i).getName());
-                details.append(" | hit point ").append(cell.getUnits().get(i).getHitPoint());
+            for (Unit unit: cell.getUnits()) {
+                if (unit instanceof Assassin && (!((Assassin) unit).isHidden() || unit.getOwner().getUsername().equals(game.getCurrentPlayer().getUsername())))
+                details.append("\n").append(unit.getName());
+                details.append(" | hit point ").append(unit.getHitPoint());
             }
         }
         return details.toString();
