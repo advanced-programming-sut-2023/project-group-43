@@ -14,9 +14,8 @@ import model.buildings.Converter;
 import model.units.*;
 
 
-import java.awt.*;
+
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GameController {
 
@@ -230,6 +229,8 @@ public class GameController {
                     setVariables(currentX, currentY, 1, true, user, unit);
                 } else if (unit instanceof Engineer) {
                     ((Engineer) unit).chargeTar();;
+                } else if (unit instanceof Tunneler) {
+                    ((Tunneler) unit).destroyBuilding(game);
                 }
                 if (unit instanceof Spearman) {
                     ((Spearman) unit).dropLadder(game);

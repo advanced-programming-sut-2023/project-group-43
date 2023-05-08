@@ -14,6 +14,7 @@ public class Engineer extends Unit{
     public void chargeTar(){
         if(!hasOil) {
             Building building = this.getOwner().getGovernance().getBuildingByName("oil smelter");
+            if (building == null) return;
             setCurrentTargetX(building.getCell().getX());
             setCurrentTargetY(building.getCell().getY());
             if (this.getCell().getX() == this.getCurrentTargetX() && this.getCell().getY() == getCurrentTargetY()) {
