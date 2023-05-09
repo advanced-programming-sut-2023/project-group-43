@@ -367,7 +367,13 @@ public class GameController {
         }
     }
 
-    private void updateTaxRate() {}
+    private void updateTaxRate() {
+        Governance governance;
+        for(int i = 0; i< game.getPlayers().size();i++){
+            governance = game.getPlayers().get(i).getGovernance();
+            if(governance.getGold() < )
+        }
+    }
 
     private void updateEfficiency() {}
 
