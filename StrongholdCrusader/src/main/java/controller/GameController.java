@@ -211,7 +211,7 @@ public class GameController {
         applyDeathChange();
         updateUnemployedPopulation();
         updateTaxIncome();
-        updatePopularity();
+        updateReligiousPopularity();
         updateFoodRate();
         updateTaxRate();
         updateEfficiency();
@@ -374,7 +374,6 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
-                //TODO :  Is it ok to use instance of here?
                 if (cell[j].getBuilding() instanceof Producer) {
                     Producer producer = (Producer) cell[j].getBuilding();
                     switch (producer.getName()) {
@@ -434,7 +433,15 @@ public class GameController {
     private void updateUnemployedPopulation() {
     }
 
-    private void updatePopularity() {
+    private void updateReligiousPopularity() {
+        Cell[][] cells = game.getCells();
+        for (Cell[] cell : cells) {
+            for (int j = 0; j < cells[0].length; j++){
+                Building building = cell[0].getBuilding();
+                if(building.getName().equals("church") || building.getName().equals("cathedral"))
+                    building.getOwner().getGovernance().changePopulation(1);
+            }
+        }
     }
 
     private void updateTaxIncome() {
@@ -506,11 +513,7 @@ public class GameController {
     }
 
     private void updateTaxRate() {
-        Governance governance;
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            governance = game.getPlayers().get(i).getGovernance();
-            if (governance.getGold() <)
-        }
+
     }
 
     private void updateEfficiency() {

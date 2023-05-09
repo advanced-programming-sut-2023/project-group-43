@@ -134,4 +134,6 @@ public class Governance {
         gold += amount;
     }
 
+    public void changePopulation(int amount){population += amount;}
+
 }
