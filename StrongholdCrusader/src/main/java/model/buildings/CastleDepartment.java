@@ -7,15 +7,15 @@ import model.units.Unit;
 
 public class CastleDepartment extends Building {
 
-    private final int hitPoint;
+    private final double hitPoint;
     private final int peopleCapacity;
     private boolean rightEntrance;
     private boolean gateIsOpen = true;
 
     private boolean isHidden = false;
 
-    private int defendRange;
-    private int fireRange;
+    private double defendRange;
+    private double fireRange;
     private String gateName;
     private CastleDepartment drawBridge;
 
@@ -57,7 +57,7 @@ public class CastleDepartment extends Building {
         }
     }
 
-    public int getHitPoint() {
+    public double getHitPoint() {
         return hitPoint;
     }
 

@@ -7,13 +7,17 @@ public enum DamageDegree {
     HIGH(400),
     VERY_HIGH(500)
     ;
-    private int degree;
+    private double degree;
 
-    DamageDegree(int degree) {
+    DamageDegree(double degree) {
         this.degree = degree;
     }
 
-    public int getDegree() {
+    public double getDegree() {
         return degree;
+    }
+
+    public void setDegree(double degree) {
+        this.degree = degree;
     }
 }

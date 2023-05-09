@@ -38,12 +38,12 @@ public enum UnitsEnum {
     ;
     private final String name;
     private final String type;
-    private final int hitPoint;
-    private final int defense;
-    private final int speed;
-    private int cost;
+    private final double hitPoint;
+    private final double defense;
+    private final double speed;
+    private double cost;
 
-    UnitsEnum(String name,String type, int hitPoint, int defense, int speed, int cost) {
+    UnitsEnum(String name,String type, double hitPoint, double defense, double speed, double cost) {
         this.type = type;
         this.name = name;
         this.hitPoint = hitPoint;
@@ -60,19 +60,19 @@ public enum UnitsEnum {
         return type;
     }
 
-    public int getHitPoint() {
+    public double getHitPoint() {
         return hitPoint;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public int getDefense() {
+    public double getDefense() {
         return defense;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 

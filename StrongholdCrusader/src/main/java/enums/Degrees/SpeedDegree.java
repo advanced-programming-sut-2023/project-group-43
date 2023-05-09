@@ -7,13 +7,13 @@ public enum SpeedDegree {
     HIGH(400),
     VERY_HIGH(500),
     ;
-    private int degree;
+    private double degree;
 
-    SpeedDegree(int degree) {
+    SpeedDegree(double degree) {
         this.degree = degree;
     }
 
-    public int getDegree() {
+    public double getDegree() {
         return degree;
     }
 }

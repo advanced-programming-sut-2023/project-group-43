@@ -9,13 +9,13 @@ public enum DefenseDegree {
     VERY_HIGH(500),
     ;
 
-    private int degree;
+    private double degree;
 
-    DefenseDegree(int degree) {
+    DefenseDegree(double degree) {
         this.degree = degree;
     }
 
-    public int getDegree() {
+    public double getDegree() {
         return degree;
     }
 }

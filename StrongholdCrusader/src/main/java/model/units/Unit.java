@@ -16,11 +16,11 @@ public class Unit {
 
     private Cell previousCell;
     private String name;
-    private int hitPoint;
-    private int damage;
-    private int defense;
-    private int speed;
-    private int cost;
+    private double hitPoint;
+    private double damage;
+    private double defense;
+    private double speed;
+    private double cost;
 
     private int currentTargetX = -1;
     private int currentTargetY = -1;
@@ -43,52 +43,16 @@ public class Unit {
         return owner;
     }
 
-    public String getName() {
-        return name;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-    public int getHitPoint() {
-        return hitPoint;
+    public UnitsEnum getUnit() {
+        return unit;
     }
 
-    public void setHitPoint(int hitPoint) {
-        this.hitPoint = hitPoint;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
-    public int getDefense() {
-        return defense;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public UnitState getState() {
-        return state;
-    }
-
-    public void setState(UnitState state) {
-        this.state = state;
+    public void setUnit(UnitsEnum unit) {
+        this.unit = unit;
     }
 
     public Cell getCell() {
@@ -105,6 +69,54 @@ public class Unit {
 
     public void setPreviousCell(Cell previousCell) {
         this.previousCell = previousCell;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getHitPoint() {
+        return hitPoint;
+    }
+
+    public void setHitPoint(double hitPoint) {
+        this.hitPoint = hitPoint;
+    }
+
+    public double getDamage() {
+        return damage;
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
+
+    public double getDefense() {
+        return defense;
+    }
+
+    public void setDefense(double defense) {
+        this.defense = defense;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     public int getCurrentTargetX() {
@@ -137,6 +149,14 @@ public class Unit {
 
     public void setNextTargetY(int nextTargetY) {
         this.nextTargetY = nextTargetY;
+    }
+
+    public UnitState getState() {
+        return state;
+    }
+
+    public void setState(UnitState state) {
+        this.state = state;
     }
 
     public void move(GameController gameController) {

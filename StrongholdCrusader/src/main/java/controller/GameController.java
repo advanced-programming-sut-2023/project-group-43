@@ -209,12 +209,12 @@ public class GameController {
         updateResources();
         applyHitPointChange();
         applyDeathChange();
-        updateUnemployedPopulation();
         updateTaxIncome();
         updateReligiousPopularity();
         updateFoodRate();
         updateTaxRate();
-        updateEfficiency();
+        updateWorkersEfficiency();
+        updateDamageEfficiency();
     }
 
     private void applyHitPointChange() {
@@ -428,11 +428,6 @@ public class GameController {
             }
         }
 
-
-
-    private void updateUnemployedPopulation() {
-    }
-
     private void updateReligiousPopularity() {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
@@ -516,8 +511,22 @@ public class GameController {
 
     }
 
-    private void updateEfficiency() {
+    private void updateWorkersEfficiency() {
+
     }
+
+    private void updateDamageEfficiency(){
+        for(int i = 0 ; i < game.getPlayers().size();i++){
+            Governance governance = game.getPlayers().get(i).getGovernance();
+            double featRate = governance.getFearRate();
+            for(int j = 0 ; j < governance.getUnits().size();j++){
+                double newDamage = governance.getUnits().get(j).getDamage() +
+                        (governance.getUnits().get(j).getDamage() * (5 / 100));
+                governance.getUnits().get(j).setDamage(newDamage);
+            }
+        }
+    }
+
 
     public boolean isGameEnded() {
         return false;
