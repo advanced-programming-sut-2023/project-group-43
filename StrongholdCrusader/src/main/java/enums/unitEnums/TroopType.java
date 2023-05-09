@@ -23,12 +23,12 @@ public enum TroopType {
     LORD("lord", DamageDegree.HIGH.getDegree(), false, false, false);
 
     private String name;
-    private int damage;
+    private double damage;
     private Boolean hasWeapon;
     private Boolean hasHorse;
     private Boolean hasArmour;
 
-    TroopType(String name, int damage, Boolean hasWeapon, Boolean hasHorse, Boolean hasArmour) {
+    TroopType(String name, double damage, Boolean hasWeapon, Boolean hasHorse, Boolean hasArmour) {
         this.name = name;
         this.damage = damage;
         this.hasWeapon = hasWeapon;
@@ -36,7 +36,7 @@ public enum TroopType {
         this.hasArmour = hasArmour;
     }
 
-    public int getDamage() {
+    public double getDamage() {
         return damage;
     }
 

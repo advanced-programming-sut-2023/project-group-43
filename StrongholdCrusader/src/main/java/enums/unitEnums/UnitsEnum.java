@@ -8,32 +8,32 @@ public enum UnitsEnum {
     //worker
     WORKER("worker","worker",1,DefenseDegree.VERY_VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
     //armed
-    ARCHER("archer","armed" ,-2, DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
-    CROSSBOWMAN("crossbowman","armed",-1,DefenseDegree.AVERAGE.getDegree() , SpeedDegree.LOW.getDegree(),  0),
-    SWORDSMAN("swordsman","armed",2,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.VERY_LOW.getDegree(), 0),
-    ARCHER_BOW("archer bow" ,"armed", -1,DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
+    ARCHER("archer","armed" ,-2, DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 10),
+    CROSSBOWMAN("crossbowman","armed",-1,DefenseDegree.AVERAGE.getDegree() , SpeedDegree.LOW.getDegree(),  20),
+    SWORDSMAN("swordsman","armed",2,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.VERY_LOW.getDegree(), 10),
+    ARCHER_BOW("archer bow" ,"armed", -1,DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 20),
     BLACKMONK("black monk","armed" ,0 , DefenseDegree.AVERAGE.getDegree(),SpeedDegree.LOW.getDegree(), -1 ),
-    SLAVE("slave" , "armed",-2,DefenseDegree.VERY_VERY_LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
-    SLINGER("slinger" ,"armed",-1,DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
-    HORSE_ARCHER("horse archer", "armed",-1,DefenseDegree.AVERAGE.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 0),
-    ARABIAN_SWORDSMAN("arabian swordsman" ,"armed",1,DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 0),
-    FIRE_THROWER("fire thrower","armed",1,DefenseDegree.LOW.getDegree(), SpeedDegree.VERY_HIGH.getDegree(),0 ),
+    SLAVE("slave" , "armed",-2,DefenseDegree.VERY_VERY_LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 20),
+    SLINGER("slinger" ,"armed",-1,DefenseDegree.LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 30),
+    HORSE_ARCHER("horse archer", "armed",-1,DefenseDegree.AVERAGE.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 30),
+    ARABIAN_SWORDSMAN("arabian swordsman" ,"armed",1,DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 20),
+    FIRE_THROWER("fire thrower","armed",1,DefenseDegree.LOW.getDegree(), SpeedDegree.VERY_HIGH.getDegree(),20),
     //unarmed
-    PIKEMAN("pikeman" ,"unarmed",0,DefenseDegree.HIGH.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
-    MACEMAN("maceman","unarmed",2,DefenseDegree.AVERAGE.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
-    KNIGHT("knight" , "unarmed",2,DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 0),
+    PIKEMAN("pikeman" ,"unarmed",0,DefenseDegree.HIGH.getDegree(), SpeedDegree.HIGH.getDegree(), 20),
+    MACEMAN("maceman","unarmed",2,DefenseDegree.AVERAGE.getDegree(), SpeedDegree.AVERAGE.getDegree(), 20),
+    KNIGHT("knight" , "unarmed",2,DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 40),
     //tunneler
-    TUNNELER("tunneler","tunneler",0,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 0),
+    TUNNELER("tunneler","tunneler",0,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 20),
     //spearman
-    SPEARMAN("spearman","spearman",0,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
+    SPEARMAN("spearman","spearman",0,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 10),
     //ladderman
-    LADDERMAN("ladderman" ,"ladderman",-10,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 0),
+    LADDERMAN("ladderman" ,"ladderman",-10,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.HIGH.getDegree(), 20),
     //engineer
-    ENGINEER("engineer","engineer",-10,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
+    ENGINEER("engineer","engineer",-10,DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 30),
     //assassin
-    ASSASSIN("assassin","assassin",0,DefenseDegree.AVERAGE.getDegree(), SpeedDegree.AVERAGE.getDegree(), 0),
+    ASSASSIN("assassin","assassin",0,DefenseDegree.AVERAGE.getDegree(), SpeedDegree.AVERAGE.getDegree(), 30),
     //dog
-    DOG("dog","dog",0,DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 0)
+    DOG("dog","dog",0,DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 5)
 
     ;
     private final String name;

@@ -165,8 +165,8 @@ public class Unit {
             if (path != null)  {
                 if (speed <= path.size() - 1) {
                     cell.removeUnit(this);
-                    path.get(speed).addUnit(this);
-                    cell = path.get(speed);
+                    path.get((int) speed).addUnit(this);
+                    cell = path.get((int) speed);
                 } else {
                     cell.removeUnit(this);
                     path.get(path.size() - 1).addUnit(this);

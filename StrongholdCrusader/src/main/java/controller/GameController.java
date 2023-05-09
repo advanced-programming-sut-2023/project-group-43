@@ -212,7 +212,6 @@ public class GameController {
         updateTaxIncome();
         updateReligiousPopularity();
         updateFoodRate();
-        updateTaxRate();
         updateWorkersEfficiency();
         updateDamageEfficiency();
     }
@@ -505,10 +504,6 @@ public class GameController {
                 governanceResource.changeAmountOfItemInStockpile(Material.MEAT, 0);
             governance.setPopularity(governance.getPopularity() + governance.getFoodRate().getPopularityIncrement());
         }
-    }
-
-    private void updateTaxRate() {
-
     }
 
     private void updateWorkersEfficiency() {
