@@ -15,6 +15,8 @@ public class Governance {
     private RateNumber taxRate;
     private int fearRate;
     private double gold;
+
+    private int turnsToCompleteBuilding = 2;
     private GovernanceResource governanceResource;
 
     private ArrayList<Unit> units = new ArrayList<>();
@@ -103,6 +105,14 @@ public class Governance {
 
     public void setGold(double gold) {
         this.gold = gold;
+    }
+
+    public int getTurnsToCompleteBuilding() {
+        return turnsToCompleteBuilding;
+    }
+
+    public void setTurnsToCompleteBuilding(int turnsToCompleteBuilding) {
+        this.turnsToCompleteBuilding = turnsToCompleteBuilding;
     }
 
     public ArrayList<Building> getBuildings() {

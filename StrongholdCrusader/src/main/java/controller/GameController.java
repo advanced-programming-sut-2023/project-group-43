@@ -204,6 +204,7 @@ public class GameController {
     }
 
     public void applyChanges() {
+        completeBuildings();
         updateUnitTargets();
         updateMovements();
         updateResources();
@@ -214,6 +215,14 @@ public class GameController {
         updateFoodRate();
         updateWorkersEfficiency();
         updateDamageEfficiency();
+    }
+
+    private void completeBuildings() {
+        for (User user : game.getPlayers()) {
+            for (Building building : user.getGovernance().getBuildings()) {
+                building.constructBuilding();
+            }
+        }
     }
 
     private void applyHitPointChange() {
@@ -262,6 +271,10 @@ public class GameController {
         for (int xIterator = sx; xIterator <= fx; xIterator++) {
             for (int yIterator = sy; yIterator <= fy; yIterator++) {
                 Cell currentCell = game.getCells()[xIterator][yIterator];
+                Building building = currentCell.getBuilding();
+                if (building != null && building.getOwner().equals(user)) {
+                    building.setHp(building.getHp() - (int) Math.floor(unit.getHitPoint()));
+                }
                 for (Unit potentialEnemy : currentCell.getUnits()) {
                     if (!potentialEnemy.getOwner().getUsername().equals(user.getUsername()) && potentialEnemy.getCell().getBuilding() == null) {
                         potentialEnemy.setHitPoint(potentialEnemy.getHitPoint() - unit.getDamage());
@@ -310,7 +323,8 @@ public class GameController {
             for (Building building : user.getGovernance().getBuildings()) {
                 if (building.getHp() <= 0) {
                     if (building instanceof CagedWarDogs) ((CagedWarDogs) building).freeDogs();
-                    user.getGovernance().setUnemployedPopulation(user.getGovernance().getUnemployedPopulation() + building.getLadderlans());
+                    if (!building.isComplete())
+                        user.getGovernance().setUnemployedPopulation(user.getGovernance().getUnemployedPopulation() + building.getLadderlans());
                     user.getGovernance().deleteBuilding(building);
                     building.getCell().setBuilding(null);
                 }
@@ -377,62 +391,40 @@ public class GameController {
                     Producer producer = (Producer) cell[j].getBuilding();
                     switch (producer.getName()) {
                         case "wheat farm":
-                            producer.produceMaterials();
                         case "hop farm":
-                            producer.produceMaterials();
                         case "hunting post":
-                            producer.produceMaterials();
                         case "apple garden":
-                            producer.produceMaterials();
                         case "wood cutter":
-                            producer.produceMaterials();
                         case "pitch rig":
-                            producer.produceMaterials();
                         case "quarry":
-                            producer.produceMaterials();
                         case "iron mine":
                             producer.produceMaterials();
                     }
-                }
-                else{
-                        Converter converter = (Converter) cell[j].getBuilding();
-                        switch (converter.getName()) {
-                            case "bakery":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "dairy products":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "beer brewing":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "mill":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "poleturner":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "fletcher":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "blacksmith":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "armourer":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                        }
+                } if (cell[j].getBuilding() instanceof Converter) {
+                    Converter converter = (Converter) cell[j].getBuilding();
+                    switch (converter.getName()) {
+                        case "bakery":
+                        case "dairy products":
+                        case "beer brewing":
+                        case "mill":
+                        case "poleturner":
+                        case "fletcher":
+                        case "blacksmith":
+                        case "armourer":
+                            converter.consumeResource();
+                            converter.produceMaterials();
                     }
                 }
             }
         }
+    }
 
     private void updateReligiousPopularity() {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
-            for (int j = 0; j < cells[0].length; j++){
+            for (int j = 0; j < cells[0].length; j++) {
                 Building building = cell[0].getBuilding();
-                if(building.getName().equals("church") || building.getName().equals("cathedral"))
+                if (building.getName().equals("church") || building.getName().equals("cathedral"))
                     building.getOwner().getGovernance().changePopulation(1);
             }
         }
@@ -510,11 +502,11 @@ public class GameController {
 
     }
 
-    private void updateDamageEfficiency(){
-        for(int i = 0 ; i < game.getPlayers().size();i++){
+    private void updateDamageEfficiency() {
+        for (int i = 0; i < game.getPlayers().size(); i++) {
             Governance governance = game.getPlayers().get(i).getGovernance();
             double featRate = governance.getFearRate();
-            for(int j = 0 ; j < governance.getUnits().size();j++){
+            for (int j = 0; j < governance.getUnits().size(); j++) {
                 double newDamage = governance.getUnits().get(j).getDamage() +
                         (governance.getUnits().get(j).getDamage() * (5 / 100));
                 governance.getUnits().get(j).setDamage(newDamage);
