@@ -8,13 +8,11 @@ import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
-import model.buildings.Building;
-import model.buildings.CagedWarDogs;
-import model.buildings.Converter;
-import model.buildings.Producer;
+import model.buildings.*;
 import model.units.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameController {
 
@@ -387,6 +385,7 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
+                if (cell[j].getBuilding() == null || !cell[j].getBuilding().isComplete()) continue;
                 if (cell[j].getBuilding() instanceof Producer) {
                     Producer producer = (Producer) cell[j].getBuilding();
                     switch (producer.getName()) {
@@ -415,10 +414,34 @@ public class GameController {
                             converter.produceMaterials();
                     }
                 }
+                if (cell[j].getBuilding() instanceof CastleDepartment) {
+                    ((CastleDepartment) cell[j].getBuilding()).reduceEnemySpeed(findUnitsAround(cell[j]));
+                    ((CastleDepartment) cell[j].getBuilding()).attackEnemy(game, cell[j].getX(), cell[j].getY());
+                }
+                if (cell[j].getBuilding() instanceof PopularityBooster)
+                    ((PopularityBooster) cell[j].getBuilding()).increasePopularity();
             }
         }
     }
 
+    private ArrayList<Unit> findUnitsAround(Cell cell) {
+        ArrayList<Unit> units = new ArrayList<>();
+        int sx = cell.getX() - 1;
+        int sy = cell.getY() - 1;
+        if (sx < 0) sx = 0;
+        if (sy < 0) sy = 0;
+        int fx = cell.getX() + 1;
+        int fy = cell.getY() + 1;
+        if (fx >= game.getRow()) fx--;
+        if (fy >= game.getColumn()) fy--;
+        for (int x = sx; x <= fx; x++) {
+            for (int y = sy; y <= fy; y++) {
+                for (Unit unit: game.getCells()[x][y].getUnits())
+                    units.add(unit);
+            }
+        }
+        return units;
+    }
     private void updateReligiousPopularity() {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
