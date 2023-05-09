@@ -1,6 +1,5 @@
 package controller;
-import java.lang.String;
-import java.util.ArrayList;
+
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.RateNumber;
@@ -10,15 +9,19 @@ import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.Building;
+import model.buildings.CagedWarDogs;
 import model.buildings.Converter;
-import model.units.Unit;
-import model.units.UnitsBuilder;
+import model.units.*;
 
-import model.units.Engineer;
+
+
+import java.util.ArrayList;
 
 public class GameController {
 
     private Game game;
+
+    private Cell village = new Cell();
 
 
     public GameController(Game game) {
@@ -41,19 +44,20 @@ public class GameController {
 
     public Output createUnit(String name, int number) {
         Governance governance = game.getCurrentPlayer().getGovernance();
-        if(number <= 0)return Output.INVALID_NUMBER;
-        if(!game.getSelectedBuilding().getName().equals("barrack"))
+        if (number <= 0) return Output.INVALID_NUMBER;
+        if (!game.getSelectedBuilding().getName().equals("barrack"))
             return Output.WRONG_SELECT_FOR_BUILDING;
-        Unit unit = UnitsBuilder.unitsBuilder(name , game.getCurrentUser());
+        Unit unit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
+        assert unit != null;
         String unitType = UnitsEnum.getTypeByUnitName(unit.getName());
-        if(unitType == null)
+        if (unitType == null)
             return Output.WRONG_UNIT_NAME;
         //Optional: Even if we could do it, we wouldn't make less than the number
-        if(unit.getCost() * number> governance.getGold())
+        if (unit.getCost() * number > governance.getGold())
             return Output.NOT_ENOUGH_MONEY;
-        if(number > governance.getUnemployedPopulation())
+        if (number > governance.getUnemployedPopulation())
             return Output.NOT_ENOUGH_POPULATION;
-        if(unitType.equals("armed")) {
+        if (unitType.equals("armed")) {
             Material weapon = ArmedWeapon.getWeaponByUnitName(unit.getName());
             if(governance.getGovernanceResource().getAmountOfItemInStockpile(weapon) < number)
                 return Output.NOT_ENOUGH_WEAPON;
@@ -84,9 +88,9 @@ public class GameController {
         ArrayList<Unit> resultcellUnits = new ArrayList<>();
         if (cellUnits.size() == 0) return Output.NO_UNIT;
         else {
-            for (int i = 0; i < cellUnits.size(); i++) {
-                if ((false == cellUnits.get(i).isHidden()) && cellUnits.get(i).getName().equals(type) && cellUnits.get(i).getOwner().equals(game.getCurrentPlayer())) {
-                    resultcellUnits.add(cellUnits.get(i));
+            for (Unit cellUnit : cellUnits) {
+                if (cellUnit.getName().equals(type) && cellUnit.getOwner().equals(game.getCurrentPlayer())) {
+                    resultcellUnits.add(cellUnit);
                 }
             }
             if (resultcellUnits.size() == 0)
@@ -100,7 +104,8 @@ public class GameController {
 
     public Output moveUnit(int x, int y) {
         if (isCoordinateInvalid(x, y)) return Output.INVALID_NUMBER;
-        for(Unit unit: game.getSelectedUnit()) {
+        for (Unit unit : game.getSelectedUnit()) {
+            if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
         }
@@ -110,7 +115,8 @@ public class GameController {
     public Output patrolUnit(int x1, int y1, int x2, int y2) {
         if (isCoordinateInvalid(x1, y1) || isCoordinateInvalid(x2, y2))
             return Output.INVALID_NUMBER;
-        for(Unit unit: game.getSelectedUnit()) {
+        for (Unit unit : game.getSelectedUnit()) {
+            if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
             unit.setCurrentTargetX(x1 - 1);
             unit.setCurrentTargetY(y1 - 1);
             unit.setNextTargetX(x2 - 1);
@@ -127,23 +133,27 @@ public class GameController {
         ArrayList<Unit> units = game.getCells()[x - 1][y - 1].getUnits();
         UnitState unitState = UnitState.getUnitStateByName(state);
         if (unitState == null) return Output.INVALID_STATE;
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             unit.setState(unitState);
         }
         return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
     }
 
-    public Output attack(int x, int y ,String item) {
-        if(item.equals("e"))
-            return attackToEnemy(x,y);
-        if(item.equals("x"))
-            return aearialAttack(x,y);
+    public Output attack(int x, int y, String item) {
+        if (item.equals("e"))
+            return attackToEnemy(x, y);
+        if (item.equals("x"))
+            return aearialAttack(x, y);
         return null;
     }
 
-    private Output attackToEnemy(int x, int y) {return null;}
+    private Output attackToEnemy(int x, int y) {
+        return null;
+    }
 
-    private Output aearialAttack(int x, int y) {return null;}
+    private Output aearialAttack(int x, int y) {
+        return null;
+    }
 
     public Output pourOil(String direction) {
         Engineer engineer = null;
@@ -155,7 +165,7 @@ public class GameController {
         }
         if (engineer == null) return Output.NO_ENGINEER_HERE;
         else {
-            //TODO pouring oil and go to oil
+            engineer.pourOil(game, direction);
         }
         return null;
     }
@@ -168,10 +178,9 @@ public class GameController {
                 cell.getBuilding().getName().equals("square tower") ||
                 cell.getBuilding().getName().equals("circle tower") ||
                 cell.getBuilding().getName().equals("pitch ditch")
-                )) {
+        )) {
             return Output.DIG_TUNNEL_FAILED;
-        }
-        else {
+        } else {
             cell.setTunelHere(true);
             return Output.DIG_TUNNEL_SUCCESSFUL;
         }
@@ -186,57 +195,175 @@ public class GameController {
     public Output disbandUnit() {
         if (game.getSelectedUnit().size() == 0) return Output.NO_UNIT_FOR_DISBANDING;
         else {
-            for (int i = 0; i < game.getSelectedUnit().size(); i++) {
-                game.getSelectedUnit().get(i).setHidden(true);
+            for (Unit unit: game.getSelectedUnit()) {
+                unit.setPreviousCell(unit.getCell());
+                unit.setCell(village);
             }
             return Output.UNIT_DISBANDED_SUCCESSFULLY;
         }
     }
 
     public void applyChanges() {
-        applyHitPointChange();
-        applyDeathChange();
+        updateUnitTargets();
         updateMovements();
         updateResources();
+        applyHitPointChange();
+        applyDeathChange();
         updateUnemployedPopulation();
         updateTaxIncome();
-        //updatePopularity();
+        updatePopularity();
         updateFoodRate();
         updateTaxRate();
         updateEfficiency();
     }
 
-    private void applyHitPointChange() {}
-
-    private void applyDeathChange() {
-        Cell[][] cells = game.getCells();
-        int newUnemployedUnit = 0;
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[0].length; j++) {
-                if (cells[i][j].getBuilding() != null) {
-                    if (cells[i][j].getBuilding().getHp() <= 0) {
-                        cells[i][j].getBuilding().getOwner().getGovernance().deleteBuilding(cells[i][j].getBuilding());
-                        cells[i][j].setBuilding(null);
-                    }
+    private void applyHitPointChange() {
+        for (User user : game.getPlayers()) {
+            for (Unit unit : user.getGovernance().getUnits()) {
+                int currentX = unit.getCell().getX();
+                int currentY = unit.getCell().getY();
+                if (unit instanceof Armed) {
+                    int range = ((Armed) unit).getWeapon().getRange();
+                    setVariables(currentX, currentY, range, true, user, unit);
+                } else if (unit instanceof Unarmed) {
+                    setVariables(currentX, currentY, 1, true, user, unit);
+                } else if (unit instanceof Engineer) {
+                    ((Engineer) unit).chargeTar();;
+                } else if (unit instanceof Tunneler) {
+                    ((Tunneler) unit).destroyBuilding(game);
+                } else if (unit instanceof Ladderman) {
+                    ((Ladderman) unit).addLadder(findBuildingsAround(unit));
                 }
-                if (cells[i][j].getUnits().size() != 0) {
-                    for (int k = 0; k < cells[i][j].getUnits().size(); k++) {
-                        if (cells[i][j].getUnits().get(k).getHitPoint() <= 0) {
-                            cells[i][j].getUnits().get(k).getOwner().getGovernance().removeUnit(cells[i][j].getUnits().get(k));
-                            cells[i][j].removeUnit(cells[i][j].getUnits().get(k));
-                            newUnemployedUnit++ ;
-                        }
+                if (unit instanceof Spearman) {
+                    ((Spearman) unit).dropLadder(findBuildingsAround(unit));
+                }
+                if (unit instanceof Assassin) {
+                    ((Assassin) unit).getCastleDepartment(findBuildingsAround(unit));
+                }
+            }
+        }
+    }
+
+    private Cell setVariables(int currentX, int currentY, int range, boolean shouldFight, User user, Unit unit) {
+        int sx = currentX - range;
+        int fx = currentX + range;
+        int sy = currentY - range;
+        int fy = currentY + range;
+        if (sx < 0) sx = 0;
+        if (sy < 0) sy = 0;
+        if (fx >= game.getRow()) fx = game.getRow() - 1;
+        if (fy >= game.getColumn()) fy = game.getColumn() - 1;
+        if (shouldFight) fight(sx, sy, fx, fy, user, unit);
+        else return findCell(sx, sy, fx, fy, user);
+        return null;
+    }
+
+    private void fight(int sx, int sy, int fx, int fy, User user, Unit unit) {
+        for (int xIterator = sx; xIterator <= fx; xIterator++) {
+            for (int yIterator = sy; yIterator <= fy; yIterator++) {
+                Cell currentCell = game.getCells()[xIterator][yIterator];
+                for (Unit potentialEnemy : currentCell.getUnits()) {
+                    if (!potentialEnemy.getOwner().getUsername().equals(user.getUsername()) && potentialEnemy.getCell().getBuilding() == null) {
+                        potentialEnemy.setHitPoint(potentialEnemy.getHitPoint() - unit.getDamage());
                     }
                 }
             }
         }
-        game.getCurrentPlayer().getGovernance().setUnemployedPopulation(game.getCurrentPlayer().getGovernance().getUnemployedPopulation() + newUnemployedUnit);
+    }
+
+    private Cell findCell(int sx, int sy, int fx, int fy, User user) {
+        for (int xIterator = sx; xIterator <= fx; xIterator++) {
+            for (int yIterator = sy; yIterator <= fy; yIterator++) {
+                Cell currentCell = game.getCells()[xIterator][yIterator];
+                for (Unit enemy : currentCell.getUnits()) {
+                    if (!enemy.getOwner().getUsername().equals(user.getUsername())) {
+                        if (enemy instanceof Assassin) ((Assassin) enemy).setHidden(false);
+                        return currentCell;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Building> findBuildingsAround(Unit unit) {
+        ArrayList<Building> buildings = new ArrayList<>();
+        int sx = unit.getCell().getX() - 1;
+        int sy = unit.getCell().getY() - 1;
+        if (sx < 0) sx = 0;
+        if (sy < 0) sy = 0;
+        int fx = unit.getCell().getX() + 1;
+        int fy = unit.getCell().getY() + 1;
+        if (fx >= game.getRow()) fx--;
+        if (fy >= game.getColumn()) fy--;
+        for (int x = sx; x <= fx; x++) {
+            for (int y = sy; y <= fy;y++) {
+                if (game.getCells()[x][y].getBuilding() != null)
+                    buildings.add(game.getCells()[x][y].getBuilding());
+            }
+        }
+        return buildings;
+    }
+
+    private void applyDeathChange() {
+        for (User user: game.getPlayers()) {
+            for (Building building: user.getGovernance().getBuildings()) {
+                if (building.getHp() <= 0) {
+                    if (building instanceof CagedWarDogs) ((CagedWarDogs) building).freeDogs();
+                    user.getGovernance().setUnemployedPopulation(user.getGovernance().getUnemployedPopulation() + building.getLadderlans());
+                    user.getGovernance().deleteBuilding(building);
+                    building.getCell().setBuilding(null);
+                }
+            }
+            for (Unit unit: user.getGovernance().getUnits()) {
+                if (unit.getHitPoint() <= 0) {
+                    unit.getCell().removeUnit(unit);
+                    user.getGovernance().removeUnit(unit);
+                    user.getGovernance().setPopulation(user.getGovernance().getPopulation() - 1);
+                }
+            }
+        }
+    }
+
+    public void updateUnitTargets() {
+        for (User user : game.getPlayers()) {
+            for (Unit unit : user.getGovernance().getUnits()) {
+                if (unit.getState().equals(UnitState.STANDING)) {
+                    unit.setCurrentTargetX(-1);
+                    unit.setCurrentTargetY(-1);
+                    unit.setNextTargetY(-1);
+                    unit.setNextTargetX(-1);
+                } else if (unit.getState().equals(UnitState.OFFENSIVE)) {
+                    Cell enemyCell = findEnemy(1000, unit.getCell().getX(), unit.getCell().getY(), user, unit);
+                    unit.setCurrentTargetX(enemyCell.getX());
+                    unit.setCurrentTargetY(enemyCell.getY());
+                    unit.setNextTargetY(-1);
+                    unit.setNextTargetX(-1);
+                } else if (unit.getState().equals(UnitState.DEFENSIVE)) {
+                    Cell enemyCell = findEnemy(3, unit.getCell().getX(), unit.getCell().getY(), user, unit);
+                    assert enemyCell != null;
+                    unit.setCurrentTargetX(enemyCell.getX());
+                    unit.setCurrentTargetY(enemyCell.getY());
+                    unit.setNextTargetY(-1);
+                    unit.setNextTargetX(-1);
+                }
+            }
+        }
+    }
+
+    private Cell findEnemy(int distance, int currentX, int currentY, User user, Unit unit) {
+        for (int i = 0; i < distance; i++) {
+            Cell cell;
+            if((cell = setVariables(currentX, currentY , i, false, user, unit)) != null)
+                return cell;
+        }
+        return null;
     }
 
     public void updateMovements(){
-        for(int i = 0 ; i < game.getPlayers().size();i++){
-            for(int j = 0 ; j < game.getPlayers().get(i).getGovernance().getUnits().size() ; j++){
-                //TODO -> how to call move function for every unit asal?
+        for(User user: game.getPlayers()) {
+            for (Unit unit: user.getGovernance().getUnits()) {
+                unit.move(this);
             }
         }
     }
@@ -244,10 +371,10 @@ public class GameController {
     private void updateResources() {
         //some building should update automatically
         Cell[][] cells = game.getCells();
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[0].length; j++){
-                Converter converter = (Converter)cells[i][j].getBuilding();
-                switch (converter.getName()){
+        for (Cell[] cell : cells) {
+            for (int j = 0; j < cells[0].length; j++) {
+                Converter converter = (Converter) cell[j].getBuilding();
+                switch (converter.getName()) {
                     case "wheat farm":
                         converter.produceMaterials();
                     case "hop farm":
@@ -294,10 +421,10 @@ public class GameController {
     }
 
 
-    private void updateUnemployedPopulation() {}
+    private void updateUnemployedPopulation() {
+    }
 
-    private void updatePopulation() {}
-
+    private void updatePopularity() {}
 
     private void updateTaxIncome() {
         Governance governance;
@@ -390,6 +517,7 @@ public class GameController {
         boolean isNextPlayerFound = false;
         for (User player: game.getPlayers()) {
             if (isNextPlayerFound) {
+                user = player;
                 game.setCurrentPlayer(player);
                 game.setSelectedUnit(new ArrayList<>());
         }
@@ -400,22 +528,23 @@ public class GameController {
         if (user == null) {
             game.setCurrentPlayer(game.getPlayers().get(0));
             game.setSelectedUnit(new ArrayList<>());
+            game.setSelectedBuilding(null);
         }
     }
 
 
-    public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty) {
+    public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty, Unit unit) {
         Cell[][] cells = game.getCells();
         ArrayList<Cell> path = new ArrayList<>();
-        if (cells[tx][ty].isBlocked()) return null;
+        if (cells[tx][ty].isBlocked(unit)) return null;
         int currentX = sx;
         int currentY = sy;
         path.add(cells[tx][ty]);
-        if (backTrack(cells, path, tx, ty)) return path;
+        if (backTrack(cells, path, tx, ty, unit)) return path;
         return null;
     }
 
-    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int tx, int ty) {
+    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int tx, int ty, Unit unit) {
         Cell currentCell = path.get(path.size() - 1);
         int currentX = currentCell.getX();
         int currentY = currentCell.getY();
@@ -424,9 +553,9 @@ public class GameController {
         for (int i = 0; i < 4; i++) {
             if (currentX + array[0][i] >= 0 && currentX + array[0][i] < game.getRow() &&
                     currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn())  {
-                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked()) {
+                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit)) {
                     path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
-                    if (backTrack(cells, path, tx, ty)) return true;
+                    if (backTrack(cells, path, tx, ty, unit)) return true;
                     path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
                 }
             }

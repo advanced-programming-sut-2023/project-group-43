@@ -13,13 +13,14 @@ public class Unit {
     private User owner;
     private UnitsEnum unit;
     private Cell cell;
+
+    private Cell previousCell;
     private String name;
     private int hitPoint;
     private int damage;
     private int defense;
     private int speed;
     private int cost;
-    private boolean isHidden = false;
 
     private int currentTargetX = -1;
     private int currentTargetY = -1;
@@ -36,14 +37,6 @@ public class Unit {
         this.defense = unit.getDefense();
         this.speed = unit.getSpeed();
         this.cost = unit.getCost();
-    }
-
-    public boolean isHidden() {
-        return isHidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        isHidden = hidden;
     }
 
     public User getOwner() {
@@ -106,6 +99,14 @@ public class Unit {
         this.cell = cell;
     }
 
+    public Cell getPreviousCell() {
+        return previousCell;
+    }
+
+    public void setPreviousCell(Cell previousCell) {
+        this.previousCell = previousCell;
+    }
+
     public int getCurrentTargetX() {
         return currentTargetX;
     }
@@ -140,7 +141,7 @@ public class Unit {
 
     public void move(GameController gameController) {
         if (currentTargetX >= 0 && currentTargetY >= 0) {
-            ArrayList<Cell> path = gameController.findPath(cell.getX(), cell.getY(), currentTargetX, currentTargetY);
+            ArrayList<Cell> path = gameController.findPath(cell.getX(), cell.getY(), currentTargetX, currentTargetY, this);
             if (path != null)  {
                 if (speed <= path.size() - 1) {
                     cell.removeUnit(this);

@@ -75,6 +75,7 @@ public class LoginMenu extends Menu {
 
     private void enterMainMenu(String username) {
         RegisterAndLoginController.enterMainMenu(username);
+        System.out.println("login menu:");
     }
 
     private void checkForPause(Output output) {

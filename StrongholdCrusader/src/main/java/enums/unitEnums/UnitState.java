@@ -3,6 +3,7 @@ package enums.unitEnums;
 public enum UnitState {
     STANDING,
     DEFENSIVE,
+    MOVING,
     OFFENSIVE;
     public static UnitState getUnitStateByName(String name){
         switch (name){

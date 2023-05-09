@@ -20,7 +20,7 @@ public class Building {
     //building
     private boolean hasLadder = false;
 
-    public boolean HasLadder() {
+    public boolean hasLadder() {
         return hasLadder;
     }
     public void setLadder(boolean hasLadder) {
@@ -35,7 +35,7 @@ public class Building {
         this.stone = BuildingEnum.getBuildingStructureByName(name).getStone();
         this.cost = BuildingEnum.getBuildingStructureByName(name).getCost();
         this.hp = BuildingEnum.getBuildingStructureByName(name).getHp();
-        this.ladderlans = BuildingEnum.getBuildingStructureByName(name).getLaddernans();
+        this.ladderlans = BuildingEnum.getBuildingStructureByName(name).getWorkerNumber();
     }
 
     public void addUnit(Unit unit){

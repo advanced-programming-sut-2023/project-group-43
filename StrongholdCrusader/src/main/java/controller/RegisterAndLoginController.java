@@ -288,8 +288,8 @@ public class RegisterAndLoginController {
         return output;
     }
     public static String generateCaptcha() {
-        int n = 4;
         Random rand = new Random(10);
+        int n = rand.nextInt(4) + 4;
         String chrs = "0123456789";
         String captcha = "";
         while (n-->0){
