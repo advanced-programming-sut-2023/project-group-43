@@ -109,7 +109,9 @@ public enum Output {
     //change environment
     INVALID_BUILDING("you only can drop headquarter now"),
     INVALID_STATE("please enter a valid state"),
-    SUCCESSFUL_ACTION("you did it successfully!")
+    SUCCESSFUL_ACTION("you did it successfully!"),
+    //moving units
+    INVALID_MOVE("warning: your chosen destination is blocked!"),
     ;
     private String string;
 

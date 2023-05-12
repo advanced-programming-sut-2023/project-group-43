@@ -42,8 +42,6 @@ public class GameController {
     public Output createUnit(String name, int number) {
         Governance governance = game.getCurrentPlayer().getGovernance();
         if (number <= 0) return Output.INVALID_NUMBER;
-        if (!game.getSelectedBuilding().getName().equals("barrack"))
-            return Output.WRONG_SELECT_FOR_BUILDING;
         Unit unit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
         assert unit != null;
         String unitType = UnitsEnum.getTypeByUnitName(unit.getName());
@@ -61,7 +59,9 @@ public class GameController {
             governance.getGovernanceResource().changeAmountOfItemInStockpile(weapon, number);
         }
         for (int i = 0; i < number; i++) {
-            game.getCurrentUser().getGovernance().addUnit(unit);
+            Unit newUnit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
+            game.getCurrentUser().getGovernance().addUnit(newUnit);
+            newUnit.setCell(getGame().getSelectedBuilding().getCell());
         }
         governance.setGold(governance.getGold() - unit.getCost() * number);
         governance.setUnemployedPopulation(governance.getUnemployedPopulation() - number);
@@ -103,6 +103,7 @@ public class GameController {
         if (isCoordinateInvalid(x, y)) return Output.INVALID_NUMBER;
         for (Unit unit : game.getSelectedUnit()) {
             if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
+            if (game.getCells()[x - 1][y - 1].isBlocked(unit)) return Output.INVALID_MOVE;
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
         }

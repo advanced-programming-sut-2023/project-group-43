@@ -25,7 +25,7 @@ public class GameMenu extends Menu{
 
         this.gameController = gameController;
         mapController = new MapController(gameController.getGame());
-        storeController = new StoreController(gameController.getGame());
+        storeController = new StoreController(gameController.getGame(), gameController);
         governanceController = new GovernanceController(gameController.getGame());
         tradeController = new TradeController(gameController.getGame());
     }
@@ -62,7 +62,8 @@ public class GameMenu extends Menu{
         MapMenu mapMenu = new MapMenu(mapController);
         mapMenu.run();
     }
-    public void enterStoreMenu() {
+    public void enterStoreMenu(String name) {
+        storeController.setStoreName(name);
         StoreMenu storeMenu = new StoreMenu(storeController);
         storeMenu.run();
     }
@@ -165,8 +166,8 @@ public class GameMenu extends Menu{
             output = null;
             //enter menu part
             if(gameController.getGame().getSelectedBuilding() != null &&
-                    gameController.getGame().getSelectedBuilding().getName().equals("market")) {
-                enterStoreMenu();
+                    gameController.getGame().getSelectedBuilding().getName().matches("(market)|(barrack)|(engineer guild)|(mercenary post)")) {
+                enterStoreMenu(gameController.getGame().getSelectedBuilding().getName());
                 continue;
             }
             input = scanner.nextLine();
