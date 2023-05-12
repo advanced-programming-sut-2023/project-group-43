@@ -30,11 +30,11 @@ package enums.BuildingEnums;
         //------> 2) animals
         STABLE("stable",10,0,400,200,0),
         //------> 3) humans
-        HOWEL("howel",6,0,0,100,0),
+        HOVEL("hovel",6,0,0,100,0),
         //-------> 4) items
         WOOD_CUTTER("wood cutter",3,0,0,200,1),
         PITCH_RIG("pitch rig",20,0,0,400,1),
-        QUARYY("quarry",20,0,0,400,3),
+        QUARRY("quarry",20,0,0,400,3),
         IRON_MINE("iron mine",20,0,0,400,2),
         //part 2
         //------> 1) humans

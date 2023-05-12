@@ -12,7 +12,6 @@ import model.buildings.*;
 import model.units.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class GameController {
 
@@ -386,8 +385,9 @@ public class GameController {
         for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
                 if (cell[j].getBuilding() == null || !cell[j].getBuilding().isComplete()) continue;
-                if (cell[j].getBuilding() instanceof Producer) {
-                    Producer producer = (Producer) cell[j].getBuilding();
+                Building building = cell[j].getBuilding();
+                if (building instanceof Producer) {
+                    Producer producer = (Producer) building;
                     switch (producer.getName()) {
                         case "wheat farm":
                         case "hop farm":
@@ -399,8 +399,8 @@ public class GameController {
                         case "iron mine":
                             producer.produceMaterials();
                     }
-                } if (cell[j].getBuilding() instanceof Converter) {
-                    Converter converter = (Converter) cell[j].getBuilding();
+                } if (building instanceof Converter) {
+                    Converter converter = (Converter) building;
                     switch (converter.getName()) {
                         case "bakery":
                         case "dairy products":
@@ -420,6 +420,11 @@ public class GameController {
                 }
                 if (cell[j].getBuilding() instanceof PopularityBooster)
                     ((PopularityBooster) cell[j].getBuilding()).increasePopularity();
+                if(building.getName().equals("hovel")) {
+                    Governance governance = building.getOwner().getGovernance();
+                    governance.setPopulation(governance.getPopulation() + 8);
+                    governance.setUnemployedPopulation(governance.getUnemployedPopulation() + 8);
+                }
             }
         }
     }

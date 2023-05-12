@@ -162,14 +162,15 @@ public class GameMenu extends Menu{
         Output output;
         Matcher matcher;
         while (!input.equals("next person")) {
-            input = scanner.nextLine();
             output = null;
             //enter menu part
-            if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {
+            if(gameController.getGame().getSelectedBuilding() != null &&
+                    gameController.getGame().getSelectedBuilding().getName().equals("market")) {
                 enterStoreMenu();
                 continue;
             }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
+            input = scanner.nextLine();
+            if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
                 enterTradeMenu();
                 continue;
             }
