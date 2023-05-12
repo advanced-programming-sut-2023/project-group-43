@@ -20,7 +20,6 @@ public class MapMenu extends Menu {
         System.out.println("map menu:");
         Scanner scanner = Menu.getScanner();
         String input;
-        Output output;
         Matcher matcher;
         while (true) {
             input = scanner.nextLine();
@@ -28,10 +27,13 @@ public class MapMenu extends Menu {
                 System.out.println(Output.MAP_MENU.getString());
             if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
                 showMap(matcher);
+                return;
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_DETAILS)) != null) {
                 showMapDetails(matcher);
+                return;
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
                 moveMap(matcher);
+                return;
             } else if (input.matches("back")) {
                 System.out.println("game menu:");
                 return;
@@ -57,13 +59,13 @@ public class MapMenu extends Menu {
         int horizontalDisplacement = 0;
         int verticalDisplacement = 0;
         if (matcher.group("firstDirection").equals("up")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement"));
+            if (matcher.group("firstDisplacement") != null) {
+                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
             } else verticalDisplacement = 1;
         }
         if (matcher.group("firstDirection").equals("down")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement")) * -1;
+            if (matcher.group("firstDisplacement") != null) {
+                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
             } else verticalDisplacement = -1;
         }
         if (matcher.group("secondDirection").equals("up")) {
@@ -78,13 +80,13 @@ public class MapMenu extends Menu {
         }
 
         if (matcher.group("firstDirection").equals("right")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement"));
+            if (matcher.group("firstDisplacement") != null) {
+                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
             } else horizontalDisplacement = 1;
         }
         if (matcher.group("firstDirection").equals("left")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement")) * -1;
+            if (matcher.group("firstDisplacement") != null) {
+                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
             } else horizontalDisplacement = -1;
         }
         if (matcher.group("secondDirection").equals("right")) {
