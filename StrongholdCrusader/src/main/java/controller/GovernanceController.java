@@ -70,4 +70,7 @@ public class GovernanceController {
         return String.valueOf(game.getCurrentPlayer().getGovernance().getFearRate());
     }
 
+    public Game getGame() {
+        return game;
+    }
 }

@@ -23,6 +23,7 @@ public class StoreMenu extends Menu{
         while (true){
             input = scanner.nextLine();
             if (input.matches("back")){
+                storeController.getGame().setSelectedBuilding(null);
                 System.out.println("game menu:");
                 return;
             }

@@ -108,4 +108,8 @@ public class StoreController {
         governance.getGovernanceResource().changeAmountOfItemInStockpile(material, -amount);
         return Output.SUCCESSFUL_SALE;
     }
+
+    public Game getGame() {
+        return game;
+    }
 }

@@ -193,6 +193,11 @@ public class GameMenu extends Menu{
                 enterStoreMenu(gameController.getGame().getSelectedBuilding().getName());
                 continue;
             }
+            if(gameController.getGame().getSelectedBuilding() != null &&
+                    gameController.getGame().getSelectedBuilding().getName().matches("small stone gatehouse")) {
+                enterGovernmentMenu();
+                continue;
+            }
             input = scanner.nextLine();
             if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
                 enterTradeMenu();
