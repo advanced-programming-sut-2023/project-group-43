@@ -10,6 +10,7 @@ public enum TreeType {
     COCONUT_PALM("coconut palm"),
     DATE("date");
     private String treeType;
+
     private TreeType(String regex) {
         this.treeType = regex;
     }
@@ -20,6 +21,7 @@ public enum TreeType {
         if (matcher.matches()) return matcher;
         else return null;
     }
+
     public void setTreeType(String treeType) {
         this.treeType = treeType;
     }

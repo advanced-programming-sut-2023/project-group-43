@@ -7,7 +7,7 @@ public class UnitsBuilder {
     public static Unit unitsBuilder(String name, User owner) {
         switch (name) {
             case "worker":
-                return new Unit(owner,name);
+                return new Unit(owner, name);
             case "archer":
                 return new Armed(owner, name, TroopType.ARCHER);
             case "crossbowman":
@@ -27,7 +27,7 @@ public class UnitsBuilder {
             case "arabian swordsman":
                 return new Armed(owner, name, TroopType.ARABIAN_SWORDSMAN);
             case "fire thrower":
-                    return new Armed(owner, name, TroopType.FIRE_THROWER);
+                return new Armed(owner, name, TroopType.FIRE_THROWER);
             case "spearman":
                 return new Spearman(owner, name, TroopType.SPEARMAN);
             case "pikeman":

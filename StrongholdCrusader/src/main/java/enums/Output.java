@@ -117,11 +117,10 @@ public enum Output {
     INVALID_DISTANCE("warning: this cell is not in a valid distance from your units!"),
 
     //dropping buildings
-    INVALID_CELL_FOR_THIS_BUILDING("you cannot drop this building here")
-    ;
-    private String string;
+    INVALID_CELL_FOR_THIS_BUILDING("you cannot drop this building here");
+    private final String string;
 
-    private Output(String string) {
+    Output(String string) {
         this.string = string;
     }
 

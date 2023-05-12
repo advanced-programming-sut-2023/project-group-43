@@ -55,7 +55,7 @@ public class MapController {
         details.append("Texture : ").append(cell.getTexture().toString());
         if (cell.HasRock()) details.append("\nRocky");
         if (cell.getTreeType() != null) details.append("\nTree : ").append(cell.getTreeType().toString());
-        if (cell.getBuilding() != null && (cell.getBuilding().getOwner().equals(game.getCurrentPlayer())|| !cell.getBuilding().getName().equals("killing pit"))) {
+        if (cell.getBuilding() != null && (cell.getBuilding().getOwner().equals(game.getCurrentPlayer()) || !cell.getBuilding().getName().equals("killing pit"))) {
             details.append("\n").append("Buldings : ").append(cell.getBuilding().getName());
             details.append(" | owner : ").append(cell.getBuilding().getOwner().getUsername());
             details.append(" | hitpoint : ").append(cell.getBuilding().getHp());

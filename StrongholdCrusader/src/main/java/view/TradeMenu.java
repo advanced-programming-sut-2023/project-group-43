@@ -8,7 +8,7 @@ import enums.menuEnums.TradeMenuCommands;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class TradeMenu extends Menu{
+public class TradeMenu extends Menu {
 
     private TradeController tradeController;
 
@@ -39,7 +39,8 @@ public class TradeMenu extends Menu{
             } else if (input.matches("back")) {
                 System.out.println("main menu:");
                 return;
-            } if (output == null) System.out.println("invalid command");
+            }
+            if (output == null) System.out.println("invalid command");
             else System.out.println(output.getString());
         }
     }

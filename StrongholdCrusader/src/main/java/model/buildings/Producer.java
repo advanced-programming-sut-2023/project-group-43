@@ -5,7 +5,7 @@ import model.User;
 
 import java.util.ArrayList;
 
-public class Producer extends Building{
+public class Producer extends Building {
 
     private ArrayList<Material> producedMaterials = new ArrayList<>();
     private final int productionRate;
@@ -17,7 +17,7 @@ public class Producer extends Building{
         this.capacity = capacity;
     }
 
-    public void addProducedMaterial(Material material){
+    public void addProducedMaterial(Material material) {
         producedMaterials.add(material);
     }
 
@@ -34,7 +34,7 @@ public class Producer extends Building{
     }
 
     public void produceMaterials() {
-        for(Material material: producedMaterials) {
+        for (Material material : producedMaterials) {
             getOwner().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(material, productionRate);
         }
     }

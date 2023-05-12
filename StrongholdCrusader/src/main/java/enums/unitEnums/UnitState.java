@@ -5,8 +5,9 @@ public enum UnitState {
     DEFENSIVE,
     MOVING,
     OFFENSIVE;
-    public static UnitState getUnitStateByName(String name){
-        switch (name){
+
+    public static UnitState getUnitStateByName(String name) {
+        switch (name) {
             case "standing":
                 return STANDING;
             case "defensive":

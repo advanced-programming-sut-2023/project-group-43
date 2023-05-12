@@ -1,11 +1,12 @@
 package controller;
 
-import model.*;
+import model.User;
 import view.ChangeEnvironmentMenu;
 import view.ProfileMenu;
 
 public class MainController {
     User currentUser;
+
     public MainController(User currentUser) {
         this.currentUser = currentUser;
     }

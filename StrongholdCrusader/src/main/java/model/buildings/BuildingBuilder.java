@@ -26,7 +26,7 @@ public class BuildingBuilder {
             case "circle tower":
                 return new CastleDepartment(name, owner, 15, 10, 1);
             case "caged war dogs":
-                return new CagedWarDogs(name , owner);
+                return new CagedWarDogs(name, owner);
             case "wheat farm":
                 producer = new Producer(name, owner, 10, 10);
                 producer.addProducedMaterial(Material.WHEAT);

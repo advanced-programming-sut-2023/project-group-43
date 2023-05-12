@@ -34,7 +34,8 @@ public class RegisterMenu extends Menu {
             }
             if (output != null) {
                 output = checkOutput(matcher, output);
-            } if (output == null) System.out.println("invalid command");
+            }
+            if (output == null) System.out.println("invalid command");
             else System.out.println(output.getString());
         }
     }
@@ -85,13 +86,15 @@ public class RegisterMenu extends Menu {
         }
         if (output.equals(Output.CHOOSE_PASSWORD_RECOVERY_QUESTION)) {
             output = choosePasswordRecoveryQuestion(matcher, output, randomSlogan, false);
-        } if (output.equals(Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION)) {
+        }
+        if (output.equals(Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION)) {
             String captcha = RegisterAndLoginController.generateCaptcha();
             System.out.println(RegisterAndLoginController.asciiArt(captcha));
             System.out.println("enter captcha:");
             String input = scanner.nextLine();
             output = RegisterAndLoginController.checkCaptcha(captcha, input);
-        } if (output.equals(Output.CAPTCHA_MATCHED)) {
+        }
+        if (output.equals(Output.CAPTCHA_MATCHED)) {
             output = choosePasswordRecoveryQuestion(matcher, output, randomSlogan, true);
         }
         return output;
@@ -115,13 +118,13 @@ public class RegisterMenu extends Menu {
                 String answerConfirmation = Validations.getInfo("c", recoveryMatcher.group());
                 String number = Validations.getInfo("q", recoveryMatcher.group());
                 if (number == null || answerConfirmation == null || answer == null) return null;
-                if(!number.matches("\\d+"))
+                if (!number.matches("\\d+"))
                     return Output.INVALID_PASSWORD_RECOVERY_QUESTION;
                 int questionNumber = Integer.parseInt(number);
                 if (randomPassword != null) password = randomPassword;
                 if (randomSlogan != null) slogan = randomSlogan;
                 if (!hasCaptcha)
-                output = RegisterAndLoginController.choosePasswordRecoveryQuestion(questionNumber, answer, answerConfirmation);
+                    output = RegisterAndLoginController.choosePasswordRecoveryQuestion(questionNumber, answer, answerConfirmation);
                 else
                     output = RegisterAndLoginController.completeRegister(username, password, nickname, email, slogan, questionNumber, answer);
             }

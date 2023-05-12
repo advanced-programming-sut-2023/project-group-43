@@ -1,18 +1,20 @@
 package model.units;
 
-import enums.unitEnums.UnitsEnum;
-import model.*;
+import model.Cell;
+import model.Game;
+import model.User;
 import model.buildings.Building;
 
-public class Engineer extends Unit{
+public class Engineer extends Unit {
     public Engineer(User owner, String name) {
         super(owner, name);
         hasOil = false;
     }
+
     private boolean hasOil;
 
-    public void chargeTar(){
-        if(!hasOil) {
+    public void chargeTar() {
+        if (!hasOil) {
             Building building = this.getOwner().getGovernance().getBuildingByName("oil smelter");
             if (building == null) return;
             setCurrentTargetX(building.getCell().getX());
@@ -45,7 +47,7 @@ public class Engineer extends Unit{
                 if (x <= game.getRow() - 2) target = cells[x + 1][y];
         }
         if (target != null) {
-            for (Unit unit: target.getUnits()) {
+            for (Unit unit : target.getUnits()) {
                 if (!unit.getOwner().getUsername().equals(getOwner().getUsername()))
                     unit.setHitPoint(0);
             }

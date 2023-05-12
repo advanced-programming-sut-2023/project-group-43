@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuCommands {
-    //TODO -> how to handle dots inside ""
     //enter menu commands
     ENTER_MAP_MENU("enter map menu"),
     ENTER_STORE_MENU("enter store menu"),

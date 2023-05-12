@@ -1,14 +1,11 @@
 package enums.menuEnums;
 
-import view.MainMenu;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainMenuCommands {
     ENTER_CHANGE_ENVIRONMENT_MENU("enter change environment menu"),
-    ENTER_PROFILE_MENU("enter profile menu")
-    ;
+    ENTER_PROFILE_MENU("enter profile menu");
     private final String regex;
 
     private MainMenuCommands(String regex) {

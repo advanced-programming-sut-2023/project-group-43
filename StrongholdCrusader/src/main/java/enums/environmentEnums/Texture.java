@@ -56,6 +56,7 @@ public enum Texture {
         if (matcher.matches()) return matcher;
         else return null;
     }
+
     public void setTexture(String texture) {
         this.texture = texture;
     }
