@@ -707,13 +707,13 @@ public class GameController {
     }
 
     public String showGameResult() {
-        StringBuilder ans = null;
+        StringBuilder ans = new StringBuilder();
         ans.append("<<<GAME OVER>>>" + "\n");
-        ans.append("The winner of the game is " + findWinner() + "\n");
+        ans.append("The winner of the game is ").append(findWinner()).append("\n");
         ans.append("Losers:" + "\n");
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (!game.getPlayers().get(i).getUsername().equals(findWinner().getUsername()))
-                ans.append(game.getPlayers().get(i).getUsername() + "\n");
+                ans.append(game.getPlayers().get(i).getUsername()).append("\n");
         }
         return String.valueOf(ans);
     }
