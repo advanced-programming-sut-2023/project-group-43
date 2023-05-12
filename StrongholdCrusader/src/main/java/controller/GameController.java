@@ -74,7 +74,7 @@ public class GameController {
                 break;
             }
         }
-        defualtMaps.put("option number 1", cells);
+        defaultMaps.put("option number 1", cells);
         Cell[][] cells2 = new Cell[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
@@ -102,7 +102,7 @@ public class GameController {
                 break;
             }
         }
-        defualtMaps.put("option number 2", cells2);
+        defaultMaps.put("option number 2", cells2);
     }
 
 
@@ -192,18 +192,18 @@ public class GameController {
 
     public Output selectUnit(int x, int y, String type) {
         ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
-        ArrayList<Unit> resultcellUnits = new ArrayList<>();
+        ArrayList<Unit> resultCellUnits = new ArrayList<>();
         if (cellUnits.size() == 0) return Output.NO_UNIT;
         else {
             for (Unit cellUnit : cellUnits) {
                 if (cellUnit.getName().equals(type) && cellUnit.getOwner().equals(game.getCurrentPlayer())) {
-                    resultcellUnits.add(cellUnit);
+                    resultCellUnits.add(cellUnit);
                 }
             }
-            if (resultcellUnits.size() == 0)
+            if (resultCellUnits.size() == 0)
                 return Output.NO_THIS_TYPE_UNIT;
             else {
-                game.setSelectedUnit(resultcellUnits);
+                game.setSelectedUnit(resultCellUnits);
                 return Output.SELECT_UNIT;
             }
         }
@@ -699,6 +699,11 @@ public class GameController {
         return null;
     }
     public void clearGame() {
+       game.setPlayers(null);
+       game.setCells(null);
+       game.setCurrentPlayer(null);
+       game.setSelectedBuilding(null);
+       game.setSelectedUnit(null);
     }
 
     public void goToNextPerson() {
