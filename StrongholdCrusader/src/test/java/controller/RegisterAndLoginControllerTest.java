@@ -15,12 +15,10 @@ public class RegisterAndLoginControllerTest {
     }
     @Test
     public void checkingSecondReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
         assertEquals(Output.EMPTY_FIELD, RegisterAndLoginController.createUser(".", ".", ".", ".", ".", null, true));
     }
     @Test
     public void checkingThirdReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
         assertEquals(Output.INVALID_USERNAME, RegisterAndLoginController.createUser(" ", ".", ".", ".", ".", null, true));
     }
     @Test
