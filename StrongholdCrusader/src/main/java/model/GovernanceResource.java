@@ -28,7 +28,7 @@ public class GovernanceResource {
     }
 
     public void addToStorage(Material material) {
-        if (storage.get(material).equals(null))
+        if (storage.get(material) == null)
             storage.put(material, 1);
         else
             storage.put(material, storage.get(material) + 1);
