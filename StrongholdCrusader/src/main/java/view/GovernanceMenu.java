@@ -45,6 +45,8 @@ public class GovernanceMenu extends Menu {
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE)) != null) {
                 System.out.println(fearRate(matcher));
             }
+            else if(GovernanceMenuCommands.getMatcher(input , GovernanceMenuCommands.FEAR_RATE_SHOW) != null)
+                System.out.println(governanceController.showFearRate());
             else {
                 System.out.println("Invalid command");
             }
