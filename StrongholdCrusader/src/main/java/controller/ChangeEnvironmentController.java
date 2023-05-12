@@ -28,7 +28,7 @@ public class ChangeEnvironmentController {
         this.currentUser = currentUser;
     }
 
-    public Output generateMap(ArrayList<String> usernames, int row, int column, int turns) {
+    public Output generateMap(ArrayList<String> usernames, int row, int column, int turns, int mapOption) {
         game.addPlayer(currentUser);
         game.setCurrentUser(currentUser);
         game.setRow(row);
@@ -40,33 +40,8 @@ public class ChangeEnvironmentController {
             game.addPlayer(user);
         }
         game.setCells(new Cell[row][column]);
-        Cell[][] cells = new Cell[row][column];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
-                cells[i][j] = new Cell();
-                if (i % 9 == 0) cells[i][j].setTexture(Texture.GROUND);
-                else if (i % 9 == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
-                else if (i % 9 == 2) cells[i][j].setTexture(Texture.BOULDER);
-                else if (i % 9 == 3) cells[i][j].setTexture(Texture.ROCK);
-                else if (i % 9 == 4) cells[i][j].setTexture(Texture.IRON);
-                else if (i % 9 == 5) cells[i][j].setTexture(Texture.GRASS);
-                else if (i % 9 == 6) cells[i][j].setTexture(Texture.MEADOW);
-                else if (i % 9 == 7) cells[i][j].setTexture(Texture.DENSE_GRASSLAND);
-                else if (i % 9 == 8) cells[i][j].setTexture(Texture.PLAIN);
-        }
-    }
-        for (int i = 0; i < column; i++) {
-            if (i % 9 == 0) cells[0][i].setTexture(Texture.OIL);
-            else if (i % 9 == 1) cells[0][i].setTexture(Texture.SHALLOW_WATER);
-            else if (i % 9 == 2) cells[0][i].setTexture(Texture.RIVER);
-            else if (i % 9 == 3) cells[0][i].setTexture(Texture.SMALL_POND);
-            else if (i % 9 == 4) cells[0][i].setTexture(Texture.BIG_POND);
-            else if (i % 9 == 5) cells[0][i].setTexture(Texture.BEACH);
-            else if (i % 9 == 6)  {
-                cells[0][i].setTexture(Texture.SEA);
-                break;
-            }
-        }
+        GameController.setDefualtMaps(row, column);
+        Cell[][] cells = GameController.getDefualtMaps(mapOption);
         game.setCells(cells);
         game.setTurns(turns);
         return Output.SUCCESSFUL_MAP_GENERATION;
