@@ -47,10 +47,6 @@ public class BuildingBuilder {
                 producer = new Producer(name, owner, 14, 10);
                 producer.addProducedMaterial(Material.HORSE);
                 return producer;
-            case "howel":
-                producer = new Producer(name, owner, 15, 10);
-                producer.addProducedMaterial(Material.PEASANT);
-                return producer;
             case "wood cutter":
                 producer = new Producer(name, owner, 16, 10);
                 producer.addProducedMaterial(Material.WOOD);
@@ -127,6 +123,7 @@ public class BuildingBuilder {
             case "engineer guild":
             case "mercenary post":
             case "ox tether":
+            case "hovel":
                 return new Building(name, owner);
         }
         return null;

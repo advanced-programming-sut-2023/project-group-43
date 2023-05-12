@@ -33,6 +33,7 @@ public class MapController {
                             output.append(game.getCells()[row - 6 + h][column - 6 + i].getTexture().getColor());
                             output.append("#").append("\u001B[0m");
                         }
+                        else output.append(" empty ");
                     }
                     output.append("|");
                 }

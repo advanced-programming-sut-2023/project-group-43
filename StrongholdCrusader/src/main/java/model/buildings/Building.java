@@ -1,4 +1,5 @@
 package model.buildings;
+
 import enums.BuildingEnums.BuildingEnum;
 import model.Cell;
 import model.User;
@@ -17,15 +18,20 @@ public class Building {
 
     private Cell cell;
 
+    private boolean isComplete = false;
+    private int turnsLeftToBeComplete;
+
     //building
     private boolean hasLadder = false;
 
     public boolean hasLadder() {
         return hasLadder;
     }
+
     public void setLadder(boolean hasLadder) {
         this.hasLadder = hasLadder;
     }
+
     private ArrayList<Unit> units = new ArrayList<>();
 
     public Building(String name, User owner) {
@@ -36,15 +42,23 @@ public class Building {
         this.cost = BuildingEnum.getBuildingStructureByName(name).getCost();
         this.hp = BuildingEnum.getBuildingStructureByName(name).getHp();
         this.ladderlans = BuildingEnum.getBuildingStructureByName(name).getWorkerNumber();
+        turnsLeftToBeComplete = owner.getGovernance().getTurnsToCompleteBuilding();
     }
 
-    public void addUnit(Unit unit){
+    public void addUnit(Unit unit) {
         units.add(unit);
-    };
-    public String getName(){return name;}
+    }
+
+    ;
+
+    public String getName() {
+        return name;
+    }
+
     public User getOwner() {
         return owner;
     }
+
     public ArrayList<Unit> getUnits() {
         return units;
     }
@@ -64,11 +78,21 @@ public class Building {
     public int getHp() {
         return hp;
     }
+
     public void setHp(int hp) {
         this.hp = hp;
     }
+
     public int getLadderlans() {
         return ladderlans;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 
     public Cell getCell() {
@@ -77,6 +101,14 @@ public class Building {
 
     public void setCell(Cell cell) {
         this.cell = cell;
+    }
+
+    public void constructBuilding() {
+        if (turnsLeftToBeComplete > 0) turnsLeftToBeComplete--;
+        else {
+            isComplete = true;
+            owner.getGovernance().setUnemployedPopulation(owner.getGovernance().getUnemployedPopulation() + ladderlans);
+        }
     }
 }
 

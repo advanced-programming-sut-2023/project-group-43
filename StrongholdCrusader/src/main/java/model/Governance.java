@@ -15,6 +15,8 @@ public class Governance {
     private RateNumber taxRate;
     private int fearRate;
     private double gold;
+
+    private int turnsToCompleteBuilding = 2;
     private GovernanceResource governanceResource;
 
     private ArrayList<Unit> units = new ArrayList<>();
@@ -85,10 +87,14 @@ public class Governance {
         units.add(unit);
     }
 
-    public void removeUnit(Unit unit) {units.remove(unit);}
+    public void removeUnit(Unit unit) {
+        units.remove(unit);
+    }
+
     public void addBuilding(Building building) {
         buildings.add(building);
     }
+
     public void deleteBuilding(Building building) {
         buildings.remove(building);
     }
@@ -105,6 +111,14 @@ public class Governance {
         this.gold = gold;
     }
 
+    public int getTurnsToCompleteBuilding() {
+        return turnsToCompleteBuilding;
+    }
+
+    public void setTurnsToCompleteBuilding(int turnsToCompleteBuilding) {
+        this.turnsToCompleteBuilding = turnsToCompleteBuilding;
+    }
+
     public ArrayList<Building> getBuildings() {
         return buildings;
     }
@@ -114,16 +128,16 @@ public class Governance {
     }
 
     public Building getBuildingByName(String name) {
-        for (Building building: buildings) {
+        for (Building building : buildings) {
             if (building.getName().equals(name))
-               return building;
+                return building;
         }
         return null;
     }
 
     public ArrayList<Building> getAllBuildingsByName(String name) {
         ArrayList<Building> allBuildings = new ArrayList<>();
-        for (Building building: buildings) {
+        for (Building building : buildings) {
             if (building.getName().equals(name))
                 allBuildings.add(building);
         }
@@ -134,6 +148,17 @@ public class Governance {
         gold += amount;
     }
 
-    public void changePopulation(int amount){population += amount;}
+    public void changePopulation(int amount) {
+        population += amount;
+    }
+
+    public ArrayList<Unit> getNewUnits(String name) {
+        ArrayList<Unit> newUnits = new ArrayList<>();
+        for (Unit unit: units) {
+            if (unit.getCell() == null && unit.getName().equals(name))
+                newUnits.add(unit);
+        }
+        return newUnits;
+    }
 
 }

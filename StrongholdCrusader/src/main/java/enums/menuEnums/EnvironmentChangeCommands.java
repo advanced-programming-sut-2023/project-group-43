@@ -20,9 +20,7 @@ public enum EnvironmentChangeCommands {
     DROP_TREE("droptree" +
             "( \\-(?<flag>[xyt])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     DROP_BUILDING("dropbuilding" +
-            "( \\-(?<flag>[xyt])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
-    DROP_UNIT("dropunit" +
-            "( \\-(?<flag>[xytc])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){4}");
+            "( \\-(?<flag>[xyt])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}");
     private final String regex;
 
     private EnvironmentChangeCommands(String regex) {

@@ -4,27 +4,93 @@ import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.RateNumber;
 import enums.environmentEnums.Material;
+import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
+import enums.unitEnums.TroopType;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
-import model.buildings.Building;
-import model.buildings.CagedWarDogs;
-import model.buildings.Converter;
-import model.buildings.Producer;
+import model.buildings.*;
 import model.units.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class GameController {
 
-    private Game game;
+    private final Game game;
+    private static HashMap<String, Cell[][]> defualtMaps = new HashMap<>();
 
     private Cell village = new Cell();
 
 
     public GameController(Game game) {
         this.game = game;
+    }
+
+    public static Cell[][] getDefualtMaps(int mapOption) {
+        if (mapOption == 1) return defualtMaps.get("option number 1");
+        else return defualtMaps.get("option number 2");
+    }
+
+    public static void setDefualtMaps(int row, int column) {
+        Cell[][] cells = new Cell[row][column];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                cells[i][j] = new Cell();
+                if (i % 9 == 0) cells[i][j].setTexture(Texture.GROUND);
+                else if (i % 9 == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
+                else if (i % 9 == 2) cells[i][j].setTexture(Texture.BOULDER);
+                else if (i % 9 == 3) cells[i][j].setTexture(Texture.ROCK);
+                else if (i % 9 == 4) cells[i][j].setTexture(Texture.IRON);
+                else if (i % 9 == 5) cells[i][j].setTexture(Texture.GRASS);
+                else if (i % 9 == 6) cells[i][j].setTexture(Texture.MEADOW);
+                else if (i % 9 == 7) cells[i][j].setTexture(Texture.DENSE_GRASSLAND);
+                else if (i % 9 == 8) cells[i][j].setTexture(Texture.PLAIN);
+            }
+        }
+        for (int i = 0; i < column; i++) {
+            if (i % 9 == 0) cells[0][i].setTexture(Texture.OIL);
+            else if (i % 9 == 1) cells[0][i].setTexture(Texture.SHALLOW_WATER);
+            else if (i % 9 == 2) cells[0][i].setTexture(Texture.RIVER);
+            else if (i % 9 == 3) cells[0][i].setTexture(Texture.SMALL_POND);
+            else if (i % 9 == 4) cells[0][i].setTexture(Texture.BIG_POND);
+            else if (i % 9 == 5) cells[0][i].setTexture(Texture.BEACH);
+            else if (i % 9 == 6)  {
+                cells[0][i].setTexture(Texture.SEA);
+                break;
+            }
+        }
+        defualtMaps.put("option number 1", cells);
+        Cell[][] cells2 = new Cell[row][column];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                cells2[i][j] = new Cell();
+                if (i % 9 == 0) cells2[i][j].setTexture(Texture.GRAVEL_GROUND);
+                else if (i % 9 == 1) cells2[i][j].setTexture(Texture.GROUND);
+                else if (i % 9 == 2) cells2[i][j].setTexture(Texture.ROCK);
+                else if (i % 9 == 3) cells2[i][j].setTexture(Texture.BOULDER);
+                else if (i % 9 == 4) cells2[i][j].setTexture(Texture.GRASS);
+                else if (i % 9 == 5) cells2[i][j].setTexture(Texture.IRON);
+                else if (i % 9 == 6) cells2[i][j].setTexture(Texture.DENSE_GRASSLAND);
+                else if (i % 9 == 7) cells2[i][j].setTexture(Texture.PLAIN);
+                else if (i % 9 == 8) cells2[i][j].setTexture(Texture.MEADOW);
+            }
+        }
+        for (int i = 0; i < column; i++) {
+            if (i % 9 == 0) cells2[0][i].setTexture(Texture.BEACH);
+            else if (i % 9 == 1) cells2[0][i].setTexture(Texture.BIG_POND);
+            else if (i % 9 == 2) cells2[0][i].setTexture(Texture.SMALL_POND);
+            else if (i % 9 == 3) cells2[0][i].setTexture(Texture.RIVER);
+            else if (i % 9 == 4) cells2[0][i].setTexture(Texture.SHALLOW_WATER);
+            else if (i % 9 == 5) cells2[0][i].setTexture(Texture.OIL);
+            else if (i % 9 == 6)  {
+                cells2[0][i].setTexture(Texture.SEA);
+                break;
+            }
+        }
+        defualtMaps.put("option number 2", cells2);
     }
 
     public Game getGame() {
@@ -42,11 +108,29 @@ public class GameController {
         return Output.NO_BUILDING;
     }
 
+    public Output dropBuilding(int x, int y, String type) {
+        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            return Output.WRONG_COORDINATES;
+        if (type.matches("headquarter")) return Output.INVALID_BUILDING;
+        Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
+        Governance governance = game.getCurrentPlayer().getGovernance();
+        if (governance.getGold() < building.getCost()) return Output.NOT_ENOUGH_GOLD;
+        if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.WOOD) < building.getWood())
+            return Output.NOT_ENOUGH_RESOURCE;
+        if (governance.getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < building.getStone())
+            return Output.NOT_ENOUGH_RESOURCE;
+        governance.changeGoldAmount(-building.getCost());
+        governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, building.getWood());
+        governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, building.getStone());
+        building.setCell(game.getCells()[x - 1][y - 1]);
+        game.getCells()[x - 1][y - 1].setBuilding(building);
+        game.getCurrentPlayer().getGovernance().addBuilding(building);
+        return Output.SUCCESSFUL_ACTION;
+    }
+
     public Output createUnit(String name, int number) {
         Governance governance = game.getCurrentPlayer().getGovernance();
         if (number <= 0) return Output.INVALID_NUMBER;
-        if (!game.getSelectedBuilding().getName().equals("barrack"))
-            return Output.WRONG_SELECT_FOR_BUILDING;
         Unit unit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
         assert unit != null;
         String unitType = UnitsEnum.getTypeByUnitName(unit.getName());
@@ -64,11 +148,25 @@ public class GameController {
             governance.getGovernanceResource().changeAmountOfItemInStockpile(weapon, number);
         }
         for (int i = 0; i < number; i++) {
-            game.getCurrentUser().getGovernance().addUnit(unit);
+            Unit newUnit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
+            game.getCurrentUser().getGovernance().addUnit(newUnit);
         }
         governance.setGold(governance.getGold() - unit.getCost() * number);
         governance.setUnemployedPopulation(governance.getUnemployedPopulation() - number);
         return Output.SUCCESSFUL_UNIT_CREATION;
+    }
+
+    public Output dropUnit(int x, int y, String type, int count) {
+        ArrayList<Unit> units = game.getCurrentPlayer().getGovernance().getNewUnits(type);
+        if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
+        if (units.size() < count) return Output.NOT_ENOUGH_UNIT;
+        Cell cell = game.getCells()[x - 1][y - 1];
+        for (int i = 0; i < count; i++) {
+            if (cell.isBlocked(units.get(i))) return Output.INVALID_CELL;
+            units.get(i).setCell(cell);
+            cell.addUnit(units.get(i));
+        }
+        return Output.SUCCESSFUL_ACTION;
     }
 
     public Output repairCastle() {
@@ -106,6 +204,7 @@ public class GameController {
         if (isCoordinateInvalid(x, y)) return Output.INVALID_NUMBER;
         for (Unit unit : game.getSelectedUnit()) {
             if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
+            if (game.getCells()[x - 1][y - 1].isBlocked(unit)) return Output.INVALID_MOVE;
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
         }
@@ -116,7 +215,6 @@ public class GameController {
         if (isCoordinateInvalid(x1, y1) || isCoordinateInvalid(x2, y2))
             return Output.INVALID_NUMBER;
         for (Unit unit : game.getSelectedUnit()) {
-            if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
             unit.setCurrentTargetX(x1 - 1);
             unit.setCurrentTargetY(y1 - 1);
             unit.setNextTargetX(x2 - 1);
@@ -204,6 +302,7 @@ public class GameController {
     }
 
     public void applyChanges() {
+        completeBuildings();
         updateUnitTargets();
         updateMovements();
         updateResources();
@@ -214,6 +313,14 @@ public class GameController {
         updateFoodRate();
         updateWorkersEfficiency();
         updateDamageEfficiency();
+    }
+
+    private void completeBuildings() {
+        for (User user : game.getPlayers()) {
+            for (Building building : user.getGovernance().getBuildings()) {
+                building.constructBuilding();
+            }
+        }
     }
 
     private void applyHitPointChange() {
@@ -262,6 +369,10 @@ public class GameController {
         for (int xIterator = sx; xIterator <= fx; xIterator++) {
             for (int yIterator = sy; yIterator <= fy; yIterator++) {
                 Cell currentCell = game.getCells()[xIterator][yIterator];
+                Building building = currentCell.getBuilding();
+                if (building != null && building.getOwner().equals(user)) {
+                    building.setHp(building.getHp() - (int) Math.floor(unit.getHitPoint()));
+                }
                 for (Unit potentialEnemy : currentCell.getUnits()) {
                     if (!potentialEnemy.getOwner().getUsername().equals(user.getUsername()) && potentialEnemy.getCell().getBuilding() == null) {
                         potentialEnemy.setHitPoint(potentialEnemy.getHitPoint() - unit.getDamage());
@@ -310,7 +421,8 @@ public class GameController {
             for (Building building : user.getGovernance().getBuildings()) {
                 if (building.getHp() <= 0) {
                     if (building instanceof CagedWarDogs) ((CagedWarDogs) building).freeDogs();
-                    user.getGovernance().setUnemployedPopulation(user.getGovernance().getUnemployedPopulation() + building.getLadderlans());
+                    if (!building.isComplete())
+                        user.getGovernance().setUnemployedPopulation(user.getGovernance().getUnemployedPopulation() + building.getLadderlans());
                     user.getGovernance().deleteBuilding(building);
                     building.getCell().setBuilding(null);
                 }
@@ -373,66 +485,75 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
-                if (cell[j].getBuilding() instanceof Producer) {
-                    Producer producer = (Producer) cell[j].getBuilding();
+                if (cell[j].getBuilding() == null || !cell[j].getBuilding().isComplete()) continue;
+                Building building = cell[j].getBuilding();
+                if (building instanceof Producer) {
+                    Producer producer = (Producer) building;
                     switch (producer.getName()) {
                         case "wheat farm":
-                            producer.produceMaterials();
                         case "hop farm":
-                            producer.produceMaterials();
                         case "hunting post":
-                            producer.produceMaterials();
                         case "apple garden":
-                            producer.produceMaterials();
                         case "wood cutter":
-                            producer.produceMaterials();
                         case "pitch rig":
-                            producer.produceMaterials();
                         case "quarry":
-                            producer.produceMaterials();
                         case "iron mine":
                             producer.produceMaterials();
                     }
-                }
-                else{
-                        Converter converter = (Converter) cell[j].getBuilding();
-                        switch (converter.getName()) {
-                            case "bakery":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "dairy products":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "beer brewing":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "mill":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "poleturner":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "fletcher":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "blacksmith":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                            case "armourer":
-                                converter.consumeResource();
-                                converter.produceMaterials();
-                        }
+                } if (building instanceof Converter) {
+                    Converter converter = (Converter) building;
+                    switch (converter.getName()) {
+                        case "bakery":
+                        case "dairy products":
+                        case "beer brewing":
+                        case "mill":
+                        case "poleturner":
+                        case "fletcher":
+                        case "blacksmith":
+                        case "armourer":
+                            converter.consumeResource();
+                            converter.produceMaterials();
                     }
+                }
+                if (cell[j].getBuilding() instanceof CastleDepartment) {
+                    ((CastleDepartment) cell[j].getBuilding()).reduceEnemySpeed(findUnitsAround(cell[j]));
+                    ((CastleDepartment) cell[j].getBuilding()).attackEnemy(game, cell[j].getX(), cell[j].getY());
+                }
+                if (cell[j].getBuilding() instanceof PopularityBooster)
+                    ((PopularityBooster) cell[j].getBuilding()).increasePopularity();
+                if(building.getName().equals("hovel")) {
+                    Governance governance = building.getOwner().getGovernance();
+                    governance.setPopulation(governance.getPopulation() + 8);
+                    governance.setUnemployedPopulation(governance.getUnemployedPopulation() + 8);
                 }
             }
         }
+    }
 
+    private ArrayList<Unit> findUnitsAround(Cell cell) {
+        ArrayList<Unit> units = new ArrayList<>();
+        int sx = cell.getX() - 1;
+        int sy = cell.getY() - 1;
+        if (sx < 0) sx = 0;
+        if (sy < 0) sy = 0;
+        int fx = cell.getX() + 1;
+        int fy = cell.getY() + 1;
+        if (fx >= game.getRow()) fx--;
+        if (fy >= game.getColumn()) fy--;
+        for (int x = sx; x <= fx; x++) {
+            for (int y = sy; y <= fy; y++) {
+                for (Unit unit: game.getCells()[x][y].getUnits())
+                    units.add(unit);
+            }
+        }
+        return units;
+    }
     private void updateReligiousPopularity() {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
-            for (int j = 0; j < cells[0].length; j++){
+            for (int j = 0; j < cells[0].length; j++) {
                 Building building = cell[0].getBuilding();
-                if(building.getName().equals("church") || building.getName().equals("cathedral"))
+                if (building.getName().equals("church") || building.getName().equals("cathedral"))
                     building.getOwner().getGovernance().changePopulation(1);
             }
         }
@@ -510,11 +631,11 @@ public class GameController {
 
     }
 
-    private void updateDamageEfficiency(){
-        for(int i = 0 ; i < game.getPlayers().size();i++){
+    private void updateDamageEfficiency() {
+        for (int i = 0; i < game.getPlayers().size(); i++) {
             Governance governance = game.getPlayers().get(i).getGovernance();
             double featRate = governance.getFearRate();
-            for(int j = 0 ; j < governance.getUnits().size();j++){
+            for (int j = 0; j < governance.getUnits().size(); j++) {
                 double newDamage = governance.getUnits().get(j).getDamage() +
                         (governance.getUnits().get(j).getDamage() * (5 / 100));
                 governance.getUnits().get(j).setDamage(newDamage);
@@ -545,6 +666,8 @@ public class GameController {
                 user = player;
                 game.setCurrentPlayer(player);
                 game.setSelectedUnit(new ArrayList<>());
+                game.setSelectedBuilding(null);
+                break;
             }
             if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
                 isNextPlayerFound = true;

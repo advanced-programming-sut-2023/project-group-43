@@ -3,6 +3,7 @@ package view;
 import controller.*;
 import enums.Output;
 import enums.Validations;
+import enums.menuEnums.EnvironmentChangeCommands;
 import enums.menuEnums.GameMenuCommands;
 import enums.unitEnums.UnitState;
 
@@ -25,7 +26,7 @@ public class GameMenu extends Menu{
 
         this.gameController = gameController;
         mapController = new MapController(gameController.getGame());
-        storeController = new StoreController(gameController.getGame());
+        storeController = new StoreController(gameController.getGame(), gameController);
         governanceController = new GovernanceController(gameController.getGame());
         tradeController = new TradeController(gameController.getGame());
     }
@@ -62,7 +63,8 @@ public class GameMenu extends Menu{
         MapMenu mapMenu = new MapMenu(mapController);
         mapMenu.run();
     }
-    public void enterStoreMenu() {
+    public void enterStoreMenu(String name) {
+        storeController.setStoreName(name);
         StoreMenu storeMenu = new StoreMenu(storeController);
         storeMenu.run();
     }
@@ -143,8 +145,7 @@ public class GameMenu extends Menu{
     }
     private Output buildEquipment(Matcher matcher) {
         String equipmentName = matcher.group("equipmentName");
-        return null;
-        //return gameController.buildEquipment(equipmentName);
+        return gameController.buildEquipment(equipmentName);
     }
 
     private boolean parseMatcher(Matcher matcher) {
@@ -155,6 +156,29 @@ public class GameMenu extends Menu{
         return false;
     }
 
+    private Output dropUnit(Matcher matcher)  {
+        String x = Validations.getInfo("x", matcher.group());
+        String y = Validations.getInfo("y", matcher.group());
+        String type = Validations.getInfo("t", matcher.group());
+        String count = Validations.getInfo("c", matcher.group());
+        if (x != null && y != null && type != null && count != null) {
+            if (x.matches("\\d+") && y.matches("\\d+") && count.matches("\\d+"))
+                return gameController.dropUnit(Integer.parseInt(x), Integer.parseInt(y), type, Integer.parseInt(count));
+        }
+        return null;
+    }
+
+    private Output dropBuilding(Matcher matcher)  {
+        String x = Validations.getInfo("x", matcher.group());
+        String y = Validations.getInfo("y", matcher.group());
+        String type = Validations.getInfo("t", matcher.group());
+        if (x != null && y != null && type != null) {
+            if (x.matches("\\d+") && y.matches("\\d+"))
+                return gameController.dropBuilding(Integer.parseInt(x), Integer.parseInt(y), type);
+        }
+        return null;
+    }
+
     private void onePlayerTurn() {
         System.out.println(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         Scanner scanner = Menu.getScanner();
@@ -162,14 +186,15 @@ public class GameMenu extends Menu{
         Output output;
         Matcher matcher;
         while (!input.equals("next person")) {
-            input = scanner.nextLine();
             output = null;
             //enter menu part
-            if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_STORE_MENU)!= null) {
-                enterStoreMenu();
+            if(gameController.getGame().getSelectedBuilding() != null &&
+                    gameController.getGame().getSelectedBuilding().getName().matches("(market)|(barrack)|(engineer guild)|(mercenary post)")) {
+                enterStoreMenu(gameController.getGame().getSelectedBuilding().getName());
                 continue;
             }
-            else if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
+            input = scanner.nextLine();
+            if(GameMenuCommands.getMatcher(input,GameMenuCommands.ENTER_TRADE_MENU)!= null) {
                 enterTradeMenu();
                 continue;
             }
@@ -219,8 +244,13 @@ public class GameMenu extends Menu{
                 output = disbandUnit(matcher);
             }
             else if ((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.PATROL_UNIT)) != null) {
-                System.out.println(patrolUnit(matcher));
-            }if (output == null) System.out.println("Invalid Command!");
+                output = patrolUnit(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DROP_UNIT)) != null) {
+                output = dropUnit(matcher);
+            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_BUILDING)) != null) {
+                output = dropBuilding(matcher);
+            }
+            if (output == null) System.out.println("Invalid Command!");
             else System.out.println(output.getString());
         }
     }

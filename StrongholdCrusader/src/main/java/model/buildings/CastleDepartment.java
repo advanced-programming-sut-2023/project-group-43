@@ -5,6 +5,8 @@ import model.Game;
 import model.User;
 import model.units.Unit;
 
+import java.util.ArrayList;
+
 public class CastleDepartment extends Building {
 
     private final double hitPoint;
@@ -35,12 +37,10 @@ public class CastleDepartment extends Building {
         isHidden = hidden;
     }
 
-    public void reduceEnemySpeed(Cell cell) {
-        if (cell.getUnits().size() != 0) {
-            for (int i = 0; i < cell.getUnits().size(); i++) {
-                if (this.getOwner() != cell.getUnits().get(i).getOwner())
-                    cell.getUnits().get(i).setSpeed(cell.getUnits().get(i).getSpeed() - 1);//TODO
-            }
+    public void reduceEnemySpeed(ArrayList<Unit> units) {
+        for (Unit unit: units) {
+            if (!this.getOwner().equals(unit.getOwner()))
+                unit.setSpeed(unit.getSpeed() - 1);//TODO
         }
     }
     public void attackEnemy(Game game, int x, int y) {
@@ -49,7 +49,7 @@ public class CastleDepartment extends Building {
         for (int i = 0; i < 8; i++) {
             if (x + array[0][i] > 0 && x + array[0][i] < game.getRow() && y + array[1][i] > 0 && y + array[1][i] < game.getColumn()) {
                 for (Unit unit: cells[x + array[0][i]][y + array[1][i]].getUnits()) {
-                    if (!unit.getOwner().getUsername().equals(game.getCurrentPlayer().getUsername())) {
+                    if (!unit.getOwner().equals(game.getCurrentPlayer())) {
                         unit.setHitPoint(unit.getHitPoint() - this.defendRange);
                     }
                 }
