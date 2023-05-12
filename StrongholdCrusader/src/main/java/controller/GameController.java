@@ -674,7 +674,7 @@ public class GameController {
             double fearRate = governance.getFearRate();
             for (int j = 0; j < governance.getUnits().size(); j++) {
                 double newDamage = governance.getUnits().get(j).getDamage() +
-                        (fearRate * (5 / 100));
+                        (fearRate * 5 / 100);
                 governance.getUnits().get(j).setDamage(newDamage);
             }
         }
@@ -689,9 +689,7 @@ public class GameController {
 
 
     public boolean isGameEnded() {
-        if (game.getPlayers().size() == calculateDeadGovernance() + 1)
-            return true;
-        return false;
+        return game.getPlayers().size() == calculateDeadGovernance() + 1;
     }
 
     public int calculateDeadGovernance() {
@@ -720,11 +718,14 @@ public class GameController {
     }
 
     public User findWinner() {
+        int maxGold = 0;
+        User winner = null;
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (game.getPlayers().get(i).getGovernance().isLordAlive())
-                return game.getPlayers().get(i);
+                if(game.getPlayers().get(i).getGovernance().getGold() > maxGold)
+                    winner = game.getPlayers().get(i);
         }
-        return null;
+        return winner;
     }
 
     public void clearGame() {
