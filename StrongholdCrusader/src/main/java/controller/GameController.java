@@ -44,6 +44,13 @@ public class GameController {
             player.getGovernance().setTaxRate(RateNumber.TAX_RATE_0);
             player.getGovernance().setPopulation(15);
             player.getGovernance().setGold(50);
+            initializeResources(player);
+        }
+    }
+
+    public void initializeResources(User player){
+        for (Material material : Material.values()) {
+            player.getGovernance().getGovernanceResource().addToStorage(material);
         }
     }
 
