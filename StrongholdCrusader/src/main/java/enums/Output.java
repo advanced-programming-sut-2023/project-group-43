@@ -110,8 +110,10 @@ public enum Output {
     INVALID_BUILDING("you only can drop headquarter now"),
     INVALID_STATE("please enter a valid state"),
     SUCCESSFUL_ACTION("you did it successfully!"),
-    //moving units
+    //moving and adding units
     INVALID_MOVE("warning: your chosen destination is blocked!"),
+    NOT_ENOUGH_UNIT("warning: you don't have enough units to drop here"),
+    INVALID_CELL("you cannot drop unit in this cell")
     ;
     private String string;
 

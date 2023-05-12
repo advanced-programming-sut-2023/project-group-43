@@ -61,11 +61,23 @@ public class GameController {
         for (int i = 0; i < number; i++) {
             Unit newUnit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
             game.getCurrentUser().getGovernance().addUnit(newUnit);
-            newUnit.setCell(getGame().getSelectedBuilding().getCell());
         }
         governance.setGold(governance.getGold() - unit.getCost() * number);
         governance.setUnemployedPopulation(governance.getUnemployedPopulation() - number);
         return Output.SUCCESSFUL_UNIT_CREATION;
+    }
+
+    public Output dropUnit(int x, int y, String type, int count) {
+        ArrayList<Unit> units = game.getCurrentPlayer().getGovernance().getNewUnits(type);
+        if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
+        if (units.size() < count) return Output.NOT_ENOUGH_UNIT;
+        Cell cell = game.getCells()[x - 1][y - 1];
+        for (int i = 0; i < count; i++) {
+            if (cell.isBlocked(units.get(i))) return Output.INVALID_CELL;
+            units.get(i).setCell(cell);
+            cell.addUnit(units.get(i));
+        }
+        return Output.SUCCESSFUL_ACTION;
     }
 
     public Output repairCastle() {

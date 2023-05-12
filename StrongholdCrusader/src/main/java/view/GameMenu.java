@@ -144,8 +144,7 @@ public class GameMenu extends Menu{
     }
     private Output buildEquipment(Matcher matcher) {
         String equipmentName = matcher.group("equipmentName");
-        return null;
-        //return gameController.buildEquipment(equipmentName);
+        return gameController.buildEquipment(equipmentName);
     }
 
     private boolean parseMatcher(Matcher matcher) {
@@ -154,6 +153,18 @@ public class GameMenu extends Menu{
         if (x == null || y == null) return false;
         if (x.matches("\\d+") && y.matches("\\d+")) return true;
         return false;
+    }
+
+    private Output dropUnit(Matcher matcher)  {
+        String x = Validations.getInfo("x", matcher.group());
+        String y = Validations.getInfo("y", matcher.group());
+        String type = Validations.getInfo("t", matcher.group());
+        String count = Validations.getInfo("c", matcher.group());
+        if (x != null && y != null && type != null && count != null) {
+            if (x.matches("\\d+") && y.matches("\\d+") && count.matches("\\d+"))
+                return gameController.dropUnit(Integer.parseInt(x), Integer.parseInt(y), type, Integer.parseInt(count));
+        }
+        return null;
     }
 
     private void onePlayerTurn() {
@@ -221,8 +232,11 @@ public class GameMenu extends Menu{
                 output = disbandUnit(matcher);
             }
             else if ((matcher = GameMenuCommands.getMatcher(input,GameMenuCommands.PATROL_UNIT)) != null) {
-                System.out.println(patrolUnit(matcher));
-            }if (output == null) System.out.println("Invalid Command!");
+                output = patrolUnit(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DROP_UNIT)) != null) {
+                output = dropUnit(matcher);
+            }
+            if (output == null) System.out.println("Invalid Command!");
             else System.out.println(output.getString());
         }
     }
