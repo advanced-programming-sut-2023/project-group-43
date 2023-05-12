@@ -27,13 +27,10 @@ public class MapMenu extends Menu {
                 System.out.println(Output.MAP_MENU.getString());
             if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
                 showMap(matcher);
-                return;
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_DETAILS)) != null) {
                 showMapDetails(matcher);
-                return;
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
                 moveMap(matcher);
-                return;
             } else if (input.matches("back")) {
                 System.out.println("game menu:");
                 return;
