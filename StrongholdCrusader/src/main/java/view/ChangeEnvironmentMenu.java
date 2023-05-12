@@ -48,9 +48,14 @@ public class ChangeEnvironmentMenu extends Menu {
                 System.out.println("main menu:");
                 return;
             } else if (input.matches("start game")) {
-                enterGameMenu();
-                System.out.println("main menu:");
-                return;
+                if (enterGameMenu()) {
+                    System.out.println("main menu:");
+                    return;
+                }
+                else {
+                    System.out.println("you cannot start the game until everyone choose their headquarters");
+                    continue;
+                }
             }
             if (output != null)
                 System.out.println(output.getString());
@@ -108,8 +113,8 @@ public class ChangeEnvironmentMenu extends Menu {
         return null;
     }
 
-    private void enterGameMenu() {
-        changeEnvironmentController.enterGameMenu();
+    private boolean enterGameMenu() {
+        return changeEnvironmentController.enterGameMenu();
     }
 
     private boolean parseMatcher(Matcher matcher) {

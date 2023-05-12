@@ -141,13 +141,18 @@ public class ChangeEnvironmentController {
         return Output.SUCCESSFUL_ACTION;
     }
 
-    public void enterGameMenu() {
-        GameController gameController = new GameController(game);
-        GameMenu gameMenu = new GameMenu(gameController);
-        gameMenu.setTurns(game.getTurns());
-        gameMenu.setNumberOfPlayers(game.getPlayers().size());
-        gameController.initializeGame();
-        gameMenu.run();
+    public boolean enterGameMenu() {
+        if (game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)) &&
+                game.getCurrentPlayer().getGovernance().getBuildingByName("headquarter") != null) {
+            GameController gameController = new GameController(game);
+            GameMenu gameMenu = new GameMenu(gameController);
+            gameMenu.setTurns(game.getTurns());
+            gameMenu.setNumberOfPlayers(game.getPlayers().size());
+            gameController.initializeGame();
+            gameMenu.run();
+            return true;
+        }
+        return false;
     }
 
     public String goToNextPerson() {
@@ -159,6 +164,7 @@ public class ChangeEnvironmentController {
         for (User player : game.getPlayers()) {
             if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);
+                user = player;
                 break;
             }
             if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
