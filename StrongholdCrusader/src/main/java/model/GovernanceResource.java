@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class GovernanceResource {
     //look after using Integer instead of int during the game
-    HashMap<Material, Integer> storage = new HashMap<Material, Integer>();
+    HashMap<Material, Integer> storage = new HashMap<>();
     private User owner;
     //before starting game you should set items for stockpile based on material enum
     public static String chooseStorage(Material material) {
@@ -28,10 +28,7 @@ public class GovernanceResource {
     }
 
     public void addToStorage(Material material) {
-        if (storage.get(material) == null)
-            storage.put(material, 1);
-        else
-            storage.put(material, storage.get(material) + 1);
+        storage.merge(material, 1, Integer::sum);
     }
 
     public int getAmountOfItemInStockpile(Material material) {
