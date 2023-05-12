@@ -4,7 +4,6 @@ import controller.GameController;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.Cell;
-import model.Game;
 import model.User;
 
 import java.util.ArrayList;
@@ -161,7 +160,7 @@ public class Unit {
 
     public void move(GameController gameController) {
         if (currentTargetX >= 0 && currentTargetY >= 0) {
-            ArrayList<Cell> path = gameController.findPath(cell.getX(), cell.getY(), currentTargetX, currentTargetY, this);
+            ArrayList<Cell> path = gameController.findPath(currentTargetX, currentTargetY, this);
             if (path != null)  {
                 if (speed <= path.size() - 1) {
                     cell.removeUnit(this);

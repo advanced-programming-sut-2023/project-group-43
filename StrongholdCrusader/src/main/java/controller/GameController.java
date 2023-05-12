@@ -14,6 +14,7 @@ import model.units.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class GameController {
 
@@ -112,6 +113,7 @@ public class GameController {
         if (type.matches("headquarter")) return Output.INVALID_BUILDING;
         Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
         Governance governance = game.getCurrentPlayer().getGovernance();
+        assert building != null;
         if (governance.getGold() < building.getCost()) return Output.NOT_ENOUGH_GOLD;
         if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.WOOD) < building.getWood())
             return Output.NOT_ENOUGH_RESOURCE;
@@ -173,7 +175,7 @@ public class GameController {
         else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
             return Output.NOT_ENOUGH_STONE;
         else {
-            game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
+            game.getSelectedBuilding().setHp(Objects.requireNonNull(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName())).getHp());
             game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
             return Output.SUCCESSFUL_REPAIRMENT;
         }
@@ -386,8 +388,7 @@ public class GameController {
         if (sy < 0) sy = 0;
         if (fx >= game.getRow()) fx = game.getRow() - 1;
         if (fy >= game.getColumn()) fy = game.getColumn() - 1;
-        else return findCell(sx, sy, fx, fy, user);
-        return null;
+        return findCell(sx, sy, fx, fy, user);
     }
 
     private Cell findCell(int sx, int sy, int fx, int fy, User user) {
@@ -455,6 +456,7 @@ public class GameController {
                     unit.setNextTargetX(-1);
                 } else if (unit.getState().equals(UnitState.OFFENSIVE)) {
                     Cell enemyCell = findEnemy(1000, unit.getCell().getX(), unit.getCell().getY(), user);
+                    assert enemyCell != null;
                     unit.setCurrentTargetX(enemyCell.getX());
                     unit.setCurrentTargetY(enemyCell.getY());
                     unit.setNextTargetY(-1);
@@ -628,7 +630,6 @@ public class GameController {
     private void updateDamageEfficiency() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             Governance governance = game.getPlayers().get(i).getGovernance();
-            double fearRate = governance.getFearRate();
             for (int j = 0; j < governance.getUnits().size(); j++) {
                 double newDamage = governance.getUnits().get(j).getDamage() +
                         (governance.getUnits().get(j).getDamage() * 5 / 100);
@@ -675,12 +676,10 @@ public class GameController {
     }
 
 
-    public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty, Unit unit) {
+    public ArrayList<Cell> findPath(int tx, int ty, Unit unit) {
         Cell[][] cells = game.getCells();
         ArrayList<Cell> path = new ArrayList<>();
         if (cells[tx][ty].isBlocked(unit)) return null;
-        int currentX = sx;
-        int currentY = sy;
         path.add(cells[tx][ty]);
         if (backTrack(cells, path, tx, ty, unit)) return path;
         return null;
@@ -697,8 +696,14 @@ public class GameController {
                     currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn()) {
                 if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit)) {
                     path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                    if(cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
+                        path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                    }
                     if (backTrack(cells, path, tx, ty, unit)) return true;
                     path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                    if(cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
+                        path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                    }
                 }
             }
         }
@@ -707,17 +712,13 @@ public class GameController {
 
     private int[][] prioritizePathFinding(int currentX, int currentY, int tx, int ty) {
         if (currentX > tx && currentY > ty) {
-            int[][] array = {{-1, 0, 1, 0}, {0, -1, 0, 1}};
-            return array;
+            return new int[][]{{-1, 0, 1, 0}, {0, -1, 0, 1}};
         } else if (currentX > tx && currentY < ty) {
-            int[][] array = {{-1, 0, 1, 0}, {0, 1, 0, -1}};
-            return array;
+            return new int[][]{{-1, 0, 1, 0}, {0, 1, 0, -1}};
         } else if (currentX < tx && currentY > ty) {
-            int[][] array = {{1, 0, -1, 0}, {0, -1, 0, 1}};
-            return array;
+            return new int[][]{{1, 0, -1, 0}, {0, -1, 0, 1}};
         } else {
-            int[][] array = {{1, 0, -1, 0}, {0, 1, 0, -1}};
-            return array;
+            return new int[][]{{1, 0, -1, 0}, {0, 1, 0, -1}};
         }
     }
 

@@ -2,17 +2,14 @@ package controller;
 
 import enums.Output;
 import enums.environmentEnums.Material;
-import enums.unitEnums.TroopType;
 import model.Game;
 import model.Governance;
-import model.units.*;
-
 import java.util.ArrayList;
 
 public class StoreController {
 
-    private Game game;
-    private GameController gameController;
+    private final Game game;
+    private final GameController gameController;
     private String storeName;
 
     public StoreController(Game game, GameController gameController) {
@@ -48,9 +45,8 @@ public class StoreController {
 
     public Output buy(String itemName, int amount) {
         Governance governance = game.getCurrentPlayer().getGovernance();
-        Unit unit = UnitsBuilder.unitsBuilder(itemName, game.getCurrentPlayer());
         switch (storeName) {
-            case "market":
+            case "market" -> {
                 Material material = Material.getMaterialByName(itemName);
                 if (material == null)
                     return Output.ITEM_NOR_FOUND;
@@ -59,13 +55,13 @@ public class StoreController {
                 governance.changeGoldAmount(-amount * material.getBuyingPrice());
                 governance.getGovernanceResource().changeAmountOfItemInStockpile(material, amount);
                 return Output.SUCCESSFUL_PURCHASE;
-            case "engineer guild":
-            case "barrack":
-            case "mercenary post":
+            }
+            case "engineer guild", "barrack", "mercenary post" -> {
                 if (isPossible(storeName, itemName)) {
                     return gameController.createUnit(itemName, amount);
                 }
                 return Output.WRONG_SELECT_FOR_BUILDING;
+            }
         }
         return null;
     }
