@@ -572,9 +572,11 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
-                Building building = cell[0].getBuilding();
-                if (building.getName().equals("church") || building.getName().equals("cathedral"))
-                    building.getOwner().getGovernance().changePopulation(1);
+                Building building = cell[j].getBuilding();
+                if (building != null) {
+                    if (building.getName().equals("church") || building.getName().equals("cathedral"))
+                        building.getOwner().getGovernance().changePopulation(1);
+                }
             }
         }
     }
