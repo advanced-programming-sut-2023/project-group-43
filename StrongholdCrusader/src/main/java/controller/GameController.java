@@ -136,14 +136,15 @@ public class GameController {
         Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
         if (building == null) return null;
         Governance governance = game.getCurrentPlayer().getGovernance();
-        assert building != null;
         if (type.equals("iron mine") && !game.getCells()[x - 1][y - 1].getTexture().equals(Texture.IRON))
             return Output.INVALID_CELL;
         if (type.equals("food stockpile") && game.getCurrentPlayer().getGovernance().getAllBuildingsByName("food stockpile") != null) {
             boolean canDropStorage = false;
             for (Building aroundBuilding : findBuildingsAround(game.getCells()[x - 1][y - 1])) {
-                if (aroundBuilding.getName().equals("food stockpile") && building.getOwner().equals(game.getCurrentPlayer()))
+                if (aroundBuilding.getName().equals("food stockpile") && building.getOwner().equals(game.getCurrentPlayer())) {
                     canDropStorage = true;
+                    break;
+                }
             }
             if (!canDropStorage) return Output.INVALID_CELL;
         }

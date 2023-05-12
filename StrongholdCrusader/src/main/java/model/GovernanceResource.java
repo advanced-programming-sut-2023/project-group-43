@@ -28,7 +28,7 @@ public class GovernanceResource {
     }
 
     public void addToStorage(Material material) {
-        if (storage.get(material).equals(null))
+        if (storage.get(material) == null)
             storage.put(material, 1);
         else
             storage.put(material, storage.get(material) + 1);
@@ -41,9 +41,11 @@ public class GovernanceResource {
     public void changeAmountOfItemInStockpile(Material material, int amount) {
         ArrayList<Building> storages = owner.getGovernance().getAllBuildingsByName(chooseStorage(material));
         if (storages == null) return;
-        Storage building = (Storage) storages.get(0);
-        if (storage.get(material) + amount > building.getCapacity() * storages.size()) return;
-        storage.put(material, getAmountOfItemInStockpile(material) + amount);
+        if (storages.size() > 0) {
+            Storage building = (Storage) storages.get(0);
+            if (storage.get(material) + amount > building.getCapacity() * storages.size()) return;
+            storage.put(material, getAmountOfItemInStockpile(material) + amount);
+        }
     }
 
     public int amountOfFoodInStorage() {
