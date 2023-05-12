@@ -40,8 +40,8 @@ public class ChangeEnvironmentController {
             game.addPlayer(user);
         }
         game.setCells(new Cell[row][column]);
-        GameController.setDefualtMaps(row, column);
-        Cell[][] cells = GameController.getDefualtMaps(mapOption);
+        GameController.setDefaultMaps(row, column);
+        Cell[][] cells = GameController.getDefaultMaps(mapOption);
         game.setCells(cells);
         game.setTurns(turns);
         return Output.SUCCESSFUL_MAP_GENERATION;

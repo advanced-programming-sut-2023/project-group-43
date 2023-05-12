@@ -27,12 +27,12 @@ public class GameController {
         this.game = game;
     }
 
-    public static Cell[][] getDefualtMaps(int mapOption) {
+    public static Cell[][] getDefaultMaps(int mapOption) {
         if (mapOption == 1) return defaultMaps.get("option number 1");
         else return defaultMaps.get("option number 2");
     }
 
-    public static void setDefualtMaps(int row, int column) {
+    public static void setDefaultMaps(int row, int column) {
         Cell[][] cells = new Cell[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
@@ -181,18 +181,18 @@ public class GameController {
 
     public Output selectUnit(int x, int y, String type) {
         ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
-        ArrayList<Unit> resultcellUnits = new ArrayList<>();
+        ArrayList<Unit> resultCellUnits = new ArrayList<>();
         if (cellUnits.size() == 0) return Output.NO_UNIT;
         else {
             for (Unit cellUnit : cellUnits) {
                 if (cellUnit.getName().equals(type) && cellUnit.getOwner().equals(game.getCurrentPlayer())) {
-                    resultcellUnits.add(cellUnit);
+                    resultCellUnits.add(cellUnit);
                 }
             }
-            if (resultcellUnits.size() == 0)
+            if (resultCellUnits.size() == 0)
                 return Output.NO_THIS_TYPE_UNIT;
             else {
-                game.setSelectedUnit(resultcellUnits);
+                game.setSelectedUnit(resultCellUnits);
                 return Output.SELECT_UNIT;
             }
         }
