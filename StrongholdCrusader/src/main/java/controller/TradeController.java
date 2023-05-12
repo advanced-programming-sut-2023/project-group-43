@@ -63,7 +63,6 @@ public class TradeController {
 
     private Output checkTrade(Trade trade, String message) {
         GovernanceResource receiverStorage = game.getCurrentPlayer().getGovernance().getGovernanceResource();
-        Material materials = Material.getMaterialByName(trade.getResourceName());
         if (trade.getSender().getGovernance().getGold() < trade.getPrice())
             return Output.NOT_ENOUGH_GOLD;
         if (receiverStorage.getAmountOfItemInStockpile(trade.getResource()) < trade.getAmount())
@@ -72,8 +71,10 @@ public class TradeController {
         receiverStorage.changeAmountOfItemInStockpile(trade.getResource(), trade.getAmount());
         trade.setReceiver(game.getCurrentPlayer());
         trade.setAccepted(true);
-        trade.setMessage(message);
-        trade.getSender().addTrade(trade);
+        Trade newTrade = new Trade(trade.getSender(), trade.getResourceName(), trade.getAmount(), trade.getPrice(), message);
+        newTrade.setId(trade.getId());
+        newTrade.setAccepted(true);
+        trade.getSender().addTrade(newTrade);
         return Output.TRADE_ACCEPTED;
     }
 
