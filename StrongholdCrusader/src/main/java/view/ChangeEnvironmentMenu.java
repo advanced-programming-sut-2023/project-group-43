@@ -156,5 +156,6 @@ public class ChangeEnvironmentMenu extends Menu {
             mapOption = scanner.nextInt();
         }
         System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns, mapOption).getString());
+        changeEnvironmentController.getGame().setCurrentPlayer(changeEnvironmentController.getCurrentUser());
     }
 }

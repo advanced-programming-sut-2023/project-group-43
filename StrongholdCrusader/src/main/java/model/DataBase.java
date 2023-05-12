@@ -30,6 +30,9 @@ public class DataBase {
         JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
         for (JsonElement jsonElement : jsonArray)
             users.add(gson.fromJson(jsonElement, User.class));
+        for (User user: users) {
+            user.setGovernance(new Governance());
+        }
     }
 
     public void saveData() {

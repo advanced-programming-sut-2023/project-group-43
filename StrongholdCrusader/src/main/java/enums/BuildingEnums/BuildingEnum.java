@@ -106,7 +106,7 @@ package enums.BuildingEnums;
 
         public static BuildingEnum getBuildingStructureByName(String name) {
             for(BuildingEnum value : BuildingEnum.values())
-                if(value.equals(name))
+                if(value.name.equals(name))
                     return value;
             return null;
         }

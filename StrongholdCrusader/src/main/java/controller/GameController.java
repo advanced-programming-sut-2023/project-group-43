@@ -120,6 +120,7 @@ public class GameController {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (type.matches("headquarter")) return Output.INVALID_BUILDING;
+        if (game.getCells()[x - 1][y - 1].getBuilding() != null) return Output.INVALID_CELL;
         Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
         if (building == null) return null;
         Governance governance = game.getCurrentPlayer().getGovernance();
