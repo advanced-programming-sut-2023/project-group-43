@@ -6,6 +6,7 @@ import enums.RateNumber;
 import enums.environmentEnums.Material;
 import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
+import enums.unitEnums.TroopType;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
@@ -105,6 +106,26 @@ public class GameController {
             return Output.SELECT_BUILDING;
         }
         return Output.NO_BUILDING;
+    }
+
+    public Output dropBuilding(int x, int y, String type) {
+        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
+            return Output.WRONG_COORDINATES;
+        if (type.matches("headquarter")) return Output.INVALID_BUILDING;
+        Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
+        Governance governance = game.getCurrentPlayer().getGovernance();
+        if (governance.getGold() < building.getCost()) return Output.NOT_ENOUGH_GOLD;
+        if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.WOOD) < building.getWood())
+            return Output.NOT_ENOUGH_RESOURCE;
+        if (governance.getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < building.getStone())
+            return Output.NOT_ENOUGH_RESOURCE;
+        governance.changeGoldAmount(-building.getCost());
+        governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, building.getWood());
+        governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, building.getStone());
+        building.setCell(game.getCells()[x - 1][y - 1]);
+        game.getCells()[x - 1][y - 1].setBuilding(building);
+        game.getCurrentPlayer().getGovernance().addBuilding(building);
+        return Output.SUCCESSFUL_ACTION;
     }
 
     public Output createUnit(String name, int number) {

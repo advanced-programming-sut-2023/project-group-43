@@ -130,12 +130,14 @@ public class ChangeEnvironmentController {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (!type.matches("headquarter")) return Output.INVALID_BUILDING;
-            Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
-            building.setCell(game.getCells()[x - 1][y - 1]);
-            game.getCurrentPlayer().getGovernance().addBuilding(building);
-            Unit unit = new Unarmed(game.getCurrentPlayer(), "lord", TroopType.LORD);
-            unit.setState(UnitState.STANDING);
-            unit.setCell(building.getCell());
+        Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
+        building.setCell(game.getCells()[x - 1][y - 1]);
+        game.getCells()[x - 1][y - 1].setBuilding(building);
+        game.getCurrentPlayer().getGovernance().addBuilding(building);
+        Unit unit = new Unarmed(game.getCurrentPlayer(), "lord", TroopType.LORD);
+        unit.setState(UnitState.STANDING);
+        unit.setCell(building.getCell());
+        game.getCells()[x - 1][y - 1].addUnit(unit);
         return Output.SUCCESSFUL_ACTION;
     }
 
@@ -150,10 +152,10 @@ public class ChangeEnvironmentController {
     public String goToNextPerson() {
         User user = null;
         boolean isNextPlayerFound = false;
-        if(game.getCurrentPlayer().getGovernance().getBuildingByName("headquarter") == null) {
+        if (game.getCurrentPlayer().getGovernance().getBuildingByName("headquarter") == null) {
             return "you haven't selected your headquarter yet";
         }
-        for (User player: game.getPlayers()) {
+        for (User player : game.getPlayers()) {
             if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);
                 break;
