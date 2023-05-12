@@ -129,14 +129,15 @@ public class GameController {
         Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
         if (building == null) return null;
         Governance governance = game.getCurrentPlayer().getGovernance();
-        assert building != null;
         if (type.equals("iron mine") && !game.getCells()[x - 1][y - 1].getTexture().equals(Texture.IRON))
             return Output.INVALID_CELL;
         if (type.equals("food stockpile") && game.getCurrentPlayer().getGovernance().getAllBuildingsByName("food stockpile") != null) {
             boolean canDropStorage = false;
             for (Building aroundBuilding : findBuildingsAround(game.getCells()[x - 1][y - 1])) {
-                if (aroundBuilding.getName().equals("food stockpile") && building.getOwner().equals(game.getCurrentPlayer()))
+                if (aroundBuilding.getName().equals("food stockpile") && building.getOwner().equals(game.getCurrentPlayer())) {
                     canDropStorage = true;
+                    break;
+                }
             }
             if (!canDropStorage) return Output.INVALID_CELL;
         }
@@ -667,7 +668,7 @@ public class GameController {
             double fearRate = governance.getFearRate();
             for (int j = 0; j < governance.getUnits().size(); j++) {
                 double newDamage = governance.getUnits().get(j).getDamage() +
-                        (fearRate * (5 / 100));
+                        (fearRate * 5 / 100);
                 governance.getUnits().get(j).setDamage(newDamage);
             }
         }
@@ -682,9 +683,7 @@ public class GameController {
 
 
     public boolean isGameEnded() {
-        if (game.getPlayers().size() == calculateDeadGovernance() + 1)
-            return true;
-        return false;
+        return game.getPlayers().size() == calculateDeadGovernance() + 1;
     }
 
     public int calculateDeadGovernance() {
@@ -713,11 +712,14 @@ public class GameController {
     }
 
     public User findWinner() {
+        int maxGold = 0;
+        User winner = null;
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (game.getPlayers().get(i).getGovernance().isLordAlive())
-                return game.getPlayers().get(i);
+                if(game.getPlayers().get(i).getGovernance().getGold() > maxGold)
+                    winner = game.getPlayers().get(i);
         }
-        return null;
+        return winner;
     }
 
     public void clearGame() {
