@@ -1,6 +1,18 @@
 package enums;
 
 public enum Output {
+    //manu names
+    CHANGE_ENVIRONMENT_MENU("change environment menu"),
+    GAME_MENU("game menu"),
+    GOVERNANCE_MENU("governance menu"),
+    LOGIN_MENU("login menu"),
+    MAIN_MENU("main menu"),
+    MAP_MENU("map menu"),
+    PROFILE_MENU("profile menu"),
+    REGISTER_MENU("register menu"),
+    STORE_MENU("store menu"),
+    TRADE_MENU("trade menu"),
+    //
     DIG_TUNNEL_FAILED("warning : digging tunnel failed!"),
     DIG_TUNNEL_SUCCESSFUL("digging tunnel done successfully"),
     WRONG_TYPE_OF_UNIT("warning : no unit with this type!"),

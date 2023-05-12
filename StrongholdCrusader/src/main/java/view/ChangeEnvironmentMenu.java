@@ -28,7 +28,9 @@ public class ChangeEnvironmentMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE)) != null) {
+            if(input.matches("show current menu"))
+                output = Output.CHANGE_ENVIRONMENT_MENU;
+            else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE)) != null) {
                 output = setTexture(matcher);
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE_RECTANGLE)) != null) {
                 setTextureRectangle(matcher);

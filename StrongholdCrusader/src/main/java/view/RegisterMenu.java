@@ -24,6 +24,8 @@ public class RegisterMenu extends Menu {
             input = scanner.nextLine();
             output = null;
             randomPassword = null;
+            if(input.matches("show current menu"))
+                output = Output.REGISTER_MENU;
             if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.CREATE_USER)) != null) {
                 output = createUser(matcher, null, null, null);
             } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.BACK) != null) {

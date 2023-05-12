@@ -25,6 +25,8 @@ public class ProfileMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
+            if(input.matches("show current menu"))
+                output = Output.PROFILE_MENU;
             if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_INFO)) != null) {
                 output = changeInfo(matcher);
             } else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD)) != null) {

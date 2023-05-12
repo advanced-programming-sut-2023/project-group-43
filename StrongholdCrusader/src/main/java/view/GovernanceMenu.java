@@ -1,6 +1,7 @@
 package view;
 
 import controller.GovernanceController;
+import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
 
 import java.util.regex.Matcher;
@@ -19,7 +20,9 @@ public class GovernanceMenu extends Menu {
         System.out.println("governance menu:");
         while (true) {
             input = scanner.nextLine();
-            if (input.matches("back")) {
+            if(input.matches("show current menu"))
+                System.out.println(Output.GOVERNANCE_MENU.getString());
+            else if (input.matches("back")) {
                 if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
                     governanceController.getGame().setSelectedBuilding(null);
                 System.out.println("game menu:");
@@ -37,11 +40,14 @@ public class GovernanceMenu extends Menu {
                 System.out.println(governanceController.showFoodRate());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE) != null) {
                 System.out.println(taxRate(matcher));
-            } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE_SHOW)) != null) {
+            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE_SHOW) != null) {
                 System.out.println(governanceController.showTaxRate());
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE)) != null) {
                 System.out.println(fearRate(matcher));
-            } else System.out.println("Invalid Command!");
+            }
+            else {
+                System.out.println("Invalid command");
+            }
         }
     }
 
