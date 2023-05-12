@@ -645,7 +645,12 @@ public class GameController {
     }
 
     private void updateWorkersEfficiency() {
-
+        for (int i = 0 ; i <  game.getPlayers().size();i++){
+            if(game.getPlayers().get(i).getGovernance().getFearRate() > 0)
+                game.getPlayers().get(i).getGovernance().setTurnsToCompleteBuilding(1);
+            if(game.getPlayers().get(i).getGovernance().getFearRate() < 0)
+                game.getPlayers().get(i).getGovernance().setTurnsToCompleteBuilding(2);
+        }
     }
 
     private void updateDamageEfficiency() {
