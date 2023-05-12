@@ -114,7 +114,10 @@ public enum Output {
     INVALID_MOVE("warning: your chosen destination is blocked!"),
     NOT_ENOUGH_UNIT("warning: you don't have enough units to drop here"),
     INVALID_CELL("you cannot drop unit in this cell"),
-    INVALID_DISTANCE("warning: this cell is not in a valid distance from your units!")
+    INVALID_DISTANCE("warning: this cell is not in a valid distance from your units!"),
+
+    //dropping buildings
+    INVALID_CELL_FOR_THIS_BUILDING("you cannot drop this building here")
     ;
     private String string;
 

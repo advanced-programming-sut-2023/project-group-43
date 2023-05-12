@@ -112,8 +112,11 @@ public class GameController {
             return Output.WRONG_COORDINATES;
         if (type.matches("headquarter")) return Output.INVALID_BUILDING;
         Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
+        if (building == null) return null;
         Governance governance = game.getCurrentPlayer().getGovernance();
         assert building != null;
+        if (type.equals("iron mine") && !game.getCells()[x - 1][y - 1].getTexture().equals(Texture.IRON))
+            return Output.INVALID_CELL;
         if (governance.getGold() < building.getCost()) return Output.NOT_ENOUGH_GOLD;
         if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.WOOD) < building.getWood())
             return Output.NOT_ENOUGH_RESOURCE;

@@ -32,7 +32,7 @@ public class MapController {
                     for (int j = 0; j < 5; j++) {
                         if ((row - 6 + h) >= 0 && (column - 6 + i) >= 0 && (column - 6 + i) <= game.getCells()[0].length && (row - 6 + h) <= game.getCells().length) {
                             output.append(game.getCells()[row - 6 + h][column - 6 + i].getTexture().getColor());
-                            if (game.getCells()[i][j] != null)
+                            if (game.getCells()[i][j].getBuilding() == null || game.getCells()[i][j].getBuilding().getName().equals("killing pit"))
                                 output.append("#").append("\u001B[0m");
                             else
                                 output.append("b").append("\u001B[0m");
@@ -55,7 +55,7 @@ public class MapController {
         details.append("Texture : ").append(cell.getTexture().toString());
         if (cell.HasRock()) details.append("\nRocky");
         if (cell.getTreeType() != null) details.append("\nTree : ").append(cell.getTreeType().toString());
-        if (cell.getBuilding() != null) {
+        if (cell.getBuilding() != null && (cell.getBuilding().getOwner().equals(game.getCurrentPlayer())|| !cell.getBuilding().getName().equals("killing pit"))) {
             details.append("\n").append("Buldings : ").append(cell.getBuilding().getName());
             details.append(" | owner : ").append(cell.getBuilding().getOwner().getUsername());
             details.append(" | hitpoint : ").append(cell.getBuilding().getHp());

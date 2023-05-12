@@ -69,6 +69,7 @@ public class StoreController {
     private boolean isPossible(String storeName, String itemName) {
         switch (itemName) {
             case "engineer":
+            case "ladderman":
                 if (storeName.matches("engineer guild")) return true;
                 break;
             case "worker":
@@ -81,7 +82,6 @@ public class StoreController {
             case "maceman":
             case "knight":
             case "tunneler":
-            case "ladderman":
             case "assassin":
                 if (storeName.matches("barrack")) return true;
                 break;
