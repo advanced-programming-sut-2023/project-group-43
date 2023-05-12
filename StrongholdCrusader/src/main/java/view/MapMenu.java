@@ -24,7 +24,6 @@ public class MapMenu extends Menu {
         Matcher matcher;
         while (true) {
             input = scanner.nextLine();
-            output = null;
             if(input.matches("show current menu"))
                 System.out.println(Output.MAP_MENU.getString());
             if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
@@ -33,6 +32,9 @@ public class MapMenu extends Menu {
                 showMapDetails(matcher);
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
                 moveMap(matcher);
+            } else if (input.matches("back")) {
+                System.out.println("game menu:");
+                return;
             }
             else System.out.println("invalid command!");;
         }
