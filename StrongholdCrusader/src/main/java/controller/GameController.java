@@ -586,7 +586,7 @@ public class GameController {
                 Building building = cell[j].getBuilding();
                 if (building != null) {
                     if (building.getName().equals("church") || building.getName().equals("cathedral"))
-                        building.getOwner().getGovernance().changePopulation(1);
+                        building.getOwner().getGovernance().setPopularity(building.getOwner().getGovernance().getPopulation() + 1);
                 }
             }
         }
