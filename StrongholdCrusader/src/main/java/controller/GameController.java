@@ -18,9 +18,9 @@ import java.util.HashMap;
 public class GameController {
 
     private final Game game;
-    private static HashMap<String, Cell[][]> defualtMaps = new HashMap<>();
+    private static final HashMap<String, Cell[][]> defualtMaps = new HashMap<>();
 
-    private Cell village = new Cell();
+    private final Cell village = new Cell();
 
 
     public GameController(Game game) {
@@ -38,24 +38,24 @@ public class GameController {
             for (int j = 0; j < column; j++) {
                 cells[i][j] = new Cell();
                 if (i % 9 == 0) cells[i][j].setTexture(Texture.GROUND);
-                else if (i % 9 == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
-                else if (i % 9 == 2) cells[i][j].setTexture(Texture.BOULDER);
-                else if (i % 9 == 3) cells[i][j].setTexture(Texture.ROCK);
-                else if (i % 9 == 4) cells[i][j].setTexture(Texture.IRON);
-                else if (i % 9 == 5) cells[i][j].setTexture(Texture.GRASS);
-                else if (i % 9 == 6) cells[i][j].setTexture(Texture.MEADOW);
-                else if (i % 9 == 7) cells[i][j].setTexture(Texture.DENSE_GRASSLAND);
-                else if (i % 9 == 8) cells[i][j].setTexture(Texture.PLAIN);
+                else if ((i % 9) == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
+                else if ((i % 9) == 2) cells[i][j].setTexture(Texture.BOULDER);
+                else if ((i % 9) == 3) cells[i][j].setTexture(Texture.ROCK);
+                else if ((i % 9) == 4) cells[i][j].setTexture(Texture.IRON);
+                else if ((i % 9) == 5) cells[i][j].setTexture(Texture.GRASS);
+                else if ((i % 9) == 6) cells[i][j].setTexture(Texture.MEADOW);
+                else if ((i % 9) == 7) cells[i][j].setTexture(Texture.DENSE_GRASSLAND);
+                else cells[i][j].setTexture(Texture.PLAIN);
             }
         }
         for (int i = 0; i < column; i++) {
-            if (i % 9 == 0) cells[0][i].setTexture(Texture.OIL);
-            else if (i % 9 == 1) cells[0][i].setTexture(Texture.SHALLOW_WATER);
-            else if (i % 9 == 2) cells[0][i].setTexture(Texture.RIVER);
-            else if (i % 9 == 3) cells[0][i].setTexture(Texture.SMALL_POND);
-            else if (i % 9 == 4) cells[0][i].setTexture(Texture.BIG_POND);
-            else if (i % 9 == 5) cells[0][i].setTexture(Texture.BEACH);
-            else if (i % 9 == 6) {
+            if ((i % 9) == 0) cells[0][i].setTexture(Texture.OIL);
+            else if ((i % 9) == 1) cells[0][i].setTexture(Texture.SHALLOW_WATER);
+            else if ((i % 9) == 2) cells[0][i].setTexture(Texture.RIVER);
+            else if ((i % 9) == 3) cells[0][i].setTexture(Texture.SMALL_POND);
+            else if ((i % 9) == 4) cells[0][i].setTexture(Texture.BIG_POND);
+            else if ((i % 9) == 5) cells[0][i].setTexture(Texture.BEACH);
+            else if ((i % 9) == 6) {
                 cells[0][i].setTexture(Texture.SEA);
                 break;
             }
@@ -65,25 +65,25 @@ public class GameController {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 cells2[i][j] = new Cell();
-                if (i % 9 == 0) cells2[i][j].setTexture(Texture.GRAVEL_GROUND);
-                else if (i % 9 == 1) cells2[i][j].setTexture(Texture.GROUND);
-                else if (i % 9 == 2) cells2[i][j].setTexture(Texture.ROCK);
-                else if (i % 9 == 3) cells2[i][j].setTexture(Texture.BOULDER);
-                else if (i % 9 == 4) cells2[i][j].setTexture(Texture.GRASS);
-                else if (i % 9 == 5) cells2[i][j].setTexture(Texture.IRON);
-                else if (i % 9 == 6) cells2[i][j].setTexture(Texture.DENSE_GRASSLAND);
-                else if (i % 9 == 7) cells2[i][j].setTexture(Texture.PLAIN);
-                else if (i % 9 == 8) cells2[i][j].setTexture(Texture.MEADOW);
+                if ((i % 9) == 0) cells2[i][j].setTexture(Texture.GRAVEL_GROUND);
+                else if ((i % 9) == 1) cells2[i][j].setTexture(Texture.GROUND);
+                else if ((i % 9) == 2) cells2[i][j].setTexture(Texture.ROCK);
+                else if ((i % 9) == 3) cells2[i][j].setTexture(Texture.BOULDER);
+                else if ((i % 9) == 4) cells2[i][j].setTexture(Texture.GRASS);
+                else if ((i % 9) == 5) cells2[i][j].setTexture(Texture.IRON);
+                else if ((i % 9) == 6) cells2[i][j].setTexture(Texture.DENSE_GRASSLAND);
+                else if ((i % 9) == 7) cells2[i][j].setTexture(Texture.PLAIN);
+                else cells2[i][j].setTexture(Texture.MEADOW);
             }
         }
         for (int i = 0; i < column; i++) {
-            if (i % 9 == 0) cells2[0][i].setTexture(Texture.BEACH);
-            else if (i % 9 == 1) cells2[0][i].setTexture(Texture.BIG_POND);
-            else if (i % 9 == 2) cells2[0][i].setTexture(Texture.SMALL_POND);
-            else if (i % 9 == 3) cells2[0][i].setTexture(Texture.RIVER);
-            else if (i % 9 == 4) cells2[0][i].setTexture(Texture.SHALLOW_WATER);
-            else if (i % 9 == 5) cells2[0][i].setTexture(Texture.OIL);
-            else if (i % 9 == 6) {
+            if ((i % 9) == 0) cells2[0][i].setTexture(Texture.BEACH);
+            else if ((i % 9) == 1) cells2[0][i].setTexture(Texture.BIG_POND);
+            else if ((i % 9) == 2) cells2[0][i].setTexture(Texture.SMALL_POND);
+            else if ((i % 9) == 3) cells2[0][i].setTexture(Texture.RIVER);
+            else if ((i % 9) == 4) cells2[0][i].setTexture(Texture.SHALLOW_WATER);
+            else if ((i % 9) == 5) cells2[0][i].setTexture(Texture.OIL);
+            else if ((i % 9) == 6) {
                 cells2[0][i].setTexture(Texture.SEA);
                 break;
             }
@@ -222,7 +222,7 @@ public class GameController {
     }
 
     private boolean isCoordinateInvalid(int x, int y) {
-        return (x <= 0 || y <= 0 || x >= game.getRow() || y >= game.getColumn());
+        return (x < 0 || y < 0 || x >= game.getRow() || y >= game.getColumn());
     }
 
     public Output setUnitState(int x, int y, String state) {
@@ -245,19 +245,46 @@ public class GameController {
 
     private Output attackToEnemy(int x, int y) {
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
-        for (Unit unit: game.getSelectedUnit()) {
+        for (Unit unit : game.getSelectedUnit()) {
             if (unit instanceof Troop) {
                 int dx = Math.abs(unit.getCell().getX() - (x - 1));
-                int dy = Math.abs(unit.getCell())
-                if (unit instanceof Unarmed) {
-
-                }
+                int dy = Math.abs(unit.getCell().getY() - (y - 1));
+                if ((dx > 1 || dy > 1) && unit instanceof Unarmed) return Output.INVALID_DISTANCE;
+                else if (unit instanceof Armed) {
+                    if (dx > ((Armed) unit).getWeapon().getRange() || dy > ((Armed) unit).getWeapon().getRange())
+                        return Output.INVALID_DISTANCE;
+                } else return Output.NO_THIS_TYPE_UNIT;
+                attack(x, y, unit);
             }
         }
+        return Output.SUCCESSFUL_ACTION;
     }
 
     private Output airAttack(int x, int y) {
-        return null;
+        if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
+        for (Unit unit : game.getSelectedUnit()) {
+            if (unit.getName().equals("archer")) {
+                int dx = Math.abs(unit.getCell().getX() - (x - 1));
+                int dy = Math.abs(unit.getCell().getY() - (y - 1));
+                if (dx > ((Armed) unit).getWeapon().getRange() || dy > ((Armed) unit).getWeapon().getRange())
+                    return Output.INVALID_DISTANCE;
+                attack(x, y, unit);
+            }
+        }
+        return Output.SUCCESSFUL_ACTION;
+    }
+
+    private void attack(int x, int y, Unit unit) {
+        Cell cell = game.getCells()[x - 1][y - 1];
+        Building building = cell.getBuilding();
+        if (building != null && building.getOwner().equals(game.getCurrentPlayer())) {
+            building.setHp(building.getHp() - (int) Math.floor(unit.getHitPoint()));
+        }
+        for (Unit potentialEnemy : cell.getUnits()) {
+            if (!potentialEnemy.getOwner().equals(game.getCurrentPlayer()) && potentialEnemy.getCell().getBuilding() == null) {
+                potentialEnemy.setHitPoint(potentialEnemy.getHitPoint() - unit.getDamage());
+            }
+        }
     }
 
     public Output pourOil(String direction) {
@@ -333,16 +360,8 @@ public class GameController {
     private void applyHitPointChange() {
         for (User user : game.getPlayers()) {
             for (Unit unit : user.getGovernance().getUnits()) {
-                int currentX = unit.getCell().getX();
-                int currentY = unit.getCell().getY();
-                if (unit instanceof Armed) {
-                    int range = ((Armed) unit).getWeapon().getRange();
-                    setVariables(currentX, currentY, range, true, user, unit);
-                } else if (unit instanceof Unarmed) {
-                    setVariables(currentX, currentY, 1, true, user, unit);
-                } else if (unit instanceof Engineer) {
+                if (unit instanceof Engineer) {
                     ((Engineer) unit).chargeTar();
-                    ;
                 } else if (unit instanceof Tunneler) {
                     ((Tunneler) unit).destroyBuilding(game);
                 } else if (unit instanceof Ladderman) {
@@ -358,7 +377,7 @@ public class GameController {
         }
     }
 
-    private Cell setVariables(int currentX, int currentY, int range, boolean shouldFight, User user, Unit unit) {
+    private Cell setVariables(int currentX, int currentY, int range, User user) {
         int sx = currentX - range;
         int fx = currentX + range;
         int sy = currentY - range;
@@ -367,26 +386,8 @@ public class GameController {
         if (sy < 0) sy = 0;
         if (fx >= game.getRow()) fx = game.getRow() - 1;
         if (fy >= game.getColumn()) fy = game.getColumn() - 1;
-        if (shouldFight) fight(sx, sy, fx, fy, user, unit);
         else return findCell(sx, sy, fx, fy, user);
         return null;
-    }
-
-    private void fight(int sx, int sy, int fx, int fy, User user, Unit unit) {
-        for (int xIterator = sx; xIterator <= fx; xIterator++) {
-            for (int yIterator = sy; yIterator <= fy; yIterator++) {
-                Cell currentCell = game.getCells()[xIterator][yIterator];
-                Building building = currentCell.getBuilding();
-                if (building != null && building.getOwner().equals(user)) {
-                    building.setHp(building.getHp() - (int) Math.floor(unit.getHitPoint()));
-                }
-                for (Unit potentialEnemy : currentCell.getUnits()) {
-                    if (!potentialEnemy.getOwner().getUsername().equals(user.getUsername()) && potentialEnemy.getCell().getBuilding() == null) {
-                        potentialEnemy.setHitPoint(potentialEnemy.getHitPoint() - unit.getDamage());
-                    }
-                }
-            }
-        }
     }
 
     private Cell findCell(int sx, int sy, int fx, int fy, User user) {
@@ -453,13 +454,13 @@ public class GameController {
                     unit.setNextTargetY(-1);
                     unit.setNextTargetX(-1);
                 } else if (unit.getState().equals(UnitState.OFFENSIVE)) {
-                    Cell enemyCell = findEnemy(1000, unit.getCell().getX(), unit.getCell().getY(), user, unit);
+                    Cell enemyCell = findEnemy(1000, unit.getCell().getX(), unit.getCell().getY(), user);
                     unit.setCurrentTargetX(enemyCell.getX());
                     unit.setCurrentTargetY(enemyCell.getY());
                     unit.setNextTargetY(-1);
                     unit.setNextTargetX(-1);
                 } else if (unit.getState().equals(UnitState.DEFENSIVE)) {
-                    Cell enemyCell = findEnemy(3, unit.getCell().getX(), unit.getCell().getY(), user, unit);
+                    Cell enemyCell = findEnemy(3, unit.getCell().getX(), unit.getCell().getY(), user);
                     assert enemyCell != null;
                     unit.setCurrentTargetX(enemyCell.getX());
                     unit.setCurrentTargetY(enemyCell.getY());
@@ -470,10 +471,10 @@ public class GameController {
         }
     }
 
-    private Cell findEnemy(int distance, int currentX, int currentY, User user, Unit unit) {
+    private Cell findEnemy(int distance, int currentX, int currentY, User user) {
         for (int i = 0; i < distance; i++) {
             Cell cell;
-            if ((cell = setVariables(currentX, currentY, i, false, user, unit)) != null)
+            if ((cell = setVariables(currentX, currentY, i, user)) != null)
                 return cell;
         }
         return null;
@@ -494,33 +495,18 @@ public class GameController {
             for (int j = 0; j < cells[0].length; j++) {
                 if (cell[j].getBuilding() == null || !cell[j].getBuilding().isComplete()) continue;
                 Building building = cell[j].getBuilding();
-                if (building instanceof Producer) {
-                    Producer producer = (Producer) building;
+                if (building instanceof Producer producer) {
                     switch (producer.getName()) {
-                        case "wheat farm":
-                        case "hop farm":
-                        case "hunting post":
-                        case "apple garden":
-                        case "wood cutter":
-                        case "pitch rig":
-                        case "quarry":
-                        case "iron mine":
-                            producer.produceMaterials();
+                        case "wheat farm", "hop farm", "hunting post", "apple garden", "wood cutter", "pitch rig", "quarry", "iron mine" ->
+                                producer.produceMaterials();
                     }
                 }
-                if (building instanceof Converter) {
-                    Converter converter = (Converter) building;
+                if (building instanceof Converter converter) {
                     switch (converter.getName()) {
-                        case "bakery":
-                        case "dairy products":
-                        case "beer brewing":
-                        case "mill":
-                        case "poleturner":
-                        case "fletcher":
-                        case "blacksmith":
-                        case "armourer":
+                        case "bakery", "dairy products", "beer brewing", "mill", "poleturner", "fletcher", "blacksmith", "armourer" -> {
                             converter.consumeResource();
                             converter.produceMaterials();
+                        }
                     }
                 }
                 if (cell[j].getBuilding() instanceof CastleDepartment) {
@@ -550,8 +536,7 @@ public class GameController {
         if (fy >= game.getColumn()) fy--;
         for (int x = sx; x <= fx; x++) {
             for (int y = sy; y <= fy; y++) {
-                for (Unit unit : game.getCells()[x][y].getUnits())
-                    units.add(unit);
+                units.addAll(game.getCells()[x][y].getUnits());
             }
         }
         return units;
@@ -643,10 +628,10 @@ public class GameController {
     private void updateDamageEfficiency() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             Governance governance = game.getPlayers().get(i).getGovernance();
-            double featRate = governance.getFearRate();
+            double fearRate = governance.getFearRate();
             for (int j = 0; j < governance.getUnits().size(); j++) {
                 double newDamage = governance.getUnits().get(j).getDamage() +
-                        (governance.getUnits().get(j).getDamage() * (5 / 100));
+                        (governance.getUnits().get(j).getDamage() * 5 / 100);
                 governance.getUnits().get(j).setDamage(newDamage);
             }
         }
