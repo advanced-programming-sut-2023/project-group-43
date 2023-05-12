@@ -136,6 +136,7 @@ public class ChangeEnvironmentController {
             return Output.WRONG_COORDINATES;
         if (!type.matches("headquarter")) return Output.INVALID_BUILDING;
         if (game.getCells()[x - 1][y - 1].getBuilding() != null) return Output.INVALID_CELL;
+        if (game.getCurrentPlayer().getGovernance().getBuildings() != null) return Output.INVALID_BUILDING;
         Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
         building.setCell(game.getCells()[x - 1][y - 1]);
         game.getCells()[x - 1][y - 1].setBuilding(building);

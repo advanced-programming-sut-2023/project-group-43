@@ -107,7 +107,7 @@ public enum Output {
     //end of trade controller
 
     //change environment
-    INVALID_BUILDING("you only can drop headquarter now"),
+    INVALID_BUILDING("you only can drop one headquarter now"),
     INVALID_STATE("please enter a valid state"),
     SUCCESSFUL_ACTION("you did it successfully!"),
     //moving and adding units
