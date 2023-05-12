@@ -1,6 +1,6 @@
 package controller;
 
-import junit.framework.TestCase;
+import enums.Output;
 import model.DataBase;
 import model.User;
 import org.junit.Test;
@@ -10,24 +10,23 @@ import static org.junit.Assert.*;
 public class RegisterAndLoginControllerTest {
     //createUser
     @Test
-    void checkingFirstReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : empty field!", controller.createUser(null, null, null, null, null, null, false));
+    public void checkingFirstReturnStatement() {
+        assertEquals(Output.EMPTY_FIELD, RegisterAndLoginController.createUser(null, null, null, null, null, null, false));
     }
     @Test
-    void checkingSecondReturnStatement() {
+    public void checkingSecondReturnStatement() {
         RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : empty field!", controller.createUser(".", ".", ".", ".", ".", null, true));
+        assertEquals(Output.EMPTY_FIELD, RegisterAndLoginController.createUser(".", ".", ".", ".", ".", null, true));
     }
     @Test
-    void checkingThirdReturnStatement() {
+    public void checkingThirdReturnStatement() {
         RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : invalid username!", controller.createUser(" ", ".", ".", ".", ".", null, true));
+        assertEquals(Output.INVALID_USERNAME, RegisterAndLoginController.createUser(" ", ".", ".", ".", ".", null, true));
     }
     @Test
     void checkingForthReturnStatement() {
         RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : duplicated username!", controller.createUser("aida", ".", ".", ".", ".", null, true));
+        assertEquals(Output.DUPLICATE_USERNAME, controller.createUser("aida", ".", ".", ".", ".", null, true));
     }
     @Test
     void checkingFifthReturnStatement() {
