@@ -7,6 +7,7 @@ import model.units.Unit;
 import java.util.ArrayList;
 
 public class Governance {
+    private boolean isLordAlive = true;
     private int popularity;
     private int population;
 
@@ -22,6 +23,14 @@ public class Governance {
     private ArrayList<Unit> units = new ArrayList<>();
 
     private ArrayList<Building> buildings = new ArrayList<>();
+
+    public boolean isLordAlive() {
+        return isLordAlive;
+    }
+
+    public void setLordAlive(boolean lordAlive) {
+        isLordAlive = lordAlive;
+    }
 
     public int getPopularity() {
         return popularity;
@@ -159,6 +168,14 @@ public class Governance {
                 newUnits.add(unit);
         }
         return newUnits;
+    }
+
+    public Unit getLord(){
+        for (int i = 0 ; i < units.size();i++){
+            if (units.get(i).getName().equals("lord"))
+                return units.get(i);
+        }
+        return null;
     }
 
 }

@@ -1,5 +1,4 @@
 package controller;
-
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.RateNumber;
@@ -11,10 +10,8 @@ import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.*;
 import model.units.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class GameController {
 
@@ -31,6 +28,18 @@ public class GameController {
     public static Cell[][] getDefaultMaps(int mapOption) {
         if (mapOption == 1) return defaultMaps.get("option number 1");
         else return defaultMaps.get("option number 2");
+    }
+
+    public void initializeGame(){
+        for (int i = 0;i < game.getPlayers().size();i++){
+            User player = game.getPlayers().get(i);
+            player.getGovernance().setLordAlive(true);
+            player.getGovernance().setFearRate(0);
+            player.getGovernance().setFoodRate(RateNumber.FOOD_RATE_MINUS_2);
+            player.getGovernance().setTaxRate(RateNumber.TAX_RATE_0);
+            player.getGovernance().setPopulation(15);
+            player.getGovernance().setGold(50);
+        }
     }
 
     public static void setDefaultMaps(int row, int column) {
@@ -178,7 +187,7 @@ public class GameController {
         else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
             return Output.NOT_ENOUGH_STONE;
         else {
-            game.getSelectedBuilding().setHp(Objects.requireNonNull(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName())).getHp());
+            game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName())).getHp());
             game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
             return Output.SUCCESSFUL_REPAIRMENT;
         }
@@ -352,6 +361,7 @@ public class GameController {
         updateFoodRate();
         updateWorkersEfficiency();
         updateDamageEfficiency();
+        removeDeadGovernance();
     }
 
     private void completeBuildings() {
@@ -633,27 +643,67 @@ public class GameController {
     private void updateDamageEfficiency() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             Governance governance = game.getPlayers().get(i).getGovernance();
+            double fearRate = governance.getFearRate();
             for (int j = 0; j < governance.getUnits().size(); j++) {
                 double newDamage = governance.getUnits().get(j).getDamage() +
-                        (governance.getUnits().get(j).getDamage() * 5 / 100);
+                        (fearRate * (5 / 100));
                 governance.getUnits().get(j).setDamage(newDamage);
             }
         }
     }
 
+    public void removeDeadGovernance(){
+        for(int i = 0 ; i < game.getPlayers().size();i++){
+            if(game.getPlayers().get(i).getGovernance().getLord() == null)
+                game.getPlayers().get(i).getGovernance().setLordAlive(false);
+        }
+    }
+
 
     public boolean isGameEnded() {
-        return false;
+       if(game.getPlayers().size() == calculateDeadGovernance() + 1)
+           return true;
+       return false;
+    }
+
+    public int calculateDeadGovernance(){
+        int counter = 0;
+        for(int i = 0; i < game.getPlayers().size();i++){
+            if(!game.getPlayers().get(i).getGovernance().isLordAlive())
+                counter++;
+        }
+        return counter;
+    }
+
+    public void updateScores() {
+        findWinner().setScore(findWinner().getScore() + (int)findWinner().getGovernance().getGold());
     }
 
     public String showGameResult() {
+        StringBuilder ans = null;
+        ans.append("<<<GAME OVER>>>" + "\n");
+        ans.append("The winner of the game is " + findWinner() + "\n");
+        ans.append("Losers:" + "\n");
+        for(int i = 0 ; i < game.getPlayers().size() ; i++){
+            if(!game.getPlayers().get(i).getUsername().equals(findWinner().getUsername()))
+                ans.append(game.getPlayers().get(i).getUsername() + "\n");
+        }
+        return String.valueOf(ans);
+    }
+
+    public User findWinner(){
+        for (int i = 0;i < game.getPlayers().size();i++){
+            if(game.getPlayers().get(i).getGovernance().isLordAlive())
+                return game.getPlayers().get(i);
+        }
         return null;
     }
-
-    private void updateScores() {
-    }
-
     public void clearGame() {
+       game.setPlayers(null);
+       game.setCells(null);
+       game.setCurrentPlayer(null);
+       game.setSelectedBuilding(null);
+       game.setSelectedUnit(null);
     }
 
     public void goToNextPerson() {

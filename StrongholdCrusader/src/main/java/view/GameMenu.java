@@ -51,7 +51,9 @@ public class GameMenu extends Menu{
             }
             gameController.applyChanges();
             if(gameController.isGameEnded()){
-                System.out.println("The End!");
+                gameController.updateScores();
+                System.out.println(gameController.showGameResult());
+                gameController.clearGame();
                 break;
             }
             turns--;
@@ -120,18 +122,18 @@ public class GameMenu extends Menu{
     private Output setUnitState(Matcher matcher) {
         String state = Validations.getInfo("s", matcher.group());
         if (parseMatcher(matcher) && state != null)
-        return gameController.setUnitState(Integer.parseInt(x),Integer.parseInt(y), state);
+            return gameController.setUnitState(Integer.parseInt(x),Integer.parseInt(y), state);
         return null;
     }
 
     private Output attack(Matcher matcher) {
         if (parseMatcher(matcher))
-        return gameController.attack(Integer.parseInt(x),Integer.parseInt(y) , null);
+            return gameController.attack(Integer.parseInt(x),Integer.parseInt(y) , null);
         return null;
     }
     private Output attackEnemy(Matcher matcher) {
         if (parseMatcher(matcher))
-        return gameController.attack(Integer.parseInt(x),Integer.parseInt(y) , "e");
+            return gameController.attack(Integer.parseInt(x),Integer.parseInt(y) , "e");
         return null;
     }
     private Output pourOil(Matcher matcher) {
@@ -140,7 +142,7 @@ public class GameMenu extends Menu{
     }
     private Output digTunnel(Matcher matcher) {
         if(parseMatcher(matcher))
-        return gameController.digTunnel(Integer.parseInt(x),Integer.parseInt(y));
+            return gameController.digTunnel(Integer.parseInt(x),Integer.parseInt(y));
         return null;
     }
     private Output buildEquipment(Matcher matcher) {
