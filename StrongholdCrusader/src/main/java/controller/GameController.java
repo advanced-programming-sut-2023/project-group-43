@@ -35,6 +35,8 @@ public class GameController {
     public void initializeGame() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             User player = game.getPlayers().get(i);
+            player.setGovernance(new Governance());
+            player.getGovernance().setGovernanceResource(new GovernanceResource());
             player.getGovernance().setLordAlive(true);
             player.getGovernance().setFearRate(0);
             player.getGovernance().setFoodRate(RateNumber.FOOD_RATE_MINUS_2);
