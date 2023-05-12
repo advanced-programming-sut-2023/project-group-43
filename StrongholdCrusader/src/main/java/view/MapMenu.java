@@ -57,13 +57,13 @@ public class MapMenu extends Menu {
         int horizontalDisplacement = 0;
         int verticalDisplacement = 0;
         if (matcher.group("firstDirection").equals("up")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement"));
+            if (matcher.group("firstDisplacement") != null) {
+                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
             } else verticalDisplacement = 1;
         }
         if (matcher.group("firstDirection").equals("down")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement")) * -1;
+            if (matcher.group("firstDisplacement") != null) {
+                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
             } else verticalDisplacement = -1;
         }
         if (matcher.group("secondDirection").equals("up")) {
@@ -78,13 +78,13 @@ public class MapMenu extends Menu {
         }
 
         if (matcher.group("firstDirection").equals("right")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement"));
+            if (matcher.group("firstDisplacement") != null) {
+                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
             } else horizontalDisplacement = 1;
         }
         if (matcher.group("firstDirection").equals("left")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement")) * -1;
+            if (matcher.group("firstDisplacement") != null) {
+                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
             } else horizontalDisplacement = -1;
         }
         if (matcher.group("secondDirection").equals("right")) {
