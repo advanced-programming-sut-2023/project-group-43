@@ -101,7 +101,7 @@ public class StoreController {
     }
 
     public Output sell(String itemName, int amount) {
-        if (storeName.matches("market")) return Output.WRONG_SELECT_FOR_BUILDING;
+        if (!storeName.matches("market")) return Output.WRONG_SELECT_FOR_BUILDING;
         Material material = Material.getMaterialByName(itemName);
         Governance governance = game.getCurrentPlayer().getGovernance();
         if (material == null)
