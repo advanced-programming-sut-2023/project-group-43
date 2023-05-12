@@ -152,7 +152,7 @@ public class ChangeEnvironmentMenu extends Menu {
         }
         int turns = Integer.parseInt(input);
         System.out.println("choose your desire map:\nenter 1 or 2");
-        int mapOption = scanner.nextInt();
+        int mapOption = Integer.parseInt(scanner.nextLine());
         while (mapOption != 2 && mapOption != 1) {
             System.out.println("wrong map number");
             mapOption = scanner.nextInt();
