@@ -6,7 +6,6 @@ import enums.RateNumber;
 import enums.environmentEnums.Material;
 import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
-import enums.unitEnums.TroopType;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.*;
@@ -15,7 +14,6 @@ import model.units.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class GameController {
 
@@ -57,7 +55,7 @@ public class GameController {
             else if (i % 9 == 3) cells[0][i].setTexture(Texture.SMALL_POND);
             else if (i % 9 == 4) cells[0][i].setTexture(Texture.BIG_POND);
             else if (i % 9 == 5) cells[0][i].setTexture(Texture.BEACH);
-            else if (i % 9 == 6)  {
+            else if (i % 9 == 6) {
                 cells[0][i].setTexture(Texture.SEA);
                 break;
             }
@@ -85,7 +83,7 @@ public class GameController {
             else if (i % 9 == 3) cells2[0][i].setTexture(Texture.RIVER);
             else if (i % 9 == 4) cells2[0][i].setTexture(Texture.SHALLOW_WATER);
             else if (i % 9 == 5) cells2[0][i].setTexture(Texture.OIL);
-            else if (i % 9 == 6)  {
+            else if (i % 9 == 6) {
                 cells2[0][i].setTexture(Texture.SEA);
                 break;
             }
@@ -241,15 +239,24 @@ public class GameController {
         if (item.equals("e"))
             return attackToEnemy(x, y);
         if (item.equals("x"))
-            return aearialAttack(x, y);
+            return airAttack(x, y);
         return null;
     }
 
     private Output attackToEnemy(int x, int y) {
-        return null;
+        if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
+        for (Unit unit: game.getSelectedUnit()) {
+            if (unit instanceof Troop) {
+                int dx = Math.abs(unit.getCell().getX() - (x - 1));
+                int dy = Math.abs(unit.getCell())
+                if (unit instanceof Unarmed) {
+
+                }
+            }
+        }
     }
 
-    private Output aearialAttack(int x, int y) {
+    private Output airAttack(int x, int y) {
         return null;
     }
 
@@ -500,7 +507,8 @@ public class GameController {
                         case "iron mine":
                             producer.produceMaterials();
                     }
-                } if (building instanceof Converter) {
+                }
+                if (building instanceof Converter) {
                     Converter converter = (Converter) building;
                     switch (converter.getName()) {
                         case "bakery":
@@ -521,7 +529,7 @@ public class GameController {
                 }
                 if (cell[j].getBuilding() instanceof PopularityBooster)
                     ((PopularityBooster) cell[j].getBuilding()).increasePopularity();
-                if(building.getName().equals("hovel")) {
+                if (building.getName().equals("hovel")) {
                     Governance governance = building.getOwner().getGovernance();
                     governance.setPopulation(governance.getPopulation() + 8);
                     governance.setUnemployedPopulation(governance.getUnemployedPopulation() + 8);
@@ -542,12 +550,13 @@ public class GameController {
         if (fy >= game.getColumn()) fy--;
         for (int x = sx; x <= fx; x++) {
             for (int y = sy; y <= fy; y++) {
-                for (Unit unit: game.getCells()[x][y].getUnits())
+                for (Unit unit : game.getCells()[x][y].getUnits())
                     units.add(unit);
             }
         }
         return units;
     }
+
     private void updateReligiousPopularity() {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
