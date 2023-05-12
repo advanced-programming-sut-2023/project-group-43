@@ -173,12 +173,11 @@ public class ChangeEnvironmentController {
                 user = player;
                 break;
             }
-            if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
+            if (player.equals(game.getCurrentPlayer())) {
                 isNextPlayerFound = true;
             }
         }
         if (user == null) {
-            game.setCurrentPlayer(game.getPlayers().get(0));
             return "everyone has changed map please start game";
         }
         return game.getCurrentPlayer().getUsername() + " can change map";
