@@ -414,7 +414,6 @@ public class GameController {
                 }
             }
         }
-        game.getCurrentPlayer().getGovernance().setUnemployedPopulation(game.getCurrentPlayer().getGovernance().getUnemployedPopulation() + newUnemployedUnit);
     }
 
     public void updateUnitTargets() {
@@ -681,9 +680,9 @@ public class GameController {
         for (int i = 0; i < 4; i++) {
             if (currentX + array[0][i] >= 0 && currentX + array[0][i] < game.getRow() &&
                     currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn()) {
-                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked()) {
+                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit)) {
                     path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
-                    if (backTrack(cells, path, tx, ty)) return true;
+                    if (backTrack(cells, path, tx, ty, unit)) return true;
                     path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
                 }
             }
