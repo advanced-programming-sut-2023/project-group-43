@@ -25,6 +25,8 @@ public class StoreMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
+            if(input.matches("show current menu"))
+                output = Output.STORE_MENU;
             if (input.matches("back")) {
                 storeController.getGame().setSelectedBuilding(null);
                 System.out.println("game menu:");

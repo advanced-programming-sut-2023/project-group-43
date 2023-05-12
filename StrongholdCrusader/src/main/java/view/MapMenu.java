@@ -25,16 +25,16 @@ public class MapMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
+            if(input.matches("show current menu"))
+                System.out.println(Output.MAP_MENU.getString());
             if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
-                //output = showMap(matcher);
                 showMap(matcher);
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_DETAILS)) != null) {
-                //output = showMapDetails(matcher);
                 showMapDetails(matcher);
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
-                //output = moveMap(matcher);
                 moveMap(matcher);
             }
+            else System.out.println("invalid command!");;
         }
     }
 

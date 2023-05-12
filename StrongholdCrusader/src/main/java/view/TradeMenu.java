@@ -26,6 +26,8 @@ public class TradeMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
+            if (input.matches("show current menu"))
+                output = Output.TRADE_MENU;
             if ((matcher = TradeMenuCommands.getMatcher(input, TradeMenuCommands.SEND_TRADE)).matches()) {
                 output = requestTrade(matcher);
             } else if ((matcher = TradeMenuCommands.getMatcher(input, TradeMenuCommands.ACCEPT_TRADE)).matches()) {

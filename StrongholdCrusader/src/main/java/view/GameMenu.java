@@ -57,7 +57,6 @@ public class GameMenu extends Menu {
             }
             turns--;
         }
-        System.out.println(gameController.showGameResult());
     }
 
     public void enterMapMenu() {

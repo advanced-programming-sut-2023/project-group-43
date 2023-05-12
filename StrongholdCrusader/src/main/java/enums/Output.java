@@ -1,21 +1,20 @@
 package enums;
 
 public enum Output {
-    DIG_TUNNEL_FAILED("warning : digging tunnel failed!"),
-    DIG_TUNNEL_SUCCESSFUL("digging tunnel done successfully"),
-    WRONG_TYPE_OF_UNIT("warning : no unit with this type!"),
-    NOT_ENOUGH_BALANCE_FOR_DROPPING_UNIT("warning : not enough balance for dropping unit/units!"),
-    BUILDING_DROPPED_SUCCESSFULLY("building dropped successfully"),
-    NOT_ENOUGH_BALANCE_FOR_DROPPING_BUILDING("warning : not enough balance for dropping this building!"),
-    UNIT_DISBANDED_SUCCESSFULLY("unit/units disbanded successfully"),
-    NO_UNIT_FOR_DISBANDING("warning : no unit available for disbanding!"),
-    NO_ENGINEER_HERE("warning : no engineer selected for pouring oil!"),
-    UNIT_STATE_SETTED_SUCCESSFULLY("unit state setted successfully"),
-    THIS_IS_NOT_YOUR_BUILDING("warning : the selected building is not yours!"),
-    NO_THIS_TYPE_UNIT("warning : no unit with given type in this cell"),
-    NO_UNIT("warning : no unit in this cell"),
-    NOT_ENOUGH_STONE("warning : not enough stone for repairment!"),
-    SUCCESSFUL_REPAIRMENT("repairment done successfully"),
+
+    //manu names
+    CHANGE_ENVIRONMENT_MENU("change environment menu"),
+    GOVERNANCE_MENU("governance menu"),
+    LOGIN_MENU("login menu"),
+    MAIN_MENU("main menu"),
+    MAP_MENU("map menu"),
+    PROFILE_MENU("profile menu"),
+    REGISTER_MENU("register menu"),
+    STORE_MENU("store menu"),
+    TRADE_MENU("trade menu"),
+
+
+    //before game
     CAPTCHA_MATCHED("captcha matched"),
     CAPTCHA_NOT_MATCHED("warning : captcha not matched!"),
     NO_BUILDING("warning : no building in this coordination!"),
@@ -57,36 +56,42 @@ public enum Output {
     SUCCESSFUL_LOGIN("enter captcha to login"),
     CORRECT_PASSWORD_RECOVERY_ANSWER("your answer is correct, choose a new password:"),
     WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
-    //
-    WRONG_UNIT_NAME("wrong unit name"),
+
+
+
+    //Game outputs
+    WRONG_UNIT_NAME("warning: wrong unit name"),
     WRONG_SELECT_FOR_BUILDING("The wrong building is selected"),
     SUCCESSFUL_UNIT_CREATION("Unit created successfully!"),
-    NOT_ENOUGH_POPULATION("Not enough population!"),
-    NOT_ENOUGH_WEAPON("Not enough weapon!"),
+    NOT_ENOUGH_POPULATION("warning: Not enough population!"),
+    NOT_ENOUGH_WEAPON("warning: Not enough weapon!"),
     SELECT_BUILDING("The building selected successfully "),
-    CREATE_UNIT("The unit successfully created"),
-    REPAIR("repaired successfully!"),
     SELECT_UNIT("The unit successfully selected"),
-    MOVE_UNIT("unit successfully moved to"),
-    SET_UNIT_STATE("unit state was successfully set to"),
-    DIRECT_ATTACK("direct attack command was successfully!"),
-    AERIAL_ATTACK("aerial attack command was successfully!"),
-    POUR_OIL("The oil successfully poured"),
-    DIG_TUNNEL("The tunnel successfully digged"),
-    BUILD_EQUIPMENT("The equipment successfully built"),
-    DISBAND_UNIT("The unit disbanded"),
     SLOGAN_REMOVED_SUCCESSFULLY("slogan removed successfully!"),
     SUCCESSFUL_PASSWORD_CHANGEING("password changed successfully!"),
     DUPLICATED_NEWPASSWORD("warning : you entered your previous password,enter a new password!"),
     SUCCESSFUL_SLOGAN_CHANGE("slogan changed successfully!"),
     DUPLICATE_SLOGAN("warning : duplicate slogan!"),
-    WRONG_COUNT("warning : invalid number!"),
-    UNIT_DROPPED_SUCCESSFULLY("unit droped successfully!"),
     SUCCESSFUL_MAP_GENERATION("you generate the map successfully!"),
+    DIG_TUNNEL_FAILED("warning : digging tunnel failed!"),
+    DIG_TUNNEL_SUCCESSFUL("digging tunnel done successfully"),
+    UNIT_DISBANDED_SUCCESSFULLY("unit/units disbanded successfully"),
+    NO_UNIT_FOR_DISBANDING("warning : no unit available for disbanding!"),
+    NO_ENGINEER_HERE("warning : no engineer selected for pouring oil!"),
+    UNIT_STATE_SETTED_SUCCESSFULLY("unit state setted successfully"),
+    THIS_IS_NOT_YOUR_BUILDING("warning : the selected building is not yours!"),
+    NO_THIS_TYPE_UNIT("warning : no unit with given type in this cell"),
+    NO_UNIT("warning : no unit in this cell"),
+    NOT_ENOUGH_STONE("warning : not enough stone for repairment!"),
+    SUCCESSFUL_REPAIRMENT("repairment done successfully"),
+
+
     //Governance outputs
     SUCCESSFUL_FOOD_RATE_CHANGE("food rate changed successfully!"),
     SUCCESSFUL_TAX_RATE_CHANGE("tax rate changed successfully!"),
     SUCCESSFUL_FEAR_RATE_CHANGE("fear rate changed successfully!"),
+
+
     //Store outputs
     ITEM_NOR_FOUND("Item not found!"),
     NOT_ENOUGH_QUANTITY("Insufficient quantity!"),
@@ -94,6 +99,8 @@ public enum Output {
     SUCCESSFUL_PURCHASE("The purchase was successful!"),
     SUCCESSFUL_SALE("The sale was successful!"),
     EQUIPMENT_CREATED_SUCCESSFULLY("equipment created successfully!"),
+
+
     //some Output for all the project
     INVALID_NUMBER("Invalid number!"),
 
@@ -110,14 +117,16 @@ public enum Output {
     INVALID_BUILDING("you only can drop one headquarter now"),
     INVALID_STATE("please enter a valid state"),
     SUCCESSFUL_ACTION("you did it successfully!"),
+
+
     //moving and adding units
     INVALID_MOVE("warning: your chosen destination is blocked!"),
     NOT_ENOUGH_UNIT("warning: you don't have enough units to drop here"),
     INVALID_CELL("you cannot drop unit in this cell"),
     INVALID_DISTANCE("warning: this cell is not in a valid distance from your units!"),
 
-    //dropping buildings
-    INVALID_CELL_FOR_THIS_BUILDING("you cannot drop this building here");
+
+    ;
     private final String string;
 
     Output(String string) {
