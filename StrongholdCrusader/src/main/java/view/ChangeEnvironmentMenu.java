@@ -144,6 +144,12 @@ public class ChangeEnvironmentMenu extends Menu {
             input = scanner.nextLine();
         }
         int turns = Integer.parseInt(input);
-        System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns).getString());
+        System.out.println("choose your desire map:\nenter 1 or 2");
+        int mapOption = scanner.nextInt();
+        while (mapOption != 2 && mapOption != 1) {
+            System.out.println("wrong map number");
+            mapOption = scanner.nextInt();
+        }
+        System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns, mapOption).getString());
     }
 }

@@ -3,6 +3,7 @@ package controller;
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.environmentEnums.Material;
+import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
@@ -15,15 +16,81 @@ import model.buildings.Converter;
 import model.units.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class GameController {
 
     private final Game game;
+    private static HashMap<String, Cell[][]> defualtMaps = new HashMap<>();
 
 
     public GameController(Game game) {
         this.game = game;
+    }
+
+    public static Cell[][] getDefualtMaps(int mapOption) {
+        if (mapOption == 1) return defualtMaps.get("option number 1");
+        else return defualtMaps.get("option number 2");
+    }
+
+    public static void setDefualtMaps(int row, int column) {
+        Cell[][] cells = new Cell[row][column];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                cells[i][j] = new Cell();
+                if (i % 9 == 0) cells[i][j].setTexture(Texture.GROUND);
+                else if (i % 9 == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
+                else if (i % 9 == 2) cells[i][j].setTexture(Texture.BOULDER);
+                else if (i % 9 == 3) cells[i][j].setTexture(Texture.ROCK);
+                else if (i % 9 == 4) cells[i][j].setTexture(Texture.IRON);
+                else if (i % 9 == 5) cells[i][j].setTexture(Texture.GRASS);
+                else if (i % 9 == 6) cells[i][j].setTexture(Texture.MEADOW);
+                else if (i % 9 == 7) cells[i][j].setTexture(Texture.DENSE_GRASSLAND);
+                else if (i % 9 == 8) cells[i][j].setTexture(Texture.PLAIN);
+            }
+        }
+        for (int i = 0; i < column; i++) {
+            if (i % 9 == 0) cells[0][i].setTexture(Texture.OIL);
+            else if (i % 9 == 1) cells[0][i].setTexture(Texture.SHALLOW_WATER);
+            else if (i % 9 == 2) cells[0][i].setTexture(Texture.RIVER);
+            else if (i % 9 == 3) cells[0][i].setTexture(Texture.SMALL_POND);
+            else if (i % 9 == 4) cells[0][i].setTexture(Texture.BIG_POND);
+            else if (i % 9 == 5) cells[0][i].setTexture(Texture.BEACH);
+            else if (i % 9 == 6)  {
+                cells[0][i].setTexture(Texture.SEA);
+                break;
+            }
+        }
+        defualtMaps.put("option number 1", cells);
+        Cell[][] cells2 = new Cell[row][column];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                cells2[i][j] = new Cell();
+                if (i % 9 == 0) cells2[i][j].setTexture(Texture.GRAVEL_GROUND);
+                else if (i % 9 == 1) cells2[i][j].setTexture(Texture.GROUND);
+                else if (i % 9 == 2) cells2[i][j].setTexture(Texture.ROCK);
+                else if (i % 9 == 3) cells2[i][j].setTexture(Texture.BOULDER);
+                else if (i % 9 == 4) cells2[i][j].setTexture(Texture.GRASS);
+                else if (i % 9 == 5) cells2[i][j].setTexture(Texture.IRON);
+                else if (i % 9 == 6) cells2[i][j].setTexture(Texture.DENSE_GRASSLAND);
+                else if (i % 9 == 7) cells2[i][j].setTexture(Texture.PLAIN);
+                else if (i % 9 == 8) cells2[i][j].setTexture(Texture.MEADOW);
+            }
+        }
+        for (int i = 0; i < column; i++) {
+            if (i % 9 == 0) cells2[0][i].setTexture(Texture.BEACH);
+            else if (i % 9 == 1) cells2[0][i].setTexture(Texture.BIG_POND);
+            else if (i % 9 == 2) cells2[0][i].setTexture(Texture.SMALL_POND);
+            else if (i % 9 == 3) cells2[0][i].setTexture(Texture.RIVER);
+            else if (i % 9 == 4) cells2[0][i].setTexture(Texture.SHALLOW_WATER);
+            else if (i % 9 == 5) cells2[0][i].setTexture(Texture.OIL);
+            else if (i % 9 == 6)  {
+                cells2[0][i].setTexture(Texture.SEA);
+                break;
+            }
+        }
+        defualtMaps.put("option number 2", cells2);
     }
 
     public Game getGame() {
