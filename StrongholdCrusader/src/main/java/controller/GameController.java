@@ -126,6 +126,14 @@ public class GameController {
         assert building != null;
         if (type.equals("iron mine") && !game.getCells()[x - 1][y - 1].getTexture().equals(Texture.IRON))
             return Output.INVALID_CELL;
+        if (type.equals("food stockpile") && game.getCurrentPlayer().getGovernance().getAllBuildingsByName("food stockpile") != null) {
+            boolean canDropStorage = false;
+            for (Building aroundBuilding: findBuildingsAround(game.getCells()[x - 1][y - 1])) {
+                if (aroundBuilding.getName().equals("food stockpile") && building.getOwner().equals(game.getCurrentPlayer()))
+                    canDropStorage = true;
+            }
+            if (!canDropStorage) return Output.INVALID_CELL;
+        }
         if (governance.getGold() < building.getCost()) return Output.NOT_ENOUGH_GOLD;
         if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.WOOD) < building.getWood())
             return Output.NOT_ENOUGH_RESOURCE;
@@ -380,13 +388,13 @@ public class GameController {
                 } else if (unit instanceof Tunneler) {
                     ((Tunneler) unit).destroyBuilding(game);
                 } else if (unit instanceof Ladderman) {
-                    ((Ladderman) unit).addLadder(findBuildingsAround(unit));
+                    ((Ladderman) unit).addLadder(findBuildingsAround(unit.getCell()));
                 }
                 if (unit instanceof Spearman) {
-                    ((Spearman) unit).dropLadder(findBuildingsAround(unit));
+                    ((Spearman) unit).dropLadder(findBuildingsAround(unit.getCell()));
                 }
                 if (unit instanceof Assassin) {
-                    ((Assassin) unit).getCastleDepartment(findBuildingsAround(unit));
+                    ((Assassin) unit).getCastleDepartment(findBuildingsAround(unit.getCell()));
                 }
             }
         }
@@ -419,14 +427,14 @@ public class GameController {
         return null;
     }
 
-    private ArrayList<Building> findBuildingsAround(Unit unit) {
+    private ArrayList<Building> findBuildingsAround(Cell cell) {
         ArrayList<Building> buildings = new ArrayList<>();
-        int sx = unit.getCell().getX() - 1;
-        int sy = unit.getCell().getY() - 1;
+        int sx = cell.getX() - 1;
+        int sy = cell.getY() - 1;
         if (sx < 0) sx = 0;
         if (sy < 0) sy = 0;
-        int fx = unit.getCell().getX() + 1;
-        int fy = unit.getCell().getY() + 1;
+        int fx = cell.getX() + 1;
+        int fy = cell.getY() + 1;
         if (fx >= game.getRow()) fx--;
         if (fy >= game.getColumn()) fy--;
         for (int x = sx; x <= fx; x++) {
