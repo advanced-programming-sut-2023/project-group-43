@@ -1,4 +1,5 @@
 package controller;
+
 import enums.Output;
 import model.Cell;
 import model.Game;
@@ -31,9 +32,11 @@ public class MapController {
                     for (int j = 0; j < 5; j++) {
                         if ((row - 6 + h) >= 0 && (column - 6 + i) >= 0 && (column - 6 + i) <= game.getCells()[0].length && (row - 6 + h) <= game.getCells().length) {
                             output.append(game.getCells()[row - 6 + h][column - 6 + i].getTexture().getColor());
-                            output.append("#").append("\u001B[0m");
-                        }
-                        else output.append(" empty ");
+                            if (game.getCells()[i][j] != null)
+                                output.append("#").append("\u001B[0m");
+                            else
+                                output.append("b").append("\u001B[0m");
+                        } else output.append(" empty ");
                     }
                     output.append("|");
                 }
@@ -45,6 +48,7 @@ public class MapController {
         }
         return output.toString();
     }
+
     public String showMapDetails(int row, int column) {
         Cell cell = game.getCells()[row - 1][column - 1];
         StringBuilder details = new StringBuilder();
@@ -58,14 +62,15 @@ public class MapController {
         }
         if (cell.getUnits().size() > 0) {
             details.append("\nUnits : ").append(cell.getUnits().size()).append(" units");
-            for (Unit unit: cell.getUnits()) {
+            for (Unit unit : cell.getUnits()) {
                 if (unit instanceof Assassin && (!((Assassin) unit).isHidden() || unit.getOwner().getUsername().equals(game.getCurrentPlayer().getUsername())))
-                details.append("\n").append(unit.getName());
+                    details.append("\n").append(unit.getName());
                 details.append(" | hit point ").append(unit.getHitPoint());
             }
         }
         return details.toString();
     }
+
     public String moveMap(int horizontalDisplacement, int verticalDisplacement) {
         return showMap(game.getCurrentMapX() + verticalDisplacement, game.getGetCurrentMapY() + horizontalDisplacement);
     }
