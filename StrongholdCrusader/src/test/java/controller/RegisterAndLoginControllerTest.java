@@ -42,7 +42,7 @@ public class RegisterAndLoginControllerTest {
     @Test
     public void invalidEmailFormat() {
         RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals(Output.INVALID_EMAIL_FORMAT, controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!1111", ".", "ioiouoi", null, false));
+        assertEquals(Output.INVALID_EMAIL_FORMAT, controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!", ".", "ioiouoi", null, false));
     }
     @Test
     public void randomSlogan(){
@@ -109,7 +109,7 @@ public class RegisterAndLoginControllerTest {
     public void successfulLogin() {
         RegisterAndLoginController controller = new RegisterAndLoginController();
         User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals(Output.SUCCESSFUL_LOGIN, controller.loginUser("aida", user.getPassword(), false));
+        assertEquals(Output.SUCCESSFUL_LOGIN, controller.loginUser("aida", "Aa1!Aa1!", user.isLoggedIn()));
     }
     @Test
     public void notExistentUsername() {
