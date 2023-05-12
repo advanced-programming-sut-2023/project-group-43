@@ -150,4 +150,9 @@ public class RegisterAndLoginControllerTest {
     public void thirdValidQuestionNumber() {
         assertEquals("What is my mother’s last name?", RegisterAndLoginController.makePasswordRecoveryQuestion(3));
     }
+
+    @Test
+    public void successfulLogin() {
+        assertEquals(Output.SUCCESSFUL_LOGIN, RegisterAndLoginController.loginUser("aida", "Aa1!Aa1!", false));
+    }
 }
