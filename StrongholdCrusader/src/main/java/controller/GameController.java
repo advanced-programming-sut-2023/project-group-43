@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class GameController {
 
     private final Game game;
-    private static HashMap<String, Cell[][]> defualtMaps = new HashMap<>();
+    private static HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private Cell village = new Cell();
 
@@ -41,12 +41,12 @@ public class GameController {
         }
     }
 
-    public static Cell[][] getDefualtMaps(int mapOption) {
-        if (mapOption == 1) return defualtMaps.get("option number 1");
-        else return defualtMaps.get("option number 2");
+    public static Cell[][] getDefaultMaps(int mapOption) {
+        if (mapOption == 1) return defaultMaps.get("option number 1");
+        else return defaultMaps.get("option number 2");
     }
 
-    public static void setDefualtMaps(int row, int column) {
+    public static void setDefaultMaps(int row, int column) {
         Cell[][] cells = new Cell[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
