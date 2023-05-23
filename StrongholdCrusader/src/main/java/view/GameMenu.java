@@ -82,7 +82,7 @@ public class GameMenu extends Menu {
 
     private Output selectBuilding(Matcher matcher) {
         if (parseMatcher(matcher))
-            return gameController.selectBuilding(Integer.getInteger(x), Integer.parseInt(y));
+            return gameController.selectBuilding(Integer.parseInt(x), Integer.parseInt(y));
         return null;
     }
 
@@ -95,13 +95,13 @@ public class GameMenu extends Menu {
     private Output selectUnit(Matcher matcher) {
         String type = Validations.getInfo("t", matcher.group());
         if (parseMatcher(matcher) && type != null)
-            return gameController.selectUnit(Integer.getInteger(x), Integer.parseInt(y), type);
+            return gameController.selectUnit(Integer.parseInt(x), Integer.parseInt(y), type);
         return null;
     }
 
     private Output moveUnit(Matcher matcher) {
         if (parseMatcher(matcher))
-            return gameController.moveUnit(Integer.getInteger(x), Integer.parseInt(y));
+            return gameController.moveUnit(Integer.parseInt(x), Integer.parseInt(y));
         return null;
     }
 
