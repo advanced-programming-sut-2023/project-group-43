@@ -26,9 +26,9 @@ public class GovernanceMenu extends Menu {
                 if (governanceController.getGame().getSelectedBuilding() != null) {
                     if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
                         governanceController.getGame().setSelectedBuilding(null);
-                    System.out.println("game menu:");
-                    return;
                 }
+                System.out.println("game menu:");
+                return;
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY_FACTORS) != null) {
                 System.out.println(governanceController.showPopularityFactors());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY) != null) {
