@@ -43,6 +43,7 @@ public class GameController {
             player.getGovernance().setFoodRate(RateNumber.FOOD_RATE_MINUS_2);
             player.getGovernance().setTaxRate(RateNumber.TAX_RATE_0);
             player.getGovernance().setPopulation(15);
+            player.getGovernance().setUnemployedPopulation(15);
             player.getGovernance().setGold(100);
             player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD , 50);
             player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE , 50);
