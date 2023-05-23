@@ -15,10 +15,10 @@ public class GovernanceController {
     public String showPopularityFactors() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<<<Popularity Factors>>");
-        stringBuilder.append("Food");
-        stringBuilder.append("Tax");
-        stringBuilder.append("Fear");
-        stringBuilder.append("Religion");
+        stringBuilder.append("\nFood");
+        stringBuilder.append("\nTax");
+        stringBuilder.append("\nFear");
+        stringBuilder.append("\nReligion");
         return String.valueOf(stringBuilder);
     }
 
@@ -29,10 +29,10 @@ public class GovernanceController {
     public String showFoodList() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<<<Food List>>>");
-        stringBuilder.append("meat");
-        stringBuilder.append("cheese");
-        stringBuilder.append("apple");
-        stringBuilder.append("bread");
+        stringBuilder.append("\nmeat");
+        stringBuilder.append("\ncheese");
+        stringBuilder.append("\napple");
+        stringBuilder.append("\nbread");
         return String.valueOf(stringBuilder);
     }
 
@@ -40,7 +40,6 @@ public class GovernanceController {
         RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("food", rate);
         game.getCurrentPlayer().getGovernance().setFoodRate(rateNumber);
         return Output.SUCCESSFUL_FOOD_RATE_CHANGE;
-        //TODO
     }
 
     public String showFoodRate() {
@@ -53,8 +52,8 @@ public class GovernanceController {
         return Output.SUCCESSFUL_TAX_RATE_CHANGE;
     }
 
-    public String showTaxRate() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getTaxRate());
+    public int showTaxRate() {
+        return (game.getCurrentPlayer().getGovernance().getTaxRate().getRateNumber());
     }
 
     public Output fearRate(int rate) {
@@ -62,8 +61,8 @@ public class GovernanceController {
         return Output.SUCCESSFUL_FEAR_RATE_CHANGE;
     }
 
-    public String showFearRate() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getFearRate());
+    public int showFearRate() {
+        return ((game.getCurrentPlayer().getGovernance().getFearRate()));
     }
 
     public Game getGame() {

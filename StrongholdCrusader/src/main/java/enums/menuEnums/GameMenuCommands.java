@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public enum GameMenuCommands {
     //enter menu commands
     ENTER_MAP_MENU("enter map menu"),
-    ENTER_STORE_MENU("enter store menu"),
     ENTER_TRADE_MENU("enter trade menu"),
     ENTER_GOVERNANCE_MENU("enter governance menu"),
     //choose and change items inside game

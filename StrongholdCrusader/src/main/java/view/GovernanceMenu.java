@@ -56,17 +56,17 @@ public class GovernanceMenu extends Menu {
 
     private String foodRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
-        return String.valueOf(governanceController.foodRate(rate));
+        return (governanceController.foodRate(rate)).getString();
     }
 
     public String taxRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
-        return String.valueOf(governanceController.taxRate(rate));
+        return (governanceController.taxRate(rate)).getString();
     }
 
     public String fearRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
-        return String.valueOf(governanceController.fearRate(rate));
+        return (governanceController.fearRate(rate)).getString();
     }
 
 }
