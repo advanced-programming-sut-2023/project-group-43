@@ -42,8 +42,8 @@ public class GovernanceController {
         return Output.SUCCESSFUL_FOOD_RATE_CHANGE;
     }
 
-    public String showFoodRate() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getFoodRate());
+    public int showFoodRate() {
+        return (game.getCurrentPlayer().getGovernance().getFoodRate().getRateNumber());
     }
 
     public Output taxRate(int rate) {

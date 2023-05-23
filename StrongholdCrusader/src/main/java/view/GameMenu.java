@@ -87,9 +87,11 @@ public class GameMenu extends Menu {
     }
 
     private Output createUnit(Matcher matcher) {
-        String type = matcher.group("type");
-        int count = Integer.parseInt(matcher.group("count"));
-        return gameController.createUnit(type, count);
+        String type = Validations.getInfo("t", matcher.group());
+        String count = Validations.getInfo("c", matcher.group());
+        if (type != null && count != null && count.matches("\\d+"))
+            return gameController.createUnit(type, Integer.parseInt(count));
+        return null;
     }
 
     private Output selectUnit(Matcher matcher) {
