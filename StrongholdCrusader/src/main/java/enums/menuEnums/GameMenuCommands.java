@@ -12,7 +12,7 @@ public enum GameMenuCommands {
     SELECT_BUILDING("select building" +
             "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     CREATE_UNIT("create unit" +
-            "( \\-(?<flag>[ct])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
+            "( \\-(?<flag>[ct])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     REPAIR_CASTLE("repair"),
     //people and units
     SELECT_UNIT("select unit" +
