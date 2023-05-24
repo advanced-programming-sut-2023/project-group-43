@@ -63,6 +63,8 @@ public class GameController {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 cells[i][j] = new Cell();
+                cells[i][j].setX(i);
+                cells[i][j].setY(j);
                 if (i % 9 == 0) cells[i][j].setTexture(Texture.GROUND);
                 else if ((i % 9) == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
                 else if ((i % 9) == 2) cells[i][j].setTexture(Texture.BOULDER);
@@ -769,33 +771,32 @@ public class GameController {
     }
 
 
-    public ArrayList<Cell> findPath(int tx, int ty, Unit unit) {
+    public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty, Unit unit) {
         Cell[][] cells = game.getCells();
         ArrayList<Cell> path = new ArrayList<>();
         if (cells[tx][ty].isBlocked(unit)) return null;
-        path.add(cells[tx][ty]);
-        if (backTrack(cells, path, tx, ty, unit)) return path;
+        path.add(cells[sx][sy]);
+        if (backTrack(cells, path,sx, sy, tx, ty, unit)) return path;
         return null;
     }
 
-    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int tx, int ty, Unit unit) {
-        Cell currentCell = path.get(path.size() - 1);
-        int currentX = currentCell.getX();
-        int currentY = currentCell.getY();
+    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int currentX, int currentY, int tx, int ty, Unit unit) {
+        System.out.println(currentX + " "  + currentY);
         if (currentX == tx && currentY == ty) return true;
         int[][] array = prioritizePathFinding(currentX, currentY, tx, ty);
         for (int i = 0; i < 4; i++) {
             if (currentX + array[0][i] >= 0 && currentX + array[0][i] < game.getRow() &&
                     currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn()) {
                 if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit)) {
-                    path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
-                    if (cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
-                        path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                    Cell cell = cells[currentX + array[0][i]][currentY + array[1][i]];
+                    path.add(cell);
+                    if (cell.getTexture().equals(Texture.SHALLOW_WATER)) {
+                        path.add(cell);
                     }
-                    if (backTrack(cells, path, tx, ty, unit)) return true;
-                    path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
-                    if (cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
-                        path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
+                    if (backTrack(cells, path, cell.getX(), cell.getY(), tx, ty, unit)) return true;
+                    path.remove(cell);
+                    if (cell.equals(Texture.SHALLOW_WATER)) {
+                        path.remove(cell);
                     }
                 }
             }
