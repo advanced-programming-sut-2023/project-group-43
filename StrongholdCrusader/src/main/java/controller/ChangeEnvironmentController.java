@@ -1,8 +1,6 @@
 package controller;
 
 import enums.Output;
-import enums.RateNumber;
-import enums.environmentEnums.Material;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
 import enums.unitEnums.TroopType;
@@ -19,9 +17,9 @@ import java.util.ArrayList;
 
 public class ChangeEnvironmentController {
 
-    private Game game = new Game();
+    private final Game game = new Game();
 
-    private User currentUser;
+    private final User currentUser;
 
     public ChangeEnvironmentController(User currentUser) {
         this.currentUser = currentUser;
@@ -36,10 +34,11 @@ public class ChangeEnvironmentController {
     }
 
     public void initializeGame() {
-        for (User player: game.getPlayers()) {
+        for (User player : game.getPlayers()) {
             player.setGovernance(new Governance());
         }
     }
+
     public Output generateMap(ArrayList<String> usernames, int row, int column, int turns, int mapOption) {
         game.setCurrentUser(currentUser);
         game.addPlayer(currentUser);
@@ -60,42 +59,30 @@ public class ChangeEnvironmentController {
         return Output.SUCCESSFUL_MAP_GENERATION;
     }
 
-    public Output setTexture(int x, int y, String texture) {
+    public Output setTexture(int x, int y, String name) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (game.getCells()[x - 1][y - 1].getBuilding() != null)
             return Output.BUILDING_IN_THIS_AREA;
-        Texture texture1 = Texture.GROUND;
-        for (Texture texture2 : Texture.values()) {
-            if (texture2.equals(texture)) {
-                texture1 = texture2;
-                break;
-            }
-        }
-        game.getCells()[x - 1][y - 1].setTexture(texture1);
+        Texture texture = Texture.getTextureByName(name);
+        game.getCells()[x - 1][y - 1].setTexture(texture);
         return Output.SET_TEXTURE;
     }
 
-    public Output setTextureRectangle(int x1, int y1, int x2, int y2, String texture) {
-        if (x1 <= 0 || y1 <= 0 || x2 <= 0 || y2 <= 0 || x1 > x2 || y1 < y2)
+    public Output setTextureRectangle(int x1, int y1, int x2, int y2, String name) {
+        if (x1 <= 0 || x2 <= 0 || y2 <= 0 || x1 > x2 || y1 < y2)
             return Output.WRONG_COORDINATES;
-        Texture texture1 = Texture.GROUND;
-        for (Texture texture2 : Texture.values()) {
-            if (texture2.equals(texture)) {
-                texture1 = texture2;
-                break;
-            }
-        }
+        Texture texture = Texture.getTextureByName(name);
         for (int i = x1 - 1; i <= x2 - 1; i++) {
             for (int j = y1 - 1; j <= y2 - 1; j++) {
                 if (game.getCells()[i][j].getBuilding() != null)
                     return Output.BUILDING_IN_THIS_AREA;
-                game.getCells()[i][j].setTexture(texture1);
+                game.getCells()[i][j].setTexture(texture);
             }
         }
         for (int i = x1 - 1; i <= x2 - 1; i++) {
             for (int j = y1 - 1; j <= y2 - 1; j++) {
-                game.getCells()[i][j].setTexture(texture1);
+                game.getCells()[i][j].setTexture(texture);
             }
         }
         return Output.SET_TEXTURE_RECTANGLE;
@@ -140,7 +127,8 @@ public class ChangeEnvironmentController {
             return Output.WRONG_COORDINATES;
         if (!type.matches("headquarter")) return Output.INVALID_BUILDING;
         if (game.getCells()[x - 1][y - 1].getBuilding() != null) return Output.INVALID_CELL;
-        if (game.getCurrentPlayer().getGovernance().getAllBuildingsByName("headquarter").size() > 0) return Output.INVALID_BUILDING;
+        if (game.getCurrentPlayer().getGovernance().getAllBuildingsByName("headquarter").size() > 0)
+            return Output.INVALID_BUILDING;
         Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
         building.setCell(game.getCells()[x - 1][y - 1]);
         game.getCells()[x - 1][y - 1].setBuilding(building);
@@ -151,7 +139,6 @@ public class ChangeEnvironmentController {
         game.getCells()[x - 1][y - 1].addUnit(unit);
         return Output.SUCCESSFUL_ACTION;
     }
-
 
 
     public boolean enterGameMenu() {

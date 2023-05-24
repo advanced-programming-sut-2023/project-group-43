@@ -58,7 +58,6 @@ public enum Output {
     WRONG_PASSWORD_RECOVERY_ANSWER("your answer is incorrect"),
 
 
-
     //Game outputs
     WRONG_UNIT_NAME("warning: wrong unit name"),
     WRONG_SELECT_FOR_BUILDING("The wrong building is selected"),

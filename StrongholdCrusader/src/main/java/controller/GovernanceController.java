@@ -4,22 +4,15 @@ import enums.Output;
 import enums.RateNumber;
 import model.Game;
 
-public class GovernanceController {
-
-    private Game game;
-
-    public GovernanceController(Game game) {
-        this.game = game;
-    }
+public record GovernanceController(Game game) {
 
     public String showPopularityFactors() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<<<Popularity Factors>>");
-        stringBuilder.append("\nFood");
-        stringBuilder.append("\nTax");
-        stringBuilder.append("\nFear");
-        stringBuilder.append("\nReligion");
-        return String.valueOf(stringBuilder);
+        return """
+                <<<Popularity Factors>>
+                Food
+                Tax
+                Fear
+                Religion""";
     }
 
     public String showPopularity() {
@@ -27,13 +20,12 @@ public class GovernanceController {
     }
 
     public String showFoodList() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<<<Food List>>>");
-        stringBuilder.append("\nmeat");
-        stringBuilder.append("\ncheese");
-        stringBuilder.append("\napple");
-        stringBuilder.append("\nbread");
-        return String.valueOf(stringBuilder);
+        return """
+                <<<Food List>>>
+                meat
+                cheese
+                apple
+                bread""";
     }
 
     public Output foodRate(int rate) {
@@ -63,9 +55,5 @@ public class GovernanceController {
 
     public int showFearRate() {
         return ((game.getCurrentPlayer().getGovernance().getFearRate()));
-    }
-
-    public Game getGame() {
-        return game;
     }
 }

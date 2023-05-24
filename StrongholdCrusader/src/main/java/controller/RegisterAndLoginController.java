@@ -59,8 +59,8 @@ public class RegisterAndLoginController {
 
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
             if (hex.length() == 1) {
                 hexString.append('0');
             }
@@ -124,16 +124,16 @@ public class RegisterAndLoginController {
     }
 
     public static String makeRandomPassword() {
-        String password = "";
+        StringBuilder password = new StringBuilder();
         Random random = new Random();
         String specialCharacters = ".+-)(*&^%$#@!~?";
         for (int i = 0; i < 3; i++) {
-            password += (char) (random.nextInt(25) + 'a');
-            password += (char) (random.nextInt(25) + 'A');
-            password += (char) (random.nextInt(9) + '0');
-            password += (specialCharacters.charAt(random.nextInt(14)));
+            password.append((char) (random.nextInt(25) + 'a'));
+            password.append((char) (random.nextInt(25) + 'A'));
+            password.append((char) (random.nextInt(9) + '0'));
+            password.append(specialCharacters.charAt(random.nextInt(14)));
         }
-        return password;
+        return password.toString();
     }
 
     public static String makeRandomSlogan() {
@@ -150,7 +150,7 @@ public class RegisterAndLoginController {
     }
 
     public static String asciiArt(String captcha) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         String[] line = new String[8];
         for (int i = 1; i < 8; i++) {
             line[i] = "";
@@ -172,7 +172,7 @@ public class RegisterAndLoginController {
         line[toBeNoisedLine2] += " ";
         for (int i = 0; i < captchaLength; i++) {
             switch (captchaDigits[i]) {
-                case 0: {
+                case 0 -> {
                     line[1] += " *****      ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -180,9 +180,8 @@ public class RegisterAndLoginController {
                     line[5] += "*     *     ";
                     line[6] += "*     *     ";
                     line[7] += " *****      ";
-                    break;
                 }
-                case 1: {
+                case 1 -> {
                     line[1] += "*    ";
                     line[2] += "*    ";
                     line[3] += "*    ";
@@ -190,9 +189,8 @@ public class RegisterAndLoginController {
                     line[5] += "*    ";
                     line[6] += "*    ";
                     line[7] += "*    ";
-                    break;
                 }
-                case 2: {
+                case 2 -> {
                     line[1] += "*******     ";
                     line[2] += "      *     ";
                     line[3] += "      *     ";
@@ -200,9 +198,8 @@ public class RegisterAndLoginController {
                     line[5] += "*           ";
                     line[6] += "*           ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 3: {
+                case 3 -> {
                     line[1] += "*******     ";
                     line[2] += "      *     ";
                     line[3] += "      *     ";
@@ -210,9 +207,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 4: {
+                case 4 -> {
                     line[1] += "*     *     ";
                     line[2] += "*     *     ";
                     line[3] += "*******     ";
@@ -220,9 +216,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "      *     ";
-                    break;
                 }
-                case 5: {
+                case 5 -> {
                     line[1] += "*******     ";
                     line[2] += "*           ";
                     line[3] += "*           ";
@@ -230,9 +225,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 6: {
+                case 6 -> {
                     line[1] += "*******     ";
                     line[2] += "*           ";
                     line[3] += "*           ";
@@ -240,9 +234,8 @@ public class RegisterAndLoginController {
                     line[5] += "*     *     ";
                     line[6] += "*     *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 7: {
+                case 7 -> {
                     line[1] += "*******     ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -250,9 +243,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "      *     ";
-                    break;
                 }
-                case 8: {
+                case 8 -> {
                     line[1] += "*******     ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -260,9 +252,8 @@ public class RegisterAndLoginController {
                     line[5] += "*     *     ";
                     line[6] += "*     *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 9: {
+                case 9 -> {
                     line[1] += "*******     ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -270,26 +261,25 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "*******     ";
-                    break;
                 }
             }
         }
         for (int i = 1; i < 8; i++) {
-            output += line[i] + "\n";
+            output.append(line[i]).append("\n");
         }
-        return output;
+        return output.toString();
     }
 
     public static String generateCaptcha() {
         Random rand = new Random();
         int n = rand.nextInt(4) + 4;
         String chrs = "0123456789";
-        String captcha = "";
+        StringBuilder captcha = new StringBuilder();
         while (n-- > 0) {
             int index = (int) (Math.random() * 10);
-            captcha += chrs.charAt(index);
+            captcha.append(chrs.charAt(index));
         }
-        return captcha;
+        return captcha.toString();
     }
 
     public static Output checkCaptcha(String captcha, String user_captcha) {

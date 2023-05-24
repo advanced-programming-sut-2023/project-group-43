@@ -14,6 +14,7 @@ import model.units.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class GameController {
 
@@ -33,7 +34,7 @@ public class GameController {
     }
 
     public void initializeGame() {
-        for (User player: game.getPlayers()) {
+        for (User player : game.getPlayers()) {
             player.getGovernance().setGovernanceResource(new GovernanceResource());
             player.getGovernance().getGovernanceResource().setOwner(player);
             player.getGovernance().setLordDead(false);
@@ -74,18 +75,7 @@ public class GameController {
                 else cells[i][j].setTexture(Texture.PLAIN);
             }
         }
-        for (int i = 0; i < column; i++) {
-            if ((i % 9) == 0) cells[0][i].setTexture(Texture.OIL);
-            else if ((i % 9) == 1) cells[0][i].setTexture(Texture.SHALLOW_WATER);
-            else if ((i % 9) == 2) cells[0][i].setTexture(Texture.RIVER);
-            else if ((i % 9) == 3) cells[0][i].setTexture(Texture.SMALL_POND);
-            else if ((i % 9) == 4) cells[0][i].setTexture(Texture.BIG_POND);
-            else if ((i % 9) == 5) cells[0][i].setTexture(Texture.BEACH);
-            else if ((i % 9) == 6) {
-                cells[0][i].setTexture(Texture.SEA);
-                break;
-            }
-        }
+        completeMap(column, cells, Texture.OIL, Texture.SHALLOW_WATER, Texture.RIVER, Texture.SMALL_POND, Texture.BIG_POND, Texture.BEACH);
         defaultMaps.put("option number 1", cells);
         Cell[][] cells2 = new Cell[row][column];
         for (int i = 0; i < row; i++) {
@@ -102,19 +92,23 @@ public class GameController {
                 else cells2[i][j].setTexture(Texture.MEADOW);
             }
         }
+        completeMap(column, cells2, Texture.BEACH, Texture.BIG_POND, Texture.SMALL_POND, Texture.RIVER, Texture.SHALLOW_WATER, Texture.OIL);
+        defaultMaps.put("option number 2", cells2);
+    }
+
+    private static void completeMap(int column, Cell[][] cells, Texture oil, Texture shallowWater, Texture river, Texture smallPond, Texture bigPond, Texture beach) {
         for (int i = 0; i < column; i++) {
-            if ((i % 9) == 0) cells2[0][i].setTexture(Texture.BEACH);
-            else if ((i % 9) == 1) cells2[0][i].setTexture(Texture.BIG_POND);
-            else if ((i % 9) == 2) cells2[0][i].setTexture(Texture.SMALL_POND);
-            else if ((i % 9) == 3) cells2[0][i].setTexture(Texture.RIVER);
-            else if ((i % 9) == 4) cells2[0][i].setTexture(Texture.SHALLOW_WATER);
-            else if ((i % 9) == 5) cells2[0][i].setTexture(Texture.OIL);
+            if ((i % 9) == 0) cells[0][i].setTexture(oil);
+            else if ((i % 9) == 1) cells[0][i].setTexture(shallowWater);
+            else if ((i % 9) == 2) cells[0][i].setTexture(river);
+            else if ((i % 9) == 3) cells[0][i].setTexture(smallPond);
+            else if ((i % 9) == 4) cells[0][i].setTexture(bigPond);
+            else if ((i % 9) == 5) cells[0][i].setTexture(beach);
             else if ((i % 9) == 6) {
-                cells2[0][i].setTexture(Texture.SEA);
+                cells[0][i].setTexture(Texture.SEA);
                 break;
             }
         }
-        defaultMaps.put("option number 2", cells2);
     }
 
     public Game getGame() {
@@ -218,7 +212,7 @@ public class GameController {
             else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
                 return Output.NOT_ENOUGH_STONE;
             else {
-                game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
+                game.getSelectedBuilding().setHp(Objects.requireNonNull(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName())).getHp());
                 game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
                 return Output.SUCCESSFUL_REPAIRMENT;
             }
@@ -731,7 +725,7 @@ public class GameController {
     public User findWinner() {
         int maxGold = 0;
         User winner = game.getCurrentUser();
-        for (User user: game.getPlayers()) {
+        for (User user : game.getPlayers()) {
             if (!user.getGovernance().isLordDead()) {
                 if (user.getGovernance().getGold() > maxGold)
                     winner = user;
@@ -780,7 +774,7 @@ public class GameController {
         for (int i = 0; i < game.getRow(); i++) {
             arr[i] = new boolean[game.getColumn()];
         }
-        if (backTrack(arr, cells, path,sx, sy, tx, ty, unit)) return path;
+        if (backTrack(arr, cells, path, sx, sy, tx, ty, unit)) return path;
         return null;
     }
 
@@ -800,7 +794,7 @@ public class GameController {
                     }
                     if (backTrack(arr, cells, path, cell.getX(), cell.getY(), tx, ty, unit)) return true;
                     path.remove(cell);
-                    if (cell.equals(Texture.SHALLOW_WATER)) {
+                    if (cell.getTexture().equals(Texture.SHALLOW_WATER)) {
                         path.remove(cell);
                     }
                 }

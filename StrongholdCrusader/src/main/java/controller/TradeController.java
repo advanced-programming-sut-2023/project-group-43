@@ -1,7 +1,6 @@
 package controller;
 
 import enums.Output;
-import enums.environmentEnums.Material;
 import model.Game;
 import model.GovernanceResource;
 import model.Trade;

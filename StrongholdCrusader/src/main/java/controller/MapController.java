@@ -8,8 +8,7 @@ import model.units.Unit;
 
 public class MapController {
 
-    private Game game;
-    private GameController gameController;
+    private final Game game;
 
     public MapController(Game game) {
         this.game = game;
@@ -21,9 +20,7 @@ public class MapController {
         game.setCurrentMapX(row--);
         game.setGetCurrentMapY(column--);
         StringBuilder output = new StringBuilder();
-        for (int i = 0; i < 11 * 6; i++) {
-            output.append("-");
-        }
+        output.append("-".repeat(11 * 6));
         output.append("\n");
         for (int h = 0; h < 11; h++) {
             for (int k = 0; k < 3; k++) {
@@ -43,9 +40,7 @@ public class MapController {
                 output.append("\n");
             }
         }
-        for (int i = 0; i < 11 * 6; i++) {
-            output.append("-");
-        }
+        output.append("-".repeat(11 * 6));
         return output.toString();
     }
 
@@ -56,9 +51,9 @@ public class MapController {
         if (cell.HasRock()) details.append("\nRocky");
         if (cell.getTreeType() != null) details.append("\nTree : ").append(cell.getTreeType().toString());
         if (cell.getBuilding() != null && (cell.getBuilding().getOwner().equals(game.getCurrentPlayer()) || !cell.getBuilding().getName().equals("killing pit"))) {
-            details.append("\n").append("Buldings : ").append(cell.getBuilding().getName());
+            details.append("\n").append("Buildings : ").append(cell.getBuilding().getName());
             details.append(" | owner : ").append(cell.getBuilding().getOwner().getUsername());
-            details.append(" | hitpoint : ").append(cell.getBuilding().getHp());
+            details.append(" | hit-point : ").append(cell.getBuilding().getHp());
         }
         if (cell.getUnits().size() > 0) {
             details.append("\nUnits : ").append(cell.getUnits().size()).append(" units");

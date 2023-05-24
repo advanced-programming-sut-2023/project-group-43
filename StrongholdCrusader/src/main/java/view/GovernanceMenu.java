@@ -23,9 +23,9 @@ public class GovernanceMenu extends Menu {
             if(input.matches("show current menu"))
                 System.out.println(Output.GOVERNANCE_MENU.getString());
             else if (input.matches("back")) {
-                if (governanceController.getGame().getSelectedBuilding() != null) {
-                    if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
-                        governanceController.getGame().setSelectedBuilding(null);
+                if (governanceController.game().getSelectedBuilding() != null) {
+                    if (governanceController.game().getSelectedBuilding().getName().equals("small stone gatehouse"))
+                        governanceController.game().setSelectedBuilding(null);
                 }
                 System.out.println("game menu:");
                 return;
