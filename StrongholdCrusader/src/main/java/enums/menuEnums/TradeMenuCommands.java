@@ -7,8 +7,7 @@ public enum TradeMenuCommands {
     SEND_TRADE("trade" +
             "( \\-(?<flag>[tamp])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){4}"),
     ACCEPT_TRADE("trade accept" +
-            "( \\-(?<flag>[im])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
-    GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
+            "( \\-(?<flag>[im])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}")
     ;
     private final String regex;
 

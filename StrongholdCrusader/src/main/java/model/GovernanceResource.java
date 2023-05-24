@@ -33,6 +33,7 @@ public class GovernanceResource {
     }
 
     public int getAmountOfItemInStockpile(Material material) {
+        if (storage.get(material) == null) return 0;
         return storage.get(material);
     }
 

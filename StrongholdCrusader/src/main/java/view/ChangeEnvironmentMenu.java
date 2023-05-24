@@ -20,6 +20,7 @@ public class ChangeEnvironmentMenu extends Menu {
     }
 
     public void run() {
+        changeEnvironmentController.initializeGame();
         getReady();
         Scanner scanner = Menu.getScanner();
         String input;

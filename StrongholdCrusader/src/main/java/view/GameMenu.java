@@ -218,6 +218,7 @@ public class GameMenu extends Menu {
                 enterGovernmentMenu();
                 continue;
             }
+            if (input.equals("next person")) return;
             //game
             if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_BUILDING)) != null) {
                 output = selectBuilding(matcher);

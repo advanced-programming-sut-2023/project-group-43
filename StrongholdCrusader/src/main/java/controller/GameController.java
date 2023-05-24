@@ -33,12 +33,10 @@ public class GameController {
     }
 
     public void initializeGame() {
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            User player = game.getPlayers().get(i);
-            player.setGovernance(new Governance());
+        for (User player: game.getPlayers()) {
             player.getGovernance().setGovernanceResource(new GovernanceResource());
             player.getGovernance().getGovernanceResource().setOwner(player);
-            player.getGovernance().setLordAlive(true);
+            player.getGovernance().setLordDead(false);
             player.getGovernance().setFearRate(0);
             player.getGovernance().setFoodRate(RateNumber.FOOD_RATE_MINUS_2);
             player.getGovernance().setTaxRate(RateNumber.TAX_RATE_0);
@@ -500,18 +498,20 @@ public class GameController {
                     unit.setNextTargetX(-1);
                 } else if (unit.getState().equals(UnitState.OFFENSIVE)) {
                     Cell enemyCell = findEnemy(1000, unit.getCell().getX(), unit.getCell().getY(), user);
-                    assert enemyCell != null;
-                    unit.setCurrentTargetX(enemyCell.getX());
-                    unit.setCurrentTargetY(enemyCell.getY());
-                    unit.setNextTargetY(-1);
-                    unit.setNextTargetX(-1);
+                    if (enemyCell != null) {
+                        unit.setCurrentTargetX(enemyCell.getX());
+                        unit.setCurrentTargetY(enemyCell.getY());
+                        unit.setNextTargetY(-1);
+                        unit.setNextTargetX(-1);
+                    }
                 } else if (unit.getState().equals(UnitState.DEFENSIVE)) {
                     Cell enemyCell = findEnemy(3, unit.getCell().getX(), unit.getCell().getY(), user);
-                    assert enemyCell != null;
-                    unit.setCurrentTargetX(enemyCell.getX());
-                    unit.setCurrentTargetY(enemyCell.getY());
-                    unit.setNextTargetY(-1);
-                    unit.setNextTargetX(-1);
+                    if (enemyCell != null) {
+                        unit.setCurrentTargetX(enemyCell.getX());
+                        unit.setCurrentTargetY(enemyCell.getY());
+                        unit.setNextTargetY(-1);
+                        unit.setNextTargetX(-1);
+                    }
                 }
             }
         }
@@ -529,9 +529,6 @@ public class GameController {
     public void updateMovements() {
         for (User user : game.getPlayers()) {
             for (Unit unit : user.getGovernance().getUnits()) {
-                System.out.println(unit.getName());
-                System.out.println(unit.getCurrentTargetX());
-                System.out.println(unit.getCurrentTargetY());
                 if (unit.getCell() != null)
                     unit.move(this);
             }
@@ -697,7 +694,7 @@ public class GameController {
     public void removeDeadGovernance() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (game.getPlayers().get(i).getGovernance().getLord() == null)
-                game.getPlayers().get(i).getGovernance().setLordAlive(false);
+                game.getPlayers().get(i).getGovernance().setLordDead(true);
         }
     }
 
@@ -709,7 +706,7 @@ public class GameController {
     public int calculateDeadGovernance() {
         int counter = 0;
         for (int i = 0; i < game.getPlayers().size(); i++) {
-            if (!game.getPlayers().get(i).getGovernance().isLordAlive())
+            if (game.getPlayers().get(i).getGovernance().isLordDead())
                 counter++;
         }
         return counter;
@@ -722,7 +719,7 @@ public class GameController {
     public String showGameResult() {
         StringBuilder ans = new StringBuilder();
         ans.append("<<<GAME OVER>>>" + "\n");
-        ans.append("The winner of the game is ").append(findWinner()).append("\n");
+        ans.append("The winner of the game is ").append(findWinner().getUsername()).append("\n");
         ans.append("Losers:" + "\n");
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (!game.getPlayers().get(i).getUsername().equals(findWinner().getUsername()))
@@ -733,11 +730,12 @@ public class GameController {
 
     public User findWinner() {
         int maxGold = 0;
-        User winner = null;
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            if (game.getPlayers().get(i).getGovernance().isLordAlive())
-                if (game.getPlayers().get(i).getGovernance().getGold() > maxGold)
-                    winner = game.getPlayers().get(i);
+        User winner = game.getCurrentUser();
+        for (User user: game.getPlayers()) {
+            if (!user.getGovernance().isLordDead()) {
+                if (user.getGovernance().getGold() > maxGold)
+                    winner = user;
+            }
         }
         return winner;
     }

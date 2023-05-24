@@ -94,24 +94,16 @@ public class User {
         this.score = score;
     }
 
-    public void setGovernment(Governance governance) {
-        this.governance = governance;
-    }
-
     public Governance getGovernance() {
         return governance;
-    }
-
-    public void setGovernance(Governance governance) {
-        this.governance = governance;
     }
 
     public ArrayList<Trade> getTrades() {
         return trades;
     }
 
-    public void setTrades(ArrayList<Trade> trades) {
-        this.trades = trades;
+    public void setGovernance(Governance governance) {
+        this.governance = governance;
     }
 
     public int getRank() {

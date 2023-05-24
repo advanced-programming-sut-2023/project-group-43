@@ -21,6 +21,7 @@ public class Trade {
 
     public Trade(User sender, String resource, int amount, int price, String message) {
         this.resourceName = resource;
+        this.resource = Material.getMaterialByName(resourceName);
         this.sender = sender;
         this.amount = amount;
         this.price = price;

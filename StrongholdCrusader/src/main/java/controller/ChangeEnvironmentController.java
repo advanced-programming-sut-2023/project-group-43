@@ -1,14 +1,13 @@
 package controller;
 
 import enums.Output;
+import enums.RateNumber;
+import enums.environmentEnums.Material;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
 import enums.unitEnums.TroopType;
 import enums.unitEnums.UnitState;
-import model.Cell;
-import model.DataBase;
-import model.Game;
-import model.User;
+import model.*;
 import model.buildings.Building;
 import model.buildings.CastleDepartment;
 import model.units.Unarmed;
@@ -36,6 +35,11 @@ public class ChangeEnvironmentController {
         return currentUser;
     }
 
+    public void initializeGame() {
+        for (User player: game.getPlayers()) {
+            player.setGovernance(new Governance());
+        }
+    }
     public Output generateMap(ArrayList<String> usernames, int row, int column, int turns, int mapOption) {
         game.setCurrentUser(currentUser);
         game.addPlayer(currentUser);
@@ -148,14 +152,16 @@ public class ChangeEnvironmentController {
         return Output.SUCCESSFUL_ACTION;
     }
 
+
+
     public boolean enterGameMenu() {
         if (game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)) &&
                 game.getCurrentPlayer().getGovernance().getBuildings() != null) {
             GameController gameController = new GameController(game);
+            gameController.initializeGame();
             GameMenu gameMenu = new GameMenu(gameController);
             gameMenu.setTurns(game.getTurns());
             gameMenu.setNumberOfPlayers(game.getPlayers().size());
-            gameController.initializeGame();
             gameMenu.run();
             return true;
         }
