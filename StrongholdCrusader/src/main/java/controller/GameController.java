@@ -189,7 +189,7 @@ public class GameController {
             governance.getGovernanceResource().changeAmountOfItemInStockpile(weapon, number);
         }
         for (int i = 0; i < number; i++) {
-            Unit newUnit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
+            Unit newUnit = UnitsBuilder.unitsBuilder(name, game.getCurrentPlayer());
             game.getCurrentPlayer().getGovernance().addUnit(newUnit);
             unit.setCell(null);
         }
@@ -207,6 +207,9 @@ public class GameController {
             if (cell.isBlocked(unit)) return Output.INVALID_CELL;
             unit.setCell(cell);
             cell.addUnit(unit);
+        }
+        for (Unit unit: cell.getUnits()) {
+            System.out.println(unit.getName());
         }
         return Output.SUCCESSFUL_ACTION;
     }
@@ -227,8 +230,9 @@ public class GameController {
         if (isCoordinateInvalid(x, y)) return Output.WRONG_COORDINATES;
         ArrayList<Unit> selectedUnits = new ArrayList<>();
         for (Unit unit: game.getCells()[x - 1][y - 1].getUnits()) {
-            if (unit.getName().equals(type) && unit.getOwner().equals(game.getCurrentPlayer()))
+            if (unit.getName().equals(type) && unit.getOwner().equals(game.getCurrentPlayer())) {
                 selectedUnits.add(unit);
+            }
         }
         if (selectedUnits.size() == 0) return Output.NO_THIS_TYPE_UNIT;
         game.setSelectedUnit(selectedUnits);
