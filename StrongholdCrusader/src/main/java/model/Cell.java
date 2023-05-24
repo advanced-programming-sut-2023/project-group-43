@@ -113,7 +113,9 @@ public class Cell {
     }
 
     public void removeUnit(Unit unit) {
-        units.remove(unit);
+        if (units.size() > 1)
+            units.remove(unit);
+        units = new ArrayList<>();
     }
 
     public boolean isBlocked(Unit unit) {

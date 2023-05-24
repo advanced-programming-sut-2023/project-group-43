@@ -45,14 +45,14 @@ public class GameController {
             player.getGovernance().setPopulation(15);
             player.getGovernance().setUnemployedPopulation(15);
             player.getGovernance().setGold(100);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD , 50);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE , 50);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.IRON , 50);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, 50);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, 50);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.IRON, 50);
             initializeResources(player);
         }
     }
 
-    public void initializeResources(User player){
+    public void initializeResources(User player) {
         for (Material material : Material.values()) {
             player.getGovernance().getGovernanceResource().addToStorage(material);
         }
@@ -203,7 +203,7 @@ public class GameController {
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         if (units.size() < count) return Output.NOT_ENOUGH_UNIT;
         Cell cell = game.getCells()[x - 1][y - 1];
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             if (cell.isBlocked(unit)) return Output.INVALID_CELL;
             unit.setCell(cell);
             cell.addUnit(unit);
@@ -226,7 +226,7 @@ public class GameController {
     public Output selectUnit(int x, int y, String type) {
         if (isCoordinateInvalid(x, y)) return Output.WRONG_COORDINATES;
         ArrayList<Unit> selectedUnits = new ArrayList<>();
-        for (Unit unit: game.getCells()[x - 1][y - 1].getUnits()) {
+        for (Unit unit : game.getCells()[x - 1][y - 1].getUnits()) {
             if (unit.getName().equals(type) && unit.getOwner().equals(game.getCurrentPlayer())) {
                 selectedUnits.add(unit);
             }
@@ -243,6 +243,7 @@ public class GameController {
             if (game.getCells()[x - 1][y - 1].isBlocked(unit)) return Output.INVALID_MOVE;
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
+            unit.setState(UnitState.MOVING);
         }
         return Output.SUCCESSFUL_ACTION;
     }
@@ -255,6 +256,7 @@ public class GameController {
             unit.setCurrentTargetY(y1 - 1);
             unit.setNextTargetX(x2 - 1);
             unit.setNextTargetY(y2 - 1);
+            unit.setState(UnitState.MOVING);
         }
         return Output.SUCCESSFUL_ACTION;
     }
@@ -523,7 +525,11 @@ public class GameController {
     public void updateMovements() {
         for (User user : game.getPlayers()) {
             for (Unit unit : user.getGovernance().getUnits()) {
-                unit.move(this);
+                System.out.println(unit.getName());
+                System.out.println(unit.getCurrentTargetX());
+                System.out.println(unit.getCurrentTargetY());
+                if (unit.getCell() != null)
+                    unit.move(this);
             }
         }
     }
@@ -726,7 +732,7 @@ public class GameController {
         User winner = null;
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (game.getPlayers().get(i).getGovernance().isLordAlive())
-                if(game.getPlayers().get(i).getGovernance().getGold() > maxGold)
+                if (game.getPlayers().get(i).getGovernance().getGold() > maxGold)
                     winner = game.getPlayers().get(i);
         }
         return winner;
