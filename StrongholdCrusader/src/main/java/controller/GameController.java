@@ -122,7 +122,7 @@ public class GameController {
     }
 
     public Output selectBuilding(int row, int column) {
-        if (!(row >= 1 && row <= game.getCells().length && column >= 1 && column <= game.getCells()[0].length))
+        if (isCoordinateInvalid(row, column))
             return Output.WRONG_COORDINATES;
         Building building = game.getCells()[row - 1][column - 1].getBuilding();
         if (building != null) {
@@ -224,22 +224,15 @@ public class GameController {
     }
 
     public Output selectUnit(int x, int y, String type) {
-        ArrayList<Unit> cellUnits = game.getCells()[x - 1][y - 1].getUnits();
-        ArrayList<Unit> resultCellUnits = new ArrayList<>();
-        if (cellUnits.size() == 0) return Output.NO_UNIT;
-        else {
-            for (Unit cellUnit : cellUnits) {
-                if (cellUnit.getName().equals(type) && cellUnit.getOwner().equals(game.getCurrentPlayer())) {
-                    resultCellUnits.add(cellUnit);
-                }
-            }
-            if (resultCellUnits.size() == 0)
-                return Output.NO_THIS_TYPE_UNIT;
-            else {
-                game.setSelectedUnit(resultCellUnits);
-                return Output.SELECT_UNIT;
-            }
+        if (isCoordinateInvalid(x, y)) return Output.WRONG_COORDINATES;
+        ArrayList<Unit> selectedUnits = new ArrayList<>();
+        for (Unit unit: game.getCells()[x - 1][y - 1].getUnits()) {
+            if (unit.getName().equals(type) && unit.getOwner().equals(game.getCurrentPlayer()))
+                selectedUnits.add(unit);
         }
+        if (selectedUnits.size() == 0) return Output.NO_THIS_TYPE_UNIT;
+        game.setSelectedUnit(selectedUnits);
+        return Output.SUCCESSFUL_ACTION;
     }
 
     public Output moveUnit(int x, int y) {

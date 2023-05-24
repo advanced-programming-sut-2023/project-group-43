@@ -32,7 +32,7 @@ public enum UnitsEnum {
     //engineer
     ENGINEER("engineer", "engineer", -10, DefenseDegree.VERY_LOW.getDegree(), SpeedDegree.AVERAGE.getDegree(), 30),
     //assassin
-    ASSASSIN("assassin", "assassin", 0, DefenseDegree.AVERAGE.getDegree(), SpeedDegree.AVERAGE.getDegree(), 30),
+    ASSASSIN("assassin", "assassin", 1, DefenseDegree.AVERAGE.getDegree(), SpeedDegree.AVERAGE.getDegree(), 30),
     //dog
     DOG("dog", "dog", 0, DefenseDegree.HIGH.getDegree(), SpeedDegree.VERY_HIGH.getDegree(), 5);
     private final String name;
