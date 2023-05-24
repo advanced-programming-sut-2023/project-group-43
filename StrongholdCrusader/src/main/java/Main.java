@@ -8,6 +8,7 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
                 DataBase.getInstance().saveData();
+                System.exit(0);
             }
         }));
         if (DataBase.getInstance().findLoggedInUser() == null)

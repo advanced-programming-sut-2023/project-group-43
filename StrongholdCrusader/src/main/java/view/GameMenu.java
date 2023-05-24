@@ -50,13 +50,13 @@ public class GameMenu extends Menu {
             }
             gameController.applyChanges();
             if (gameController.isGameEnded()) {
-                gameController.updateScores();
-                System.out.println(gameController.showGameResult());
-                gameController.clearGame();
                 break;
             }
             turns--;
         }
+        gameController.updateScores();
+        System.out.println(gameController.showGameResult());
+        gameController.clearGame();
     }
 
     public void enterMapMenu() {

@@ -281,11 +281,10 @@ public class GameController {
     }
 
     public Output attack(int x, int y, String item) {
-        if (item.equals("e"))
+        if (item != null)
             return attackToEnemy(x, y);
-        if (item.equals("x"))
+        else
             return airAttack(x, y);
-        return null;
     }
 
     private Output attackToEnemy(int x, int y) {
@@ -775,7 +774,6 @@ public class GameController {
 
 
     public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty, Unit unit) {
-        System.out.println(unit.getOwner().getUsername() + " :" + unit.getName());
         Cell[][] cells = game.getCells();
         ArrayList<Cell> path = new ArrayList<>();
         if (cells[tx][ty].isBlocked(unit)) return null;
@@ -789,7 +787,6 @@ public class GameController {
     }
 
     public boolean backTrack(boolean[][] arr, Cell[][] cells, ArrayList<Cell> path, int currentX, int currentY, int tx, int ty, Unit unit) {
-        System.out.println(currentX + " "  + currentY);
         if (currentX == tx && currentY == ty) return true;
         int[][] array = prioritizePathFinding(currentX, currentY, tx, ty);
         for (int i = 0; i < 4; i++) {

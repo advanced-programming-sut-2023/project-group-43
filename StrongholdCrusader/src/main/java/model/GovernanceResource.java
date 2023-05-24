@@ -11,6 +11,7 @@ public class GovernanceResource {
     //look after using Integer instead of int during the game
     HashMap<Material, Integer> storage = new HashMap<>();
     private User owner;
+
     //before starting game you should set items for stockpile based on material enum
     public static String chooseStorage(Material material) {
         return switch (material.getType()) {
@@ -37,11 +38,18 @@ public class GovernanceResource {
 
     public void changeAmountOfItemInStockpile(Material material, int amount) {
         ArrayList<Building> storages = owner.getGovernance().getAllBuildingsByName(chooseStorage(material));
-        if (storages == null) return;
-        if (storages.size() > 0) {
+        if (material.equals(Material.WOOD) || material.equals(Material.STONE) || material.equals(Material.IRON)) {
+            if (storage.get(material) == null) {
+                storage.put(material, amount);
+            } else
+                storage.put(material, getAmountOfItemInStockpile(material) + amount);
+        } else if (storages.size() > 0) {
             Storage building = (Storage) storages.get(0);
             if (storage.get(material) + amount > building.getCapacity() * storages.size()) return;
-            storage.put(material, getAmountOfItemInStockpile(material) + amount);
+            if (storage.get(material) == null) {
+                storage.put(material, amount);
+            } else
+                storage.put(material, getAmountOfItemInStockpile(material) + amount);
         }
     }
 
