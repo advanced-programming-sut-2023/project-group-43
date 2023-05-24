@@ -161,7 +161,6 @@ public class Unit {
     public void move(GameController gameController) {
         if (currentTargetX >= 0 && currentTargetY >= 0) {
             ArrayList<Cell> path = gameController.findPath(cell.getX(), cell.getY(), currentTargetX, currentTargetY, this);
-            System.out.println(path.size());
             if (path != null)  {
                 if (speed <= path.size() - 1) {
                     cell.removeUnit(this);

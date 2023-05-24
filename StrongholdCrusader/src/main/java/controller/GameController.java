@@ -214,15 +214,18 @@ public class GameController {
     }
 
     public Output repairCastle() {
-        if (!game.getSelectedBuilding().getOwner().equals(game.getCurrentPlayer()))
-            return Output.THIS_IS_NOT_YOUR_BUILDING;
-        else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
-            return Output.NOT_ENOUGH_STONE;
-        else {
-            game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
-            game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
-            return Output.SUCCESSFUL_REPAIRMENT;
+        if (game.getSelectedBuilding() != null) {
+            if (!game.getSelectedBuilding().getOwner().equals(game.getCurrentPlayer()))
+                return Output.THIS_IS_NOT_YOUR_BUILDING;
+            else if (game.getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < game.getSelectedBuilding().getStone())
+                return Output.NOT_ENOUGH_STONE;
+            else {
+                game.getSelectedBuilding().setHp(BuildingEnum.getBuildingStructureByName(game.getSelectedBuilding().getName()).getHp());
+                game.getCurrentPlayer().getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, (-1 * game.getSelectedBuilding().getStone()));
+                return Output.SUCCESSFUL_REPAIRMENT;
+            }
         }
+        return Output.NO_BUILDING;
     }
 
     public Output selectUnit(int x, int y, String type) {
@@ -772,28 +775,35 @@ public class GameController {
 
 
     public ArrayList<Cell> findPath(int sx, int sy, int tx, int ty, Unit unit) {
+        System.out.println(unit.getOwner().getUsername() + " :" + unit.getName());
         Cell[][] cells = game.getCells();
         ArrayList<Cell> path = new ArrayList<>();
         if (cells[tx][ty].isBlocked(unit)) return null;
         path.add(cells[sx][sy]);
-        if (backTrack(cells, path,sx, sy, tx, ty, unit)) return path;
+        boolean[][] arr = new boolean[game.getRow()][game.getColumn()];
+        for (int i = 0; i < game.getRow(); i++) {
+            arr[i] = new boolean[game.getColumn()];
+        }
+        if (backTrack(arr, cells, path,sx, sy, tx, ty, unit)) return path;
         return null;
     }
 
-    public boolean backTrack(Cell[][] cells, ArrayList<Cell> path, int currentX, int currentY, int tx, int ty, Unit unit) {
+    public boolean backTrack(boolean[][] arr, Cell[][] cells, ArrayList<Cell> path, int currentX, int currentY, int tx, int ty, Unit unit) {
         System.out.println(currentX + " "  + currentY);
         if (currentX == tx && currentY == ty) return true;
         int[][] array = prioritizePathFinding(currentX, currentY, tx, ty);
         for (int i = 0; i < 4; i++) {
             if (currentX + array[0][i] >= 0 && currentX + array[0][i] < game.getRow() &&
                     currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn()) {
-                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit)) {
+                if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit) &&
+                        !(arr[currentX + array[0][i]][currentY + array[1][i]])) {
                     Cell cell = cells[currentX + array[0][i]][currentY + array[1][i]];
                     path.add(cell);
+                    arr[currentX + array[0][i]][currentY + array[1][i]] = true;
                     if (cell.getTexture().equals(Texture.SHALLOW_WATER)) {
                         path.add(cell);
                     }
-                    if (backTrack(cells, path, cell.getX(), cell.getY(), tx, ty, unit)) return true;
+                    if (backTrack(arr, cells, path, cell.getX(), cell.getY(), tx, ty, unit)) return true;
                     path.remove(cell);
                     if (cell.equals(Texture.SHALLOW_WATER)) {
                         path.remove(cell);
