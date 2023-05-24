@@ -126,8 +126,11 @@ public class GameController {
             return Output.WRONG_COORDINATES;
         Building building = game.getCells()[row - 1][column - 1].getBuilding();
         if (building != null) {
-            game.setSelectedBuilding(building);
-            return Output.SELECT_BUILDING;
+            if (building.getOwner().equals(game.getCurrentPlayer())) {
+                game.setSelectedBuilding(building);
+                return Output.SELECT_BUILDING;
+            }
+            return Output.WRONG_SELECT_FOR_BUILDING;
         }
         return Output.NO_BUILDING;
     }
@@ -187,7 +190,8 @@ public class GameController {
         }
         for (int i = 0; i < number; i++) {
             Unit newUnit = UnitsBuilder.unitsBuilder(name, game.getCurrentUser());
-            game.getCurrentUser().getGovernance().addUnit(newUnit);
+            game.getCurrentPlayer().getGovernance().addUnit(newUnit);
+            unit.setCell(null);
         }
         governance.setGold(governance.getGold() - unit.getCost() * number);
         governance.setUnemployedPopulation(governance.getUnemployedPopulation() - number);

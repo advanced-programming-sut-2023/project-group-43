@@ -162,6 +162,7 @@ public class Governance {
     }
 
     public ArrayList<Unit> getNewUnits(String name) {
+        System.out.println(units.size());
         ArrayList<Unit> newUnits = new ArrayList<>();
         for (Unit unit : units) {
             if (unit.getCell() == null && unit.getName().equals(name))
