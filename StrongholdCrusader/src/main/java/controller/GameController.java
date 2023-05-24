@@ -203,10 +203,10 @@ public class GameController {
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         if (units.size() < count) return Output.NOT_ENOUGH_UNIT;
         Cell cell = game.getCells()[x - 1][y - 1];
-        for (int i = 0; i < count; i++) {
-            if (cell.isBlocked(units.get(i))) return Output.INVALID_CELL;
-            units.get(i).setCell(cell);
-            cell.addUnit(units.get(i));
+        for (Unit unit: units) {
+            if (cell.isBlocked(unit)) return Output.INVALID_CELL;
+            unit.setCell(cell);
+            cell.addUnit(unit);
         }
         return Output.SUCCESSFUL_ACTION;
     }
