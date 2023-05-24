@@ -208,9 +208,6 @@ public class GameController {
             unit.setCell(cell);
             cell.addUnit(unit);
         }
-        for (Unit unit: cell.getUnits()) {
-            System.out.println(unit.getName());
-        }
         return Output.SUCCESSFUL_ACTION;
     }
 
@@ -489,6 +486,7 @@ public class GameController {
     public void updateUnitTargets() {
         for (User user : game.getPlayers()) {
             for (Unit unit : user.getGovernance().getUnits()) {
+                if (unit.getState() == null) unit.setState(UnitState.STANDING);
                 if (unit.getState().equals(UnitState.STANDING)) {
                     unit.setCurrentTargetX(-1);
                     unit.setCurrentTargetY(-1);
