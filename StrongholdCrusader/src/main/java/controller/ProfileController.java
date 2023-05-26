@@ -68,7 +68,7 @@ public class ProfileController {
         return Output.SUCCESSFUL_SLOGAN_CHANGE;
     }
 
-    public int displayHighscore() {
+    public int displayHighScore() {
         return currentUser.getScore();
     }
 
@@ -93,5 +93,13 @@ public class ProfileController {
         userProfile.append("Slogan : ").append(currentUser.getSlogan()).append("\n");
         userProfile.append("Score : ").append(currentUser.getScore()).append("\n");
         return userProfile.toString();
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 }

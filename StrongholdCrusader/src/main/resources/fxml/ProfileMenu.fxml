@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.ProfileMenu"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/style.css">
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <Label text="username"/>
+            <TextField promptText="new username" styleClass="text-input" fx:id="newUsername"/>
+            <Button text="save new username" onMouseClicked="#saveNewUsername"/>
+            <Label text="nick name"/>
+            <TextField promptText="new nickname" styleClass="text-input" fx:id="newNickname"/>
+            <Button text="save new nickname" onMouseClicked="#saveNewNickname"/>
+            <Label text="email"/>
+            <TextField promptText="new email" styleClass="text-input" fx:id="newEmail"/>
+            <Button text="save new email" onMouseClicked="#saveNewEmail"/>
+            <Label text="slogan"/>
+            <TextField promptText="new slogan" styleClass="text-input" fx:id="newSlogan"/>
+            <Button text="save new slogan" onMouseClicked="#saveNewSlogan"/>
+            <Label text="password"/>
+            <TextField promptText="old password" styleClass="text-input" fx:id="oldPassword"/>
+            <TextField promptText="new password" styleClass="text-input" fx:id="newPassword"/>
+            <Button text="save new password" onMouseClicked="#saveNewPassword"/>
+            <Button text="remove slogan" onMouseClicked="#removeSlogan"/>
+            <Button text="display slogan" onMouseClicked="#displaySlogan"/>
+            <Button text="display high score" onMouseClicked="#displayHighScore"/>
+            <Button text="display rank" onMouseClicked="#displayRank"/>
+            <Button text="display profile" onMouseClicked="#displayProfile"/>
+            <Button text="back" onMouseClicked="#back"/>
+        </VBox>
+    </center>
+</BorderPane>
