@@ -1,7 +1,6 @@
 package controller;
 
 import enums.Output;
-import enums.environmentEnums.Material;
 import model.Game;
 import model.GovernanceResource;
 import model.Trade;
@@ -9,7 +8,7 @@ import model.User;
 
 public class TradeController {
 
-    private Game game;
+    private final Game game;
 
     public TradeController(Game game) {
         this.game = game;
@@ -23,7 +22,7 @@ public class TradeController {
 
     public String showTradeList() {
         StringBuilder output = new StringBuilder("trade list:");
-        for (Trade trade: game.getTrades()) {
+        for (Trade trade : game.getTrades()) {
             if (!trade.isAccepted() && !game.getCurrentPlayer().getUsername().equals(trade.getSender().getUsername())) {
                 output.append(showTrade(trade));
             }
@@ -36,7 +35,7 @@ public class TradeController {
         output += "\ntrade id: " + trade.getId();
         output += "\nsender: " + trade.getSender().getUsername();
         output += "\nresource: " + trade.getResourceName();
-        output += "\namount: "  + trade.getAmount();
+        output += "\namount: " + trade.getAmount();
         output += "\nprice: " + trade.getPrice();
         output += "\nmessage: " + trade.getMessage();
         return output;
@@ -44,7 +43,7 @@ public class TradeController {
 
     public String showNotification() {
         StringBuilder output = new StringBuilder("notification:");
-        for (Trade trade: game.getCurrentPlayer().getTrades()) {
+        for (Trade trade : game.getCurrentPlayer().getTrades()) {
             if (!trade.isSeen(game.getCurrentPlayer())) {
                 if (!trade.getSender().getUsername().equals(game.getCurrentPlayer().getUsername())) {
                     if (trade.isAccepted()) continue;
@@ -81,7 +80,7 @@ public class TradeController {
     public String showTradeHistory() {
         User user = game.getCurrentPlayer();
         StringBuilder output = new StringBuilder("trade history:");
-        for (Trade trade: user.getTrades()) {
+        for (Trade trade : user.getTrades()) {
             if (trade.getSender().getUsername().equals(user.getUsername())) {
                 output.append(showTrade(trade));
             } else if (trade.isAccepted() && trade.getReceiver().getUsername().equals(user.getUsername()))

@@ -19,7 +19,7 @@ public class Trade {
     private int id;
     private boolean isAccepted;
 
-    public Trade(User sender, String resource, int amount , int price, String message) {
+    public Trade(User sender, String resource, int amount, int price, String message) {
         this.resourceName = resource;
         this.sender = sender;
         this.amount = amount;
@@ -59,9 +59,10 @@ public class Trade {
         this.id = id;
     }
 
-    public String getResourceName () {
+    public String getResourceName() {
         return resourceName;
     }
+
     public void setAccepted(boolean accepted) {
         isAccepted = accepted;
     }
@@ -87,7 +88,7 @@ public class Trade {
     }
 
     public boolean isSeen(User player) {
-        for (User user: users) {
+        for (User user : users) {
             if (user.getUsername().equals(player.getUsername())) {
                 return true;
             }

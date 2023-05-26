@@ -2,9 +2,8 @@ package controller;
 
 import enums.Output;
 import enums.Validations;
-import model.*;
-
-import java.util.Random;
+import model.DataBase;
+import model.User;
 
 public class ProfileController {
 
@@ -35,8 +34,7 @@ public class ProfileController {
         if (output.equals(null)) {
             currentUser.setPassword(RegisterAndLoginController.makeShaCode(newPassword));
             return Output.SUCCESSFUL_PASSWORD_CHANGEING;
-        }
-        else return output;
+        } else return output;
     }
 
     public Output changeUsername(String username) {
@@ -69,12 +67,15 @@ public class ProfileController {
         currentUser.setSlogan(slogan);
         return Output.SUCCESSFUL_SLOGAN_CHANGE;
     }
+
     public int displayHighscore() {
         return currentUser.getScore();
     }
+
     public int displayRank() {
         return DataBase.getInstance().getRank(currentUser);
     }
+
     public String displaySlogan() {
         return currentUser.getSlogan();
     }
@@ -83,6 +84,7 @@ public class ProfileController {
         currentUser.setSlogan(null);
         return Output.SLOGAN_REMOVED_SUCCESSFULLY;
     }
+
     public String displayAllProfile() {
         StringBuilder userProfile = new StringBuilder();
         userProfile.append("Username : ").append(currentUser.getUsername()).append("\n");

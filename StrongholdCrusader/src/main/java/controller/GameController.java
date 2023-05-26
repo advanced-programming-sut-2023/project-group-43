@@ -1,4 +1,5 @@
 package controller;
+
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.RateNumber;
@@ -10,6 +11,7 @@ import enums.unitEnums.UnitsEnum;
 import model.*;
 import model.buildings.*;
 import model.units.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,9 +32,11 @@ public class GameController {
         else return defaultMaps.get("option number 2");
     }
 
-    public void initializeGame(){
-        for (int i = 0;i < game.getPlayers().size();i++){
+    public void initializeGame() {
+        for (int i = 0; i < game.getPlayers().size(); i++) {
             User player = game.getPlayers().get(i);
+            player.setGovernance(new Governance());
+            player.getGovernance().setGovernanceResource(new GovernanceResource());
             player.getGovernance().setLordAlive(true);
             player.getGovernance().setFearRate(0);
             player.getGovernance().setFoodRate(RateNumber.FOOD_RATE_MINUS_2);
@@ -120,6 +124,7 @@ public class GameController {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (type.matches("headquarter")) return Output.INVALID_BUILDING;
+        if (game.getCells()[x - 1][y - 1].getBuilding() != null) return Output.INVALID_CELL;
         Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
         if (building == null) return null;
         Governance governance = game.getCurrentPlayer().getGovernance();
@@ -128,7 +133,7 @@ public class GameController {
             return Output.INVALID_CELL;
         if (type.equals("food stockpile") && game.getCurrentPlayer().getGovernance().getAllBuildingsByName("food stockpile") != null) {
             boolean canDropStorage = false;
-            for (Building aroundBuilding: findBuildingsAround(game.getCells()[x - 1][y - 1])) {
+            for (Building aroundBuilding : findBuildingsAround(game.getCells()[x - 1][y - 1])) {
                 if (aroundBuilding.getName().equals("food stockpile") && building.getOwner().equals(game.getCurrentPlayer()))
                     canDropStorage = true;
             }
@@ -569,9 +574,11 @@ public class GameController {
         Cell[][] cells = game.getCells();
         for (Cell[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
-                Building building = cell[0].getBuilding();
-                if (building.getName().equals("church") || building.getName().equals("cathedral"))
-                    building.getOwner().getGovernance().changePopulation(1);
+                Building building = cell[j].getBuilding();
+                if (building != null) {
+                    if (building.getName().equals("church") || building.getName().equals("cathedral"))
+                        building.getOwner().getGovernance().changePopulation(1);
+                }
             }
         }
     }
@@ -645,7 +652,12 @@ public class GameController {
     }
 
     private void updateWorkersEfficiency() {
-
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            if (game.getPlayers().get(i).getGovernance().getFearRate() > 0)
+                game.getPlayers().get(i).getGovernance().setTurnsToCompleteBuilding(1);
+            if (game.getPlayers().get(i).getGovernance().getFearRate() < 0)
+                game.getPlayers().get(i).getGovernance().setTurnsToCompleteBuilding(2);
+        }
     }
 
     private void updateDamageEfficiency() {
@@ -660,31 +672,31 @@ public class GameController {
         }
     }
 
-    public void removeDeadGovernance(){
-        for(int i = 0 ; i < game.getPlayers().size();i++){
-            if(game.getPlayers().get(i).getGovernance().getLord() == null)
+    public void removeDeadGovernance() {
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            if (game.getPlayers().get(i).getGovernance().getLord() == null)
                 game.getPlayers().get(i).getGovernance().setLordAlive(false);
         }
     }
 
 
     public boolean isGameEnded() {
-       if(game.getPlayers().size() == calculateDeadGovernance() + 1)
-           return true;
-       return false;
+        if (game.getPlayers().size() == calculateDeadGovernance() + 1)
+            return true;
+        return false;
     }
 
-    public int calculateDeadGovernance(){
+    public int calculateDeadGovernance() {
         int counter = 0;
-        for(int i = 0; i < game.getPlayers().size();i++){
-            if(!game.getPlayers().get(i).getGovernance().isLordAlive())
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            if (!game.getPlayers().get(i).getGovernance().isLordAlive())
                 counter++;
         }
         return counter;
     }
 
     public void updateScores() {
-        findWinner().setScore(findWinner().getScore() + (int)findWinner().getGovernance().getGold());
+        findWinner().setScore(findWinner().getScore() + (int) findWinner().getGovernance().getGold());
     }
 
     public String showGameResult() {
@@ -692,26 +704,27 @@ public class GameController {
         ans.append("<<<GAME OVER>>>" + "\n");
         ans.append("The winner of the game is " + findWinner() + "\n");
         ans.append("Losers:" + "\n");
-        for(int i = 0 ; i < game.getPlayers().size() ; i++){
-            if(!game.getPlayers().get(i).getUsername().equals(findWinner().getUsername()))
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            if (!game.getPlayers().get(i).getUsername().equals(findWinner().getUsername()))
                 ans.append(game.getPlayers().get(i).getUsername() + "\n");
         }
         return String.valueOf(ans);
     }
 
-    public User findWinner(){
-        for (int i = 0;i < game.getPlayers().size();i++){
-            if(game.getPlayers().get(i).getGovernance().isLordAlive())
+    public User findWinner() {
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            if (game.getPlayers().get(i).getGovernance().isLordAlive())
                 return game.getPlayers().get(i);
         }
         return null;
     }
+
     public void clearGame() {
-       game.setPlayers(null);
-       game.setCells(null);
-       game.setCurrentPlayer(null);
-       game.setSelectedBuilding(null);
-       game.setSelectedUnit(null);
+        game.setPlayers(null);
+        game.setCells(null);
+        game.setCurrentPlayer(null);
+        game.setSelectedBuilding(null);
+        game.setSelectedUnit(null);
     }
 
     public void goToNextPerson() {
@@ -757,12 +770,12 @@ public class GameController {
                     currentY + array[1][i] >= 0 && currentY + array[1][i] < game.getColumn()) {
                 if (!cells[currentX + array[0][i]][currentY + array[1][i]].isBlocked(unit)) {
                     path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
-                    if(cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
+                    if (cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
                         path.add(cells[currentX + array[0][i]][currentY + array[1][i]]);
                     }
                     if (backTrack(cells, path, tx, ty, unit)) return true;
                     path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
-                    if(cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
+                    if (cells[currentX + array[0][i]][currentY + array[1][i]].getTexture().equals(Texture.SHALLOW_WATER)) {
                         path.remove(cells[currentX + array[0][i]][currentY + array[1][i]]);
                     }
                 }

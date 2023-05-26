@@ -1,11 +1,6 @@
 package model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-
-import model.buildings.Storage;
 
 public class User {
     private String username;
@@ -17,9 +12,7 @@ public class User {
     private String slogan;
     private int score;
     private int rank;
-
-    private Storage storage;
-    private Governance governance;
+    private Governance governance = new Governance();
 
     boolean isLoggedIn;
 
@@ -97,16 +90,8 @@ public class User {
         return score;
     }
 
-    public Storage getStorage() {
-        return storage;
-    }
-
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public void setStorage(Storage storage) {
-        this.storage = storage;
     }
 
     public void setGovernment(Governance governance) {

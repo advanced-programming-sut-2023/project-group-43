@@ -163,15 +163,15 @@ public class Governance {
 
     public ArrayList<Unit> getNewUnits(String name) {
         ArrayList<Unit> newUnits = new ArrayList<>();
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             if (unit.getCell() == null && unit.getName().equals(name))
                 newUnits.add(unit);
         }
         return newUnits;
     }
 
-    public Unit getLord(){
-        for (int i = 0 ; i < units.size();i++){
+    public Unit getLord() {
+        for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getName().equals("lord"))
                 return units.get(i);
         }

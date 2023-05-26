@@ -4,6 +4,7 @@ import enums.Output;
 import model.DataBase;
 import model.User;
 import view.MainMenu;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -60,7 +61,7 @@ public class RegisterAndLoginController {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
         for (int i = 0; i < hash.length; i++) {
             String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) {
+            if (hex.length() == 1) {
                 hexString.append('0');
             }
             hexString.append(hex);
@@ -118,7 +119,7 @@ public class RegisterAndLoginController {
     public static String suggestUsername(String username) {
         Random random = new Random();
         while (DataBase.getInstance().getUserByUsername(username) != null)
-            username += (char)(random.nextInt(9) + '0');
+            username += (char) (random.nextInt(9) + '0');
         return username;
     }
 
@@ -127,9 +128,9 @@ public class RegisterAndLoginController {
         Random random = new Random();
         String specialCharacters = ".+-)(*&^%$#@!~?";
         for (int i = 0; i < 3; i++) {
-            password += (char)(random.nextInt(25) + 'a');
-            password += (char)(random.nextInt(25) + 'A');
-            password += (char)(random.nextInt(9) + '0');
+            password += (char) (random.nextInt(25) + 'a');
+            password += (char) (random.nextInt(25) + 'A');
+            password += (char) (random.nextInt(9) + '0');
             password += (specialCharacters.charAt(random.nextInt(14)));
         }
         return password;
@@ -278,22 +279,25 @@ public class RegisterAndLoginController {
         }
         return output;
     }
+
     public static String generateCaptcha() {
-        Random rand = new Random(10);
+        Random rand = new Random();
         int n = rand.nextInt(4) + 4;
         String chrs = "0123456789";
         String captcha = "";
-        while (n-->0){
-            int index = (int)(Math.random()*10);
-            captcha+=chrs.charAt(index);
+        while (n-- > 0) {
+            int index = (int) (Math.random() * 10);
+            captcha += chrs.charAt(index);
         }
         return captcha;
     }
+
     public static Output checkCaptcha(String captcha, String user_captcha) {
         if (captcha.equals(user_captcha))
             return Output.CAPTCHA_MATCHED;
         return Output.CAPTCHA_NOT_MATCHED;
     }
+
     public static void enterMainMenu(String username) {
         User currentUser = DataBase.getInstance().getUserByUsername(username);
         MainController mainController = new MainController(currentUser);

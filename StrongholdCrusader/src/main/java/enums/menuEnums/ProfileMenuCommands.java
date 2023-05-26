@@ -12,8 +12,7 @@ public enum ProfileMenuCommands {
     DISPLAY_RANK("profile display rank"),
     DISPLAY_SLOGAN("profile display slogan"),
     PROFILE_DISPLAY("profile display"),
-    BACK("back")
-    ;
+    BACK("back");
     final String regex;
 
     private ProfileMenuCommands(String regex) {

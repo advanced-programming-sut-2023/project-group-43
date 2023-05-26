@@ -127,7 +127,7 @@ public class Game {
         trade.setId(tradeId);
         tradeId++;
         trades.add(trade);
-        for(User user: players) {
+        for (User user : players) {
             if (!user.getUsername().equals(currentPlayer.getUsername())) {
                 user.addTrade(trade);
             }
@@ -135,7 +135,7 @@ public class Game {
     }
 
     public Trade getTradeById(int id) {
-        for (Trade trade: trades) {
+        for (Trade trade : trades) {
             if (trade.getId() == id && !trade.isAccepted())
                 return trade;
         }

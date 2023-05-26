@@ -1,11 +1,11 @@
 package enums.Degrees;
 
 public enum SpeedDegree {
-    VERY_LOW(100),
-    LOW(200),
-    AVERAGE(300),
-    HIGH(400),
-    VERY_HIGH(500),
+    VERY_LOW(1),
+    LOW(2),
+    AVERAGE(3),
+    HIGH(4),
+    VERY_HIGH(5),
     ;
     private double degree;
 

@@ -1,13 +1,12 @@
 package view;
 
 import controller.GovernanceController;
+import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
-import model.DataBase;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class GovernanceMenu extends Menu{
+public class GovernanceMenu extends Menu {
 
     private GovernanceController governanceController;
 
@@ -19,39 +18,36 @@ public class GovernanceMenu extends Menu{
         String input;
         Matcher matcher;
         System.out.println("governance menu:");
-        while (true){
+        while (true) {
             input = scanner.nextLine();
-            if(input.matches("back")) {
+            if(input.matches("show current menu"))
+                System.out.println(Output.GOVERNANCE_MENU.getString());
+            else if (input.matches("back")) {
                 if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
                     governanceController.getGame().setSelectedBuilding(null);
                 System.out.println("game menu:");
                 return;
-            }
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_POPULARITY_FACTORS)!= null) {
+            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY_FACTORS) != null) {
                 System.out.println(governanceController.showPopularityFactors());
-            }
-            else if (GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_POPULARITY)!= null) {
+            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY) != null) {
                 System.out.println(governanceController.showPopularity());
-            }
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.SHOW_FOOD_LIST)!= null) {
+            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_FOOD_LIST) != null) {
                 System.out.println(governanceController.showFoodList());
-            }
-            else if ((matcher = GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.FOOD_RATE)) != null) {
+            } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE)) != null) {
                 System.out.println(foodRate(matcher));
 
-            } else if ((matcher = GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.FOOD_RATE_SHOW))!= null) {
+            } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE_SHOW)) != null) {
                 System.out.println(governanceController.showFoodRate());
-            }
-            else if(GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.TAX_RATE)!= null) {
+            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE) != null) {
                 System.out.println(taxRate(matcher));
-            }
-            else if((matcher = GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.TAX_RATE_SHOW)) != null) {
+            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE_SHOW) != null) {
                 System.out.println(governanceController.showTaxRate());
-            }
-            else if((matcher = GovernanceMenuCommands.getMatcher(input,GovernanceMenuCommands.FEAR_RATE)) != null) {
+            } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE)) != null) {
                 System.out.println(fearRate(matcher));
             }
-            else System.out.println("Invalid Command!");
+            else {
+                System.out.println("Invalid command");
+            }
         }
     }
 
@@ -66,7 +62,7 @@ public class GovernanceMenu extends Menu{
         return String.valueOf(governanceController.taxRate(rate));
     }
 
-    public  String fearRate(Matcher matcher) {
+    public String fearRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
         return String.valueOf(governanceController.fearRate(rate));
     }

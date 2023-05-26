@@ -1,10 +1,9 @@
 package model.units;
 
 import enums.unitEnums.TroopType;
-import enums.unitEnums.UnitsEnum;
-import model.*;
+import model.User;
 
-public class Troop extends Unit{
+public class Troop extends Unit {
     public Troop(User owner, String name, TroopType troopType) {
         super(owner, name);
     }
@@ -28,6 +27,7 @@ public class Troop extends Unit{
     public void setCanHide(boolean canHide) {
         this.canHide = canHide;
     }
+
     public void attack() {
 
     }
@@ -36,6 +36,7 @@ public class Troop extends Unit{
         canHide = true;
     }
 
-    public void shoot() {}
+    public void shoot() {
+    }
 
 }

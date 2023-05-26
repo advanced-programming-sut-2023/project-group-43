@@ -4,6 +4,7 @@ import enums.Output;
 import enums.environmentEnums.Material;
 import model.Game;
 import model.Governance;
+
 import java.util.ArrayList;
 
 public class StoreController {
@@ -91,7 +92,7 @@ public class StoreController {
             case "horse archer":
             case "arabian swordsman":
             case "fire thrower":
-                if(storeName.matches("mercenary post")) return true;
+                if (storeName.matches("mercenary post")) return true;
         }
         return false;
     }

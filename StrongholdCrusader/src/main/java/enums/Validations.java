@@ -9,12 +9,15 @@ public enum Validations {
     VALID_USERNAME("[a-zA-Z0-9_]+"),
     GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)");
     private final String regex;
+
     private Validations(String regex) {
         this.regex = regex;
     }
-    public static boolean check (String string, Validations term) {
+
+    public static boolean check(String string, Validations term) {
         return Pattern.compile(term.regex).matcher(string).matches();
     }
+
     public static String getInfo(String flag, String input) {
         Matcher matcher = RegisterAndLoginCommands.getWholeMatcher(input, RegisterAndLoginCommands.GROUP);
         String info = null;
