@@ -69,8 +69,12 @@ public class ChangeEnvironmentMenu extends Menu {
     }
 
     private Output setTexture(Matcher matcher) {
-        if (parseMatcher(matcher))
-            return changeEnvironmentController.setTexture(Integer.parseInt(x), Integer.parseInt(y), type);
+        if (parseMatcher(matcher)) {
+            System.out.println(type);
+            System.out.println(x);
+            System.out.println(y);
+            return changeEnvironmentController.setTexture(Integer.parseInt(x), Integer.parseInt(y), type);}
+
         return null;
     }
 

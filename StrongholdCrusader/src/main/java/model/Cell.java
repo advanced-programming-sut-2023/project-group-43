@@ -109,6 +109,7 @@ public class Cell {
     }
 
     public void addUnit(Unit unit) {
+        if (units == null) units = new ArrayList<>();
         units.add(unit);
     }
 
