@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.RegisterMenu"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="Register Menu"/>
+            <HBox alignment="CENTER" spacing="20">
+                <Label text="username:"/>
+                <TextField promptText="username" fx:id="username"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <Label text="password:"/>
+                <PasswordField promptText="password" fx:id="password"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <Label text="confirm password:"/>
+                <PasswordField promptText="password" fx:id="passwordConfirmation"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <CheckBox onMouseClicked="#activeSlogan"/>
+                <Label text="slogan:"/>
+                <TextField promptText="password" fx:id="slogan" disable="true"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <Label text="email:"/>
+                <TextField promptText="password" fx:id="email"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <Label text="nickname:"/>
+                <TextField promptText="password" fx:id="nickname"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10">
+                <Button text="sign up" onMouseClicked="#createUser"/>
+                <Button text="enter login menu" onMouseClicked="#enterLoginMenu"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

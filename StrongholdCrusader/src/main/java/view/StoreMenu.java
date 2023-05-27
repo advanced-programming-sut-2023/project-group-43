@@ -25,7 +25,7 @@ public class StoreMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 output = Output.STORE_MENU;
             if (input.matches("back")) {
                 storeController.getGame().setSelectedBuilding(null);
@@ -38,7 +38,8 @@ public class StoreMenu extends Menu {
                 output = buy(matcher);
             } else if ((matcher = StoreMenuCommands.getMatcher(input, StoreMenuCommands.SELL)) != null) {
                 output = sell(matcher);
-            } if (output == null) System.out.println("invalid command!");
+            }
+            if (output == null) System.out.println("invalid command!");
             else System.out.println(output.getString());
         }
     }
@@ -47,7 +48,7 @@ public class StoreMenu extends Menu {
         String itemName = Validations.getInfo("i", matcher.group());
         String amount = Validations.getInfo("a", matcher.group());
         if (itemName != null && amount != null && amount.matches("\\d+"))
-        return storeController.buy(itemName, Integer.parseInt(amount));
+            return storeController.buy(itemName, Integer.parseInt(amount));
         return null;
     }
 

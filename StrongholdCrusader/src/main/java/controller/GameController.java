@@ -238,7 +238,7 @@ public class GameController {
         for (Unit unit : game.getSelectedUnit()) {
             if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
             if (game.getCells()[x - 1][y - 1].isBlocked(unit)) return Output.INVALID_MOVE;
-            if (findPath(unit.getCell().getX(), unit.getCell().getY(), x - 1, y -1, unit).size() == 0) {
+            if (findPath(unit.getCell().getX(), unit.getCell().getY(), x - 1, y - 1, unit).size() == 0) {
                 return Output.INVALID_MOVE;
             }
             unit.setCurrentTargetX(x - 1);

@@ -33,9 +33,9 @@ public enum GameMenuCommands {
     PATROL_UNIT("patrol unit" +
             "( \\-(?<flag>[(x1)|(y1)|(x2)|(y2)|(t)])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     DROP_UNIT("dropunit" +
-            "( \\-(?<flag>[xytc])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){4}")
-    ;
+            "( \\-(?<flag>[xytc])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){4}");
     private final String regex;
+
     private GameMenuCommands(String regex) {
         this.regex = regex;
     }
