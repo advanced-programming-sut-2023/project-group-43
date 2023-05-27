@@ -17,7 +17,7 @@ public class MainMenu extends Menu {
         String input;
         while (true) {
             input = scanner.nextLine();
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 System.out.println(Output.MAIN_MENU.getString());
             else if (input.matches("back"))
                 return;

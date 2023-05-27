@@ -1,4 +1,5 @@
 package model.buildings;
+
 import enums.BuildingEnums.BuildingEnum;
 import model.Cell;
 import model.Game;
@@ -22,7 +23,7 @@ public class CastleDepartment extends Building {
     private CastleDepartment drawBridge;
 
     public CastleDepartment(String name, User owner, int peopleCapacity, int defendRange, int fireRange) {
-        super(name , owner);
+        super(name, owner);
         this.hitPoint = BuildingEnum.getBuildingStructureByName(name).getHp();
         this.peopleCapacity = peopleCapacity;
         this.defendRange = defendRange;
@@ -38,17 +39,18 @@ public class CastleDepartment extends Building {
     }
 
     public void reduceEnemySpeed(ArrayList<Unit> units) {
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             if (!this.getOwner().equals(unit.getOwner()))
                 unit.setSpeed(unit.getSpeed() - 1);//TODO
         }
     }
+
     public void attackEnemy(Game game, int x, int y) {
         int[][] array = {{1, 0, -1, 0, -1, -1, 1, 1}, {0, 1, 0, -1, -1, 1, -1, 1}};
         Cell[][] cells = game.getCells();
         for (int i = 0; i < 8; i++) {
             if (x + array[0][i] > 0 && x + array[0][i] < game.getRow() && y + array[1][i] > 0 && y + array[1][i] < game.getColumn()) {
-                for (Unit unit: cells[x + array[0][i]][y + array[1][i]].getUnits()) {
+                for (Unit unit : cells[x + array[0][i]][y + array[1][i]].getUnits()) {
                     if (!unit.getOwner().equals(game.getCurrentPlayer())) {
                         unit.setHitPoint(unit.getHitPoint() - this.defendRange);
                     }
@@ -101,7 +103,8 @@ public class CastleDepartment extends Building {
         this.gateIsOpen(openIt);
         this.drawBridge.gateIsOpen(openIt);
     }
-    public CastleDepartment dropDrawBridge (Game game, int x, int y) {
+
+    public CastleDepartment dropDrawBridge(Game game, int x, int y) {
         Cell[][] cell = game.getCells();
         int[][] array = {{1, 0, -1, 0}, {0, 1, 0, -1}};
         for (int i = 0; i < 4; i++) {

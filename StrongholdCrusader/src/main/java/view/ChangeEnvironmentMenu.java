@@ -29,7 +29,7 @@ public class ChangeEnvironmentMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 output = Output.CHANGE_ENVIRONMENT_MENU;
             else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE)) != null) {
                 output = setTexture(matcher);
@@ -46,16 +46,14 @@ public class ChangeEnvironmentMenu extends Menu {
             } else if (input.matches("next")) {
                 System.out.println(changeEnvironmentController.goToNextPerson());
                 continue;
-            }
-            else if (input.matches("back")) {
+            } else if (input.matches("back")) {
                 System.out.println("main menu:");
                 return;
             } else if (input.matches("start game")) {
                 if (enterGameMenu()) {
                     System.out.println("main menu:");
                     return;
-                }
-                else {
+                } else {
                     System.out.println("you cannot start the game until everyone choose their headquarters");
                     continue;
                 }
@@ -73,7 +71,8 @@ public class ChangeEnvironmentMenu extends Menu {
             System.out.println(type);
             System.out.println(x);
             System.out.println(y);
-            return changeEnvironmentController.setTexture(Integer.parseInt(x), Integer.parseInt(y), type);}
+            return changeEnvironmentController.setTexture(Integer.parseInt(x), Integer.parseInt(y), type);
+        }
 
         return null;
     }
@@ -146,7 +145,7 @@ public class ChangeEnvironmentMenu extends Menu {
         input = scanner.nextLine();
         while (true) {
             input = scanner.nextLine();
-            if(input.matches("\\S*end\\S*")) break;
+            if (input.matches("\\S*end\\S*")) break;
             playersArraylist.add(input);
         }
         System.out.println("number of turns:");

@@ -23,7 +23,7 @@ public class MapMenu extends Menu {
         Matcher matcher;
         while (true) {
             input = scanner.nextLine();
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 System.out.println(Output.MAP_MENU.getString());
             if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
                 showMap(matcher);
@@ -34,8 +34,8 @@ public class MapMenu extends Menu {
             } else if (input.matches("back")) {
                 System.out.println("game menu:");
                 return;
-            }
-            else System.out.println("invalid command!");;
+            } else System.out.println("invalid command!");
+            ;
         }
     }
 

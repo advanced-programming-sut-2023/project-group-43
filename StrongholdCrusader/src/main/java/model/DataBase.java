@@ -1,12 +1,11 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 
 public class DataBase {
@@ -20,18 +19,21 @@ public class DataBase {
     }
 
     private void loadData() {
-        Reader reader;
         try {
-            reader = new FileReader("data.json");
-        } catch (FileNotFoundException e) {
-            return;
-        }
-        Gson gson = new Gson();
-        JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-        for (JsonElement jsonElement : jsonArray)
-            users.add(gson.fromJson(jsonElement, User.class));
-        for (User user : users) {
-            user.setGovernance(new Governance());
+            Reader reader;
+            try {
+                reader = new FileReader("data.json");
+            } catch (FileNotFoundException e) {
+                return;
+            }
+            Gson gson = new Gson();
+            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+            for (JsonElement jsonElement : jsonArray)
+                users.add(gson.fromJson(jsonElement, User.class));
+            for (User user : users) {
+                user.setGovernance(new Governance());
+            }
+        } catch (Exception e) {
         }
     }
 
