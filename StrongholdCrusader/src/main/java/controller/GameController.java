@@ -43,7 +43,7 @@ public class GameController {
             player.getGovernance().setTaxRate(RateNumber.TAX_RATE_0);
             player.getGovernance().setPopulation(15);
             player.getGovernance().setUnemployedPopulation(15);
-            player.getGovernance().setGold(10000);
+            player.getGovernance().setGold(100000);
             player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, 50);
             player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, 50);
             player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.IRON, 50);
@@ -238,6 +238,9 @@ public class GameController {
         for (Unit unit : game.getSelectedUnit()) {
             if (unit.getCell().equals(village)) unit.setCell(unit.getPreviousCell());
             if (game.getCells()[x - 1][y - 1].isBlocked(unit)) return Output.INVALID_MOVE;
+            if (findPath(unit.getCell().getX(), unit.getCell().getY(), x - 1, y - 1, unit).size() == 0) {
+                return Output.INVALID_MOVE;
+            }
             unit.setCurrentTargetX(x - 1);
             unit.setCurrentTargetY(y - 1);
             unit.setState(UnitState.MOVING);

@@ -22,7 +22,7 @@ public class LoginMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 output = Output.LOGIN_MENU;
             if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.LOGIN_USER)) != null) {
                 output = loginUser(matcher);

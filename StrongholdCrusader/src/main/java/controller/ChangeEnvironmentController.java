@@ -90,7 +90,7 @@ public class ChangeEnvironmentController {
 
     public Output clear(int x, int y) {
         game.getCells()[x - 1][y - 1].setBuilding(null);
-        game.getCells()[x - 1][y - 1].setUnits(null);
+        game.getCells()[x - 1][y - 1].setUnits(new ArrayList<>());
         game.getCells()[x - 1][y - 1].setTexture(Texture.GROUND);
         game.getCells()[x - 1][y - 1].setTreeType(null);
         game.getCells()[x - 1][y - 1].setHasRock(false);

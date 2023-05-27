@@ -28,7 +28,7 @@ public class Unit {
 
     private UnitState state;
 
-    public Unit(User owner,String name) {
+    public Unit(User owner, String name) {
         unit = UnitsEnum.getUnitByName(name);
         this.owner = owner;
         this.name = name;
@@ -161,7 +161,7 @@ public class Unit {
     public void move(GameController gameController) {
         if (currentTargetX >= 0 && currentTargetY >= 0) {
             ArrayList<Cell> path = gameController.findPath(cell.getX(), cell.getY(), currentTargetX, currentTargetY, this);
-            if (path != null)  {
+            if (path != null) {
                 if (speed <= path.size() - 1) {
                     cell.removeUnit(this);
                     path.get((int) speed).addUnit(this);
@@ -188,6 +188,7 @@ public class Unit {
         }
 
 
-}}
+    }
+}
 
 
