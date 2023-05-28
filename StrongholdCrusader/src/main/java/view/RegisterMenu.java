@@ -1,9 +1,12 @@
 package view;
 
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +26,7 @@ public class RegisterMenu extends Application {
     public TextField username;
 
     private static Stage stage;
+    public CheckBox sloganCheckBox;
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -30,7 +34,6 @@ public class RegisterMenu extends Application {
             System.exit(0);
         }));
         launch(RegisterMenu.class, args);
-
     }
 
     @Override
@@ -44,6 +47,7 @@ public class RegisterMenu extends Application {
         stage.show();
     }
 
+
     public static Stage getStage() {
         return stage;
     }
@@ -51,10 +55,12 @@ public class RegisterMenu extends Application {
     public void createUser(MouseEvent mouseEvent) {
     }
 
-    public void enterLoginMenu(MouseEvent mouseEvent) {
+    public void enterLoginMenu(MouseEvent mouseEvent) throws Exception {
+        (new LoginMenu()).start(stage);
     }
 
-    public void activeSlogan(MouseEvent mouseEvent) {
-        slogan.setDisable(false);
+    public void activateSlogan(MouseEvent mouseEvent) {
+        if (sloganCheckBox.isSelected()) slogan.setDisable(false);
+        else slogan.setDisable(true);
     }
 }
