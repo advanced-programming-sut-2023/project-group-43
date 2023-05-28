@@ -61,7 +61,7 @@ Button {
     -fx-font-family: "Arial";
     -fx-font-weight: bold;
     -fx-min-width: 100;
-    -fx-max-width: 100;
+    -fx-max-width: 300;
     -fx-background-insets: 0,1,2;
     -fx-padding: 3 30 3 30;
     -fx-text-fill: black;
@@ -85,7 +85,7 @@ Button:pressed {
 Label {
     -fx-text-fill: magenta;
     -fx-font-weight: bolder;
-    -fx-font-size: 32px;
+    -fx-font-size: 15px;
     -fx-font-family: "Arial Black";
     -fx-fill: #818181;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
