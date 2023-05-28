@@ -20,7 +20,7 @@ public class MainController {
     public void enterProfileMenu() {
         ProfileController profileController = new ProfileController(currentUser);
         ProfileMenu profileMenu = new ProfileMenu(profileController);
-        profileMenu.run();
+        //profileMenu.run();
     }
 
 }

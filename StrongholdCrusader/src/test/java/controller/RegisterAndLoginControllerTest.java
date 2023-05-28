@@ -184,6 +184,6 @@ public class RegisterAndLoginControllerTest {
 
     @Test
     public void successfulLogin() {
-        assertEquals(Output.SUCCESSFUL_LOGIN, RegisterAndLoginController.loginUser("aida", "Aa1!Aa1!", false));
+        assertEquals(Output.SUCCESSFUL_LOGIN, RegisterAndLoginController.loginUser("asal", "Aa1!Aa1!", false));
     }
 }
