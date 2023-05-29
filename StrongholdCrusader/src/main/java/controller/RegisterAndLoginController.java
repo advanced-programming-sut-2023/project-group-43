@@ -44,7 +44,7 @@ public class RegisterAndLoginController {
         return null;
     }
 
-    private static Output checkPasswordConfirmation(String passwordConfirmation, String password) {
+    public static Output checkPasswordConfirmation(String passwordConfirmation, String password) {
         if (!password.equals(passwordConfirmation)) {
             return Output.INCORRECT_PASSWORD_CONFIRMATION;
         }

@@ -84,7 +84,8 @@ public class RegisterMenu extends Application {
         });
         passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
-            if ((output = RegisterAndLoginController.checkUsername(passwordConfirmation.getText())) == null)
+            if ((output = RegisterAndLoginController.checkPasswordConfirmation(passwordConfirmation.getText(),
+                    password.getText())) == null)
                 passwordConfirmationError.setText("ok");
             else passwordConfirmationError.setText(output.getString());
         });
