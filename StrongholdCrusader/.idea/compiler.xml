@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="StrongholdCrusader" options="--add-exports java.datatransfer/java.awt=com.example.strongholdcrusader" />
+      <module name="StrongholdCrusader" options="" />
     </option>
   </component>
 </project>
