@@ -19,10 +19,11 @@ public class RegisterAndLoginController {
                                     String email,
                                     String slogan,
                                     boolean hasSlogan) {
-        if (username.isEmpty() || password.isEmpty() || nickname.isEmpty() || email.isEmpty()) {
+        if (checkNickname(nickname) != null) {
             return Output.EMPTY_FIELD;
-        } else if (slogan.isEmpty() && hasSlogan) {
-            return Output.EMPTY_FIELD;
+        }
+        else if (checkSlogan(slogan, hasSlogan) != null) {
+            return checkSlogan(slogan, hasSlogan);
         } else if (checkUsername(username) != null) return checkUsername(username);
         else if (checkPassword(password) != null) {
             return checkPassword(password);
@@ -38,6 +39,11 @@ public class RegisterAndLoginController {
         return Output.CHOOSE_PASSWORD_RECOVERY_QUESTION;
     }
 
+    public static Output checkSlogan(String slogan, boolean hasSlogan) {
+        if (slogan.isEmpty() && hasSlogan) return Output.EMPTY_FIELD;
+        return null;
+    }
+
     private static Output checkPasswordConfirmation(String passwordConfirmation, String password) {
         if (!password.equals(passwordConfirmation)) {
             return Output.INCORRECT_PASSWORD_CONFIRMATION;
@@ -51,6 +57,11 @@ public class RegisterAndLoginController {
             return Output.INVALID_USERNAME;
         else if (DataBase.getInstance().getUserByUsername(username) != null)
             return Output.DUPLICATE_USERNAME;
+        return null;
+    }
+
+    public static Output checkNickname(String nickname) {
+        if (nickname.isEmpty()) return Output.EMPTY_FIELD;
         return null;
     }
 

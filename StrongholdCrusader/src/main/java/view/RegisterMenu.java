@@ -1,11 +1,16 @@
 package view;
 
+
+import controller.RegisterAndLoginController;
+import enums.Output;
 import controller.RegisterAndLoginController;
 import enums.Output;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;

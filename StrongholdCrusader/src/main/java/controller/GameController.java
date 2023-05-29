@@ -272,7 +272,7 @@ public class GameController {
         for (Unit unit : units) {
             unit.setState(unitState);
         }
-        return Output.UNIT_STATE_SETTED_SUCCESSFULLY;
+        return Output.UNIT_STATE_SET_SUCCESSFULLY;
     }
 
     public Output attack(int x, int y, String item) {
