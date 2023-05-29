@@ -1,8 +1,8 @@
-TextField {
+TextField , PasswordField{
     -fx-border-color: transparent transparent lightgray transparent;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
-    -fx-prompt-text-fill: rgba(0, 255, 255, 0.5);
+    -fx-prompt-text-fill: rgb(124, 73, 45);
     -fx-text-fill: black;
     -fx-background-radius: 15 15 0 0;
     -fx-alignment: center;
@@ -13,7 +13,6 @@ TextField {
     -fx-font-size: 13px;
     -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
     -fx-highlight-text-fill: -fx-text-inner-color;
-    -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-border-insets: 0 0 1 0;
     -fx-border-style: hidden hidden solid hidden;
@@ -23,29 +22,6 @@ TextField {
 
 TextField:focused {
     -fx-background-color: #E0FFFF;
-}
-
-PasswordField {
-    -fx-border-color: transparent transparent lightgray transparent;
-    -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
-    -fx-prompt-text-fill: rgba(0, 255, 255, 0.5);
-    -fx-text-fill: black;
-    -fx-background-radius: 15 15 0 0;
-    -fx-alignment: center;
-    -fx-font-weight: bold;
-    -fx-max-width: 300;
-    -fx-min-width: 300;
-    -fx-font-family: "Arial";
-    -fx-font-size: 13px;
-    -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
-    -fx-highlight-text-fill: -fx-text-inner-color;
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-border-insets: 0 0 1 0;
-    -fx-border-style: hidden hidden solid hidden;
-    -fx-cursor: text;
-    -fx-padding: 0.166667em 0em 0.333333em 0em;
 }
 
 PasswordField:focused {
@@ -83,12 +59,17 @@ Button:pressed {
 
 
 Label {
-    -fx-text-fill: magenta;
+    -fx-text-fill: #753308;
     -fx-font-weight: bolder;
-    -fx-font-size: 15px;
+    -fx-font-size: 12px;
     -fx-font-family: "Arial Black";
     -fx-fill: #818181;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.error {
+    -fx-text-fill: red;
+    -fx-font-size: 10px;
 }
 
 .BackGround {

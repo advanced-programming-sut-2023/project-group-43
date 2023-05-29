@@ -25,7 +25,7 @@ public class ProfileController {
 
 
     public Output changePassword(String oldPassword, String newPassword) {
-        if (oldPassword.equals(newPassword)) return Output.DUPLICATED_NEWPASSWORD;
+        if (oldPassword.equals(newPassword)) return Output.DUPLICATED_NEW_PASSWORD;
         return RegisterAndLoginController.checkPassword(newPassword);
     }
 
