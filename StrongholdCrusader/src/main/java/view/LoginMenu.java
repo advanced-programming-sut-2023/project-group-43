@@ -110,6 +110,7 @@ public class LoginMenu extends Application {
     }
 
     public void enterMainMenu(MouseEvent mouseEvent) {
+        ((new MainMenu()).start(RegisterMenu.getStage()));
     }
 
     public void back() throws Exception {

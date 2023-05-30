@@ -4,16 +4,33 @@ import controller.StoreController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.StoreMenuCommands;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class StoreMenu extends Menu {
+public class StoreMenu extends Application {
 
+    public static Stage stage;
     private StoreController storeController;
+
 
     public StoreMenu(StoreController storeController) {
         this.storeController = storeController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        StoreMenu.stage = stage;
+        BorderPane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
+        Scene scene = new Scene(storeMenuPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void run() {
