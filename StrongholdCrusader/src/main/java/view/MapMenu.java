@@ -1,18 +1,14 @@
 package view;
 
-import controller.GameController;
 import controller.MapController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
-import model.DataBase;
-import model.User;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class MapMenu extends Menu{
+public class MapMenu extends Menu {
 
     private MapController mapController;
 
@@ -20,27 +16,26 @@ public class MapMenu extends Menu{
         this.mapController = mapController;
     }
 
-    public void run(){
+    public void run() {
         System.out.println("map menu:");
         Scanner scanner = Menu.getScanner();
         String input;
-        Output output;
         Matcher matcher;
         while (true) {
             input = scanner.nextLine();
-            output = null;
+            if (input.matches("show current menu"))
+                System.out.println(Output.MAP_MENU.getString());
             if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
-                //output = showMap(matcher);
                 showMap(matcher);
-            }
-            else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_DETAILS)) != null) {
-                //output = showMapDetails(matcher);
+            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_DETAILS)) != null) {
                 showMapDetails(matcher);
-            }
-            else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
-                //output = moveMap(matcher);
+            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
                 moveMap(matcher);
-            }
+            } else if (input.matches("back")) {
+                System.out.println("game menu:");
+                return;
+            } else System.out.println("invalid command!");
+            ;
         }
     }
 
@@ -50,62 +45,56 @@ public class MapMenu extends Menu{
 
         System.out.println(mapController.showMap(Integer.parseInt(row), Integer.parseInt(column)));
     }
+
     public void showMapDetails(Matcher matcher) {
         int row = Integer.parseInt(Validations.getInfo("x", matcher.group()));
         int column = Integer.parseInt(Validations.getInfo("y", matcher.group()));
         System.out.println(mapController.showMapDetails(row, column));
     }
+
     public void moveMap(Matcher matcher) {
         int horizontalDisplacement = 0;
         int verticalDisplacement = 0;
         if (matcher.group("firstDirection").equals("up")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement"));
-            }
-            else verticalDisplacement = 1;
+            if (matcher.group("firstDisplacement") != null) {
+                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
+            } else verticalDisplacement = 1;
         }
         if (matcher.group("firstDirection").equals("down")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement")) * -1;
-            }
-            else verticalDisplacement = -1;
+            if (matcher.group("firstDisplacement") != null) {
+                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
+            } else verticalDisplacement = -1;
         }
         if (matcher.group("secondDirection").equals("up")) {
             if (matcher.group("secondDisplacement") != null) {
                 verticalDisplacement = Integer.parseInt(matcher.group("secondDisplacement"));
-            }
-            else verticalDisplacement = 1;
+            } else verticalDisplacement = 1;
         }
         if (matcher.group("secondDirection").equals("down")) {
             if (matcher.group("secondDisplacement") != null) {
                 verticalDisplacement = Integer.parseInt(matcher.group("secondDisplacement")) * -1;
-            }
-            else verticalDisplacement = -1;
+            } else verticalDisplacement = -1;
         }
 
         if (matcher.group("firstDirection").equals("right")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement"));
-            }
-            else horizontalDisplacement = 1;
+            if (matcher.group("firstDisplacement") != null) {
+                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
+            } else horizontalDisplacement = 1;
         }
         if (matcher.group("firstDirection").equals("left")) {
-            if (matcher.group("firtsDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firtsDisplacement")) * -1;
-            }
-            else horizontalDisplacement = -1;
+            if (matcher.group("firstDisplacement") != null) {
+                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
+            } else horizontalDisplacement = -1;
         }
         if (matcher.group("secondDirection").equals("right")) {
             if (matcher.group("secondDisplacement") != null) {
                 horizontalDisplacement = Integer.parseInt(matcher.group("secondDisplacement"));
-            }
-            else horizontalDisplacement = 1;
+            } else horizontalDisplacement = 1;
         }
         if (matcher.group("secondDirection").equals("left")) {
             if (matcher.group("secondDisplacement") != null) {
                 horizontalDisplacement = Integer.parseInt(matcher.group("secondDisplacement")) * -1;
-            }
-            else horizontalDisplacement = -1;
+            } else horizontalDisplacement = -1;
         }
         System.out.println(mapController.moveMap(horizontalDisplacement, verticalDisplacement));
     }

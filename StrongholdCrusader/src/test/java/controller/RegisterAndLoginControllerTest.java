@@ -6,6 +6,7 @@ import model.User;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RegisterAndLoginControllerTest {
     //createUser
@@ -13,185 +14,176 @@ public class RegisterAndLoginControllerTest {
     public void checkingFirstReturnStatement() {
         assertEquals(Output.EMPTY_FIELD, RegisterAndLoginController.createUser(null, null, null, null, null, null, false));
     }
+
     @Test
     public void checkingSecondReturnStatement() {
         assertEquals(Output.EMPTY_FIELD, RegisterAndLoginController.createUser(".", ".", ".", ".", ".", null, true));
     }
+
     @Test
     public void checkingThirdReturnStatement() {
-        assertEquals(Output.INVALID_USERNAME, RegisterAndLoginController.createUser(" ", ".", ".", ".", ".", null, true));
+        assertEquals(Output.INVALID_USERNAME, RegisterAndLoginController.createUser(".", ".", ".", ".", ".", null, false));
     }
+
     @Test
-    void checkingForthReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals(Output.DUPLICATE_USERNAME, controller.createUser("aida", ".", ".", ".", ".", null, true));
+    public void checkingForthReturnStatement() {
+        assertEquals(Output.DUPLICATE_USERNAME, RegisterAndLoginController.createUser("aida", ".", ".", ".", ".", null, false));
     }
+
     @Test
-    void checkingFifthReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : password must have at least 6 characters!", controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", ".", ".", ".", ".", null, true));
+    public void checkingFifthReturnStatement() {
+        assertEquals(Output.INCORRECT_PASSWORD_CONFIRMATION, RegisterAndLoginController.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!Aa1!", ".", ".", null, false));
     }
+
     @Test
-    void checkingSixthReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
+    public void checkingSixthReturnStatement() {
         User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals("warning: duplicated email", controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!", ".", user.getEmail(), null, true));
+        assertEquals(Output.DUPLICATE_EMAIL, RegisterAndLoginController.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!", ".", user.getEmail(), null, false));
     }
+
     @Test
-    void checkingSeventhReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals("warning: password and password confirmation aren't matched", controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!1111", ".", user.getEmail(), null, true));
+    public void invalidEmailFormat() {
+        assertEquals(Output.INVALID_EMAIL_FORMAT, RegisterAndLoginController.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!", ".", "ioiouoi", null, false));
     }
+
     @Test
-    void invalidEmailFormat() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning: email format is invalid", controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!1111", ".", "ioiouoi", null, true));
+    public void randomSlogan() {
+        assertEquals(Output.RANDOM_SLOGAN, RegisterAndLoginController.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!", ".", "something@something.something", "random", true));
     }
+
     @Test
-    void randomSlogan(){
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("your slogan is: ", controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!1111", ".", "ioiouoi", "random", true));
+    public void randomPassword() {
+        assertEquals(Output.CONFIRM_PASSWORD, RegisterAndLoginController.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "random", null, ".", "something@something.something", null, false));
     }
+
     @Test
-    void randomPassword() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("please re-enter your password here:", controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "random", null, ".", "ioiouoi", null, true));
+    public void lastReturnStatement() {
+        assertEquals(Output.CHOOSE_PASSWORD_RECOVERY_QUESTION, RegisterAndLoginController.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "Aa1!Aa1!", "Aa1!Aa1!", ".", "something@something.something", null, false));
     }
-    @Test
-    void lastReturnStatement() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("Pick your security question: 1. What is my father’s name? 2. What " +
-                "was my first pet’s name? 3. What is my mother’s last name?", controller.createUser("aidaaidaaidaaidaaidaaidaaidaaidaaidaaidaaida", "random", "random", ".", "ioiouoi", null, true));
-    }
+
     //checkPassword
     @Test
-    void checkShortPassword() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : password must have at least 6 characters!", controller.checkPassword("ababa").getString());
-        }
-    @Test
-    void checkPasswordWithoutCapitalCaseLetter() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning: password must have at least one capital letter", controller.checkPassword("abababab").getString());
+    public void checkShortPassword() {
+        assertEquals(Output.SHORT_PASSWORD, RegisterAndLoginController.checkPassword("ababa"));
     }
+
     @Test
-    void checkPasswordWithoutLowerCaseLetter () {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning: password must have at least one lower letter", controller.checkPassword("ABABABABAB").getString());
+    public void checkPasswordWithoutCapitalCaseLetter() {
+        assertEquals(Output.WITHOUT_CAPITAL_CASE_LETTER, RegisterAndLoginController.checkPassword("abababab"));
     }
+
     @Test
-    void passwordWithoutNumber() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning: password must have at least one number", controller.checkPassword("ABABabab").getString());
+    public void checkPasswordWithoutLowerCaseLetter() {
+        assertEquals(Output.WITHOUT_LOWER_CASE_LETTER, RegisterAndLoginController.checkPassword("ABABABABAB"));
     }
+
     @Test
-    void passwordWithoutSpecialCharacter() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning: password must have at least one special character", controller.checkPassword("Aa1Aa1Aa1").getString());
+    public void passwordWithoutNumber() {
+        assertEquals(Output.WITHOUT_NUMBER, RegisterAndLoginController.checkPassword("ABABabab"));
     }
+
     @Test
-    void passwordCorrectAndShouldReturnNull() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertNull(controller.checkPassword("Aa1!Aa1!Aa1!"));
+    public void passwordWithoutSpecialCharacter() {
+        assertEquals(Output.WITHOUT_SPECIAL_CHARACTER, RegisterAndLoginController.checkPassword("Aa1Aa1Aa1"));
     }
+
+    @Test
+    public void passwordCorrectAndShouldReturnNull() {
+        assertNull(RegisterAndLoginController.checkPassword("Aa1!Aa1!Aa1!"));
+    }
+
     //loginUser
     @Test
-    void emptyUsernameField() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : empty field!", controller.loginUser(null, "lskfh", false));
+    public void emptyUsernameField() {
+        assertEquals(Output.EMPTY_FIELD, RegisterAndLoginController.loginUser(null, "lskfh", false));
     }
+
     @Test
-    void emptyPasswordField() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : empty field!", controller.loginUser("aida", null, false));
+    public void emptyPasswordField() {
+        assertEquals(Output.EMPTY_FIELD, RegisterAndLoginController.loginUser("aida", null, false));
     }
+
     @Test
-    void successfulLogin() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals("enter captcha to login", controller.loginUser("aida", user.getPassword(), false));
+    public void notExistentUsername() {
+        assertEquals(Output.NONEXISTENT_USERNAME, RegisterAndLoginController.loginUser("asqarAgaBefarmaAkbarAgaNafarmaSoxraXanomTajeSari", "password", false));
     }
-    @Test
-    void notExistentUsername() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        User user = DataBase.getInstance().getUserByUsername("asqarAgaBefarmaAkbarAgaNafarmaSoxraXanomTajeSari");
-        assertNull(user);
-    }
+
     //forgetPassword
     @Test
-    void userDoesNotExist() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        User user = DataBase.getInstance().getUserByUsername("asqarAgaBefarmaAkbarAgaNafarmaSoxraXanomTajeSari");
-        assertNull(user);
+    public void userDoesNotExist() {
+        assertEquals("user does not exist", RegisterAndLoginController.forgetPassword("asqarAgaBefarmaAkbarAgaNafarmaSoxraXanomTajeSari"));
     }
+
     //changePassword
     @Test
-    void changePasswordSuccessfully() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals("password changed successfully", controller.changePassword("aida", user.getPassword()));
+    public void changePasswordSuccessfully() {
+        assertEquals(Output.SUCCESSFUL_PASSWORD_CHANGE, RegisterAndLoginController.changePassword("aida", "Aa1!Bb2!"));
     }
+
     @Test
-    void invalidPasswordForChangingPassword() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertNotEquals("password changed successfully", controller.changePassword("aida", "a"));
+    public void invalidPasswordForChangingPassword() {
+        assertNotEquals(Output.SUCCESSFUL_PASSWORD_CHANGE, RegisterAndLoginController.changePassword("aida", "a"));
     }
+
     //Check captcha
     @Test
-    void captchaEnteredCorrectly() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("captcha matched", controller.checkCaptcha("123456", "123456").getString());
+    public void captchaEnteredCorrectly() {
+        assertEquals(Output.CAPTCHA_MATCHED, RegisterAndLoginController.checkCaptcha("123456", "123456"));
     }
+
     @Test
-    void wrongCaptchaEntered() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning : captcha not matched!", controller.checkCaptcha("6543", "123456").getString());
+    public void wrongCaptchaEntered() {
+        assertEquals(Output.CAPTCHA_NOT_MATCHED, RegisterAndLoginController.checkCaptcha("6543", "123456"));
     }
+
     //choosePasswordRecoveryQuestion
     @Test
-    void passwordRecoveryQuestionIsNull() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("warning: you have to choose a number between 1 to 3", controller.choosePasswordRecoveryQuestion(4, null, null).getString());
+    public void passwordRecoveryQuestionIsNull() {
+        assertEquals(Output.INVALID_PASSWORD_RECOVERY_QUESTION, RegisterAndLoginController.choosePasswordRecoveryQuestion(4, null, null));
     }
+
     @Test
-    void incorrectAnswerConfirmation() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
+    public void incorrectAnswerConfirmation() {
         User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals("warning: answer and answer confirmation aren't matched", controller.choosePasswordRecoveryQuestion(2, user.getPasswordRecoveryAnswer(), null).getString());
+        assertEquals(Output.INCORRECT_ANSWER_CONFIRMATION, RegisterAndLoginController.choosePasswordRecoveryQuestion(2, user.getPasswordRecoveryAnswer(), null));
     }
+
     @Test
-    void correctPasswordRecoveryQuestion() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
+    public void correctPasswordRecoveryQuestion() {
         User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals("password recovery question has chosen successfully!", controller.choosePasswordRecoveryQuestion(2, user.getPasswordRecoveryAnswer(), user.getPasswordRecoveryAnswer()).getString());
+        assertEquals(Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION, RegisterAndLoginController.choosePasswordRecoveryQuestion(2, user.getPasswordRecoveryAnswer(), user.getPasswordRecoveryAnswer()));
     }
+
     //completeRegister
     @Test
-    void completeRegister() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
+    public void completeRegister() {
         User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals("user sign up successfully!", controller.completeRegister(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getSlogan(), 2, user.getPasswordRecoveryAnswer()));
+        assertEquals(Output.SUCCESSFUL_REGISTER, RegisterAndLoginController.completeRegister(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getSlogan(), 2, user.getPasswordRecoveryAnswer()));
     }
+
     //makePasswordRecoveryQuestion
     @Test
-    void invalidQuestionNumber() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertNull(controller.makePasswordRecoveryQuestion(5));
+    public void invalidQuestionNumber() {
+        assertNull(RegisterAndLoginController.makePasswordRecoveryQuestion(5));
     }
+
     @Test
-    void firstValidQuestionNumber() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("What is my father’s name?", controller.makePasswordRecoveryQuestion(1));
+    public void firstValidQuestionNumber() {
+        assertEquals("What is my father’s name?", RegisterAndLoginController.makePasswordRecoveryQuestion(1));
     }
+
     @Test
-    void secondValidQuestionNumber() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("What was my first pet’s name?", controller.makePasswordRecoveryQuestion(2));
+    public void secondValidQuestionNumber() {
+        assertEquals("What was my first pet’s name?", RegisterAndLoginController.makePasswordRecoveryQuestion(2));
     }
+
     @Test
-    void thirdValidQuestionNumber() {
-        RegisterAndLoginController controller = new RegisterAndLoginController();
-        assertEquals("What is my mother’s last name?", controller.makePasswordRecoveryQuestion(3));
+    public void thirdValidQuestionNumber() {
+        assertEquals("What is my mother’s last name?", RegisterAndLoginController.makePasswordRecoveryQuestion(3));
+    }
+
+    @Test
+    public void successfulLogin() {
+        assertEquals(Output.SUCCESSFUL_LOGIN, RegisterAndLoginController.loginUser("asal", "Aa1!Aa1!", false));
     }
 }

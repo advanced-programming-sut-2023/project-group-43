@@ -20,6 +20,7 @@ public class ChangeEnvironmentMenu extends Menu {
     }
 
     public void run() {
+        changeEnvironmentController.initializeGame();
         getReady();
         Scanner scanner = Menu.getScanner();
         String input;
@@ -28,7 +29,9 @@ public class ChangeEnvironmentMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE)) != null) {
+            if (input.matches("show current menu"))
+                output = Output.CHANGE_ENVIRONMENT_MENU;
+            else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE)) != null) {
                 output = setTexture(matcher);
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE_RECTANGLE)) != null) {
                 setTextureRectangle(matcher);
@@ -43,14 +46,17 @@ public class ChangeEnvironmentMenu extends Menu {
             } else if (input.matches("next")) {
                 System.out.println(changeEnvironmentController.goToNextPerson());
                 continue;
-            }
-            else if (input.matches("back")) {
+            } else if (input.matches("back")) {
                 System.out.println("main menu:");
                 return;
             } else if (input.matches("start game")) {
-                enterGameMenu();
-                System.out.println("main menu:");
-                return;
+                if (enterGameMenu()) {
+                    System.out.println("main menu:");
+                    return;
+                } else {
+                    System.out.println("you cannot start the game until everyone choose their headquarters");
+                    continue;
+                }
             }
             if (output != null)
                 System.out.println(output.getString());
@@ -61,8 +67,13 @@ public class ChangeEnvironmentMenu extends Menu {
     }
 
     private Output setTexture(Matcher matcher) {
-        if (parseMatcher(matcher))
+        if (parseMatcher(matcher)) {
+            System.out.println(type);
+            System.out.println(x);
+            System.out.println(y);
             return changeEnvironmentController.setTexture(Integer.parseInt(x), Integer.parseInt(y), type);
+        }
+
         return null;
     }
 
@@ -108,8 +119,8 @@ public class ChangeEnvironmentMenu extends Menu {
         return null;
     }
 
-    private void enterGameMenu() {
-        changeEnvironmentController.enterGameMenu();
+    private boolean enterGameMenu() {
+        return changeEnvironmentController.enterGameMenu();
     }
 
     private boolean parseMatcher(Matcher matcher) {
@@ -134,7 +145,7 @@ public class ChangeEnvironmentMenu extends Menu {
         input = scanner.nextLine();
         while (true) {
             input = scanner.nextLine();
-            if(input.matches("\\S*end\\S*")) break;
+            if (input.matches("\\S*end\\S*")) break;
             playersArraylist.add(input);
         }
         System.out.println("number of turns:");
@@ -145,11 +156,12 @@ public class ChangeEnvironmentMenu extends Menu {
         }
         int turns = Integer.parseInt(input);
         System.out.println("choose your desire map:\nenter 1 or 2");
-        int mapOption = scanner.nextInt();
+        int mapOption = Integer.parseInt(scanner.nextLine());
         while (mapOption != 2 && mapOption != 1) {
             System.out.println("wrong map number");
             mapOption = scanner.nextInt();
         }
         System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns, mapOption).getString());
+        changeEnvironmentController.getGame().setCurrentPlayer(changeEnvironmentController.getCurrentUser());
     }
 }

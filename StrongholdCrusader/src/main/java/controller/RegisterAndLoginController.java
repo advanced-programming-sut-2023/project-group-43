@@ -4,6 +4,7 @@ import enums.Output;
 import model.DataBase;
 import model.User;
 import view.MainMenu;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,23 +19,17 @@ public class RegisterAndLoginController {
                                     String email,
                                     String slogan,
                                     boolean hasSlogan) {
-        if (username == null || password == null || nickname == null || email == null) {
+        if (checkNickname(nickname) != null) {
             return Output.EMPTY_FIELD;
-        } else if (slogan == null && hasSlogan) {
-            return Output.EMPTY_FIELD;
-        } else if (!username.matches("[\\w_]+")) {
-            return Output.INVALID_USERNAME;
-        } else if (DataBase.getInstance().getUserByUsername(username) != null) {
-            return Output.DUPLICATE_USERNAME;
-        } else if (passwordConfirmation != null && checkPassword(password) != null) {
-            return checkPassword(password);
-        } else if (passwordConfirmation != null && !password.equals(passwordConfirmation)) {
-            return Output.INCORRECT_PASSWORD_CONFIRMATION;
-        } else if (DataBase.getInstance().getUserByEmail(email) != null) {
-            return Output.DUPLICATE_EMAIL;
-        } else if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) {
-            return Output.INVALID_EMAIL_FORMAT;
         }
+        else if (checkSlogan(slogan, hasSlogan) != null) {
+            return checkSlogan(slogan, hasSlogan);
+        } else if (checkUsername(username) != null) return checkUsername(username);
+        else if (checkPassword(password) != null) {
+            return checkPassword(password);
+        } else if (checkPasswordConfirmation(passwordConfirmation, password) != null)
+            return checkPasswordConfirmation(passwordConfirmation, password);
+        else if (checkEmail(email) != null) return checkEmail(email);
         if (slogan != null && slogan.equals("random")) {
             return Output.RANDOM_SLOGAN;
         }
@@ -42,6 +37,42 @@ public class RegisterAndLoginController {
             return Output.CONFIRM_PASSWORD;
         }
         return Output.CHOOSE_PASSWORD_RECOVERY_QUESTION;
+    }
+
+    public static Output checkSlogan(String slogan, boolean hasSlogan) {
+        if (slogan.isEmpty() && hasSlogan) return Output.EMPTY_FIELD;
+        return null;
+    }
+
+    public static Output checkPasswordConfirmation(String passwordConfirmation, String password) {
+        if (!password.equals(passwordConfirmation)) {
+            return Output.INCORRECT_PASSWORD_CONFIRMATION;
+        }
+        return null;
+    }
+
+    public static Output checkUsername(String username) {
+        if (username.isEmpty()) return Output.EMPTY_FIELD;
+        else if (!username.matches("[\\w_]+"))
+            return Output.INVALID_USERNAME;
+        else if (DataBase.getInstance().getUserByUsername(username) != null)
+            return Output.DUPLICATE_USERNAME;
+        return null;
+    }
+
+    public static Output checkNickname(String nickname) {
+        if (nickname.isEmpty()) return Output.EMPTY_FIELD;
+        return null;
+    }
+
+    public static Output checkEmail(String email) {
+        if (email.isEmpty()) return Output.EMPTY_FIELD;
+        if (DataBase.getInstance().getUserByEmail(email) != null) {
+            return Output.DUPLICATE_EMAIL;
+        } else if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) {
+            return Output.INVALID_EMAIL_FORMAT;
+        }
+        return null;
     }
 
     public static String makeShaCode(String password) {
@@ -58,9 +89,9 @@ public class RegisterAndLoginController {
 
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) {
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
                 hexString.append('0');
             }
             hexString.append(hex);
@@ -118,21 +149,21 @@ public class RegisterAndLoginController {
     public static String suggestUsername(String username) {
         Random random = new Random();
         while (DataBase.getInstance().getUserByUsername(username) != null)
-            username += (char)(random.nextInt(9) + '0');
+            username += (char) (random.nextInt(9) + '0');
         return username;
     }
 
     public static String makeRandomPassword() {
-        String password = "";
+        StringBuilder password = new StringBuilder();
         Random random = new Random();
         String specialCharacters = ".+-)(*&^%$#@!~?";
         for (int i = 0; i < 3; i++) {
-            password += (char)(random.nextInt(25) + 'a');
-            password += (char)(random.nextInt(25) + 'A');
-            password += (char)(random.nextInt(9) + '0');
-            password += (specialCharacters.charAt(random.nextInt(14)));
+            password.append((char) (random.nextInt(25) + 'a'));
+            password.append((char) (random.nextInt(25) + 'A'));
+            password.append((char) (random.nextInt(9) + '0'));
+            password.append(specialCharacters.charAt(random.nextInt(14)));
         }
-        return password;
+        return password.toString();
     }
 
     public static String makeRandomSlogan() {
@@ -149,7 +180,7 @@ public class RegisterAndLoginController {
     }
 
     public static String asciiArt(String captcha) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         String[] line = new String[8];
         for (int i = 1; i < 8; i++) {
             line[i] = "";
@@ -171,7 +202,7 @@ public class RegisterAndLoginController {
         line[toBeNoisedLine2] += " ";
         for (int i = 0; i < captchaLength; i++) {
             switch (captchaDigits[i]) {
-                case 0: {
+                case 0 -> {
                     line[1] += " *****      ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -179,9 +210,8 @@ public class RegisterAndLoginController {
                     line[5] += "*     *     ";
                     line[6] += "*     *     ";
                     line[7] += " *****      ";
-                    break;
                 }
-                case 1: {
+                case 1 -> {
                     line[1] += "*    ";
                     line[2] += "*    ";
                     line[3] += "*    ";
@@ -189,9 +219,8 @@ public class RegisterAndLoginController {
                     line[5] += "*    ";
                     line[6] += "*    ";
                     line[7] += "*    ";
-                    break;
                 }
-                case 2: {
+                case 2 -> {
                     line[1] += "*******     ";
                     line[2] += "      *     ";
                     line[3] += "      *     ";
@@ -199,9 +228,8 @@ public class RegisterAndLoginController {
                     line[5] += "*           ";
                     line[6] += "*           ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 3: {
+                case 3 -> {
                     line[1] += "*******     ";
                     line[2] += "      *     ";
                     line[3] += "      *     ";
@@ -209,9 +237,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 4: {
+                case 4 -> {
                     line[1] += "*     *     ";
                     line[2] += "*     *     ";
                     line[3] += "*******     ";
@@ -219,9 +246,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "      *     ";
-                    break;
                 }
-                case 5: {
+                case 5 -> {
                     line[1] += "*******     ";
                     line[2] += "*           ";
                     line[3] += "*           ";
@@ -229,9 +255,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 6: {
+                case 6 -> {
                     line[1] += "*******     ";
                     line[2] += "*           ";
                     line[3] += "*           ";
@@ -239,9 +264,8 @@ public class RegisterAndLoginController {
                     line[5] += "*     *     ";
                     line[6] += "*     *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 7: {
+                case 7 -> {
                     line[1] += "*******     ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -249,9 +273,8 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "      *     ";
-                    break;
                 }
-                case 8: {
+                case 8 -> {
                     line[1] += "*******     ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -259,9 +282,8 @@ public class RegisterAndLoginController {
                     line[5] += "*     *     ";
                     line[6] += "*     *     ";
                     line[7] += "*******     ";
-                    break;
                 }
-                case 9: {
+                case 9 -> {
                     line[1] += "*******     ";
                     line[2] += "*     *     ";
                     line[3] += "*     *     ";
@@ -269,31 +291,33 @@ public class RegisterAndLoginController {
                     line[5] += "      *     ";
                     line[6] += "      *     ";
                     line[7] += "*******     ";
-                    break;
                 }
             }
         }
         for (int i = 1; i < 8; i++) {
-            output += line[i] + "\n";
+            output.append(line[i]).append("\n");
         }
-        return output;
+        return output.toString();
     }
+
     public static String generateCaptcha() {
-        Random rand = new Random(10);
+        Random rand = new Random();
         int n = rand.nextInt(4) + 4;
         String chrs = "0123456789";
-        String captcha = "";
-        while (n-->0){
-            int index = (int)(Math.random()*10);
-            captcha+=chrs.charAt(index);
+        StringBuilder captcha = new StringBuilder();
+        while (n-- > 0) {
+            int index = (int) (Math.random() * 10);
+            captcha.append(chrs.charAt(index));
         }
-        return captcha;
+        return captcha.toString();
     }
+
     public static Output checkCaptcha(String captcha, String user_captcha) {
         if (captcha.equals(user_captcha))
             return Output.CAPTCHA_MATCHED;
         return Output.CAPTCHA_NOT_MATCHED;
     }
+
     public static void enterMainMenu(String username) {
         User currentUser = DataBase.getInstance().getUserByUsername(username);
         MainController mainController = new MainController(currentUser);

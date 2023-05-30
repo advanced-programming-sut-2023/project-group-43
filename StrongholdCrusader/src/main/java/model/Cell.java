@@ -109,11 +109,14 @@ public class Cell {
     }
 
     public void addUnit(Unit unit) {
+        if (units == null) units = new ArrayList<>();
         units.add(unit);
     }
 
     public void removeUnit(Unit unit) {
-        units.remove(unit);
+        if (units.size() > 1)
+            units.remove(unit);
+        units = new ArrayList<>();
     }
 
     public boolean isBlocked(Unit unit) {

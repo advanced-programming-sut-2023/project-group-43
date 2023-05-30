@@ -5,10 +5,7 @@ import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
 import enums.unitEnums.TroopType;
 import enums.unitEnums.UnitState;
-import model.Cell;
-import model.DataBase;
-import model.Game;
-import model.User;
+import model.*;
 import model.buildings.Building;
 import model.buildings.CastleDepartment;
 import model.units.Unarmed;
@@ -20,15 +17,30 @@ import java.util.ArrayList;
 
 public class ChangeEnvironmentController {
 
-    private Game game = new Game();
+    private final Game game = new Game();
 
-    private User currentUser;
+    private final User currentUser;
 
     public ChangeEnvironmentController(User currentUser) {
         this.currentUser = currentUser;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void initializeGame() {
+        for (User player : game.getPlayers()) {
+            player.setGovernance(new Governance());
+        }
+    }
+
     public Output generateMap(ArrayList<String> usernames, int row, int column, int turns, int mapOption) {
+        game.setCurrentUser(currentUser);
         game.addPlayer(currentUser);
         game.setCurrentUser(currentUser);
         game.setRow(row);
@@ -47,46 +59,30 @@ public class ChangeEnvironmentController {
         return Output.SUCCESSFUL_MAP_GENERATION;
     }
 
-    public Output chooseMap(int numberOfPlayers, int size) {
-        return null;
-    }
-
-    public Output setTexture(int x, int y, String texture) {
+    public Output setTexture(int x, int y, String name) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (game.getCells()[x - 1][y - 1].getBuilding() != null)
             return Output.BUILDING_IN_THIS_AREA;
-        Texture texture1 = Texture.GROUND;
-        for (Texture texture2 : Texture.values()) {
-            if (texture2.equals(texture)) {
-                texture1 = texture2;
-                break;
-            }
-        }
-        game.getCells()[x - 1][y - 1].setTexture(texture1);
+        Texture texture = Texture.getTextureByName(name);
+        game.getCells()[x - 1][y - 1].setTexture(texture);
         return Output.SET_TEXTURE;
     }
 
-    public Output setTextureRectangle(int x1, int y1, int x2, int y2, String texture) {
-        if (x1 <= 0 || y1 <= 0 || x2 <= 0 || y2 <= 0 || x1 > x2 || y1 < y2)
+    public Output setTextureRectangle(int x1, int y1, int x2, int y2, String name) {
+        if (x1 <= 0 || x2 <= 0 || y2 <= 0 || x1 > x2 || y1 < y2)
             return Output.WRONG_COORDINATES;
-        Texture texture1 = Texture.GROUND;
-        for (Texture texture2 : Texture.values()) {
-            if (texture2.equals(texture)) {
-                texture1 = texture2;
-                break;
-            }
-        }
+        Texture texture = Texture.getTextureByName(name);
         for (int i = x1 - 1; i <= x2 - 1; i++) {
             for (int j = y1 - 1; j <= y2 - 1; j++) {
                 if (game.getCells()[i][j].getBuilding() != null)
                     return Output.BUILDING_IN_THIS_AREA;
-                game.getCells()[i][j].setTexture(texture1);
+                game.getCells()[i][j].setTexture(texture);
             }
         }
         for (int i = x1 - 1; i <= x2 - 1; i++) {
             for (int j = y1 - 1; j <= y2 - 1; j++) {
-                game.getCells()[i][j].setTexture(texture1);
+                game.getCells()[i][j].setTexture(texture);
             }
         }
         return Output.SET_TEXTURE_RECTANGLE;
@@ -94,7 +90,7 @@ public class ChangeEnvironmentController {
 
     public Output clear(int x, int y) {
         game.getCells()[x - 1][y - 1].setBuilding(null);
-        game.getCells()[x - 1][y - 1].setUnits(null);
+        game.getCells()[x - 1][y - 1].setUnits(new ArrayList<>());
         game.getCells()[x - 1][y - 1].setTexture(Texture.GROUND);
         game.getCells()[x - 1][y - 1].setTreeType(null);
         game.getCells()[x - 1][y - 1].setHasRock(false);
@@ -130,6 +126,9 @@ public class ChangeEnvironmentController {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
         if (!type.matches("headquarter")) return Output.INVALID_BUILDING;
+        if (game.getCells()[x - 1][y - 1].getBuilding() != null) return Output.INVALID_CELL;
+        if (game.getCurrentPlayer().getGovernance().getAllBuildingsByName("headquarter").size() > 0)
+            return Output.INVALID_BUILDING;
         Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
         building.setCell(game.getCells()[x - 1][y - 1]);
         game.getCells()[x - 1][y - 1].setBuilding(building);
@@ -141,13 +140,19 @@ public class ChangeEnvironmentController {
         return Output.SUCCESSFUL_ACTION;
     }
 
-    public void enterGameMenu() {
-        GameController gameController = new GameController(game);
-        GameMenu gameMenu = new GameMenu(gameController);
-        gameMenu.setTurns(game.getTurns());
-        gameMenu.setNumberOfPlayers(game.getPlayers().size());
-        gameController.initializeGame();
-        gameMenu.run();
+
+    public boolean enterGameMenu() {
+        if (game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)) &&
+                game.getCurrentPlayer().getGovernance().getBuildings() != null) {
+            GameController gameController = new GameController(game);
+            gameController.initializeGame();
+            GameMenu gameMenu = new GameMenu(gameController);
+            gameMenu.setTurns(game.getTurns());
+            gameMenu.setNumberOfPlayers(game.getPlayers().size());
+            gameMenu.run();
+            return true;
+        }
+        return false;
     }
 
     public String goToNextPerson() {
@@ -159,17 +164,17 @@ public class ChangeEnvironmentController {
         for (User player : game.getPlayers()) {
             if (isNextPlayerFound) {
                 game.setCurrentPlayer(player);
+                user = player;
                 break;
             }
-            if (player.getUsername().equals(game.getCurrentPlayer().getUsername())) {
+            if (player.equals(game.getCurrentPlayer())) {
                 isNextPlayerFound = true;
             }
         }
         if (user == null) {
-            game.setCurrentPlayer(game.getPlayers().get(0));
             return "everyone has changed map please start game";
         }
-        return game.getCurrentPlayer() + " can change map";
+        return game.getCurrentPlayer().getUsername() + " can change map";
     }
 
 }

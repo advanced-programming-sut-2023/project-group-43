@@ -5,8 +5,7 @@ public enum DamageDegree {
     LOW(200),
     AVERAGE(300),
     HIGH(400),
-    VERY_HIGH(500)
-    ;
+    VERY_HIGH(500);
     private double degree;
 
     DamageDegree(double degree) {

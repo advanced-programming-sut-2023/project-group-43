@@ -1,29 +1,18 @@
 package controller;
 
-import java.lang.String;
-
 import enums.Output;
 import enums.RateNumber;
-import model.*;
+import model.Game;
 
-import javax.print.DocFlavor;
-
-public class GovernanceController {
-
-    private Game game;
-
-    public GovernanceController(Game game) {
-        this.game = game;
-    }
+public record GovernanceController(Game game) {
 
     public String showPopularityFactors() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<<<Popularity Factors>>");
-        stringBuilder.append("Food");
-        stringBuilder.append("Tax");
-        stringBuilder.append("Fear");
-        stringBuilder.append("Religion");
-        return String.valueOf(stringBuilder);
+        return """
+                <<<Popularity Factors>>
+                Food
+                Tax
+                Fear
+                Religion""";
     }
 
     public String showPopularity() {
@@ -31,34 +20,32 @@ public class GovernanceController {
     }
 
     public String showFoodList() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<<<Food List>>>");
-        stringBuilder.append("meat");
-        stringBuilder.append("cheese");
-        stringBuilder.append("apple");
-        stringBuilder.append("bread");
-        return String.valueOf(stringBuilder);
+        return """
+                <<<Food List>>>
+                meat
+                cheese
+                apple
+                bread""";
     }
 
     public Output foodRate(int rate) {
-        RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("food" , rate);
+        RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("food", rate);
         game.getCurrentPlayer().getGovernance().setFoodRate(rateNumber);
         return Output.SUCCESSFUL_FOOD_RATE_CHANGE;
-        //TODO
     }
 
-    public String showFoodRate() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getFoodRate());
+    public int showFoodRate() {
+        return (game.getCurrentPlayer().getGovernance().getFoodRate().getRateNumber());
     }
 
     public Output taxRate(int rate) {
-        RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("tax" , rate);
+        RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("tax", rate);
         game.getCurrentPlayer().getGovernance().setTaxRate(rateNumber);
         return Output.SUCCESSFUL_TAX_RATE_CHANGE;
     }
 
-    public String showTaxRate() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getTaxRate());
+    public int showTaxRate() {
+        return (game.getCurrentPlayer().getGovernance().getTaxRate().getRateNumber());
     }
 
     public Output fearRate(int rate) {
@@ -66,8 +53,7 @@ public class GovernanceController {
         return Output.SUCCESSFUL_FEAR_RATE_CHANGE;
     }
 
-    public String showFearRate() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getFearRate());
+    public int showFearRate() {
+        return ((game.getCurrentPlayer().getGovernance().getFearRate()));
     }
-
 }

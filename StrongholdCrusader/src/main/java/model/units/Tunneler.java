@@ -5,7 +5,7 @@ import model.Game;
 import model.User;
 import model.buildings.Building;
 
-public class Tunneler extends Unit{
+public class Tunneler extends Unit {
     public Tunneler(User owner, String name, TroopType troopType) {
         super(owner, name);
     }

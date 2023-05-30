@@ -2,9 +2,8 @@ package controller;
 
 import enums.Output;
 import enums.Validations;
-import model.*;
-
-import java.util.Random;
+import model.DataBase;
+import model.User;
 
 public class ProfileController {
 
@@ -15,32 +14,22 @@ public class ProfileController {
     }
 
     public Output changeInfo(String flag, String info) {
-        switch (flag) {
-            case "u":
-                return changeUsername(info);
-            case "n":
-                return changeNickname(info);
-            case "e":
-                return changeEmail(info);
-            case "s":
-                return changeSlogan(info);
-        }
-        return null;
+        return switch (flag) {
+            case "u" -> changeUsername(info);
+            case "n" -> changeNickname(info);
+            case "e" -> changeEmail(info);
+            case "s" -> changeSlogan(info);
+            default -> null;
+        };
     }
 
 
     public Output changePassword(String oldPassword, String newPassword) {
-        if (oldPassword.equals(newPassword)) return Output.DUPLICATED_NEWPASSWORD;
-        Output output = RegisterAndLoginController.checkPassword(newPassword);
-        if (output.equals(null)) {
-            currentUser.setPassword(RegisterAndLoginController.makeShaCode(newPassword));
-            return Output.SUCCESSFUL_PASSWORD_CHANGEING;
-        }
-        else return output;
+        if (oldPassword.equals(newPassword)) return Output.DUPLICATED_NEW_PASSWORD;
+        return RegisterAndLoginController.checkPassword(newPassword);
     }
 
     public Output changeUsername(String username) {
-        if (username.equals(null)) return Output.EMPTY_FIELD;
         if (!Validations.check(username, Validations.VALID_USERNAME)) return Output.INVALID_USERNAME;
         if (DataBase.getInstance().getUserByUsername(username) != null) return Output.DUPLICATE_USERNAME;
         currentUser.setUsername(username);
@@ -49,32 +38,35 @@ public class ProfileController {
 
 
     public Output changeNickname(String nickname) {
-        if (nickname.equals(null)) return Output.EMPTY_FIELD;
         if (nickname.equals(currentUser.getNickname())) return Output.DUPLICATE_NICKNAME;
         currentUser.setNickname(nickname);
         return Output.SUCCESSFUL_NICKNAME_CHANGE;
     }
 
     public Output changeEmail(String email) {
-        if (email.equals(null)) return Output.EMPTY_FIELD;
-        if (email.toLowerCase().equals(currentUser.getNickname().toLowerCase())) return Output.DUPLICATE_EMAIL;
-        if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) return Output.INVALID_EMAIL_FORMAT;
+        if (email.equalsIgnoreCase(currentUser.getNickname())) return Output.DUPLICATE_EMAIL;
+        if (!email.matches("[\\w\\.\\_]+@[\\w\\.\\_]+\\.[\\w\\.\\_]+")) {
+            return Output.INVALID_EMAIL_FORMAT;
+        }
         currentUser.setEmail(email);
         return Output.SUCCESSFUL_EMAIL_CHANGE;
     }
 
     public Output changeSlogan(String slogan) {
         if (slogan == null) return Output.EMPTY_FIELD;
-        if (slogan.toLowerCase().equals(currentUser.getSlogan().toLowerCase())) return Output.DUPLICATE_SLOGAN;
+        if (slogan.equalsIgnoreCase(currentUser.getSlogan())) return Output.DUPLICATE_SLOGAN;
         currentUser.setSlogan(slogan);
         return Output.SUCCESSFUL_SLOGAN_CHANGE;
     }
-    public int displayHighscore() {
+
+    public int displayHighScore() {
         return currentUser.getScore();
     }
+
     public int displayRank() {
         return DataBase.getInstance().getRank(currentUser);
     }
+
     public String displaySlogan() {
         return currentUser.getSlogan();
     }
@@ -83,13 +75,20 @@ public class ProfileController {
         currentUser.setSlogan(null);
         return Output.SLOGAN_REMOVED_SUCCESSFULLY;
     }
+
     public String displayAllProfile() {
-        StringBuilder userProfile = new StringBuilder();
-        userProfile.append("Username : ").append(currentUser.getUsername()).append("\n");
-        userProfile.append("Nickname : ").append(currentUser.getNickname()).append("\n");
-        userProfile.append("Email : ").append(currentUser.getEmail()).append("\n");
-        userProfile.append("Slogan : ").append(currentUser.getSlogan()).append("\n");
-        userProfile.append("Score : ").append(currentUser.getScore()).append("\n");
-        return userProfile.toString();
+        return "Username : " + currentUser.getUsername() + "\n" +
+                "Nickname : " + currentUser.getNickname() + "\n" +
+                "Email : " + currentUser.getEmail() + "\n" +
+                "Slogan : " + currentUser.getSlogan() + "\n" +
+                "Score : " + currentUser.getScore() + "\n";
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 }

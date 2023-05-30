@@ -1,5 +1,6 @@
 package enums.environmentEnums;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,43 +21,36 @@ public enum Texture {
     BIG_POND("big pond", false, "\u001b[48;5;183m"),
     BEACH("beach", true, "\u001b[48;5;195m"),
     SEA("sea", false, "\u001b[48;5;27m");
-    private String texture;
+    private String name;
     private boolean passable;
     private String color;
 
-    private Texture(String regex, boolean passable, String color) {
-        this.texture = regex;
+    private Texture(String name, boolean passable, String color) {
+        this.name = name;
         this.passable = passable;
         this.color = color;
-    }
-
-    public String getTexture() {
-        return texture;
     }
 
     public boolean isPassable() {
         return passable;
     }
 
-    public void setPassable(boolean passable) {
-        this.passable = passable;
-    }
-
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public static Matcher getMatcher(String input, Texture command) {
-        Pattern pattern = Pattern.compile(command.texture);
+        Pattern pattern = Pattern.compile(command.name);
         Matcher matcher = pattern.matcher(input);
         if (matcher.matches()) return matcher;
         else return null;
     }
-    public void setTexture(String texture) {
-        this.texture = texture;
+
+    public static Texture getTextureByName(String name) {
+        for (Texture texture : Texture.values()) {
+            if (texture.name.equals(name))
+                return texture;
+        }
+        return null;
     }
 }

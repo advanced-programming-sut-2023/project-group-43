@@ -1,11 +1,12 @@
 package controller;
 
-import model.*;
+import model.User;
 import view.ChangeEnvironmentMenu;
 import view.ProfileMenu;
 
 public class MainController {
     User currentUser;
+
     public MainController(User currentUser) {
         this.currentUser = currentUser;
     }
@@ -19,7 +20,7 @@ public class MainController {
     public void enterProfileMenu() {
         ProfileController profileController = new ProfileController(currentUser);
         ProfileMenu profileMenu = new ProfileMenu(profileController);
-        profileMenu.run();
+        //profileMenu.run();
     }
 
 }
