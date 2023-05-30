@@ -4,22 +4,33 @@ import controller.ChangeEnvironmentController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class ChangeEnvironmentMenu extends Menu {
-
-    private ChangeEnvironmentController changeEnvironmentController;
-
+public class ChangeEnvironmentMenu extends Application {
+    public static Stage stage;
     private String x, y, type;
+    @Override
+    public void start(Stage stage) throws Exception {
+        ChangeEnvironmentMenu.stage = stage;
+        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(
+                new URL(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml").toExternalForm()));
 
-    public ChangeEnvironmentMenu(ChangeEnvironmentController changeEnvironmentController) {
-        this.changeEnvironmentController = changeEnvironmentController;
+        Scene scene = new Scene(changeEnvironmentMenuPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void run() {
+        //TODO --> fix controller problem
         changeEnvironmentController.initializeGame();
         getReady();
         Scanner scanner = Menu.getScanner();
@@ -164,4 +175,5 @@ public class ChangeEnvironmentMenu extends Menu {
         System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns, mapOption).getString());
         changeEnvironmentController.getGame().setCurrentPlayer(changeEnvironmentController.getCurrentUser());
     }
+
 }
