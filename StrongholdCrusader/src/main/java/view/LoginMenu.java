@@ -83,7 +83,7 @@ public class LoginMenu extends Application {
     }
 
     private void enterMainMenu(String username) {
-        RegisterAndLoginController.enterMainMenu(username);
+        //RegisterAndLoginController.enterMainMenu(username);
         System.out.println("login menu:");
     }
 
@@ -110,7 +110,7 @@ public class LoginMenu extends Application {
     }
 
     public void enterMainMenu(MouseEvent mouseEvent) {
-        ((new MainMenu()).start(RegisterMenu.getStage()));
+        //((new MainMenu()).start(RegisterMenu.getStage()));
     }
 
     public void back() throws Exception {

@@ -45,13 +45,14 @@ Button {
 }
 
 Button:hover {
-    -fx-cursor: hand;
-    -fx-background-color: #E0FFFF;
+    -fx-background-color: #000000;
+    -fx-text-fill: whitesmoke;
 }
 
 Button:pressed {
     -fx-background-color: #ADD8E6;
 }
+
 
 .Clickable {
     -fx-cursor: hand;
