@@ -19,23 +19,17 @@ public class RegisterAndLoginController {
                                     String email,
                                     String slogan,
                                     boolean hasSlogan) {
-        if (username == null || password == null || nickname == null || email == null) {
+        if (checkNickname(nickname) != null) {
             return Output.EMPTY_FIELD;
-        } else if (slogan == null && hasSlogan) {
-            return Output.EMPTY_FIELD;
-        } else if (!username.matches("[\\w_]+")) {
-            return Output.INVALID_USERNAME;
-        } else if (DataBase.getInstance().getUserByUsername(username) != null) {
-            return Output.DUPLICATE_USERNAME;
-        } else if (passwordConfirmation != null && checkPassword(password) != null) {
-            return checkPassword(password);
-        } else if (passwordConfirmation != null && !password.equals(passwordConfirmation)) {
-            return Output.INCORRECT_PASSWORD_CONFIRMATION;
-        } else if (DataBase.getInstance().getUserByEmail(email) != null) {
-            return Output.DUPLICATE_EMAIL;
-        } else if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) {
-            return Output.INVALID_EMAIL_FORMAT;
         }
+        else if (checkSlogan(slogan, hasSlogan) != null) {
+            return checkSlogan(slogan, hasSlogan);
+        } else if (checkUsername(username) != null) return checkUsername(username);
+        else if (checkPassword(password) != null) {
+            return checkPassword(password);
+        } else if (checkPasswordConfirmation(passwordConfirmation, password) != null)
+            return checkPasswordConfirmation(passwordConfirmation, password);
+        else if (checkEmail(email) != null) return checkEmail(email);
         if (slogan != null && slogan.equals("random")) {
             return Output.RANDOM_SLOGAN;
         }
@@ -43,6 +37,42 @@ public class RegisterAndLoginController {
             return Output.CONFIRM_PASSWORD;
         }
         return Output.CHOOSE_PASSWORD_RECOVERY_QUESTION;
+    }
+
+    public static Output checkSlogan(String slogan, boolean hasSlogan) {
+        if (slogan.isEmpty() && hasSlogan) return Output.EMPTY_FIELD;
+        return null;
+    }
+
+    private static Output checkPasswordConfirmation(String passwordConfirmation, String password) {
+        if (!password.equals(passwordConfirmation)) {
+            return Output.INCORRECT_PASSWORD_CONFIRMATION;
+        }
+        return null;
+    }
+
+    public static Output checkUsername(String username) {
+        if (username.isEmpty()) return Output.EMPTY_FIELD;
+        else if (!username.matches("[\\w_]+"))
+            return Output.INVALID_USERNAME;
+        else if (DataBase.getInstance().getUserByUsername(username) != null)
+            return Output.DUPLICATE_USERNAME;
+        return null;
+    }
+
+    public static Output checkNickname(String nickname) {
+        if (nickname.isEmpty()) return Output.EMPTY_FIELD;
+        return null;
+    }
+
+    public static Output checkEmail(String email) {
+        if (email.isEmpty()) return Output.EMPTY_FIELD;
+        if (DataBase.getInstance().getUserByEmail(email) != null) {
+            return Output.DUPLICATE_EMAIL;
+        } else if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) {
+            return Output.INVALID_EMAIL_FORMAT;
+        }
+        return null;
     }
 
     public static String makeShaCode(String password) {

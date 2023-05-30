@@ -4,12 +4,19 @@ import controller.RegisterAndLoginController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.RegisterAndLoginCommands;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
-public class LoginMenu extends Menu {
+public class LoginMenu extends Application {
 
     private int incorrectPasswords = 0;
 
@@ -92,4 +99,23 @@ public class LoginMenu extends Menu {
         }
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        BorderPane registerPane = FXMLLoader.load(
+                new URL(LoginMenu.class.getResource("/fxml/loginMenu.fxml").toExternalForm()));
+
+        Scene scene = new Scene(registerPane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void enterMainMenu(MouseEvent mouseEvent) {
+    }
+
+    public void back() throws Exception {
+        (new RegisterMenu()).start(RegisterMenu.getStage());
+    }
+
+    public void forgetPassword(MouseEvent mouseEvent) {
+    }
 }

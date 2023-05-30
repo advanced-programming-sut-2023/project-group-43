@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.RegisterMenu"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterMenu"
+            stylesheets="@../css/style.css">
 
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Register Menu"/>
             <HBox alignment="CENTER" spacing="20">
                 <Label text="username:"/>
-                <TextField promptText="username" fx:id="username"/>
+                <TextField fx:id="username" promptText="username"/>
             </HBox>
+            <Label fx:id="usernameError" styleClass="error"/>
             <HBox alignment="CENTER" spacing="20">
                 <Label text="password:"/>
-                <PasswordField promptText="password" fx:id="password"/>
+                <PasswordField fx:id="password" promptText="password"/>
             </HBox>
+            <Label fx:id="passwordError" styleClass="error"/>
             <HBox alignment="CENTER" spacing="20">
                 <Label text="confirm password:"/>
-                <PasswordField promptText="password" fx:id="passwordConfirmation"/>
+                <PasswordField fx:id="passwordConfirmation" promptText="password confirmation"/>
             </HBox>
+            <Label fx:id="passwordConfirmationError" styleClass="error"/>
             <HBox alignment="CENTER" spacing="20">
-                <CheckBox onMouseClicked="#activeSlogan"/>
+                <CheckBox onMouseClicked="#activateSlogan" fx:id="sloganCheckBox"/>
                 <Label text="slogan:"/>
-                <TextField promptText="password" fx:id="slogan" disable="true"/>
+                <TextField fx:id="slogan" disable="true" promptText="slogan"/>
             </HBox>
+            <Label fx:id="sloganError" styleClass="error"/>
             <HBox alignment="CENTER" spacing="20">
                 <Label text="email:"/>
-                <TextField promptText="password" fx:id="email"/>
+                <TextField fx:id="email" promptText="email@gmail.com"/>
             </HBox>
+            <Label fx:id="emailError" styleClass="error"/>
             <HBox alignment="CENTER" spacing="20">
                 <Label text="nickname:"/>
-                <TextField promptText="password" fx:id="nickname"/>
+                <TextField fx:id="nickname" promptText="nickname"/>
             </HBox>
+            <Label fx:id="nicknameError" styleClass="error"/>
             <HBox alignment="CENTER" spacing="10">
-                <Button text="sign up" onMouseClicked="#createUser"/>
-                <Button text="enter login menu" onMouseClicked="#enterLoginMenu"/>
+                <Button onMouseClicked="#createUser" text="sign up">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button alignment="CENTER" onMouseClicked="#enterLoginMenu" text="enter login menu">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
             </HBox>
         </VBox>
     </center>
