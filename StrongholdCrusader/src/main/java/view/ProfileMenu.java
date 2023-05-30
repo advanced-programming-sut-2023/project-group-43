@@ -148,7 +148,7 @@ public class ProfileMenu extends Application {
     }
 //TODO
     public void back(MouseEvent mouseEvent) {
-        RegisterAndLoginController.enterMainMenu(profileController.getCurrentUser().getUsername());
+        //RegisterAndLoginController.enterMainMenu(profileController.getCurrentUser().getUsername());
     }
 
     @Override
