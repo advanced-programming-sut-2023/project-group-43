@@ -34,6 +34,7 @@ public class DataBase {
                 user.setGovernance(new Governance());
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -49,6 +50,8 @@ public class DataBase {
                 e.printStackTrace();
             }
         } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getCause());
         }
     }
 

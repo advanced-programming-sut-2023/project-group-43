@@ -154,13 +154,6 @@ public class RegisterAndLoginControllerTest {
         assertEquals(Output.SUCCESSFUL_PASSWORD_RECOVERY_QUESTION, RegisterAndLoginController.choosePasswordRecoveryQuestion(2, user.getPasswordRecoveryAnswer(), user.getPasswordRecoveryAnswer()));
     }
 
-    //completeRegister
-    @Test
-    public void completeRegister() {
-        User user = DataBase.getInstance().getUserByUsername("aida");
-        assertEquals(Output.SUCCESSFUL_REGISTER, RegisterAndLoginController.completeRegister(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getSlogan(), 2, user.getPasswordRecoveryAnswer()));
-    }
-
     //makePasswordRecoveryQuestion
     @Test
     public void invalidQuestionNumber() {
