@@ -1,5 +1,6 @@
-package controller;
+package controller.GameControllers;
 
+import controller.GameControllers.GameController;
 import enums.Output;
 import enums.environmentEnums.Material;
 import model.Game;

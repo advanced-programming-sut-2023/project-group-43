@@ -1,4 +1,4 @@
-package controller;
+package controller.GameControllers;
 
 import enums.Output;
 import model.Cell;

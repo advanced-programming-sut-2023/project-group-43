@@ -1,19 +1,22 @@
 package view;
 
-import controller.MapController;
+import controller.GameControllers.MapController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class MapMenu extends Menu {
+public class MapMenu extends Application {
 
     private MapController mapController;
 
-    public MapMenu(MapController mapController) {
-        this.mapController = mapController;
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 
     public void run() {
@@ -98,4 +101,5 @@ public class MapMenu extends Menu {
         }
         System.out.println(mapController.moveMap(horizontalDisplacement, verticalDisplacement));
     }
+
 }

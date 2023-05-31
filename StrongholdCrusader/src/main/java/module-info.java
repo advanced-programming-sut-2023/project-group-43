@@ -11,4 +11,8 @@ module com.example.strongholdcrusader {
     exports view;
     opens controller to com.google.gson, javafx.fxml;
     exports controller;
+    exports controller.GameControllers;
+    opens controller.GameControllers to com.google.gson, javafx.fxml;
+    exports controller.UserControllers;
+    opens controller.UserControllers to com.google.gson, javafx.fxml;
 }

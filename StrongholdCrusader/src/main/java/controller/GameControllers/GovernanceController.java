@@ -1,12 +1,20 @@
-package controller;
+package controller.GameControllers;
 
 import enums.Output;
 import enums.RateNumber;
 import model.Game;
+import model.User;
 
-public record GovernanceController(Game game) {
+public class GovernanceController {
+    private final User currentUser;
+    private Game game;
 
-    public String showPopularityFactors() {
+    public GovernanceController(User currentUser, Game game) {
+        this.currentUser = currentUser;
+        this.game = game;
+    }
+
+    private String showPopularityFactors() {
         return """
                 <<<Popularity Factors>>
                 Food
@@ -15,11 +23,11 @@ public record GovernanceController(Game game) {
                 Religion""";
     }
 
-    public String showPopularity() {
+    private String showPopularity(Game game) {
         return String.valueOf(game.getCurrentPlayer().getGovernance().getPopularity());
     }
 
-    public String showFoodList() {
+    private String showFoodList() {
         return """
                 <<<Food List>>>
                 meat
@@ -28,32 +36,32 @@ public record GovernanceController(Game game) {
                 bread""";
     }
 
-    public Output foodRate(int rate) {
+    private Output foodRate(int rate, Game game) {
         RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("food", rate);
         game.getCurrentPlayer().getGovernance().setFoodRate(rateNumber);
         return Output.SUCCESSFUL_FOOD_RATE_CHANGE;
     }
 
-    public int showFoodRate() {
+    private int showFoodRate(Game game) {
         return (game.getCurrentPlayer().getGovernance().getFoodRate().getRateNumber());
     }
 
-    public Output taxRate(int rate) {
+    private Output taxRate(int rate, Game game) {
         RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("tax", rate);
         game.getCurrentPlayer().getGovernance().setTaxRate(rateNumber);
         return Output.SUCCESSFUL_TAX_RATE_CHANGE;
     }
 
-    public int showTaxRate() {
+    private int showTaxRate(Game game) {
         return (game.getCurrentPlayer().getGovernance().getTaxRate().getRateNumber());
     }
 
-    public Output fearRate(int rate) {
+    private Output fearRate(int rate, Game game) {
         game.getCurrentPlayer().getGovernance().setFearRate(rate);
         return Output.SUCCESSFUL_FEAR_RATE_CHANGE;
     }
 
-    public int showFearRate() {
+    private int showFearRate(Game game) {
         return ((game.getCurrentPlayer().getGovernance().getFearRate()));
     }
 }
