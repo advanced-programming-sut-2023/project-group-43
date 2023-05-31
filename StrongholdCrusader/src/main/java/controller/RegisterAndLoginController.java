@@ -341,9 +341,8 @@ public class RegisterAndLoginController {
                                           String nickname,
                                           String email,
                                           String slogan,
-                                          int passwordRecoveryQuestionNumber,
+                                          String passwordRecoveryQuestion,
                                           String passwordRecoveryAnswer) {
-        String passwordRecoveryQuestion = makePasswordRecoveryQuestion(passwordRecoveryQuestionNumber);
         String SHA = makeShaCode(password);
         User user = new User(username, SHA, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan);
         DataBase.getInstance().addUser(user);

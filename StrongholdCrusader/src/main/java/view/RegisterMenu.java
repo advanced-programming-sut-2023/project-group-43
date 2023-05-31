@@ -3,16 +3,7 @@ package view;
 
 import controller.RegisterAndLoginController;
 import enums.Output;
-import controller.RegisterAndLoginController;
-import enums.Output;
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,7 +35,7 @@ public class RegisterMenu extends Application {
     public Label emailError;
     public Label nicknameError;
     public TextField passwordRecoveryAnswer;
-    public ChoiceBox passwordRecoveryQuestion;
+    public ChoiceBox<String> passwordRecoveryQuestion;
     public TextField passwordAnswerConfirmation;
     public Label questionError;
 
@@ -100,7 +91,7 @@ public class RegisterMenu extends Application {
                 emailError.setText("ok");
             else emailError.setText(output.getString());
         });
-        nicknameError.textProperty().addListener((observable, oldText, newText) -> {
+        nickname.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkNickname(nickname.getText())) == null)
                 nicknameError.setText("ok");
@@ -112,12 +103,8 @@ public class RegisterMenu extends Application {
                 sloganError.setText("ok");
             else sloganError.setText(output.getString());
         });
-        passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> {
-            checkQuestion();
-        });
-        passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> {
-            checkQuestion();
-        });
+        passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
+        passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
     }
 
     private void checkQuestion() {
@@ -132,7 +119,24 @@ public class RegisterMenu extends Application {
         return stage;
     }
 
-    public void createUser(MouseEvent mouseEvent) {
+    public void createUser() {
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (checkEverything()) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(RegisterAndLoginController.completeRegister(username.getText(),
+                    password.getText(), nickname.getText(), email.getText(), slogan.getText(),
+                    passwordRecoveryQuestion.getValue(), passwordRecoveryAnswer.getText()).getString());
+        } else {
+            alert.setContentText("you should complete everything correctly");
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.show();
+    }
+
+    private boolean checkEverything() {
+        return usernameError.getText().equals("ok") && sloganError.getText().equals("ok") && emailError.getText().equals("ok")
+                && nicknameError.getText().equals("ok") && questionError.getText().equals("ok") &&
+                passwordError.getText().equals("ok") && passwordConfirmationError.getText().equals("ok");
     }
 
     public void enterLoginMenu(MouseEvent mouseEvent) throws Exception {
@@ -140,8 +144,10 @@ public class RegisterMenu extends Application {
     }
 
     public void activateSlogan() {
-        if (sloganCheckBox.isSelected()) slogan.setDisable(false);
-        else {
+        if (sloganCheckBox.isSelected()) {
+            slogan.setDisable(false);
+            sloganError.setText("empty field!");
+        } else {
             slogan.setDisable(true);
             slogan.setText("");
             sloganError.setText("ok");
