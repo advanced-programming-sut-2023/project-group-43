@@ -1,6 +1,6 @@
 package view;
 
-import controller.StoreController;
+import controller.GameControllers.StoreController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.StoreMenuCommands;
@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -31,6 +32,8 @@ public class StoreMenu extends Application {
         Scene scene = new Scene(storeMenuPane);
         stage.setScene(scene);
         stage.show();
+        Popup popup = new Popup();
+        popup.getContent();
     }
 
     public void run() {

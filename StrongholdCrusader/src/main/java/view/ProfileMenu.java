@@ -1,7 +1,6 @@
 package view;
 
-import controller.ProfileController;
-import controller.RegisterAndLoginController;
+import controller.UserControllers.ProfileController;
 import enums.Output;
 import enums.Validations;
 import javafx.application.Application;

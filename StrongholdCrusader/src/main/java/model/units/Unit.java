@@ -1,6 +1,6 @@
 package model.units;
 
-import controller.GameController;
+import controller.GameControllers.GameController;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import model.Cell;

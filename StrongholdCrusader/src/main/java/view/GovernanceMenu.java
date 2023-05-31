@@ -1,17 +1,24 @@
 package view;
 
-import controller.GovernanceController;
+import controller.GameControllers.GovernanceController;
 import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.util.regex.Matcher;
 
-public class GovernanceMenu extends Menu {
+import static view.Menu.scanner;
 
-    private GovernanceController governanceController;
+public class GovernanceMenu extends Application {
+    private static GovernanceController governanceController;
+    private static Stage stage;
 
-    public GovernanceMenu(GovernanceController governanceController) {
-        this.governanceController = governanceController;
+    @Override
+    public void start(Stage stage) throws Exception {
+        //TODO --> handle game for controllers
+        //governanceController = new GovernanceController(DataBase.getInstance().findLoggedInUser(), );
+        GovernanceMenu.stage = stage;
     }
 
     public void run() {
@@ -30,24 +37,24 @@ public class GovernanceMenu extends Menu {
                 System.out.println("game menu:");
                 return;
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY_FACTORS) != null) {
-                System.out.println(governanceController.showPopularityFactors());
+                System.out.println(GovernanceController.showPopularityFactors());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY) != null) {
-                System.out.println(governanceController.showPopularity());
+                System.out.println(GovernanceController.showPopularity());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_FOOD_LIST) != null) {
-                System.out.println(governanceController.showFoodList());
+                System.out.println(GovernanceController.showFoodList());
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE)) != null) {
                 System.out.println(foodRate(matcher));
 
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE_SHOW)) != null) {
-                System.out.println(governanceController.showFoodRate());
+                System.out.println(GovernanceController.showFoodRate());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE) != null) {
                 System.out.println(taxRate(matcher));
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE_SHOW) != null) {
-                System.out.println(governanceController.showTaxRate());
+                System.out.println(GovernanceController.showTaxRate());
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE)) != null) {
                 System.out.println(fearRate(matcher));
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE_SHOW) != null)
-                System.out.println(governanceController.showFearRate());
+                System.out.println(GovernanceController.showFearRate());
             else {
                 System.out.println("Invalid command");
             }

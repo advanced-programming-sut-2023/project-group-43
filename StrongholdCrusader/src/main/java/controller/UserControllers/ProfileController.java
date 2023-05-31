@@ -1,5 +1,6 @@
-package controller;
+package controller.UserControllers;
 
+import controller.RegisterAndLoginController;
 import enums.Output;
 import enums.Validations;
 import model.DataBase;

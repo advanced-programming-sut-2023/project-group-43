@@ -1,33 +1,31 @@
 package view;
 
-import controller.*;
+import controller.GameControllers.GameController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
 import enums.menuEnums.GameMenuCommands;
+import javafx.application.Application;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import model.Game;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class GameMenu extends Menu {
+public class GameMenu extends Application {
 
-    private GameController gameController;
-    private MapController mapController;
-    private GovernanceController governanceController;
-    private TradeController tradeController;
-    private StoreController storeController;
-
+    private static Stage stage;
+    private static GameController gameController;
     private int turns, numberOfPlayers;
-
     private String x, y;
 
-    public GameMenu(GameController gameController) {
 
-        this.gameController = gameController;
-        mapController = new MapController(gameController.getGame());
-        storeController = new StoreController(gameController.getGame(), gameController);
-        governanceController = new GovernanceController(gameController.getGame());
-        tradeController = new TradeController(gameController.getGame());
+    @Override
+    public void start(Stage stage) throws Exception {
+        //TODO --> I'm not sure about new game in here
+        gameController = new GameController(new Game());
+        GameMenu.stage = stage;
     }
 
     public void setTurns(int turns) {
@@ -71,13 +69,11 @@ public class GameMenu extends Menu {
     }
 
     private void enterTradeMenu() {
-        TradeMenu tradeMenu = new TradeMenu(tradeController);
-        tradeMenu.run();
+        new TradeMenu().start(stage);
     }
 
-    private void enterGovernmentMenu() {
-        GovernanceMenu governanceMenu = new GovernanceMenu(governanceController);
-        governanceMenu.run();
+    private void enterGovernmentMenu(MouseEvent mouseEvent) throws Exception {
+        new GovernanceMenu().start(stage);
     }
 
     private Output selectBuilding(Matcher matcher) {
@@ -255,6 +251,5 @@ public class GameMenu extends Menu {
             else System.out.println(output.getString());
         }
     }
-
 
 }

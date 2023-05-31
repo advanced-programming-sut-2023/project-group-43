@@ -4,11 +4,18 @@ import controller.TradeController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.TradeMenuCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class TradeMenu extends Menu {
+public class TradeMenu extends Application {
+    private static Stage stage;
+    @Override
+    public void start(Stage stage) throws Exception {
+        TradeMenu.stage = stage;
+    }
 
     private TradeController tradeController;
 
