@@ -8,8 +8,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
+import model.DataBase;
+import model.Game;
+import model.User;
 
 import java.net.URL;
 import java.util.Scanner;
@@ -17,23 +19,32 @@ import java.util.regex.Matcher;
 
 public class StoreMenu extends Application {
 
-    public static Stage stage;
+    private static Stage stage;
     private StoreController storeController;
+    private Game game;
+    private User currentUser;
 
+    public StoreController getStoreController() {
+        return storeController;
+    }
 
-    public StoreMenu(StoreController storeController) {
+    public void setStoreController(StoreController storeController) {
         this.storeController = storeController;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        currentUser = DataBase.getInstance().findLoggedInUser();
         StoreMenu.stage = stage;
         BorderPane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
+        setMenu();
         Scene scene = new Scene(storeMenuPane);
         stage.setScene(scene);
         stage.show();
-        Popup popup = new Popup();
-        popup.getContent();
+    }
+
+    private void setMenu() {
+
     }
 
     public void run() {

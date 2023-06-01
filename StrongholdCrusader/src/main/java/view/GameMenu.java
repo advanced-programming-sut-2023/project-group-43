@@ -16,15 +16,22 @@ import java.util.regex.Matcher;
 public class GameMenu extends Application {
 
     private static Stage stage;
-    private static GameController gameController;
+    private GameController gameController;
     private int turns, numberOfPlayers;
     private String x, y;
 
 
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         //TODO --> I'm not sure about new game in here
-        gameController = new GameController(new Game());
         GameMenu.stage = stage;
     }
 
@@ -57,18 +64,16 @@ public class GameMenu extends Application {
         gameController.clearGame();
     }
 
-    public void enterMapMenu() {
-        MapMenu mapMenu = new MapMenu(mapController);
-        mapMenu.run();
+    public void enterMapMenu(MouseEvent mouseEvent) throws Exception {
+        new MapMenu().start(stage);
     }
 
-    public void enterStoreMenu(String name) {
-        storeController.setStoreName(name);
-        StoreMenu storeMenu = new StoreMenu(storeController);
-        storeMenu.run();
+    public void enterStoreMenu(String name) throws Exception {
+        //TODO --> what is usage of name
+        new StoreMenu().start(stage);
     }
 
-    private void enterTradeMenu() {
+    private void enterTradeMenu() throws Exception {
         new TradeMenu().start(stage);
     }
 
@@ -184,7 +189,7 @@ public class GameMenu extends Application {
         return null;
     }
 
-    private void onePlayerTurn() {
+    private void onePlayerTurn() throws Exception {
         System.out.println(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         Scanner scanner = Menu.getScanner();
         String input = "";

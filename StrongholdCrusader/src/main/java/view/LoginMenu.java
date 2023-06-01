@@ -20,6 +20,19 @@ public class LoginMenu extends Application {
 
     private int incorrectPasswords = 0;
 
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        BorderPane registerPane = FXMLLoader.load(
+                new URL(LoginMenu.class.getResource("/fxml/loginMenu.fxml").toExternalForm()));
+
+        Scene scene = new Scene(registerPane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+
+
     public void run() {
         Scanner scanner = Menu.getScanner();
         String input;
@@ -100,15 +113,6 @@ public class LoginMenu extends Application {
         }
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        BorderPane registerPane = FXMLLoader.load(
-                new URL(LoginMenu.class.getResource("/fxml/loginMenu.fxml").toExternalForm()));
-
-        Scene scene = new Scene(registerPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 
     public void enterMainMenu(MouseEvent mouseEvent) {
         //((new MainMenu()).start(RegisterMenu.getStage()));

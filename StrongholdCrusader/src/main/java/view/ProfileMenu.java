@@ -35,7 +35,12 @@ public class ProfileMenu extends Application {
 
     private ProfileController profileController;
 
-    public ProfileMenu(ProfileController profileController) {
+
+    public ProfileController getProfileController() {
+        return profileController;
+    }
+
+    public void setProfileController(ProfileController profileController) {
         this.profileController = profileController;
     }
 

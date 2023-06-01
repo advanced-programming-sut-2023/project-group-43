@@ -5,6 +5,8 @@ import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.DataBase;
+import model.User;
 
 import java.util.regex.Matcher;
 
@@ -13,11 +15,20 @@ import static view.Menu.scanner;
 public class GovernanceMenu extends Application {
     private static GovernanceController governanceController;
     private static Stage stage;
+    private User currentUser = DataBase.getInstance().findLoggedInUser();
+
+    public static GovernanceController getGovernanceController() {
+        return governanceController;
+    }
+
+    public static void setGovernanceController(GovernanceController governanceController) {
+        GovernanceMenu.governanceController = governanceController;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
         //TODO --> handle game for controllers
-        //governanceController = new GovernanceController(DataBase.getInstance().findLoggedInUser(), );
+        //governanceController = new GovernanceController(currentUser, );
         GovernanceMenu.stage = stage;
     }
 
@@ -30,31 +41,31 @@ public class GovernanceMenu extends Application {
             if (input.matches("show current menu"))
                 System.out.println(Output.GOVERNANCE_MENU.getString());
             else if (input.matches("back")) {
-                if (governanceController.game().getSelectedBuilding() != null) {
-                    if (governanceController.game().getSelectedBuilding().getName().equals("small stone gatehouse"))
-                        governanceController.game().setSelectedBuilding(null);
+                if (governanceController.getGame().getSelectedBuilding() != null) {
+                    if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
+                        governanceController.getGame().setSelectedBuilding(null);
                 }
                 System.out.println("game menu:");
                 return;
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY_FACTORS) != null) {
-                System.out.println(GovernanceController.showPopularityFactors());
+                System.out.println(governanceController.showPopularityFactors());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY) != null) {
-                System.out.println(GovernanceController.showPopularity());
+                System.out.println(governanceController.showPopularity());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_FOOD_LIST) != null) {
-                System.out.println(GovernanceController.showFoodList());
+                System.out.println(governanceController.showFoodList());
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE)) != null) {
                 System.out.println(foodRate(matcher));
 
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE_SHOW)) != null) {
-                System.out.println(GovernanceController.showFoodRate());
+                System.out.println(governanceController.showFoodRate());
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE) != null) {
                 System.out.println(taxRate(matcher));
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE_SHOW) != null) {
-                System.out.println(GovernanceController.showTaxRate());
+                System.out.println(governanceController.showTaxRate());
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE)) != null) {
                 System.out.println(fearRate(matcher));
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE_SHOW) != null)
-                System.out.println(GovernanceController.showFearRate());
+                System.out.println(governanceController.showFearRate());
             else {
                 System.out.println("Invalid command");
             }

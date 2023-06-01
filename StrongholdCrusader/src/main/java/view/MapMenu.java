@@ -14,6 +14,14 @@ public class MapMenu extends Application {
 
     private MapController mapController;
 
+    public MapController getMapController() {
+        return mapController;
+    }
+
+    public void setMapController(MapController mapController) {
+        this.mapController = mapController;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 

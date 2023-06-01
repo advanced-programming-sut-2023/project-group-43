@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.DataBase;
+import model.User;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,12 +18,21 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ChangeEnvironmentMenu extends Application {
-    public static Stage stage;
+    private static Stage stage;
+    private User currentUser = DataBase.getInstance().findLoggedInUser();
+    private ChangeEnvironmentController changeEnvironmentController ;
     private String x, y, type;
-    private static final ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController();
+
+    public ChangeEnvironmentController getChangeEnvironmentController() {
+        return changeEnvironmentController;
+    }
+
+    public void setChangeEnvironmentController(ChangeEnvironmentController changeEnvironmentController) {
+        this.changeEnvironmentController = changeEnvironmentController;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-
         ChangeEnvironmentMenu.stage = stage;
         BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml").toExternalForm()));
         Scene scene = new Scene(changeEnvironmentMenuPane);
@@ -97,7 +108,7 @@ public class ChangeEnvironmentMenu extends Application {
         if (x1 == null || y1 == null || x2 == null || y2 == null || type == null) return null;
         if (!(x1.matches("\\d+") && y1.matches("\\d+") && x2.matches("\\d+") && y2.matches("\\d+")))
             return null;
-        //return changeEnvironmentController.setTextureRectangle(Integer.parseInt(x1), Integer.parseInt(y1),
+        return changeEnvironmentController.setTextureRectangle(Integer.parseInt(x1), Integer.parseInt(y1),
                 Integer.parseInt(x2), Integer.parseInt(y2), type);
     }
 

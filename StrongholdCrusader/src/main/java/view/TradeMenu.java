@@ -11,16 +11,20 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class TradeMenu extends Application {
+    private  TradeController tradeController ;
     private static Stage stage;
+
+    public TradeController getTradeController() {
+        return tradeController;
+    }
+
+    public void setTradeController(TradeController tradeController) {
+        this.tradeController = tradeController;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         TradeMenu.stage = stage;
-    }
-
-    private TradeController tradeController;
-
-    public TradeMenu(TradeController tradeController) {
-        this.tradeController = tradeController;
     }
 
     public void run() {
