@@ -4,6 +4,7 @@ import enums.Output;
 import model.DataBase;
 import model.User;
 import view.MainMenu;
+import view.RegisterMenu;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -21,8 +22,7 @@ public class RegisterAndLoginController {
                                     boolean hasSlogan) {
         if (checkNickname(nickname) != null) {
             return Output.EMPTY_FIELD;
-        }
-        else if (checkSlogan(slogan, hasSlogan) != null) {
+        } else if (checkSlogan(slogan, hasSlogan) != null) {
             return checkSlogan(slogan, hasSlogan);
         } else if (checkUsername(username) != null) return checkUsername(username);
         else if (checkPassword(password) != null) {
@@ -318,12 +318,13 @@ public class RegisterAndLoginController {
         return Output.CAPTCHA_NOT_MATCHED;
     }
 
-//    public static void enterMainMenu(String username) {
-//        User currentUser = DataBase.getInstance().getUserByUsername(username);
-////        MainController mainController = new MainController(currentUser);
-////        MainMenu mainMenu = new MainMenu(mainController);
-//        (new MainMenu()).start(stage);
-//    }
+    public static void enterMainMenu(String username) throws Exception {
+        User currentUser = DataBase.getInstance().getUserByUsername(username);
+        MainUserController mainController = new MainUserController(currentUser);
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.setMainUserController(mainController);
+        (new MainMenu()).start(RegisterMenu.getStage());
+    }
 
     public static Output choosePasswordRecoveryQuestion(int passwordRecoveryQuestionNumber,
                                                         String passwordRecoveryAnswer,

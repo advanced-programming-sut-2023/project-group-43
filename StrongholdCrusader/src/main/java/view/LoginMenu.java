@@ -73,8 +73,7 @@ public class LoginMenu extends Application {
     public void loginUser() throws Exception {
         Output output = RegisterAndLoginController.loginUser(username.getText(), password.getText(), false);
         if (output.equals(Output.SUCCESSFUL_LOGIN)) {
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.start(RegisterMenu.getStage());
+            RegisterAndLoginController.enterMainMenu(username.getText());
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
