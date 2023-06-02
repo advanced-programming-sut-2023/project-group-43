@@ -1,25 +1,45 @@
 package view;
 
-import controller.ChangeEnvironmentController;
+import controller.GameControllers.ChangeEnvironmentController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class ChangeEnvironmentMenu extends Menu {
-
+public class ChangeEnvironmentMenu extends Application {
+    private Stage stage;
     private ChangeEnvironmentController changeEnvironmentController;
-
     private String x, y, type;
 
-    public ChangeEnvironmentMenu(ChangeEnvironmentController changeEnvironmentController) {
+    public ChangeEnvironmentController getChangeEnvironmentController() {
+        return changeEnvironmentController;
+    }
+
+    public void setChangeEnvironmentController(ChangeEnvironmentController changeEnvironmentController) {
         this.changeEnvironmentController = changeEnvironmentController;
     }
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml")).toExternalForm()));
+        Scene scene = new Scene(changeEnvironmentMenuPane);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void run() {
+        //TODO --> fix controller problem
         changeEnvironmentController.initializeGame();
         getReady();
         Scanner scanner = Menu.getScanner();
@@ -164,4 +184,5 @@ public class ChangeEnvironmentMenu extends Menu {
         System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns, mapOption).getString());
         changeEnvironmentController.getGame().setCurrentPlayer(changeEnvironmentController.getCurrentUser());
     }
+
 }

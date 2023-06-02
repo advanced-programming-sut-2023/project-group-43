@@ -1,17 +1,32 @@
 package view;
 
-import controller.GovernanceController;
+import controller.GameControllers.GovernanceController;
 import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import model.DataBase;
+import model.User;
 
 import java.util.regex.Matcher;
 
-public class GovernanceMenu extends Menu {
+import static view.Menu.scanner;
 
+public class GovernanceMenu extends Application {
     private GovernanceController governanceController;
+    private Stage stage;
 
-    public GovernanceMenu(GovernanceController governanceController) {
+    public GovernanceController getGovernanceController() {
+        return governanceController;
+    }
+
+    public void setGovernanceController(GovernanceController governanceController) {
         this.governanceController = governanceController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
     }
 
     public void run() {
@@ -23,9 +38,9 @@ public class GovernanceMenu extends Menu {
             if (input.matches("show current menu"))
                 System.out.println(Output.GOVERNANCE_MENU.getString());
             else if (input.matches("back")) {
-                if (governanceController.game().getSelectedBuilding() != null) {
-                    if (governanceController.game().getSelectedBuilding().getName().equals("small stone gatehouse"))
-                        governanceController.game().setSelectedBuilding(null);
+                if (governanceController.getGame().getSelectedBuilding() != null) {
+                    if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
+                        governanceController.getGame().setSelectedBuilding(null);
                 }
                 System.out.println("game menu:");
                 return;

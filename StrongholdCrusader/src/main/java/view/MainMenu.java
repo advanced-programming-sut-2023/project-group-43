@@ -1,40 +1,70 @@
 package view;
 
-import controller.MainController;
-import enums.Output;
-import enums.menuEnums.MainMenuCommands;
+import controller.GameControllers.ChangeEnvironmentController;
+import controller.RegisterAndLoginController;
+import controller.UserControllers.ProfileController;
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import model.DataBase;
 
-public class MainMenu extends Menu {
+import java.net.URL;
+import java.util.Objects;
 
-    private MainController mainController;
 
-    public MainMenu(MainController mainController) {
-        this.mainController = mainController;
+public class MainMenu extends Application {
+
+    private Stage stage;
+
+    private Scene scene;
+    @FXML
+    private Pane mainPane;
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        mainPane = FXMLLoader.load(
+                new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
+        scene = new Scene(mainPane);
+        setBackground();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void run() {
-        System.out.println("main menu:");
-        String input;
-        while (true) {
-            input = scanner.nextLine();
-            if (input.matches("show current menu"))
-                System.out.println(Output.MAIN_MENU.getString());
-            else if (input.matches("back"))
-                return;
-            else if (MainMenuCommands.getMatcher(input, MainMenuCommands.ENTER_PROFILE_MENU) != null) {
-                enterProfileMenu();
-            } else if (MainMenuCommands.getMatcher(input, MainMenuCommands.ENTER_CHANGE_ENVIRONMENT_MENU) != null) {
-                enterChangeEnvironmentMenu();
-            } else System.out.println("Invalid Command!");
-        }
+
+    private void setBackground() {
+        mainPane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/5559468.jpg").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
     }
 
-    private void enterChangeEnvironmentMenu() {
-        mainController.enterChangeEnvironmentMenu();
+    public void help() {
+
     }
 
-    private void enterProfileMenu() {
-        mainController.enterProfileMenu();
+    public void back() throws Exception {
+        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
+        LoginMenu loginMenu = new LoginMenu();
+        loginMenu.setLoginController(registerAndLoginController);
+        loginMenu.start(stage);
     }
 
+
+    public void enterProfileMenu() throws Exception {
+        ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
+        ProfileMenu profileMenu = new ProfileMenu();
+        profileMenu.setProfileController(profileController);
+        profileMenu.start(stage);
+    }
+
+    public void enterChangeEnvironmentMenu() throws Exception {
+        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().findLoggedInUser());
+        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
+        changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
+        changeEnvironmentMenu.start(stage);
+    }
 }

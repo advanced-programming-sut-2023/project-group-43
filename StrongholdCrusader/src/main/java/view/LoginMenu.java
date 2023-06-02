@@ -12,15 +12,34 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends Application {
 
+    private Stage stage;
     private int incorrectPasswords = 0;
+    private RegisterAndLoginController loginController;
 
-    public void run() {
+    public void setLoginController(RegisterAndLoginController loginController) {
+        this.loginController = loginController;
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        BorderPane registerPane = FXMLLoader.load(
+                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/loginMenu.fxml")).toExternalForm()));
+
+        this.stage = primaryStage;
+        Scene scene = new Scene(registerPane);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    public void run() throws Exception {
         Scanner scanner = Menu.getScanner();
         String input;
         Output output;
@@ -82,9 +101,9 @@ public class LoginMenu extends Application {
         }
     }
 
-    private void enterMainMenu(String username) {
-        RegisterAndLoginController.enterMainMenu(username);
-        System.out.println("login menu:");
+    private void enterMainMenu(String username) throws Exception {
+        //what is usage of the username?
+        new MainMenu().start(stage);
     }
 
     private void checkForPause(Output output) {
@@ -99,21 +118,13 @@ public class LoginMenu extends Application {
         }
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        BorderPane registerPane = FXMLLoader.load(
-                new URL(LoginMenu.class.getResource("/fxml/loginMenu.fxml").toExternalForm()));
 
-        Scene scene = new Scene(registerPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public void enterMainMenu(MouseEvent mouseEvent) {
+    public void enterMainMenu() throws Exception {
+        new MainMenu().start(stage);
     }
 
     public void back() throws Exception {
-        (new RegisterMenu()).start(RegisterMenu.getStage());
+        (new RegisterMenu()).start(stage);
     }
 
     public void forgetPassword(MouseEvent mouseEvent) {

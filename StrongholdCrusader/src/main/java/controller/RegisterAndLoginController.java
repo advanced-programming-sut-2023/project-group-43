@@ -318,12 +318,12 @@ public class RegisterAndLoginController {
         return Output.CAPTCHA_NOT_MATCHED;
     }
 
-    public static void enterMainMenu(String username) {
-        User currentUser = DataBase.getInstance().getUserByUsername(username);
-        MainController mainController = new MainController(currentUser);
-        MainMenu mainMenu = new MainMenu(mainController);
-        mainMenu.run();
-    }
+//    public static void enterMainMenu(String username) {
+//        User currentUser = DataBase.getInstance().getUserByUsername(username);
+////        MainController mainController = new MainController(currentUser);
+////        MainMenu mainMenu = new MainMenu(mainController);
+//        (new MainMenu()).start(stage);
+//    }
 
     public static Output choosePasswordRecoveryQuestion(int passwordRecoveryQuestionNumber,
                                                         String passwordRecoveryAnswer,

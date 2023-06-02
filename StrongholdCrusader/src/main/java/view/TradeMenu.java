@@ -4,16 +4,23 @@ import controller.TradeController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.TradeMenuCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class TradeMenu extends Menu {
+public class TradeMenu extends Application {
+    private  TradeController tradeController ;
+    private Stage stage;
 
-    private TradeController tradeController;
-
-    public TradeMenu(TradeController tradeController) {
+    public void setTradeController(TradeController tradeController) {
         this.tradeController = tradeController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
     }
 
     public void run() {

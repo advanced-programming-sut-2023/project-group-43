@@ -1,19 +1,41 @@
 package view;
 
-import controller.StoreController;
+import controller.GameControllers.StoreController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.StoreMenuCommands;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class StoreMenu extends Menu {
+public class StoreMenu extends Application {
 
+
+    private Stage stage;
     private StoreController storeController;
 
-    public StoreMenu(StoreController storeController) {
+    public void setStoreController(StoreController storeController) {
         this.storeController = storeController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        Pane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
+        setMenu();
+        Scene scene = new Scene(storeMenuPane);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void setMenu() {
+
     }
 
     public void run() {
