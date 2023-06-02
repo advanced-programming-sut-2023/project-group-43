@@ -1,13 +1,9 @@
 package view;
 
+
 import controller.RegisterAndLoginController;
 import enums.Output;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,8 +25,6 @@ public class RegisterMenu extends Application {
     public TextField email;
     public TextField nickname;
     public TextField username;
-
-    private static Stage stage;
     public CheckBox sloganCheckBox;
     public Label usernameError;
     public Label passwordError;
@@ -42,6 +36,7 @@ public class RegisterMenu extends Application {
     public ChoiceBox passwordRecoveryQuestion;
     public TextField passwordAnswerConfirmation;
     public Label questionError;
+    private Stage stage;
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -51,9 +46,10 @@ public class RegisterMenu extends Application {
         launch(RegisterMenu.class, args);
     }
 
+
     @Override
     public void start(Stage stage) throws Exception {
-        RegisterMenu.stage = stage;
+        this.stage = stage;
         BorderPane registerPane = FXMLLoader.load(
                 new URL(RegisterMenu.class.getResource("/fxml/registerMenu.fxml").toExternalForm()));
 
@@ -122,16 +118,14 @@ public class RegisterMenu extends Application {
         else questionError.setText("ok");
     }
 
-
-    public static Stage getStage() {
-        return stage;
-    }
-
     public void createUser(MouseEvent mouseEvent) {
     }
 
-    public void enterLoginMenu(MouseEvent mouseEvent) throws Exception {
-        (new LoginMenu()).start(stage);
+    public void enterLoginMenu() throws Exception {
+        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
+        LoginMenu loginMenu = new LoginMenu();
+        loginMenu.setLoginController(registerAndLoginController);
+        loginMenu.start(stage);
     }
 
     public void activateSlogan() {

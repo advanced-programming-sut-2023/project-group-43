@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class ChangeEnvironmentController {
 
     private final Game game = new Game();
-
     private final User currentUser;
 
     public ChangeEnvironmentController(User currentUser) {
@@ -146,10 +145,12 @@ public class ChangeEnvironmentController {
                 game.getCurrentPlayer().getGovernance().getBuildings() != null) {
             GameController gameController = new GameController(game);
             gameController.initializeGame();
-            GameMenu gameMenu = new GameMenu(gameController);
+            GameMenu gameMenu = new GameMenu();
+            gameMenu.setGameController(gameController);
             gameMenu.setTurns(game.getTurns());
             gameMenu.setNumberOfPlayers(game.getPlayers().size());
-            gameMenu.run();
+            //TODO --> How to start in game menu ?
+            //gameMenu.start(stage);
             return true;
         }
         return false;

@@ -19,6 +19,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class ProfileMenu extends Application {
+
+    private Stage stage;
     @FXML
     private TextField newUsername;
     @FXML
@@ -31,17 +33,20 @@ public class ProfileMenu extends Application {
     private TextField oldPassword;
     @FXML
     private TextField newPassword;
-    
 
     private ProfileController profileController;
 
-
-    public ProfileController getProfileController() {
-        return profileController;
-    }
-
     public void setProfileController(ProfileController profileController) {
         this.profileController = profileController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        BorderPane pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /*public void run() {
@@ -151,17 +156,10 @@ public class ProfileMenu extends Application {
         alert.show();
     }
 //TODO
-    public void back(MouseEvent mouseEvent) {
-        //RegisterAndLoginController.enterMainMenu(profileController.getCurrentUser().getUsername());
+    public void back(MouseEvent mouseEvent) throws Exception {
+        new MainMenu().start(stage);
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        BorderPane pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     @FXML
     private void initialize() {

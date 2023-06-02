@@ -1,21 +1,24 @@
 package view;
 
 import controller.GameControllers.GameController;
+import controller.GameControllers.GovernanceController;
+import controller.GameControllers.MapController;
+import controller.GameControllers.StoreController;
+import controller.TradeController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
 import enums.menuEnums.GameMenuCommands;
 import javafx.application.Application;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Game;
+import model.DataBase;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
 
-    private static Stage stage;
+    private Stage stage;
     private GameController gameController;
     private int turns, numberOfPlayers;
     private String x, y;
@@ -31,8 +34,7 @@ public class GameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //TODO --> I'm not sure about new game in here
-        GameMenu.stage = stage;
+        this.stage = stage;
     }
 
     public void setTurns(int turns) {
@@ -43,7 +45,7 @@ public class GameMenu extends Application {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public void run() {
+    public void run() throws Exception {
         System.out.println("game menu:");
         gameController.getGame().setCurrentPlayer(gameController.getGame().getCurrentUser());
         while (turns > 0) {
@@ -64,21 +66,33 @@ public class GameMenu extends Application {
         gameController.clearGame();
     }
 
-    public void enterMapMenu(MouseEvent mouseEvent) throws Exception {
-        new MapMenu().start(stage);
+    public void enterMapMenu() throws Exception {
+        MapController mapController = new MapController(gameController.getGame());
+        MapMenu mapMenu = new MapMenu();
+        mapMenu.setMapController(mapController);
+        mapMenu.start(stage);
     }
 
     public void enterStoreMenu(String name) throws Exception {
-        //TODO --> what is usage of name
-        new StoreMenu().start(stage);
+        //TODO--> what is usage of name?
+        StoreController storeController = new StoreController(gameController.getGame(), gameController);
+        StoreMenu storeMenu = new StoreMenu();
+        storeMenu.setStoreController(storeController);
+        storeMenu.start(stage);
     }
 
     private void enterTradeMenu() throws Exception {
-        new TradeMenu().start(stage);
+        TradeController tradeController = new TradeController(gameController.getGame());
+        TradeMenu tradeMenu = new TradeMenu();
+        tradeMenu.setTradeController(tradeController);
+        tradeMenu.start(stage);
     }
 
-    private void enterGovernmentMenu(MouseEvent mouseEvent) throws Exception {
-        new GovernanceMenu().start(stage);
+    private void enterGovernmentMenu() throws Exception {
+        GovernanceController governanceController = new GovernanceController(DataBase.getInstance().findLoggedInUser(), gameController.getGame());
+        GovernanceMenu governanceMenu = new GovernanceMenu();
+        governanceMenu.setGovernanceController(governanceController);
+        governanceMenu.start(stage);
     }
 
     private Output selectBuilding(Matcher matcher) {
