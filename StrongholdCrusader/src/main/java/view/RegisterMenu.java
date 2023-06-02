@@ -38,6 +38,7 @@ public class RegisterMenu extends Application {
     public ChoiceBox<String> passwordRecoveryQuestion;
     public TextField passwordAnswerConfirmation;
     public Label questionError;
+    public CheckBox randomSlogan;
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -151,6 +152,14 @@ public class RegisterMenu extends Application {
             slogan.setDisable(true);
             slogan.setText("");
             sloganError.setText("ok");
+        }
+    }
+
+    public void chooseRandomSlogan() {
+        if (randomSlogan.isSelected()) {
+            sloganCheckBox.setSelected(true);
+            slogan.setDisable(false);
+            slogan.setText(RegisterAndLoginController.makeRandomSlogan());
         }
     }
 }
