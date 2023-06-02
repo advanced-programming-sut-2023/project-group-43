@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameControllers.ChangeEnvironmentController;
+import controller.MainUserController;
 import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
 import javafx.application.Application;
@@ -23,6 +24,12 @@ public class MainMenu extends Application {
     private Scene scene;
     @FXML
     private Pane mainPane;
+
+    private MainUserController mainUserController;
+
+    public void setMainUserController(MainUserController mainUserController) {
+        this.mainUserController = mainUserController;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
