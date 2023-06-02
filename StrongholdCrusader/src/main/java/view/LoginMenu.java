@@ -36,11 +36,6 @@ public class LoginMenu extends Application {
     public PasswordField newPassword;
     private String captchaNumber;
     private int incorrectPasswords = 0;
-    private RegisterAndLoginController loginController;
-
-    public void setLoginController(RegisterAndLoginController loginController) {
-        this.loginController = loginController;
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -137,9 +132,16 @@ public class LoginMenu extends Application {
         if (RegisterAndLoginController.isAnswerCorrect(answer.getText(), username.getText())) {
             if (RegisterAndLoginController.checkPassword(newPassword.getText()) == null) {
                 RegisterAndLoginController.changePassword(username.getText(), newPassword.getText());
+                showInformation("password changed successfully!");
             }
             else showError("wrong password format");
         }
         else showError("wrong answer");
+    }
+
+    public void showInformation(String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(text);
+        alert.show();
     }
 }
