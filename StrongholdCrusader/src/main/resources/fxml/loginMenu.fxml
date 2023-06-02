@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 <BorderPane xmlns="http://javafx.com/javafx"
@@ -41,6 +41,18 @@
                     </cursor>
                 </Button>
             </HBox>
+            <Group fx:id="group" visible="false">
+                <VBox>
+                    <Label styleClass="menuLabel" fx:id="question"/>
+                    <TextField fx:id="answer" promptText="answer"/>
+                    <PasswordField fx:id="newPassword"/>
+                    <Button alignment="CENTER" onMouseClicked="#setNewPassword" text="set new password">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </Button>
+                </VBox>
+            </Group>
         </VBox>
     </center>
 

@@ -225,5 +225,16 @@ public class RegisterAndLoginController {
         return null;
     }
 
+    public static boolean isUserExisted(String username) {
+        return (DataBase.getInstance().getUserByUsername(username) != null);
+    }
+
+    public static String getQuestion(String username) {
+        return DataBase.getInstance().getUserByUsername(username).getPasswordRecoveryQuestion();
+    }
+
+    public static boolean isAnswerCorrect(String answer, String username) {
+        return DataBase.getInstance().getUserByUsername(username).getPasswordRecoveryAnswer().equals(answer);
+    }
 }
 

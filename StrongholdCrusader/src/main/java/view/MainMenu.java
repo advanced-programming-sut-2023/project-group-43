@@ -57,7 +57,7 @@ public class MainMenu extends Application {
         RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
         loginMenu.setLoginController(registerAndLoginController);
-        loginMenu.start(stage);
+        loginMenu.start(RegisterMenu.getStage());
     }
 
 
