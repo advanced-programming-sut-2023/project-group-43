@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -42,6 +42,7 @@ public class LoginMenu extends Application {
                 new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/loginMenu.fxml")).toExternalForm()));
 
         Scene scene = new Scene(registerPane);
+        setBackground(registerPane);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -49,6 +50,12 @@ public class LoginMenu extends Application {
     @FXML
     public void initialize() {
         generateNewCaptcha();
+    }
+
+    private void setBackground(Pane pane) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/5559468.jpg").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
     }
 
     private void generateNewCaptcha() {
