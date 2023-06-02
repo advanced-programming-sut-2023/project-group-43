@@ -7,7 +7,7 @@ import enums.menuEnums.StoreMenuCommands;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -15,6 +15,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class StoreMenu extends Application {
+
 
     private Stage stage;
     private StoreController storeController;
@@ -26,7 +27,7 @@ public class StoreMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        BorderPane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
+        Pane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
         setMenu();
         Scene scene = new Scene(storeMenuPane);
         stage.setScene(scene);

@@ -4,9 +4,11 @@ import controller.GameControllers.ChangeEnvironmentController;
 import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.DataBase;
 
@@ -19,20 +21,25 @@ public class MainMenu extends Application {
     private Stage stage;
 
     private Scene scene;
-    private BorderPane mainPane;
+    @FXML
+    private Pane mainPane;
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         mainPane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
-        setStyle();
         scene = new Scene(mainPane);
+        setBackground();
         stage.setScene(scene);
         stage.show();
     }
 
-    private void setStyle() {
+
+    private void setBackground() {
+        mainPane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/5559468.jpg").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
     }
 
     public void help() {
