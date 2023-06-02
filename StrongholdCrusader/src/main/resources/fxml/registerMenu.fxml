@@ -25,6 +25,10 @@
             </HBox>
             <Label fx:id="passwordConfirmationError" styleClass="error"/>
             <HBox alignment="CENTER" spacing="20">
+                <Label text="random slogan"/>
+                <CheckBox onMouseClicked="#chooseRandomSlogan" fx:id="randomSlogan"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
                 <CheckBox onMouseClicked="#activateSlogan" fx:id="sloganCheckBox"/>
                 <Label text="slogan:"/>
                 <TextField fx:id="slogan" disable="true" promptText="slogan"/>
