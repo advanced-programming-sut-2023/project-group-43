@@ -2,11 +2,12 @@ package view;
 
 import controller.RegisterAndLoginController;
 import enums.Output;
-import enums.Validations;
-import enums.menuEnums.RegisterAndLoginCommands;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -19,7 +20,8 @@ import java.util.regex.Matcher;
 
 public class LoginMenu extends Application {
 
-    private Stage stage;
+    public PasswordField password;
+    public TextField username;
     private int incorrectPasswords = 0;
     private RegisterAndLoginController loginController;
 
@@ -32,55 +34,9 @@ public class LoginMenu extends Application {
         BorderPane registerPane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/loginMenu.fxml")).toExternalForm()));
 
-        this.stage = primaryStage;
         Scene scene = new Scene(registerPane);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-    public void run() throws Exception {
-        Scanner scanner = Menu.getScanner();
-        String input;
-        Output output;
-        Matcher matcher;
-        System.out.println("login menu:");
-        while (true) {
-            input = scanner.nextLine();
-            output = null;
-            if (input.matches("show current menu"))
-                output = Output.LOGIN_MENU;
-            if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.LOGIN_USER)) != null) {
-                output = loginUser(matcher);
-            } else if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.FORGET_PASSWORD)) != null) {
-                forgetPassword(matcher);
-                continue;
-            } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.BACK) != null) {
-                System.out.println("register menu:");
-                return;
-            }
-            if (output != null) System.out.println(output.getString());
-            else System.out.println("invalid command");
-            if (output != null && output.equals(Output.SUCCESSFUL_LOGIN)) {
-                String captcha = RegisterAndLoginController.generateCaptcha();
-                System.out.println(RegisterAndLoginController.asciiArt(captcha));
-                input = scanner.nextLine();
-                output = RegisterAndLoginController.checkCaptcha(captcha, input);
-                System.out.println(output.getString());
-                if (output.equals(Output.CAPTCHA_MATCHED)) {
-                    String username = Validations.getInfo("u", matcher.group());
-                    enterMainMenu(username);
-                }
-            }
-            checkForPause(output);
-        }
-    }
-
-    private Output loginUser(Matcher matcher) {
-        String username = Validations.getInfo("u", matcher.group());
-        String password = Validations.getInfo("p", matcher.group());
-        Boolean isStayLoggedIn = (matcher.group("stayLoggedIn") != null);
-        return RegisterAndLoginController.loginUser(username, password, isStayLoggedIn);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     private void forgetPassword(Matcher matcher) {
@@ -101,11 +57,6 @@ public class LoginMenu extends Application {
         }
     }
 
-    private void enterMainMenu(String username) throws Exception {
-        //what is usage of the username?
-        new MainMenu().start(stage);
-    }
-
     private void checkForPause(Output output) {
         if (output != null && output.equals(Output.INCORRECT_PASSWORD)) incorrectPasswords++;
         else incorrectPasswords = 0;
@@ -119,12 +70,21 @@ public class LoginMenu extends Application {
     }
 
 
-    public void enterMainMenu() throws Exception {
-        new MainMenu().start(stage);
+    public void loginUser() throws Exception {
+        Output output = RegisterAndLoginController.loginUser(username.getText(), password.getText(), false);
+        if (output.equals(Output.SUCCESSFUL_LOGIN)) {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.start(RegisterMenu.getStage());
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(output.getString());
+            alert.show();
+        }
     }
 
     public void back() throws Exception {
-        (new RegisterMenu()).start(stage);
+        (new RegisterMenu()).start(RegisterMenu.getStage());
     }
 
     public void forgetPassword(MouseEvent mouseEvent) {
