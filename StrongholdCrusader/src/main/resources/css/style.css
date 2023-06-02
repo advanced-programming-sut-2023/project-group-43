@@ -22,7 +22,7 @@ ChoiceBox {
 TextField , PasswordField{
     -fx-background-color: #f6e0b9;
     -fx-prompt-text-fill: rgb(124, 73, 45);
-    -fx-text-fill: #f6e0b9;
+    -fx-text-fill: #461b00;
     -fx-background-radius: 15 15 15 15;
     -fx-alignment: center;
     -fx-font-weight: bold;
