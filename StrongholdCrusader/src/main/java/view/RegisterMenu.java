@@ -10,8 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBase;
 
@@ -39,6 +42,10 @@ public class RegisterMenu extends Application {
     public TextField passwordAnswerConfirmation;
     public Label questionError;
     public CheckBox randomSlogan;
+    public Rectangle captchaRec;
+    public TextField captcha;
+
+    private String captchaNumber;
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -106,6 +113,12 @@ public class RegisterMenu extends Application {
         });
         passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
         passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
+        generateNewCaptcha();
+    }
+
+    private void generateNewCaptcha() {
+        captchaNumber = RegisterAndLoginController.chooseCaptcha();
+        captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
 
     private void checkQuestion() {
@@ -122,7 +135,7 @@ public class RegisterMenu extends Application {
 
     public void createUser() {
         Alert alert = new Alert(Alert.AlertType.NONE);
-        if (checkEverything()) {
+        if (checkEverything() && captcha.getText().equals(captchaNumber)) {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText(RegisterAndLoginController.completeRegister(username.getText(),
                     password.getText(), nickname.getText(), email.getText(), slogan.getText(),
@@ -132,6 +145,7 @@ public class RegisterMenu extends Application {
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
+        generateNewCaptcha();
     }
 
     private boolean checkEverything() {

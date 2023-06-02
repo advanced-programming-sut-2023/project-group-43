@@ -3,13 +3,17 @@ package view;
 import controller.RegisterAndLoginController;
 import enums.Output;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -22,6 +26,9 @@ public class LoginMenu extends Application {
 
     public PasswordField password;
     public TextField username;
+    public Rectangle captchaRec;
+    public TextField captcha;
+    private String captchaNumber;
     private int incorrectPasswords = 0;
     private RegisterAndLoginController loginController;
 
@@ -37,6 +44,16 @@ public class LoginMenu extends Application {
         Scene scene = new Scene(registerPane);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    @FXML
+    public void initialize() {
+        generateNewCaptcha();
+    }
+
+    private void generateNewCaptcha() {
+        captchaNumber = RegisterAndLoginController.chooseCaptcha();
+        captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
 
     private void forgetPassword(Matcher matcher) {
@@ -71,15 +88,24 @@ public class LoginMenu extends Application {
 
 
     public void loginUser() throws Exception {
-        Output output = RegisterAndLoginController.loginUser(username.getText(), password.getText(), false);
-        if (output.equals(Output.SUCCESSFUL_LOGIN)) {
-            RegisterAndLoginController.enterMainMenu(username.getText());
+        if (captcha.getText().equals(captchaNumber)) {
+            Output output = RegisterAndLoginController.loginUser(username.getText(), password.getText(), false);
+            if (output.equals(Output.SUCCESSFUL_LOGIN)) {
+                RegisterAndLoginController.enterMainMenu(username.getText());
+            }
+            else {
+                showError(output.getString());
+            }
         }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(output.getString());
-            alert.show();
-        }
+        else showError("wrong captcha");
+    }
+
+    private void showError(String text) {
+        generateNewCaptcha();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(text);
+        alert.show();
+        generateNewCaptcha();
     }
 
     public void back() throws Exception {
