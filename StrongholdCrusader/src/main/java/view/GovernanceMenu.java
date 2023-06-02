@@ -13,23 +13,20 @@ import java.util.regex.Matcher;
 import static view.Menu.scanner;
 
 public class GovernanceMenu extends Application {
-    private static GovernanceController governanceController;
-    private static Stage stage;
-    private User currentUser = DataBase.getInstance().findLoggedInUser();
+    private GovernanceController governanceController;
+    private Stage stage;
 
-    public static GovernanceController getGovernanceController() {
+    public GovernanceController getGovernanceController() {
         return governanceController;
     }
 
-    public static void setGovernanceController(GovernanceController governanceController) {
-        GovernanceMenu.governanceController = governanceController;
+    public void setGovernanceController(GovernanceController governanceController) {
+        this.governanceController = governanceController;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        //TODO --> handle game for controllers
-        //governanceController = new GovernanceController(currentUser, );
-        GovernanceMenu.stage = stage;
+        this.stage = stage;
     }
 
     public void run() {

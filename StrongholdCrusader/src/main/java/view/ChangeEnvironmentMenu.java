@@ -9,18 +9,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.DataBase;
-import model.User;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ChangeEnvironmentMenu extends Application {
-    private static Stage stage;
-    private User currentUser = DataBase.getInstance().findLoggedInUser();
-    private ChangeEnvironmentController changeEnvironmentController ;
+    private Stage stage;
+    private ChangeEnvironmentController changeEnvironmentController;
     private String x, y, type;
 
     public ChangeEnvironmentController getChangeEnvironmentController() {
@@ -33,8 +31,8 @@ public class ChangeEnvironmentMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        ChangeEnvironmentMenu.stage = stage;
-        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml").toExternalForm()));
+        this.stage = stage;
+        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml")).toExternalForm()));
         Scene scene = new Scene(changeEnvironmentMenuPane);
         stage.setScene(scene);
         stage.show();

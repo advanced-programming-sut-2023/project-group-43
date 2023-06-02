@@ -12,11 +12,7 @@ import java.util.regex.Matcher;
 
 public class TradeMenu extends Application {
     private  TradeController tradeController ;
-    private static Stage stage;
-
-    public TradeController getTradeController() {
-        return tradeController;
-    }
+    private Stage stage;
 
     public void setTradeController(TradeController tradeController) {
         this.tradeController = tradeController;
@@ -24,7 +20,7 @@ public class TradeMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        TradeMenu.stage = stage;
+        this.stage = stage;
     }
 
     public void run() {

@@ -1,47 +1,63 @@
 package view;
 
+import controller.GameControllers.ChangeEnvironmentController;
+import controller.RegisterAndLoginController;
+import controller.UserControllers.ProfileController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.DataBase;
+
 import java.net.URL;
+import java.util.Objects;
 
 
 public class MainMenu extends Application {
 
-    public static Stage stage;
+    private Stage stage;
+
     private Scene scene;
     private BorderPane mainPane;
+
     @Override
     public void start(Stage stage) throws Exception {
-        MainMenu.stage = stage;
+        this.stage = stage;
         mainPane = FXMLLoader.load(
-                new URL(RegisterMenu.class.getResource("/fxml/mainMenu.fxml").toExternalForm()));
+                new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
         setStyle();
         scene = new Scene(mainPane);
         stage.setScene(scene);
         stage.show();
     }
 
-    private void setStyle(){
-    }
-    public void back(MouseEvent mouseEvent) throws Exception {
-        (new LoginMenu()).start(stage);
+    private void setStyle() {
     }
 
-    public void help(MouseEvent mouseEvent){
+    public void help() {
 
     }
-    public void enterProfileMenu(MouseEvent mouseEvent){
-        //fix the controller
-        //(new ProfileMenu()).start(stage);
+
+    public void back() throws Exception {
+        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
+        LoginMenu loginMenu = new LoginMenu();
+        loginMenu.setLoginController(registerAndLoginController);
+        loginMenu.start(stage);
     }
 
-    public void enterChangeEnvironmentMenu(MouseEvent mouseEvent) throws Exception {
-        //(new ChangeEnvironmentMenu()).start(stage);
+
+    public void enterProfileMenu() throws Exception {
+        ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
+        ProfileMenu profileMenu = new ProfileMenu();
+        profileMenu.setProfileController(profileController);
+        profileMenu.start(stage);
+    }
+
+    public void enterChangeEnvironmentMenu() throws Exception {
+        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().findLoggedInUser());
+        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
+        changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
+        changeEnvironmentMenu.start(stage);
     }
 }

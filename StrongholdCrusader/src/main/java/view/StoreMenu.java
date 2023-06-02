@@ -9,9 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.DataBase;
-import model.Game;
-import model.User;
 
 import java.net.URL;
 import java.util.Scanner;
@@ -19,14 +16,8 @@ import java.util.regex.Matcher;
 
 public class StoreMenu extends Application {
 
-    private static Stage stage;
+    private Stage stage;
     private StoreController storeController;
-    private Game game;
-    private User currentUser;
-
-    public StoreController getStoreController() {
-        return storeController;
-    }
 
     public void setStoreController(StoreController storeController) {
         this.storeController = storeController;
@@ -34,8 +25,7 @@ public class StoreMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        currentUser = DataBase.getInstance().findLoggedInUser();
-        StoreMenu.stage = stage;
+        this.stage = stage;
         BorderPane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
         setMenu();
         Scene scene = new Scene(storeMenuPane);
