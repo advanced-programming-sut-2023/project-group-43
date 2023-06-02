@@ -1,14 +1,14 @@
 TextField , PasswordField{
+    -fx-background-color: #f6e0b9;
     -fx-border-color: transparent transparent lightgray transparent;
     -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
     -fx-prompt-text-fill: rgb(124, 73, 45);
     -fx-text-fill: black;
     -fx-background-radius: 15 15 0 0;
     -fx-alignment: center;
     -fx-font-weight: bold;
     -fx-max-width: 300;
-    -fx-min-width: 300;
+    -fx-min-width: 200;
     -fx-font-family: "Arial";
     -fx-font-size: 13px;
     -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
@@ -21,11 +21,11 @@ TextField , PasswordField{
 }
 
 TextField:focused {
-    -fx-background-color: #E0FFFF;
+    -fx-background-color: #fff8e0;
 }
 
 PasswordField:focused {
-    -fx-background-color: #E0FFFF;
+    -fx-background-color: #fff8e0;
 }
 
 Button {
