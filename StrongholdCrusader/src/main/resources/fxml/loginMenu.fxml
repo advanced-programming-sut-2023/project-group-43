@@ -42,10 +42,10 @@
                 </Button>
             </HBox>
             <Group fx:id="group" visible="false">
-                <VBox>
+                <VBox spacing="20">
                     <Label styleClass="menuLabel" fx:id="question"/>
                     <TextField fx:id="answer" promptText="answer"/>
-                    <PasswordField fx:id="newPassword"/>
+                    <PasswordField fx:id="newPassword" promptText="new password"/>
                     <Button alignment="CENTER" onMouseClicked="#setNewPassword" text="set new password">
                         <cursor>
                             <Cursor fx:constant="HAND"/>
