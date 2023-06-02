@@ -65,13 +65,13 @@ public class MainMenu extends Application {
         ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
         ProfileMenu profileMenu = new ProfileMenu();
         profileMenu.setProfileController(profileController);
-        profileMenu.start(stage);
+        profileMenu.start(RegisterMenu.getStage());
     }
 
     public void enterChangeEnvironmentMenu() throws Exception {
         ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().findLoggedInUser());
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
-        changeEnvironmentMenu.start(stage);
+        changeEnvironmentMenu.start(RegisterMenu.getStage());
     }
 }

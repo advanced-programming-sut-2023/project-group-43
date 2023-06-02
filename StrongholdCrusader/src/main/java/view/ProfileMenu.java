@@ -40,14 +40,6 @@ public class ProfileMenu extends Application {
         this.profileController = profileController;
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        this.stage = stage;
-        BorderPane pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     /*public void run() {
         Scanner scanner = Menu.getScanner();
@@ -165,5 +157,13 @@ public class ProfileMenu extends Application {
     private void initialize() {
         ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll("1", "2", "3");
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        BorderPane pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.show();
     }
 }
