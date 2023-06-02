@@ -5,8 +5,10 @@ import enums.Output;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -28,6 +30,10 @@ public class LoginMenu extends Application {
     public TextField username;
     public Rectangle captchaRec;
     public TextField captcha;
+    public Group group;
+    public Label question;
+    public TextField answer;
+    public PasswordField newPassword;
     private String captchaNumber;
     private int incorrectPasswords = 0;
     private RegisterAndLoginController loginController;
@@ -99,12 +105,10 @@ public class LoginMenu extends Application {
             Output output = RegisterAndLoginController.loginUser(username.getText(), password.getText(), false);
             if (output.equals(Output.SUCCESSFUL_LOGIN)) {
                 RegisterAndLoginController.enterMainMenu(username.getText());
-            }
-            else {
+            } else {
                 showError(output.getString());
             }
-        }
-        else showError("wrong captcha");
+        } else showError("wrong captcha");
     }
 
     private void showError(String text) {
@@ -119,6 +123,23 @@ public class LoginMenu extends Application {
         (new RegisterMenu()).start(RegisterMenu.getStage());
     }
 
-    public void forgetPassword(MouseEvent mouseEvent) {
+    public void forgetPassword() {
+        if (RegisterAndLoginController.isUserExisted(username.getText())) {
+            group.setVisible(true);
+            question.setText(RegisterAndLoginController.getQuestion(username.getText()));
+        }
+        else
+            showError("username does not exist!");
+    }
+
+    public void setNewPassword() {
+        group.setVisible(false);
+        if (RegisterAndLoginController.isAnswerCorrect(answer.getText(), username.getText())) {
+            if (RegisterAndLoginController.checkPassword(newPassword.getText()) == null) {
+                RegisterAndLoginController.changePassword(username.getText(), newPassword.getText());
+            }
+            else showError("wrong password format");
+        }
+        else showError("wrong answer");
     }
 }
