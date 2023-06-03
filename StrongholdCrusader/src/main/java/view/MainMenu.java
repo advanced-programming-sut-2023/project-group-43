@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.DataBase;
-import model.User;
 
 import java.net.URL;
 import java.util.Objects;
@@ -28,12 +27,8 @@ public class MainMenu extends Application {
 
     private MainUserController mainUserController;
 
-    private static String username;
-
-    public void setMainUserController(String username) {
-        MainMenu.username = username;
-        User currentUser = DataBase.getInstance().getUserByUsername(username);
-        mainUserController = new MainUserController(currentUser);
+    public void setMainUserController(MainUserController mainUserController) {
+        this.mainUserController = mainUserController;
     }
 
     @Override
@@ -59,31 +54,22 @@ public class MainMenu extends Application {
     }
 
     public void back() throws Exception {
+        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
-        //loginMenu.setLoginController(registerAndLoginController);
         //loginMenu.setLoginController(registerAndLoginController);
         loginMenu.start(RegisterMenu.getStage());
     }
 
 
     public void enterProfileMenu() throws Exception {
-        if (mainUserController == null) {
-            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
-        }
+        ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
         ProfileMenu profileMenu = new ProfileMenu();
-        profileMenu.setProfileController(MainMenu.username);
+        profileMenu.setProfileController(profileController);
         profileMenu.start(RegisterMenu.getStage());
     }
 
-    public static String getUsername() {
-        return username;
-    }
-
     public void enterChangeEnvironmentMenu() throws Exception {
-        if (mainUserController == null) {
-            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
-        }
-        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(mainUserController.getCurrentUser());
+        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().findLoggedInUser());
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
         changeEnvironmentMenu.start(RegisterMenu.getStage());
