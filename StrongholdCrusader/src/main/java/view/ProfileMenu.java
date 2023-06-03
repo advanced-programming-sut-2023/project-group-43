@@ -1,7 +1,5 @@
 package view;
 
-import controller.MainUserController;
-import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
 import enums.Output;
 import enums.Validations;
@@ -11,16 +9,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import model.DataBase;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -37,150 +31,56 @@ public class ProfileMenu extends Application {
     @FXML
     private TextField newSlogan;
     @FXML
-    private PasswordField oldPassword;
+    private TextField oldPassword;
     @FXML
-    private PasswordField newPassword;
-    private PasswordField passwordConfirmation;
+    private TextField newPassword;
+
     private ProfileController profileController;
-    public CheckBox sloganCheckBox;
-    public Label usernameError;
-    public Label passwordError;
-    public Label passwordConfirmationError;
-    public Label sloganError;
-    public Label emailError;
-    public Label nicknameError;
-    public TextField passwordRecoveryAnswer;
-    public ChoiceBox<String> passwordRecoveryQuestion;
-    public TextField passwordAnswerConfirmation;
-    public Label questionError;
-    public CheckBox randomSlogan;
-    public Rectangle captchaRec;
-    public TextField captcha;
-    private String captchaNumber;
-    public HBox userInfo = new HBox();
-    public HBox picture = new HBox();
-    public ChoiceBox avatar;
-    public static BorderPane pane;
-    private static String username;
-    public void setProfileController(String username) {
-        ProfileMenu.username = username;
-        this.profileController = new ProfileController(DataBase.getInstance().getUserByUsername(username));
-        profileController.setCurrentUser(DataBase.getInstance().getUserByUsername(username));
+
+    public void setProfileController(ProfileController profileController) {
+        this.profileController = profileController;
     }
-    @Override
-    public void start(Stage stage) throws Exception {
-        ProfileMenu.pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        ProfileMenu.pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
-        stage.show();
-    }
-    @FXML
-    private void initialize() {
-        if (profileController == null) {
-            profileController = new ProfileController(DataBase.getInstance().getUserByUsername(ProfileMenu.username));
-            profileController.setCurrentUser(DataBase.getInstance().getUserByUsername(ProfileMenu.username));
-        }
-        ObservableList<String> list = FXCollections.observableArrayList();
-        list.addAll("1", "2", "3", "4");
-        avatar.setItems(list);
-        avatar.setValue(profileController.getCurrentUser().getAvatarNumber());
-        newUsername.setText(profileController.getCurrentUser().getUsername());
-        newUsername.setDisable(true);
-        newUsernameListener();
-        newNickname.setText(profileController.getCurrentUser().getNickname());
-        newNicknameListener();
-        newNickname.setDisable(true);
-        newEmail.setText(profileController.getCurrentUser().getEmail());
-        newEmailListener();
-        newEmail.setDisable(true);
-        if (profileController.getCurrentUser().getSlogan().equals("")) newSlogan.setText("Slogan is empty");
-        else newSlogan.setText(profileController.getCurrentUser().getSlogan());
-        newSlogan.setDisable(true);
-        newSloganListener();
-        oldPassword.setText(profileController.getCurrentUser().getPassword());
-        newPassword.textProperty().addListener((observable, oldText, newText) -> {
-            Output output;
-            if ((output = RegisterAndLoginController.checkPassword(newPassword.getText())) == null)
-                passwordError.setText("ok");
-            else passwordError.setText(output.getString());
-        });
-//        passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
-//            Output output;
-//            if ((output = RegisterAndLoginController.checkPasswordConfirmation(passwordConfirmation.getText(),
-//                    newPassword.getText())) == null)
-//                passwordConfirmationError.setText("ok");
-//            else passwordConfirmationError.setText(output.getString());
-//        });
-//        passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
-//        passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
-//        new RegisterMenu().generateNewCaptcha();
-    }
-    public void newUsernameListener() {
-        newUsername.textProperty().addListener((observable, oldText, newText) -> {
-            Output output;
-            if ((output = RegisterAndLoginController.checkUsername(newUsername.getText())) == null)
-                usernameError.setText("ok");
-            else usernameError.setText(output.getString());
-        });
-    }
-    public void newNicknameListener() {
-        newNickname.textProperty().addListener((observable, oldText, newText) -> {
-            Output output;
-            if ((output = RegisterAndLoginController.checkNickname(newNickname.getText())) == null)
-                nicknameError.setText("ok");
-            else nicknameError.setText(output.getString());
-        });
-    }
-    public void newEmailListener() {
-        newEmail.textProperty().addListener((observable, oldText, newText) -> {
+
+
+    /*public void run() {
+        Scanner scanner = Menu.getScanner();
+        String input;
         Output output;
-        if ((output = RegisterAndLoginController.checkEmail(newEmail.getText())) == null)
-            emailError.setText("ok");
-        else emailError.setText(output.getString());
-    });
-    }
-    public void newSloganListener() {
-        newSlogan.textProperty().addListener((observable, oldText, newText) -> {
-            Output output;
-            if ((output = RegisterAndLoginController.checkSlogan(newSlogan.getText(), sloganCheckBox.isSelected())) == null)
-                sloganError.setText("ok");
-            else sloganError.setText(output.getString());
-        });
-    }
-    public void changeAvatar() {
-        profileController.getCurrentUser().setAvatarNumber(Integer.parseInt(avatar.getValue().toString()));
-        if (picture.getChildren().size() > 0)
-            picture.getChildren().remove(0);
-        updateAvatar(pane);
-    }
-    private void updateAvatar(Pane pane) {
-        pane.getChildren().remove(picture);
-        picture = new HBox();
-        picture.setLayoutX(120);
-        picture.setLayoutY(10);
-        Rectangle rectangle = new Rectangle(100, 100, 100, 100);
-        rectangle.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/image/pic" +
-                profileController.getCurrentUser().getAvatarNumber() + ".jpg").toExternalForm())));
-        picture.getChildren().add(rectangle);
-        pane.getChildren().add(picture);
-    }
-    private void updateUsername() {
-        if (userInfo.getChildren().size() > 0)
-            userInfo.getChildren().remove(0);
-        pane.getChildren().remove(userInfo);
-        userInfo = new HBox();
-        Label username = new Label();
-        username.setText("username: " + profileController.getCurrentUser().getUsername());
-        username.setLayoutX(100);
-        username.setLayoutY(100);
-        userInfo = new HBox();
-        userInfo.setLayoutY(10);
-        userInfo.setLayoutX(250);
-        userInfo.getChildren().add(username);
-        pane.getChildren().add(userInfo);
-    }
+        Matcher matcher;
+        System.out.println("profile menu:");
+        while (true) {
+            input = scanner.nextLine();
+            output = null;
+            if (input.matches("show current menu"))
+                output = Output.PROFILE_MENU;
+            if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_INFO)) != null) {
+                output = changeInfo(matcher);
+            } else if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD)) != null) {
+                output = changePassword(matcher);
+            } else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.REMOVE_SLOGAN) != null) {
+                output = removeSlogan();
+            } else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_HIGHSCORE) != null) {
+                System.out.println(displayHighScore());
+                continue;
+            } else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_RANK) != null) {
+                System.out.println(displayRank());
+                continue;
+            } else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.DISPLAY_SLOGAN) != null) {
+                System.out.println(displaySlogan());
+                continue;
+            } else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.PROFILE_DISPLAY) != null) {
+                System.out.println(displayProfile());
+                continue;
+            } else if (ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.BACK) != null) {
+                System.out.println("main menu:");
+                return;
+            }
+            if (output != null) {
+                System.out.println(output.getString());
+            } else System.out.println("Invalid Command!");
+        }
+    }*/
+
     private Output changePassword(Matcher matcher) {
         String oldPassword = Validations.getInfo("o", matcher.group());
         String newPassword = Validations.getInfo("n", matcher.group());
@@ -248,13 +148,25 @@ public class ProfileMenu extends Application {
         alert.setContentText(profileController.displayAllProfile());
         alert.show();
     }
+//TODO
     public void back(MouseEvent mouseEvent) throws Exception {
-        new MainMenu().start(RegisterMenu.getStage());
+        new MainMenu().start(stage);
     }
-    private void checkQuestion() {
-        if (!passwordRecoveryAnswer.getText().equals(passwordAnswerConfirmation.getText()))
-            questionError.setText("not equal");
-        else if (passwordAnswerConfirmation.getText().isEmpty()) questionError.setText("empty field");
-        else questionError.setText("ok");
+
+
+    @FXML
+    private void initialize() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.addAll("1", "2", "3");
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        BorderPane pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+        stage.show();
     }
 }
