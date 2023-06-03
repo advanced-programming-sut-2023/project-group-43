@@ -7,7 +7,6 @@
 <BorderPane prefHeight="633.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterMenu"
             stylesheets="@../css/style.css">
-
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Register Menu" styleClass="menuLabel"/>
@@ -73,5 +72,4 @@
             </HBox>
         </VBox>
     </center>
-
 </BorderPane>
