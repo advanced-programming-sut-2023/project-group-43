@@ -1,7 +1,6 @@
 package view;
 
-import controller.ProfileController;
-import controller.RegisterAndLoginController;
+import controller.UserControllers.ProfileController;
 import enums.Output;
 import enums.Validations;
 import javafx.application.Application;
@@ -20,6 +19,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class ProfileMenu extends Application {
+
+    private Stage stage;
     @FXML
     private TextField newUsername;
     @FXML
@@ -32,13 +33,13 @@ public class ProfileMenu extends Application {
     private TextField oldPassword;
     @FXML
     private TextField newPassword;
-    
 
     private ProfileController profileController;
 
-    public ProfileMenu(ProfileController profileController) {
+    public void setProfileController(ProfileController profileController) {
         this.profileController = profileController;
     }
+
 
     /*public void run() {
         Scanner scanner = Menu.getScanner();
@@ -49,7 +50,7 @@ public class ProfileMenu extends Application {
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 output = Output.PROFILE_MENU;
             if ((matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_INFO)) != null) {
                 output = changeInfo(matcher);
@@ -147,8 +148,15 @@ public class ProfileMenu extends Application {
         alert.show();
     }
 //TODO
-    public void back(MouseEvent mouseEvent) {
-        RegisterAndLoginController.enterMainMenu(profileController.getCurrentUser().getUsername());
+    public void back(MouseEvent mouseEvent) throws Exception {
+        new MainMenu().start(stage);
+    }
+
+
+    @FXML
+    private void initialize() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.addAll("1", "2", "3");
     }
 
     @Override
@@ -157,11 +165,5 @@ public class ProfileMenu extends Application {
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
-    }
-
-    @FXML
-    private void initialize() {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        list.addAll("1", "2", "3");
     }
 }

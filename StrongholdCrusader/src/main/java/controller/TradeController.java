@@ -64,8 +64,9 @@ public class TradeController {
         GovernanceResource receiverStorage = game.getCurrentPlayer().getGovernance().getGovernanceResource();
         if (trade.getSender().getGovernance().getGold() < trade.getPrice())
             return Output.NOT_ENOUGH_GOLD;
-        if (receiverStorage.getAmountOfItemInStockpile(trade.getResource()) < trade.getAmount())
+        if (receiverStorage.getAmountOfItemInStockpile(trade.getResource()) < trade.getAmount()) {
             return Output.NOT_ENOUGH_RESOURCE;
+        }
         trade.getSender().getGovernance().changeGoldAmount(-trade.getPrice());
         receiverStorage.changeAmountOfItemInStockpile(trade.getResource(), trade.getAmount());
         trade.setReceiver(game.getCurrentPlayer());

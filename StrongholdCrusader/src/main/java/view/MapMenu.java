@@ -1,19 +1,26 @@
 package view;
 
-import controller.MapController;
+import controller.GameControllers.MapController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class MapMenu extends Menu {
+public class MapMenu extends Application {
 
     private MapController mapController;
 
-    public MapMenu(MapController mapController) {
+    public void setMapController(MapController mapController) {
         this.mapController = mapController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 
     public void run() {
@@ -23,22 +30,19 @@ public class MapMenu extends Menu {
         Matcher matcher;
         while (true) {
             input = scanner.nextLine();
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 System.out.println(Output.MAP_MENU.getString());
             if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
                 showMap(matcher);
-                return;
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_DETAILS)) != null) {
                 showMapDetails(matcher);
-                return;
             } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
                 moveMap(matcher);
-                return;
             } else if (input.matches("back")) {
                 System.out.println("game menu:");
                 return;
-            }
-            else System.out.println("invalid command!");;
+            } else System.out.println("invalid command!");
+            ;
         }
     }
 
@@ -101,4 +105,5 @@ public class MapMenu extends Menu {
         }
         System.out.println(mapController.moveMap(horizontalDisplacement, verticalDisplacement));
     }
+
 }

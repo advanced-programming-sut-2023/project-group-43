@@ -4,6 +4,7 @@ import enums.Output;
 import model.DataBase;
 import model.User;
 import view.MainMenu;
+import view.RegisterMenu;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -19,23 +20,16 @@ public class RegisterAndLoginController {
                                     String email,
                                     String slogan,
                                     boolean hasSlogan) {
-        if (username == null || password == null || nickname == null || email == null) {
+        if (checkNickname(nickname) != null) {
             return Output.EMPTY_FIELD;
-        } else if (slogan == null && hasSlogan) {
-            return Output.EMPTY_FIELD;
-        } else if (!username.matches("[\\w_]+")) {
-            return Output.INVALID_USERNAME;
-        } else if (DataBase.getInstance().getUserByUsername(username) != null) {
-            return Output.DUPLICATE_USERNAME;
-        } else if (passwordConfirmation != null && checkPassword(password) != null) {
+        } else if (checkSlogan(slogan, hasSlogan) != null) {
+            return checkSlogan(slogan, hasSlogan);
+        } else if (checkUsername(username) != null) return checkUsername(username);
+        else if (checkPassword(password) != null) {
             return checkPassword(password);
-        } else if (passwordConfirmation != null && !password.equals(passwordConfirmation)) {
-            return Output.INCORRECT_PASSWORD_CONFIRMATION;
-        } else if (DataBase.getInstance().getUserByEmail(email) != null) {
-            return Output.DUPLICATE_EMAIL;
-        } else if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) {
-            return Output.INVALID_EMAIL_FORMAT;
-        }
+        } else if (checkPasswordConfirmation(passwordConfirmation, password) != null)
+            return checkPasswordConfirmation(passwordConfirmation, password);
+        else if (checkEmail(email) != null) return checkEmail(email);
         if (slogan != null && slogan.equals("random")) {
             return Output.RANDOM_SLOGAN;
         }
@@ -43,6 +37,42 @@ public class RegisterAndLoginController {
             return Output.CONFIRM_PASSWORD;
         }
         return Output.CHOOSE_PASSWORD_RECOVERY_QUESTION;
+    }
+
+    public static Output checkSlogan(String slogan, boolean hasSlogan) {
+        if (slogan.isEmpty() && hasSlogan) return Output.EMPTY_FIELD;
+        return null;
+    }
+
+    public static Output checkPasswordConfirmation(String passwordConfirmation, String password) {
+        if (!password.equals(passwordConfirmation)) {
+            return Output.INCORRECT_PASSWORD_CONFIRMATION;
+        }
+        return null;
+    }
+
+    public static Output checkUsername(String username) {
+        if (username.isEmpty()) return Output.EMPTY_FIELD;
+        else if (!username.matches("[\\w_]+"))
+            return Output.INVALID_USERNAME;
+        else if (DataBase.getInstance().getUserByUsername(username) != null)
+            return Output.DUPLICATE_USERNAME;
+        return null;
+    }
+
+    public static Output checkNickname(String nickname) {
+        if (nickname.isEmpty()) return Output.EMPTY_FIELD;
+        return null;
+    }
+
+    public static Output checkEmail(String email) {
+        if (email.isEmpty()) return Output.EMPTY_FIELD;
+        if (DataBase.getInstance().getUserByEmail(email) != null) {
+            return Output.DUPLICATE_EMAIL;
+        } else if (!email.matches("[\\w\\._]+\\@[\\w\\._]+\\.[\\w\\._]+")) {
+            return Output.INVALID_EMAIL_FORMAT;
+        }
+        return null;
     }
 
     public static String makeShaCode(String password) {
@@ -59,8 +89,8 @@ public class RegisterAndLoginController {
 
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
             if (hex.length() == 1) {
                 hexString.append('0');
             }
@@ -124,16 +154,16 @@ public class RegisterAndLoginController {
     }
 
     public static String makeRandomPassword() {
-        String password = "";
+        StringBuilder password = new StringBuilder();
         Random random = new Random();
         String specialCharacters = ".+-)(*&^%$#@!~?";
         for (int i = 0; i < 3; i++) {
-            password += (char) (random.nextInt(25) + 'a');
-            password += (char) (random.nextInt(25) + 'A');
-            password += (char) (random.nextInt(9) + '0');
-            password += (specialCharacters.charAt(random.nextInt(14)));
+            password.append((char) (random.nextInt(25) + 'a'));
+            password.append((char) (random.nextInt(25) + 'A'));
+            password.append((char) (random.nextInt(9) + '0'));
+            password.append(specialCharacters.charAt(random.nextInt(14)));
         }
-        return password;
+        return password.toString();
     }
 
     public static String makeRandomSlogan() {
@@ -148,161 +178,17 @@ public class RegisterAndLoginController {
         Random random = new Random();
         return slogans[random.nextInt(7)];
     }
-
-    public static String asciiArt(String captcha) {
-        String output = "";
-        String[] line = new String[8];
-        for (int i = 1; i < 8; i++) {
-            line[i] = "";
-        }
-        int captchaLength = captcha.length();
-        int captchaNumber = Integer.parseInt(captcha);
-        int[] captchaDigits = new int[captchaLength];
-        for (int i = captchaLength - 1; i >= 0; i--) {
-            captchaDigits[i] = captchaNumber % 10;
-            captchaNumber /= 10;
-        }
-        //noise
-        int toBeNoisedLine1 = (4 + (int) (Math.random() * 5)) % 7 + 1;
-        int toBeNoisedLine2 = (4 + (int) (Math.random() * 5)) % 7 + 1;
-        while (toBeNoisedLine2 == toBeNoisedLine1) {
-            toBeNoisedLine2 = (4 + (int) (Math.random() * 5)) % 7 + 1;
-        }
-        line[toBeNoisedLine1] += " ";
-        line[toBeNoisedLine2] += " ";
-        for (int i = 0; i < captchaLength; i++) {
-            switch (captchaDigits[i]) {
-                case 0: {
-                    line[1] += " *****      ";
-                    line[2] += "*     *     ";
-                    line[3] += "*     *     ";
-                    line[4] += "*     *     ";
-                    line[5] += "*     *     ";
-                    line[6] += "*     *     ";
-                    line[7] += " *****      ";
-                    break;
-                }
-                case 1: {
-                    line[1] += "*    ";
-                    line[2] += "*    ";
-                    line[3] += "*    ";
-                    line[4] += "*    ";
-                    line[5] += "*    ";
-                    line[6] += "*    ";
-                    line[7] += "*    ";
-                    break;
-                }
-                case 2: {
-                    line[1] += "*******     ";
-                    line[2] += "      *     ";
-                    line[3] += "      *     ";
-                    line[4] += "*******     ";
-                    line[5] += "*           ";
-                    line[6] += "*           ";
-                    line[7] += "*******     ";
-                    break;
-                }
-                case 3: {
-                    line[1] += "*******     ";
-                    line[2] += "      *     ";
-                    line[3] += "      *     ";
-                    line[4] += " ******     ";
-                    line[5] += "      *     ";
-                    line[6] += "      *     ";
-                    line[7] += "*******     ";
-                    break;
-                }
-                case 4: {
-                    line[1] += "*     *     ";
-                    line[2] += "*     *     ";
-                    line[3] += "*******     ";
-                    line[4] += "      *     ";
-                    line[5] += "      *     ";
-                    line[6] += "      *     ";
-                    line[7] += "      *     ";
-                    break;
-                }
-                case 5: {
-                    line[1] += "*******     ";
-                    line[2] += "*           ";
-                    line[3] += "*           ";
-                    line[4] += "*******     ";
-                    line[5] += "      *     ";
-                    line[6] += "      *     ";
-                    line[7] += "*******     ";
-                    break;
-                }
-                case 6: {
-                    line[1] += "*******     ";
-                    line[2] += "*           ";
-                    line[3] += "*           ";
-                    line[4] += "*******     ";
-                    line[5] += "*     *     ";
-                    line[6] += "*     *     ";
-                    line[7] += "*******     ";
-                    break;
-                }
-                case 7: {
-                    line[1] += "*******     ";
-                    line[2] += "*     *     ";
-                    line[3] += "*     *     ";
-                    line[4] += "      *     ";
-                    line[5] += "      *     ";
-                    line[6] += "      *     ";
-                    line[7] += "      *     ";
-                    break;
-                }
-                case 8: {
-                    line[1] += "*******     ";
-                    line[2] += "*     *     ";
-                    line[3] += "*     *     ";
-                    line[4] += "*******     ";
-                    line[5] += "*     *     ";
-                    line[6] += "*     *     ";
-                    line[7] += "*******     ";
-                    break;
-                }
-                case 9: {
-                    line[1] += "*******     ";
-                    line[2] += "*     *     ";
-                    line[3] += "*     *     ";
-                    line[4] += "*******     ";
-                    line[5] += "      *     ";
-                    line[6] += "      *     ";
-                    line[7] += "*******     ";
-                    break;
-                }
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            output += line[i] + "\n";
-        }
-        return output;
+    public static String chooseCaptcha() {
+        String[] captcha = {"1181", "1381", "1491", "1722", "1959", "2163", "2177", "2723"};
+        Random random = new Random();
+        return captcha[random.nextInt(7)];
     }
-
-    public static String generateCaptcha() {
-        Random rand = new Random();
-        int n = rand.nextInt(4) + 4;
-        String chrs = "0123456789";
-        String captcha = "";
-        while (n-- > 0) {
-            int index = (int) (Math.random() * 10);
-            captcha += chrs.charAt(index);
-        }
-        return captcha;
-    }
-
-    public static Output checkCaptcha(String captcha, String user_captcha) {
-        if (captcha.equals(user_captcha))
-            return Output.CAPTCHA_MATCHED;
-        return Output.CAPTCHA_NOT_MATCHED;
-    }
-
-    public static void enterMainMenu(String username) {
+    public static void enterMainMenu(String username) throws Exception {
         User currentUser = DataBase.getInstance().getUserByUsername(username);
-        MainController mainController = new MainController(currentUser);
-        MainMenu mainMenu = new MainMenu(mainController);
-        mainMenu.run();
+        MainUserController mainController = new MainUserController(currentUser);
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.setMainUserController(mainController);
+        (new MainMenu()).start(RegisterMenu.getStage());
     }
 
     public static Output choosePasswordRecoveryQuestion(int passwordRecoveryQuestionNumber,
@@ -321,9 +207,8 @@ public class RegisterAndLoginController {
                                           String nickname,
                                           String email,
                                           String slogan,
-                                          int passwordRecoveryQuestionNumber,
+                                          String passwordRecoveryQuestion,
                                           String passwordRecoveryAnswer) {
-        String passwordRecoveryQuestion = makePasswordRecoveryQuestion(passwordRecoveryQuestionNumber);
         String SHA = makeShaCode(password);
         User user = new User(username, SHA, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan);
         DataBase.getInstance().addUser(user);
@@ -340,5 +225,16 @@ public class RegisterAndLoginController {
         return null;
     }
 
+    public static boolean isUserExisted(String username) {
+        return (DataBase.getInstance().getUserByUsername(username) != null);
+    }
+
+    public static String getQuestion(String username) {
+        return DataBase.getInstance().getUserByUsername(username).getPasswordRecoveryQuestion();
+    }
+
+    public static boolean isAnswerCorrect(String answer, String username) {
+        return DataBase.getInstance().getUserByUsername(username).getPasswordRecoveryAnswer().equals(answer);
+    }
 }
 

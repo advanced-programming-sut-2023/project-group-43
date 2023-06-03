@@ -1,19 +1,41 @@
 package view;
 
-import controller.StoreController;
+import controller.GameControllers.StoreController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.StoreMenuCommands;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class StoreMenu extends Menu {
+public class StoreMenu extends Application {
 
+
+    private Stage stage;
     private StoreController storeController;
 
-    public StoreMenu(StoreController storeController) {
+    public void setStoreController(StoreController storeController) {
         this.storeController = storeController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        Pane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
+        setMenu();
+        Scene scene = new Scene(storeMenuPane);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void setMenu() {
+
     }
 
     public void run() {
@@ -25,7 +47,7 @@ public class StoreMenu extends Menu {
         while (true) {
             input = scanner.nextLine();
             output = null;
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 output = Output.STORE_MENU;
             if (input.matches("back")) {
                 storeController.getGame().setSelectedBuilding(null);
@@ -38,7 +60,8 @@ public class StoreMenu extends Menu {
                 output = buy(matcher);
             } else if ((matcher = StoreMenuCommands.getMatcher(input, StoreMenuCommands.SELL)) != null) {
                 output = sell(matcher);
-            } if (output == null) System.out.println("invalid command!");
+            }
+            if (output == null) System.out.println("invalid command!");
             else System.out.println(output.getString());
         }
     }
@@ -47,7 +70,7 @@ public class StoreMenu extends Menu {
         String itemName = Validations.getInfo("i", matcher.group());
         String amount = Validations.getInfo("a", matcher.group());
         if (itemName != null && amount != null && amount.matches("\\d+"))
-        return storeController.buy(itemName, Integer.parseInt(amount));
+            return storeController.buy(itemName, Integer.parseInt(amount));
         return null;
     }
 

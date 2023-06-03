@@ -1,17 +1,32 @@
 package view;
 
-import controller.GovernanceController;
+import controller.GameControllers.GovernanceController;
 import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import model.DataBase;
+import model.User;
 
 import java.util.regex.Matcher;
 
-public class GovernanceMenu extends Menu {
+import static view.Menu.scanner;
 
+public class GovernanceMenu extends Application {
     private GovernanceController governanceController;
+    private Stage stage;
 
-    public GovernanceMenu(GovernanceController governanceController) {
+    public GovernanceController getGovernanceController() {
+        return governanceController;
+    }
+
+    public void setGovernanceController(GovernanceController governanceController) {
         this.governanceController = governanceController;
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
     }
 
     public void run() {
@@ -20,11 +35,13 @@ public class GovernanceMenu extends Menu {
         System.out.println("governance menu:");
         while (true) {
             input = scanner.nextLine();
-            if(input.matches("show current menu"))
+            if (input.matches("show current menu"))
                 System.out.println(Output.GOVERNANCE_MENU.getString());
             else if (input.matches("back")) {
-                if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
-                    governanceController.getGame().setSelectedBuilding(null);
+                if (governanceController.getGame().getSelectedBuilding() != null) {
+                    if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
+                        governanceController.getGame().setSelectedBuilding(null);
+                }
                 System.out.println("game menu:");
                 return;
             } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY_FACTORS) != null) {
@@ -44,7 +61,8 @@ public class GovernanceMenu extends Menu {
                 System.out.println(governanceController.showTaxRate());
             } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE)) != null) {
                 System.out.println(fearRate(matcher));
-            }
+            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE_SHOW) != null)
+                System.out.println(governanceController.showFearRate());
             else {
                 System.out.println("Invalid command");
             }
@@ -54,17 +72,17 @@ public class GovernanceMenu extends Menu {
 
     private String foodRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
-        return String.valueOf(governanceController.foodRate(rate));
+        return (governanceController.foodRate(rate)).getString();
     }
 
     public String taxRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
-        return String.valueOf(governanceController.taxRate(rate));
+        return (governanceController.taxRate(rate)).getString();
     }
 
     public String fearRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
-        return String.valueOf(governanceController.fearRate(rate));
+        return (governanceController.fearRate(rate)).getString();
     }
 
 }

@@ -6,14 +6,13 @@ import java.util.regex.Pattern;
 public enum GameMenuCommands {
     //enter menu commands
     ENTER_MAP_MENU("enter map menu"),
-    ENTER_STORE_MENU("enter store menu"),
     ENTER_TRADE_MENU("enter trade menu"),
     ENTER_GOVERNANCE_MENU("enter governance menu"),
     //choose and change items inside game
     SELECT_BUILDING("select building" +
             "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     CREATE_UNIT("create unit" +
-            "( \\-(?<flag>[ct])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
+            "( \\-(?<flag>[ct])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     REPAIR_CASTLE("repair"),
     //people and units
     SELECT_UNIT("select unit" +
@@ -34,9 +33,9 @@ public enum GameMenuCommands {
     PATROL_UNIT("patrol unit" +
             "( \\-(?<flag>[(x1)|(y1)|(x2)|(y2)|(t)])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     DROP_UNIT("dropunit" +
-            "( \\-(?<flag>[xytc])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){4}")
-    ;
+            "( \\-(?<flag>[xytc])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){4}");
     private final String regex;
+
     private GameMenuCommands(String regex) {
         this.regex = regex;
     }

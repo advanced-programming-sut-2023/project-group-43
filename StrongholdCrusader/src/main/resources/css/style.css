@@ -1,96 +1,86 @@
-TextField {
-    -fx-border-color: transparent transparent lightgray transparent;
-    -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
-    -fx-prompt-text-fill: rgba(0, 255, 255, 0.5);
-    -fx-text-fill: black;
-    -fx-background-radius: 15 15 0 0;
+.menuLabel {
+    -fx-text-fill: #fff8f4;
+    -fx-font-weight: bolder;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial Black";
+}
+
+Label {
+    -fx-text-fill: #250e00;
+    -fx-font-weight: bolder;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial Black";
+}
+
+ChoiceBox {
+    -fx-background-color: #f6e0b9;
+
+    -fx-background-radius: 15 15 15 15;
+}
+
+
+TextField , PasswordField{
+    -fx-background-color: #f6e0b9;
+    -fx-prompt-text-fill: rgb(124, 73, 45);
+    -fx-text-fill: #461b00;
+    -fx-background-radius: 15 15 15 15;
     -fx-alignment: center;
     -fx-font-weight: bold;
     -fx-max-width: 300;
-    -fx-min-width: 300;
+    -fx-min-width: 250;
     -fx-font-family: "Arial";
     -fx-font-size: 13px;
     -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
     -fx-highlight-text-fill: -fx-text-inner-color;
-    -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-border-insets: 0 0 1 0;
-    -fx-border-style: hidden hidden solid hidden;
     -fx-cursor: text;
     -fx-padding: 0.166667em 0em 0.333333em 0em;
 }
 
 TextField:focused {
-    -fx-background-color: #E0FFFF;
-}
-
-PasswordField {
-    -fx-border-color: transparent transparent lightgray transparent;
-    -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
-    -fx-prompt-text-fill: rgba(0, 255, 255, 0.5);
-    -fx-text-fill: black;
-    -fx-background-radius: 15 15 0 0;
-    -fx-alignment: center;
-    -fx-font-weight: bold;
-    -fx-max-width: 300;
-    -fx-min-width: 300;
-    -fx-font-family: "Arial";
-    -fx-font-size: 13px;
-    -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
-    -fx-highlight-text-fill: -fx-text-inner-color;
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-border-insets: 0 0 1 0;
-    -fx-border-style: hidden hidden solid hidden;
-    -fx-cursor: text;
-    -fx-padding: 0.166667em 0em 0.333333em 0em;
+    -fx-background-color: #fff8e0;
 }
 
 PasswordField:focused {
-    -fx-background-color: #E0FFFF;
+    -fx-background-color: #fff8e0;
 }
 
 Button {
     -fx-border-color: lightgray;
     -fx-border-width: 1;
-    -fx-background-color: transparent;
+    -fx-background-color: white;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-font-family: "Arial";
     -fx-font-weight: bold;
     -fx-min-width: 100;
-    -fx-max-width: 100;
+    -fx-max-width: 300;
     -fx-background-insets: 0,1,2;
     -fx-padding: 3 30 3 30;
     -fx-text-fill: black;
-    -fx-font-size: 9px;
+    -fx-font-size: 12px;
 }
 
 Button:hover {
-    -fx-cursor: hand;
-    -fx-background-color: #E0FFFF;
+    -fx-font-family: "Modern No. 20";
+    -fx-background-color: #000000;
+    -fx-text-fill: White;
 }
 
 Button:pressed {
     -fx-background-color: #ADD8E6;
 }
 
+
 .Clickable {
     -fx-cursor: hand;
 }
 
 
-Label {
-    -fx-text-fill: magenta;
-    -fx-font-weight: bolder;
-    -fx-font-size: 15px;
-    -fx-font-family: "Arial Black";
-    -fx-fill: #818181;
-    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+.error {
+    -fx-text-fill: red;
+    -fx-font-size: 10px;
 }
 
-.BackGround {
-    background-color : #92dedb;
-}
+
+

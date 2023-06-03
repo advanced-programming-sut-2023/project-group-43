@@ -2,59 +2,66 @@ package view;
 
 import controller.RegisterAndLoginController;
 import enums.Output;
-import enums.Validations;
-import enums.menuEnums.RegisterAndLoginCommands;
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
-public class LoginMenu extends Menu {
+public class LoginMenu extends Application {
 
+    public PasswordField password;
+    public TextField username;
+    public Rectangle captchaRec;
+    public TextField captcha;
+    public Group group;
+    public Label question;
+    public TextField answer;
+    public PasswordField newPassword;
+    private String captchaNumber;
     private int incorrectPasswords = 0;
 
-    public void run() {
-        Scanner scanner = Menu.getScanner();
-        String input;
-        Output output;
-        Matcher matcher;
-        System.out.println("login menu:");
-        while (true) {
-            input = scanner.nextLine();
-            output = null;
-            if(input.matches("show current menu"))
-                output = Output.LOGIN_MENU;
-            if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.LOGIN_USER)) != null) {
-                output = loginUser(matcher);
-            } else if ((matcher = RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.FORGET_PASSWORD)) != null) {
-                forgetPassword(matcher);
-                continue;
-            } else if (RegisterAndLoginCommands.getMatcher(input, RegisterAndLoginCommands.BACK) != null) {
-                System.out.println("register menu:");
-                return;
-            }
-            if (output != null) System.out.println(output.getString());
-            else System.out.println("invalid command");
-            if (output != null && output.equals(Output.SUCCESSFUL_LOGIN)) {
-                String captcha = RegisterAndLoginController.generateCaptcha();
-                System.out.println(RegisterAndLoginController.asciiArt(captcha));
-                input = scanner.nextLine();
-                output = RegisterAndLoginController.checkCaptcha(captcha, input);
-                System.out.println(output.getString());
-                if (output.equals(Output.CAPTCHA_MATCHED)) {
-                    String username = Validations.getInfo("u", matcher.group());
-                    enterMainMenu(username);
-                }
-            }
-            checkForPause(output);
-        }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        BorderPane registerPane = FXMLLoader.load(
+                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/loginMenu.fxml")).toExternalForm()));
+
+        Scene scene = new Scene(registerPane);
+        setBackground(registerPane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
-    private Output loginUser(Matcher matcher) {
-        String username = Validations.getInfo("u", matcher.group());
-        String password = Validations.getInfo("p", matcher.group());
-        Boolean isStayLoggedIn = (matcher.group("stayLoggedIn") != null);
-        return RegisterAndLoginController.loginUser(username, password, isStayLoggedIn);
+    @FXML
+    public void initialize() {
+        generateNewCaptcha();
+    }
+
+    private void setBackground(Pane pane) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/01.jpg").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+    }
+
+    private void generateNewCaptcha() {
+        captchaNumber = RegisterAndLoginController.chooseCaptcha();
+        captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
 
     private void forgetPassword(Matcher matcher) {
@@ -75,11 +82,6 @@ public class LoginMenu extends Menu {
         }
     }
 
-    private void enterMainMenu(String username) {
-        RegisterAndLoginController.enterMainMenu(username);
-        System.out.println("login menu:");
-    }
-
     private void checkForPause(Output output) {
         if (output != null && output.equals(Output.INCORRECT_PASSWORD)) incorrectPasswords++;
         else incorrectPasswords = 0;
@@ -92,4 +94,54 @@ public class LoginMenu extends Menu {
         }
     }
 
+
+    public void loginUser() throws Exception {
+        if (captcha.getText().equals(captchaNumber)) {
+            Output output = RegisterAndLoginController.loginUser(username.getText(), password.getText(), false);
+            if (output.equals(Output.SUCCESSFUL_LOGIN)) {
+                RegisterAndLoginController.enterMainMenu(username.getText());
+            } else {
+                showError(output.getString());
+            }
+        } else showError("wrong captcha");
+    }
+
+    private void showError(String text) {
+        generateNewCaptcha();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(text);
+        alert.show();
+        generateNewCaptcha();
+    }
+
+    public void back() throws Exception {
+        (new RegisterMenu()).start(RegisterMenu.getStage());
+    }
+
+    public void forgetPassword() {
+        if (RegisterAndLoginController.isUserExisted(username.getText())) {
+            group.setVisible(true);
+            question.setText(RegisterAndLoginController.getQuestion(username.getText()));
+        }
+        else
+            showError("username does not exist!");
+    }
+
+    public void setNewPassword() {
+        group.setVisible(false);
+        if (RegisterAndLoginController.isAnswerCorrect(answer.getText(), username.getText())) {
+            if (RegisterAndLoginController.checkPassword(newPassword.getText()) == null) {
+                RegisterAndLoginController.changePassword(username.getText(), newPassword.getText());
+                showInformation("password changed successfully!");
+            }
+            else showError("wrong password format");
+        }
+        else showError("wrong answer");
+    }
+
+    public void showInformation(String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(text);
+        alert.show();
+    }
 }

@@ -13,15 +13,14 @@ public enum RegisterAndLoginCommands {
             "))){0,5}"),
 
     LOGIN_USER("user login" +
-            "( \\-(?<flag>[up])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"+
+            "( \\-(?<flag>[up])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}" +
             "((?<stayLoggedIn> --stay-logged-in)?)"),
     FORGET_PASSWORD("forgot my password - u (((?<username>\\S+)|(\"(?<username2>[^\"]+)\")))"),
     BACK("back"),
     ENTER_LOGIN_MENU("enter login menu"),
     CHOOSE_PASSWORD_RECOVERY_QUESTION("question pick" +
             "( \\-(?<flag>[acq])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
-    GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)")
-    ;
+    GROUP("\\-(?<flag>(\\S+))( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\"))?)");
     private final String regex;
 
     RegisterAndLoginCommands(String regex) {
@@ -31,9 +30,10 @@ public enum RegisterAndLoginCommands {
     public static Matcher getMatcher(String input, RegisterAndLoginCommands command) {
         Pattern pattern = Pattern.compile(command.regex);
         Matcher matcher = pattern.matcher(input);
-        if(matcher.matches()) return matcher;
+        if (matcher.matches()) return matcher;
         else return null;
     }
+
     public static Matcher getWholeMatcher(String input, RegisterAndLoginCommands command) {
         Pattern pattern = Pattern.compile(command.regex);
         return pattern.matcher(input);

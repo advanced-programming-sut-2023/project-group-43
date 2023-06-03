@@ -9,5 +9,13 @@
         <module name="StrongholdCrusader" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="stronghold" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="StrongholdCrusader" options="" />
+    </option>
   </component>
 </project>

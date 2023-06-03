@@ -1,33 +1,40 @@
 package view;
 
-import controller.*;
+import controller.GameControllers.GameController;
+import controller.GameControllers.GovernanceController;
+import controller.GameControllers.MapController;
+import controller.GameControllers.StoreController;
+import controller.TradeController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
 import enums.menuEnums.GameMenuCommands;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import model.DataBase;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class GameMenu extends Menu {
+public class GameMenu extends Application {
 
+    private Stage stage;
     private GameController gameController;
-    private MapController mapController;
-    private GovernanceController governanceController;
-    private TradeController tradeController;
-    private StoreController storeController;
-
     private int turns, numberOfPlayers;
-
     private String x, y;
 
-    public GameMenu(GameController gameController) {
 
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameController gameController) {
         this.gameController = gameController;
-        mapController = new MapController(gameController.getGame());
-        storeController = new StoreController(gameController.getGame(), gameController);
-        governanceController = new GovernanceController(gameController.getGame());
-        tradeController = new TradeController(gameController.getGame());
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
     }
 
     public void setTurns(int turns) {
@@ -38,7 +45,7 @@ public class GameMenu extends Menu {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public void run() {
+    public void run() throws Exception {
         System.out.println("game menu:");
         gameController.getGame().setCurrentPlayer(gameController.getGame().getCurrentUser());
         while (turns > 0) {
@@ -50,58 +57,68 @@ public class GameMenu extends Menu {
             }
             gameController.applyChanges();
             if (gameController.isGameEnded()) {
-                gameController.updateScores();
-                System.out.println(gameController.showGameResult());
-                gameController.clearGame();
                 break;
             }
             turns--;
         }
+        gameController.updateScores();
+        System.out.println(gameController.showGameResult());
+        gameController.clearGame();
     }
 
-    public void enterMapMenu() {
-        MapMenu mapMenu = new MapMenu(mapController);
-        mapMenu.run();
+    public void enterMapMenu() throws Exception {
+        MapController mapController = new MapController(gameController.getGame());
+        MapMenu mapMenu = new MapMenu();
+        mapMenu.setMapController(mapController);
+        mapMenu.start(stage);
     }
 
-    public void enterStoreMenu(String name) {
-        storeController.setStoreName(name);
-        StoreMenu storeMenu = new StoreMenu(storeController);
-        storeMenu.run();
+    public void enterStoreMenu(String name) throws Exception {
+        //TODO--> what is usage of name?
+        StoreController storeController = new StoreController(gameController.getGame(), gameController);
+        StoreMenu storeMenu = new StoreMenu();
+        storeMenu.setStoreController(storeController);
+        storeMenu.start(stage);
     }
 
-    private void enterTradeMenu() {
-        TradeMenu tradeMenu = new TradeMenu(tradeController);
-        tradeMenu.run();
+    private void enterTradeMenu() throws Exception {
+        TradeController tradeController = new TradeController(gameController.getGame());
+        TradeMenu tradeMenu = new TradeMenu();
+        tradeMenu.setTradeController(tradeController);
+        tradeMenu.start(stage);
     }
 
-    private void enterGovernmentMenu() {
-        GovernanceMenu governanceMenu = new GovernanceMenu(governanceController);
-        governanceMenu.run();
+    private void enterGovernmentMenu() throws Exception {
+        GovernanceController governanceController = new GovernanceController(DataBase.getInstance().findLoggedInUser(), gameController.getGame());
+        GovernanceMenu governanceMenu = new GovernanceMenu();
+        governanceMenu.setGovernanceController(governanceController);
+        governanceMenu.start(stage);
     }
 
     private Output selectBuilding(Matcher matcher) {
         if (parseMatcher(matcher))
-            return gameController.selectBuilding(Integer.getInteger(x), Integer.parseInt(y));
+            return gameController.selectBuilding(Integer.parseInt(x), Integer.parseInt(y));
         return null;
     }
 
     private Output createUnit(Matcher matcher) {
-        String type = matcher.group("type");
-        int count = Integer.parseInt(matcher.group("count"));
-        return gameController.createUnit(type, count);
+        String type = Validations.getInfo("t", matcher.group());
+        String count = Validations.getInfo("c", matcher.group());
+        if (type != null && count != null && count.matches("\\d+"))
+            return gameController.createUnit(type, Integer.parseInt(count));
+        return null;
     }
 
     private Output selectUnit(Matcher matcher) {
         String type = Validations.getInfo("t", matcher.group());
         if (parseMatcher(matcher) && type != null)
-            return gameController.selectUnit(Integer.getInteger(x), Integer.parseInt(y), type);
+            return gameController.selectUnit(Integer.parseInt(x), Integer.parseInt(y), type);
         return null;
     }
 
     private Output moveUnit(Matcher matcher) {
         if (parseMatcher(matcher))
-            return gameController.moveUnit(Integer.getInteger(x), Integer.parseInt(y));
+            return gameController.moveUnit(Integer.parseInt(x), Integer.parseInt(y));
         return null;
     }
 
@@ -186,7 +203,7 @@ public class GameMenu extends Menu {
         return null;
     }
 
-    private void onePlayerTurn() {
+    private void onePlayerTurn() throws Exception {
         System.out.println(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         Scanner scanner = Menu.getScanner();
         String input = "";
@@ -216,6 +233,7 @@ public class GameMenu extends Menu {
                 enterGovernmentMenu();
                 continue;
             }
+            if (input.equals("next person")) return;
             //game
             if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_BUILDING)) != null) {
                 output = selectBuilding(matcher);
@@ -252,6 +270,5 @@ public class GameMenu extends Menu {
             else System.out.println(output.getString());
         }
     }
-
 
 }

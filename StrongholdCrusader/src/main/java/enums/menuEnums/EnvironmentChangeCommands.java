@@ -9,7 +9,7 @@ public enum EnvironmentChangeCommands {
     SHOW_DETAILS("show details" +
             "( \\-(?<flag>[xy])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){2}"),
     MAP_MOVMENTS("map (?<firstDirection>.*) (?<firstDisplacement>([0-9])+) (?<secondDirection>.*) (?<secondDisplacement>([0-9])+)"),
-    SET_TEXTURE("settexture " +
+    SET_TEXTURE("settexture" +
             "( \\-(?<flag>[xyt])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){3}"),
     SET_TEXTURE_RECTANGLE("settexture" +
             "( \\-(?<flag>[(x1)|(y2)|(x2)|(y2)|(t)])( ((?<group>\\S+)|(\"(?<group2>[^\"]+)\")))){5}"),
