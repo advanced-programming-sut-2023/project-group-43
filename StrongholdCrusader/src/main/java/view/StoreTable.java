@@ -13,18 +13,17 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class StoreTable extends Application {
 
     private static Stage stage;
-    public final String css = this.getClass().getResource("/css/style.css").toExternalForm();
+    public final String css = Objects.requireNonNull(this.getClass().getResource("/css/style.css")).toExternalForm();
     public BorderPane root = new BorderPane();
     public BorderPane center = new BorderPane();
-    private Scene scene;
-    private HBox hBox = new HBox();
-    private HBox images = new HBox();
+    private final HBox hBox = new HBox();
+    private final HBox images = new HBox();
     private String item;
-    private ArrayList<Material> materials;
     private StoreController storeController;
 
     public void setStoreController(StoreController storeController) {
@@ -36,7 +35,7 @@ public class StoreTable extends Application {
         StoreTable.stage = stage;
         setBackground();
         initialize();
-        scene = new Scene(root);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.show();
@@ -47,8 +46,7 @@ public class StoreTable extends Application {
     }
 
     private void initialize() {
-        materials = Material.getMaterialsByType(item);
-        ArrayList<Button> buttons = new ArrayList<>();
+        ArrayList<Material> materials = Material.getMaterialsByType(item);
 
         for (Material material : materials) {
             Button button = new Button(material.getName());
@@ -59,7 +57,6 @@ public class StoreTable extends Application {
             imageView.setFitWidth(100);
 
             button.setMinSize(80, 80);
-            buttons.add(button);
             button.setOnAction(actionEvent -> createPopUp(material));
 
             hBox.getChildren().add(button);
