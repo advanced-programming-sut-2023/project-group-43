@@ -31,7 +31,7 @@ PasswordField:focused {
 Button {
     -fx-border-color: lightgray;
     -fx-border-width: 1;
-    -fx-background-color: white;
+    -fx-background-color: black;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-font-family: "Arial";
@@ -40,18 +40,19 @@ Button {
     -fx-max-width: 300;
     -fx-background-insets: 0,1,2;
     -fx-padding: 3 30 3 30;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-font-size: 12px;
 }
 
 Button:hover {
     -fx-font-family: "Modern No. 20";
-    -fx-background-color: #000000;
-    -fx-text-fill: White;
+    -fx-background-color: black;
+    -fx-text-fill: white;
 }
 
 Button:pressed {
-    -fx-background-color: #ADD8E6;
+    -fx-font-family: "Modern No. 20";
+    -fx-background-color: darkRed;
 }
 
 
@@ -85,3 +86,5 @@ Text{
     -fx-text-fill: Black;
 
 }
+
+
