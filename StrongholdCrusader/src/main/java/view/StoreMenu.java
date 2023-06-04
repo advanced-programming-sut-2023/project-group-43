@@ -2,8 +2,6 @@ package view;
 
 import controller.GameControllers.StoreController;
 import enums.ImageEnum;
-import enums.Output;
-import enums.Validations;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +9,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.regex.Matcher;
 
 public class StoreMenu extends Application {
 
@@ -58,6 +55,12 @@ public class StoreMenu extends Application {
     public void setToolOnTable() throws Exception {
         StoreTable storeTable = new StoreTable();
         storeTable.setItem("tool");
+        storeTable.setStoreController(storeController);
+        storeTable.start(stage);
+    }
+    public void setMineralOnTable() throws Exception {
+        StoreTable storeTable = new StoreTable();
+        storeTable.setItem("mineral");
         storeTable.setStoreController(storeController);
         storeTable.start(stage);
     }
