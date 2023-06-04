@@ -1,23 +1,24 @@
 package view;
 
 import controller.GameControllers.StoreController;
+import enums.ImageEnum;
 import enums.Output;
 import enums.Validations;
-import enums.menuEnums.StoreMenuCommands;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class StoreMenu extends Application {
 
 
-    private Stage stage;
+    private static Stage stage;
+    private Scene mainScene;
+    private Pane storeMenuPane;
     private StoreController storeController;
 
     public void setStoreController(StoreController storeController) {
@@ -26,59 +27,41 @@ public class StoreMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
-        Pane storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
-        setMenu();
-        Scene scene = new Scene(storeMenuPane);
-        stage.setScene(scene);
+        StoreMenu.stage = stage;
+        storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
+        setMainBackground();
+        mainScene = new Scene(storeMenuPane);
+        stage.setScene(mainScene);
         stage.show();
     }
 
-    private void setMenu() {
+    private void setMainBackground() {
+        storeMenuPane.setBackground(new Background(new BackgroundImage(ImageEnum.SHOP_MENU.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
 
     }
 
-    public void run() {
-        Scanner scanner = Menu.getScanner();
-        String input;
-        Matcher matcher;
-        Output output;
-        System.out.println("store menu:");
-        while (true) {
-            input = scanner.nextLine();
-            output = null;
-            if (input.matches("show current menu"))
-                output = Output.STORE_MENU;
-            if (input.matches("back")) {
-                storeController.getGame().setSelectedBuilding(null);
-                System.out.println("game menu:");
-                return;
-            } else if (StoreMenuCommands.getMatcher(input, StoreMenuCommands.SHOW_PRICE_LIST) != null) {
-                System.out.println(storeController.showPriceList());
-                continue;
-            } else if ((matcher = StoreMenuCommands.getMatcher(input, StoreMenuCommands.BUY)) != null) {
-                output = buy(matcher);
-            } else if ((matcher = StoreMenuCommands.getMatcher(input, StoreMenuCommands.SELL)) != null) {
-                output = sell(matcher);
-            }
-            if (output == null) System.out.println("invalid command!");
-            else System.out.println(output.getString());
-        }
+    public void setFoodOnTable() throws Exception {
+        StoreTable storeTable = new StoreTable();
+        storeTable.setItem("food");
+        storeTable.setStoreController(storeController);
+        storeTable.start(stage);
     }
 
-    private Output buy(Matcher matcher) {
-        String itemName = Validations.getInfo("i", matcher.group());
-        String amount = Validations.getInfo("a", matcher.group());
-        if (itemName != null && amount != null && amount.matches("\\d+"))
-            return storeController.buy(itemName, Integer.parseInt(amount));
-        return null;
+    public void setWeaponOnTable() throws Exception {
+        StoreTable storeTable = new StoreTable();
+        storeTable.setItem("weapon");
+        storeTable.setStoreController(storeController);
+        storeTable.start(stage);
     }
 
-    private Output sell(Matcher matcher) {
-        String itemName = Validations.getInfo("i", matcher.group());
-        String amount = Validations.getInfo("a", matcher.group());
-        if (itemName != null && amount != null && amount.matches("\\d+"))
-            return storeController.sell(itemName, Integer.parseInt(amount));
-        return null;
+    public void setToolOnTable() throws Exception {
+        StoreTable storeTable = new StoreTable();
+        storeTable.setItem("tool");
+        storeTable.setStoreController(storeController);
+        storeTable.start(stage);
+    }
+    public void back() {
+
     }
 }
