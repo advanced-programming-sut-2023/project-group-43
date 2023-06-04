@@ -9,12 +9,12 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Objects;
 
 public class StoreMenu extends Application {
 
 
     private static Stage stage;
-    private Scene mainScene;
     private Pane storeMenuPane;
     private StoreController storeController;
 
@@ -25,9 +25,9 @@ public class StoreMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         StoreMenu.stage = stage;
-        storeMenuPane = FXMLLoader.load(new URL(this.getClass().getResource("/fxml/storeMenu.fxml").toExternalForm()));
+        storeMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(this.getClass().getResource("/fxml/storeMenu.fxml")).toExternalForm()));
         setMainBackground();
-        mainScene = new Scene(storeMenuPane);
+        Scene mainScene = new Scene(storeMenuPane);
         stage.setScene(mainScene);
         stage.show();
     }
