@@ -7,6 +7,7 @@ import enums.menuEnums.EnvironmentChangeCommands;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -32,7 +33,7 @@ public class ChangeEnvironmentMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml")).toExternalForm()));
+        AnchorPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml")).toExternalForm()));
         Scene scene = new Scene(changeEnvironmentMenuPane);
         stage.setScene(scene);
         stage.show();
