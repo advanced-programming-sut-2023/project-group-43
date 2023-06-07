@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameControllers.ChangeEnvironmentController;
+import controller.MainUserController;
 import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
 import javafx.application.Application;
@@ -23,6 +24,12 @@ public class MainMenu extends Application {
     private Scene scene;
     @FXML
     private Pane mainPane;
+
+    private MainUserController mainUserController;
+
+    public void setMainUserController(MainUserController mainUserController) {
+        this.mainUserController = mainUserController;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,8 +56,7 @@ public class MainMenu extends Application {
     public void back() throws Exception {
         RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
-        loginMenu.setLoginController(registerAndLoginController);
-        loginMenu.start(stage);
+        loginMenu.start(RegisterMenu.getStage());
     }
 
 
@@ -58,13 +64,13 @@ public class MainMenu extends Application {
         ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
         ProfileMenu profileMenu = new ProfileMenu();
         profileMenu.setProfileController(profileController);
-        profileMenu.start(stage);
+        profileMenu.start(RegisterMenu.getStage());
     }
 
     public void enterChangeEnvironmentMenu() throws Exception {
         ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().findLoggedInUser());
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
-        changeEnvironmentMenu.start(stage);
+        changeEnvironmentMenu.start(RegisterMenu.getStage());
     }
 }

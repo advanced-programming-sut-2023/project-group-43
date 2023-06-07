@@ -10,8 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBase;
 
@@ -25,6 +28,8 @@ public class RegisterMenu extends Application {
     public TextField email;
     public TextField nickname;
     public TextField username;
+
+    private static Stage stage;
     public CheckBox sloganCheckBox;
     public Label usernameError;
     public Label passwordError;
@@ -33,10 +38,14 @@ public class RegisterMenu extends Application {
     public Label emailError;
     public Label nicknameError;
     public TextField passwordRecoveryAnswer;
-    public ChoiceBox passwordRecoveryQuestion;
+    public ChoiceBox<String> passwordRecoveryQuestion;
     public TextField passwordAnswerConfirmation;
     public Label questionError;
-    private Stage stage;
+    public CheckBox randomSlogan;
+    public Rectangle captchaRec;
+    public TextField captcha;
+
+    private String captchaNumber;
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -46,16 +55,22 @@ public class RegisterMenu extends Application {
         launch(RegisterMenu.class, args);
     }
 
-
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        RegisterMenu.stage = stage;
         BorderPane registerPane = FXMLLoader.load(
                 new URL(RegisterMenu.class.getResource("/fxml/registerMenu.fxml").toExternalForm()));
 
         Scene scene = new Scene(registerPane);
         stage.setScene(scene);
+        setBackground(registerPane);
         stage.show();
+    }
+
+    private void setBackground(Pane pane) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/b.jpg").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
     }
 
     @FXML
@@ -91,7 +106,7 @@ public class RegisterMenu extends Application {
                 emailError.setText("ok");
             else emailError.setText(output.getString());
         });
-        nicknameError.textProperty().addListener((observable, oldText, newText) -> {
+        nickname.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkNickname(nickname.getText())) == null)
                 nicknameError.setText("ok");
@@ -103,12 +118,14 @@ public class RegisterMenu extends Application {
                 sloganError.setText("ok");
             else sloganError.setText(output.getString());
         });
-        passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> {
-            checkQuestion();
-        });
-        passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> {
-            checkQuestion();
-        });
+        passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
+        passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
+        generateNewCaptcha();
+    }
+
+    private void generateNewCaptcha() {
+        captchaNumber = RegisterAndLoginController.chooseCaptcha();
+        captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
 
     private void checkQuestion() {
@@ -118,22 +135,52 @@ public class RegisterMenu extends Application {
         else questionError.setText("ok");
     }
 
-    public void createUser(MouseEvent mouseEvent) {
+
+    public static Stage getStage() {
+        return stage;
     }
 
-    public void enterLoginMenu() throws Exception {
-        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
-        LoginMenu loginMenu = new LoginMenu();
-        loginMenu.setLoginController(registerAndLoginController);
-        loginMenu.start(stage);
+    public void createUser() {
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (checkEverything() && captcha.getText().equals(captchaNumber)) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(RegisterAndLoginController.completeRegister(username.getText(),
+                    password.getText(), nickname.getText(), email.getText(), slogan.getText(),
+                    passwordRecoveryQuestion.getValue(), passwordRecoveryAnswer.getText()).getString());
+        } else {
+            alert.setContentText("you should complete everything correctly");
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.show();
+        generateNewCaptcha();
+    }
+
+    private boolean checkEverything() {
+        return usernameError.getText().equals("ok") && sloganError.getText().equals("ok") && emailError.getText().equals("ok")
+                && nicknameError.getText().equals("ok") && questionError.getText().equals("ok") &&
+                passwordError.getText().equals("ok") && passwordConfirmationError.getText().equals("ok");
+    }
+
+    public void enterLoginMenu(MouseEvent mouseEvent) throws Exception {
+        (new LoginMenu()).start(stage);
     }
 
     public void activateSlogan() {
-        if (sloganCheckBox.isSelected()) slogan.setDisable(false);
-        else {
+        if (sloganCheckBox.isSelected()) {
+            slogan.setDisable(false);
+            sloganError.setText("empty field!");
+        } else {
             slogan.setDisable(true);
             slogan.setText("");
             sloganError.setText("ok");
+        }
+    }
+
+    public void chooseRandomSlogan() {
+        if (randomSlogan.isSelected()) {
+            sloganCheckBox.setSelected(true);
+            slogan.setDisable(false);
+            slogan.setText(RegisterAndLoginController.makeRandomSlogan());
         }
     }
 }
