@@ -19,33 +19,6 @@ public class StoreController {
         this.gameController = gameController;
     }
 
-//    public void setStoreName(String storeName) {
-//        this.storeName = storeName;
-//    }
-
-//    public String showPriceList() {
-//        ArrayList<Material> minerals = Material.getMaterialsByType("mineral");
-//        ArrayList<Material> foods = Material.getMaterialsByType("food");
-//        ArrayList<Material> weapons = Material.getMaterialsByType("weapon");
-//        ArrayList<Material> tools = Material.getMaterialsByType("tool");
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("your gold: ").append(game.getCurrentPlayer().getGovernance().getGold());
-//        stringBuilder.append("\n<<<Price List>>>");
-//        stringBuilder.append("\n~Minerals~");
-//        for (int i = 0; i < minerals.size(); i++)
-//            stringBuilder.append("\n").append(i).append(" ").append(minerals.get(i).getName()).append("  :  ").append(minerals.get(i).getBuyingPrice());
-//        stringBuilder.append("\n~Foods~");
-//        for (int i = 0; i < foods.size(); i++)
-//            stringBuilder.append("\n").append(i).append(" ").append(foods.get(i).getName()).append("  :  ").append(foods.get(i).getBuyingPrice());
-//        stringBuilder.append("\n~weapons~");
-//        for (int i = 0; i < weapons.size(); i++)
-//            stringBuilder.append("\n").append(i).append(" ").append(weapons.get(i).getName()).append("  :  ").append(weapons.get(i).getBuyingPrice());
-//        stringBuilder.append("\n~tools~");
-//        for (int i = 0; i < tools.size(); i++)
-//            stringBuilder.append("\n").append(i).append(" ").append(tools.get(i).getName()).append("  :  ").append(tools.get(i).getBuyingPrice());
-//        return String.valueOf(stringBuilder);
-//    }
-
     public Output buy(String itemName, int amount) {
         Governance governance = game.getCurrentPlayer().getGovernance();
         switch (storeName) {
