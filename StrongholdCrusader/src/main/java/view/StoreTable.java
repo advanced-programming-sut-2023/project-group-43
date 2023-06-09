@@ -152,7 +152,7 @@ public class StoreTable extends Application {
         storeController.buy(material.getName(), 1);
         number.setText(String.valueOf(material.getRange()));
         coin.setText("-1");
-        //TODO
+        //TODO ---> create alert after map
     }
 
     private void sell(Material material, Label number, Label coin) {
