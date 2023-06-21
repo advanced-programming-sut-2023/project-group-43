@@ -6,8 +6,11 @@ public enum ImageEnum {
     //<<BACKGROUND>>
     MAIN_MENU(new Image(ImageEnum.class.getResource("").toExternalForm())),
     SHOP_MENU(new Image(ImageEnum.class.getResource("/images/background/store.jpg").toExternalForm())),
+    TRADE_MENU(new Image(ImageEnum.class.getResource("/images/background/coin.jpg").toExternalForm())),
     WOOD_MENU(new Image(ImageEnum.class.getResource("/images/background/wood.png").toExternalForm())),
     OLD_PAPER(new Image(ImageEnum.class.getResource("/images/background/oldPaper.png").toExternalForm())),
+    REQUEST(new Image(ImageEnum.class.getResource("/images/background/request.jpg").toExternalForm())),
+
 
     //<<MATERIAL>>
     STONE(new Image(ImageEnum.class.getResource("/images/material/Stone.png").toExternalForm())),
