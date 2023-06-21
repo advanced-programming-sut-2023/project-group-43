@@ -127,9 +127,11 @@ public class StoreTable extends Application {
         Button buy = new Button("Buy  " + material.getBuyingPrice());
         Button sell = new Button("Sell " + material.getSellingPrice());
         Button back = new Button("Back");
+
         buy.setMinWidth(100);
         sell.setMinWidth(100);
         back.setMinWidth(100);
+
         sell.setOnAction(actionEvent -> sell(material, number, coin));
         buy.setOnAction(actionEvent -> buy(material, number, coin));
         back.setOnAction(actionEvent -> popup.hide());
