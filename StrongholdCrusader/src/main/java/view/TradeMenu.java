@@ -8,13 +8,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Material;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import model.DataBase;
 import model.User;
+import model.buildings.Storage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class TradeMenu extends Application {
@@ -92,21 +96,26 @@ public class TradeMenu extends Application {
     }
 
 
-    private void makeRequest(){
+    private void makeRequest() {
+
+        ArrayList<User> users = DataBase.getInstance().getUsers();
+
         Popup makeRequest = new Popup();
         BorderPane main = new BorderPane();
 
         main.setBorder(Border.stroke(Color.BLACK));
-        main.setMinSize(700 , 700);
+        main.setMinSize(700, 700);
         main.setBackground(new Background(new BackgroundImage(ImageEnum.REQUEST.getImage(),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
 
         VBox vBox = new VBox();
 
-        //TODO --> we need a function in database to get all the users
-        for(int i = 0 ; i < 3 ; i++){
-            Button button = new Button("name");
-            button.setOnAction(ae -> showPersonDetails("name"));
+        //TODO --> I'm not sure about users
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).equals(DataBase.getInstance().findLoggedInUser())) continue;
+            Button button = new Button();
+            int finalI = i;
+            button.setOnAction(ae -> showPersonDetails(users.get(finalI)));
             vBox.getChildren().add(button);
         }
 
@@ -122,21 +131,23 @@ public class TradeMenu extends Application {
         makeRequest.show(stage);
     }
 
-    private void showPersonDetails(String name){
-
-        User user = DataBase.getInstance().getUserByUsername(name);
+    private void showPersonDetails(User user) {
 
         Popup infoPopUp = new Popup();
         BorderPane main = new BorderPane();
 
         main.setBorder(Border.stroke(Color.BLACK));
-        main.setMinSize(700 , 700);
+        main.setMinSize(700, 700);
         main.setBackground(new Background(new BackgroundImage(ImageEnum.OLD_PAPER.getImage(),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
 
         VBox vBox = new VBox();
 
-        //TODO
+        HashMap storage = user.getGovernance().getGovernanceResource().getStorage();
+
+        for(int i = 0 ; i < storage.size(); i++){
+            Material material = (Material) storage.get(i);
+        }
 
 
         Button back1 = new Button("Back");
@@ -151,6 +162,7 @@ public class TradeMenu extends Application {
         infoPopUp.show(stage);
     }
 
-    private void tradeHistory(){}
+    private void tradeHistory() {
+    }
 
 }

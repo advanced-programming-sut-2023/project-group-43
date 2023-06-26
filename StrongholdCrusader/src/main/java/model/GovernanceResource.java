@@ -13,6 +13,12 @@ public class GovernanceResource {
     private User owner;
 
     //before starting game you should set items for stockpile based on material enum
+
+
+    public HashMap<Material, Integer> getStorage() {
+        return storage;
+    }
+
     public static String chooseStorage(Material material) {
         return switch (material.getType()) {
             case "mineral" -> "stockpile";
