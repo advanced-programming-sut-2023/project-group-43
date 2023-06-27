@@ -44,7 +44,6 @@ public class RegisterMenu extends Application {
     public CheckBox randomSlogan;
     public Rectangle captchaRec;
     public TextField captcha;
-
     private String captchaNumber;
 
     public static void main(String[] args) {
@@ -123,7 +122,7 @@ public class RegisterMenu extends Application {
         generateNewCaptcha();
     }
 
-    private void generateNewCaptcha() {
+    public void generateNewCaptcha() {
         captchaNumber = RegisterAndLoginController.chooseCaptcha();
         captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
@@ -134,7 +133,6 @@ public class RegisterMenu extends Application {
         else if (passwordAnswerConfirmation.getText().isEmpty()) questionError.setText("empty field");
         else questionError.setText("ok");
     }
-
 
     public static Stage getStage() {
         return stage;

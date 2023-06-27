@@ -2,6 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.Cursor?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.ProfileMenu"
@@ -9,28 +10,90 @@
             stylesheets="@../css/style.css">
     <center>
         <VBox alignment="CENTER" spacing="15">
-            <Label text="username"/>
-            <TextField promptText="new username" styleClass="text-input" fx:id="newUsername"/>
-            <Button text="save new username" onMouseClicked="#saveNewUsername"/>
-            <Label text="nick name"/>
-            <TextField promptText="new nickname" styleClass="text-input" fx:id="newNickname"/>
-            <Button text="save new nickname" onMouseClicked="#saveNewNickname"/>
-            <Label text="email"/>
-            <TextField promptText="new email" styleClass="text-input" fx:id="newEmail"/>
-            <Button text="save new email" onMouseClicked="#saveNewEmail"/>
+            <HBox alignment="CENTER" spacing="20" fx:id="userInfo" layoutX="200"/>
+            <HBox alignment="CENTER" spacing="20" fx:id="picture" layoutX="200"></HBox>
+            <HBox alignment="CENTER" spacing="20" layoutX="200">
+                <Label text="avatar number: "/>
+                <ChoiceBox fx:id="avatar"/>
+                <Button text="change avatar" onMouseClicked="#changeAvatar"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <Label text="username"/>
+                <TextField promptText="new username" styleClass="text-input" fx:id="newUsername"/>
+                <Button text="save new username" onMouseClicked="#saveNewUsername">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Label fx:id="usernameError" styleClass="error"/>
+            </HBox>
+            <HBox>
+                <Label text="nick name"/>
+                <TextField promptText="new nickname" styleClass="text-input" fx:id="newNickname"/>
+                <Button text="save new nickname" onMouseClicked="#saveNewNickname">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+            </HBox>
+            <HBox>
+                <Label text="email"/>
+                <TextField promptText="new email" styleClass="text-input" fx:id="newEmail"/>
+                <Button text="save new email" onMouseClicked="#saveNewEmail">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+            </HBox>
+            <HBox>
             <Label text="slogan"/>
             <TextField promptText="new slogan" styleClass="text-input" fx:id="newSlogan"/>
-            <Button text="save new slogan" onMouseClicked="#saveNewSlogan"/>
-            <Label text="password"/>
-            <TextField promptText="old password" styleClass="text-input" fx:id="oldPassword"/>
-            <TextField promptText="new password" styleClass="text-input" fx:id="newPassword"/>
-            <Button text="save new password" onMouseClicked="#saveNewPassword"/>
-            <Button text="remove slogan" onMouseClicked="#removeSlogan"/>
-            <Button text="display slogan" onMouseClicked="#displaySlogan"/>
-            <Button text="display high score" onMouseClicked="#displayHighScore"/>
-            <Button text="display rank" onMouseClicked="#displayRank"/>
-            <Button text="display profile" onMouseClicked="#displayProfile"/>
-            <Button text="back" onMouseClicked="#back"/>
+            <Button text="save new slogan" onMouseClicked="#saveNewSlogan">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            </HBox>
+                <HBox>
+                <Label text="password"/>
+                <PasswordField promptText="old password" styleClass="text-input" fx:id="oldPassword"/>
+                <PasswordField promptText="new password" styleClass="text-input" fx:id="newPassword"/>
+                <Button text = "save new password" onMouseClicked = "#saveNewPassword">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+            </HBox>
+            <Button text="remove slogan" onMouseClicked="#removeSlogan">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button text="display slogan" onMouseClicked="#displaySlogan">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button text="display high score" onMouseClicked="#displayHighScore">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button text="display rank" onMouseClicked="#displayRank">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button text="display profile" onMouseClicked="#displayProfile">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button text="back" onMouseClicked="#back">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
         </VBox>
     </center>
 </BorderPane>
