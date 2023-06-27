@@ -28,20 +28,16 @@ public class MainMenu extends Application {
 
     private MainUserController mainUserController;
 
-    private String username;
+    private static String username;
 
     public void setMainUserController(String username) {
-        System.out.println("username:");
-        System.out.println(username);
-        System.out.println("this was the username");
-        this.username = username;
+        MainMenu.username = username;
         User currentUser = DataBase.getInstance().getUserByUsername(username);
         mainUserController = new MainUserController(currentUser);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println(username);
         this.stage = stage;
         mainPane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
@@ -63,7 +59,6 @@ public class MainMenu extends Application {
     }
 
     public void back() throws Exception {
-        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
         //loginMenu.setLoginController(registerAndLoginController);
         //loginMenu.setLoginController(registerAndLoginController);
@@ -73,10 +68,10 @@ public class MainMenu extends Application {
 
     public void enterProfileMenu() throws Exception {
         if (mainUserController == null) {
-            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(username));
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
         }
         ProfileMenu profileMenu = new ProfileMenu();
-        profileMenu.setProfileController(username);
+        profileMenu.setProfileController(MainMenu.username);
         profileMenu.start(RegisterMenu.getStage());
     }
 

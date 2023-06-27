@@ -60,27 +60,27 @@ public class ProfileMenu extends Application {
     public HBox userInfo = new HBox();
     public HBox picture = new HBox();
     public ChoiceBox avatar;
-    public BorderPane pane;
-    private String username;
+    public static BorderPane pane;
+    private static String username;
     public void setProfileController(String username) {
-        this.username = username;
+        ProfileMenu.username = username;
         this.profileController = new ProfileController(DataBase.getInstance().getUserByUsername(username));
         profileController.setCurrentUser(DataBase.getInstance().getUserByUsername(username));
     }
     @Override
     public void start(Stage stage) throws Exception {
-        pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
+        ProfileMenu.pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
-        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
+        ProfileMenu.pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
         stage.show();
     }
     @FXML
     private void initialize() {
         if (profileController == null) {
-            profileController = new ProfileController(DataBase.getInstance().getUserByUsername(username));
-            profileController.setCurrentUser(DataBase.getInstance().getUserByUsername(username));
+            profileController = new ProfileController(DataBase.getInstance().getUserByUsername(ProfileMenu.username));
+            profileController.setCurrentUser(DataBase.getInstance().getUserByUsername(ProfileMenu.username));
         }
         ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll("1", "2", "3", "4");
@@ -106,16 +106,16 @@ public class ProfileMenu extends Application {
                 passwordError.setText("ok");
             else passwordError.setText(output.getString());
         });
-        passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
-            Output output;
-            if ((output = RegisterAndLoginController.checkPasswordConfirmation(passwordConfirmation.getText(),
-                    newPassword.getText())) == null)
-                passwordConfirmationError.setText("ok");
-            else passwordConfirmationError.setText(output.getString());
-        });
-        passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
-        passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
-        new RegisterMenu().generateNewCaptcha();
+//        passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
+//            Output output;
+//            if ((output = RegisterAndLoginController.checkPasswordConfirmation(passwordConfirmation.getText(),
+//                    newPassword.getText())) == null)
+//                passwordConfirmationError.setText("ok");
+//            else passwordConfirmationError.setText(output.getString());
+//        });
+//        passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
+//        passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
+//        new RegisterMenu().generateNewCaptcha();
     }
     public void newUsernameListener() {
         newUsername.textProperty().addListener((observable, oldText, newText) -> {
@@ -153,9 +153,9 @@ public class ProfileMenu extends Application {
         profileController.getCurrentUser().setAvatarNumber(Integer.parseInt(avatar.getValue().toString()));
         if (picture.getChildren().size() > 0)
             picture.getChildren().remove(0);
-        updateAvatar();
+        updateAvatar(pane);
     }
-    private void updateAvatar() {
+    private void updateAvatar(Pane pane) {
         pane.getChildren().remove(picture);
         picture = new HBox();
         picture.setLayoutX(120);
@@ -248,9 +248,8 @@ public class ProfileMenu extends Application {
         alert.setContentText(profileController.displayAllProfile());
         alert.show();
     }
-//TODO
     public void back(MouseEvent mouseEvent) throws Exception {
-        new MainMenu().start(stage);
+        new MainMenu().start(RegisterMenu.getStage());
     }
     private void checkQuestion() {
         if (!passwordRecoveryAnswer.getText().equals(passwordAnswerConfirmation.getText()))
