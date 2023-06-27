@@ -56,6 +56,10 @@ public class MainMenu extends Application {
     public void back() throws Exception {
         RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
+<<<<<<< HEAD
+=======
+        //loginMenu.setLoginController(registerAndLoginController);
+>>>>>>> 57dce611256ddb94d1e38ca191210a1db6ba3a65
         loginMenu.start(RegisterMenu.getStage());
     }
 
