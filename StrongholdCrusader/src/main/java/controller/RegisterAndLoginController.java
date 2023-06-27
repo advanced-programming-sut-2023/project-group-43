@@ -184,10 +184,8 @@ public class RegisterAndLoginController {
         return captcha[random.nextInt(7)];
     }
     public static void enterMainMenu(String username) throws Exception {
-        User currentUser = DataBase.getInstance().getUserByUsername(username);
-        MainUserController mainController = new MainUserController(currentUser);
         MainMenu mainMenu = new MainMenu();
-        mainMenu.setMainUserController(mainController);
+        mainMenu.setMainUserController(username);
         (new MainMenu()).start(RegisterMenu.getStage());
     }
 
