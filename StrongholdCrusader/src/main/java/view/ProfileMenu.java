@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.DataBase;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -60,8 +61,11 @@ public class ProfileMenu extends Application {
     public HBox picture = new HBox();
     public ChoiceBox avatar;
     public BorderPane pane;
-    public void setProfileController(ProfileController profileController) {
-        this.profileController = profileController;
+    private String username;
+    public void setProfileController(String username) {
+        this.username = username;
+        this.profileController = new ProfileController(DataBase.getInstance().getUserByUsername(username));
+        profileController.setCurrentUser(DataBase.getInstance().getUserByUsername(username));
     }
     @Override
     public void start(Stage stage) throws Exception {
@@ -74,6 +78,10 @@ public class ProfileMenu extends Application {
     }
     @FXML
     private void initialize() {
+        if (profileController == null) {
+            profileController = new ProfileController(DataBase.getInstance().getUserByUsername(username));
+            profileController.setCurrentUser(DataBase.getInstance().getUserByUsername(username));
+        }
         ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll("1", "2", "3", "4");
         avatar.setItems(list);

@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.DataBase;
+import model.User;
 
 import java.net.URL;
 import java.util.Objects;
@@ -27,12 +28,20 @@ public class MainMenu extends Application {
 
     private MainUserController mainUserController;
 
-    public void setMainUserController(MainUserController mainUserController) {
-        this.mainUserController = mainUserController;
+    private String username;
+
+    public void setMainUserController(String username) {
+        System.out.println("username:");
+        System.out.println(username);
+        System.out.println("this was the username");
+        this.username = username;
+        User currentUser = DataBase.getInstance().getUserByUsername(username);
+        mainUserController = new MainUserController(currentUser);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println(username);
         this.stage = stage;
         mainPane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
@@ -63,14 +72,16 @@ public class MainMenu extends Application {
 
 
     public void enterProfileMenu() throws Exception {
-        ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(username));
+        }
         ProfileMenu profileMenu = new ProfileMenu();
-        profileMenu.setProfileController(profileController);
+        profileMenu.setProfileController(username);
         profileMenu.start(RegisterMenu.getStage());
     }
 
     public void enterChangeEnvironmentMenu() throws Exception {
-        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().findLoggedInUser());
+        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(mainUserController.getCurrentUser());
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
         changeEnvironmentMenu.start(RegisterMenu.getStage());
