@@ -17,6 +17,7 @@ public class User {
     boolean isLoggedIn;
 
     private ArrayList<Trade> trades = new ArrayList<>();
+    private int avatarNumber = 4;
 
 
     public User(String username, String password, String nickname, String email,
@@ -28,6 +29,14 @@ public class User {
         this.passwordRecoveryQuestion = passwordRecoveryQuestion;
         this.PasswordRecoveryAnswer = PasswordRecoveryAnswer;
         this.slogan = slogan;
+    }
+
+    public int getAvatarNumber() {
+        return avatarNumber;
+    }
+
+    public void setAvatarNumber(int avatarNumber) {
+        this.avatarNumber = avatarNumber;
     }
 
     public String getUsername() {
