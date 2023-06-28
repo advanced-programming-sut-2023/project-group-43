@@ -1,18 +1,22 @@
 package view;
 
 import controller.GameControllers.MapController;
-import enums.Output;
-import enums.Validations;
-import enums.menuEnums.EnvironmentChangeCommands;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
-import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class MapMenu extends Application {
 
     private MapController mapController;
+
+    private Stage stage;
+
+    private Scene scene;
+
+    private AnchorPane root = new AnchorPane();
 
     public void setMapController(MapController mapController) {
         this.mapController = mapController;
@@ -20,90 +24,32 @@ public class MapMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        this.stage = stage;
+        initialize();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void run() {
-        System.out.println("map menu:");
-        Scanner scanner = Menu.getScanner();
-        String input;
-        Matcher matcher;
-        while (true) {
-            input = scanner.nextLine();
-            if (input.matches("show current menu"))
-                System.out.println(Output.MAP_MENU.getString());
-            if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_MAP)) != null) {
-                showMap(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SHOW_DETAILS)) != null) {
-                showMapDetails(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.MAP_MOVMENTS)) != null) {
-                moveMap(matcher);
-            } else if (input.matches("back")) {
-                System.out.println("game menu:");
-                return;
-            } else System.out.println("invalid command!");
-            ;
-        }
+
+    private void initialize(){
+        setRootPane();
+        setScrollBar();
+        setCells();
     }
 
-    public void showMap(Matcher matcher) {
-        String row = Validations.getInfo("x", matcher.group());
-        String column = Validations.getInfo("x", matcher.group());
-
-        System.out.println(mapController.showMap(Integer.parseInt(row), Integer.parseInt(column)));
+    private void setRootPane() {
+        root.setMinSize(1600,800);
     }
 
-    public void showMapDetails(Matcher matcher) {
-        int row = Integer.parseInt(Validations.getInfo("x", matcher.group()));
-        int column = Integer.parseInt(Validations.getInfo("y", matcher.group()));
-        System.out.println(mapController.showMapDetails(row, column));
+    private void setScrollBar() {
+        ScrollBar scrollBar = new ScrollBar();
+        scrollBar.setMinSize(1600,800);
+        root.getChildren().add(scrollBar);
     }
 
-    public void moveMap(Matcher matcher) {
-        int horizontalDisplacement = 0;
-        int verticalDisplacement = 0;
-        if (matcher.group("firstDirection").equals("up")) {
-            if (matcher.group("firstDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
-            } else verticalDisplacement = 1;
-        }
-        if (matcher.group("firstDirection").equals("down")) {
-            if (matcher.group("firstDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
-            } else verticalDisplacement = -1;
-        }
-        if (matcher.group("secondDirection").equals("up")) {
-            if (matcher.group("secondDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("secondDisplacement"));
-            } else verticalDisplacement = 1;
-        }
-        if (matcher.group("secondDirection").equals("down")) {
-            if (matcher.group("secondDisplacement") != null) {
-                verticalDisplacement = Integer.parseInt(matcher.group("secondDisplacement")) * -1;
-            } else verticalDisplacement = -1;
-        }
-
-        if (matcher.group("firstDirection").equals("right")) {
-            if (matcher.group("firstDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement"));
-            } else horizontalDisplacement = 1;
-        }
-        if (matcher.group("firstDirection").equals("left")) {
-            if (matcher.group("firstDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("firstDisplacement")) * -1;
-            } else horizontalDisplacement = -1;
-        }
-        if (matcher.group("secondDirection").equals("right")) {
-            if (matcher.group("secondDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("secondDisplacement"));
-            } else horizontalDisplacement = 1;
-        }
-        if (matcher.group("secondDirection").equals("left")) {
-            if (matcher.group("secondDisplacement") != null) {
-                horizontalDisplacement = Integer.parseInt(matcher.group("secondDisplacement")) * -1;
-            } else horizontalDisplacement = -1;
-        }
-        System.out.println(mapController.moveMap(horizontalDisplacement, verticalDisplacement));
+    private void setCells() {
     }
+
 
 }
