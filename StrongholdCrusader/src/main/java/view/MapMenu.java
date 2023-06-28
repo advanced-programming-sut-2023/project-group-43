@@ -1,12 +1,19 @@
 package view;
 
 import controller.GameControllers.MapController;
+import enums.ImageEnum;
+import enums.environmentEnums.Texture;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Cell;
+import model.DataBase;
 
 public class MapMenu extends Application {
 
@@ -18,6 +25,8 @@ public class MapMenu extends Application {
 
     private AnchorPane root = new AnchorPane();
 
+    int x;
+    int y;
     public void setMapController(MapController mapController) {
         this.mapController = mapController;
     }
@@ -49,7 +58,47 @@ public class MapMenu extends Application {
     }
 
     private void setCells() {
+        for(int i = 0 ; i < mapController.getGame().getCells().length ; i++){
+            for(int j = 0 ; j < mapController.getGame().getCells().length ; j++){
+                GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
+                setCell(cell);
+            }
+        }
     }
 
+    private GridPane loadCell(Cell cell) {
+        GridPane gridPane = new GridPane();
+        gridPane.setMinSize(20,20);
+        Image texture = getTexture(cell);
+        return gridPane;
+    }
+
+    private Image getTexture(Cell cell){
+        Image texture;
+        switch (cell.getTexture()){
+            case SEA -> ;
+            case OIL ->;
+            case IRON ->;
+            case ROCK -> ;
+            case BEACH -> ;
+            case GRASS -> ;
+            case PLAIN -> ;
+            case DENSE_GRASSLAND -> ;
+            case RIVER -> ;
+            case GROUND -> ;
+            case BIG_POND -> ;
+            case SMALL_POND -> ;
+            case SHALLOW_WATER -> ;
+            case BOULDER -> ;
+            case MEADOW ->;
+            case GRAVEL_GROUND -> ;
+            default -> texture = null;
+        }
+        return texture;
+    }
+
+    private void setCell(GridPane cell){
+        root.getChildren().add(cell);
+    }
 
 }
