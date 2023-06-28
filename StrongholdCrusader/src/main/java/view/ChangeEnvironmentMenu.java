@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -119,8 +120,17 @@ public class ChangeEnvironmentMenu extends Application {
         return null;
     }
 
-    private boolean enterGameMenu() {
-        return changeEnvironmentController.enterGameMenu();
+    private boolean enterGameMenu() throws Exception {
+        String allPlayers = players.getText();
+        Scanner scanner = new Scanner(allPlayers);
+        ArrayList<String> usernames = new ArrayList<>();
+        usernames.add(MainMenu.getUsername());
+        while (scanner.hasNextLine()) {
+            usernames.add(scanner.nextLine());
+        }
+        return changeEnvironmentController.enterGameMenu(usernames,
+                Integer.parseInt(rows.getValue().toString()), Integer.parseInt(turns.getValue().toString()),
+                Integer.parseInt(map.getValue().toString()));
     }
 
     private boolean parseMatcher(Matcher matcher) {
@@ -165,8 +175,13 @@ public class ChangeEnvironmentMenu extends Application {
         changeEnvironmentController.getGame().setCurrentPlayer(changeEnvironmentController.getCurrentUser());
     }
 
-    public void startGame(MouseEvent mouseEvent) {
-        enterGameMenu();
+    public void startGame(MouseEvent mouseEvent) throws Exception {
+        if (!enterGameMenu()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("you cannot start the game");
+            alert.show();
+        }
+
     }
 
     public void back(MouseEvent mouseEvent) {

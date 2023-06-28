@@ -11,6 +11,7 @@ import model.buildings.CastleDepartment;
 import model.units.Unarmed;
 import model.units.Unit;
 import view.GameMenu;
+import view.RegisterMenu;
 
 import java.util.ArrayList;
 
@@ -140,8 +141,8 @@ public class ChangeEnvironmentController {
     }
 
 
-    public boolean enterGameMenu(ArrayList<String> usernames, int row, int column, int turns, int mapOption) {
-        Output output = generateMap(usernames, row, column, turns, mapOption);
+    public boolean enterGameMenu(ArrayList<String> usernames, int row, int turns, int mapOption) throws Exception {
+        Output output = generateMap(usernames, row, row, turns, mapOption);
         if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
         if (game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)) &&
                 game.getCurrentPlayer().getGovernance().getBuildings() != null) {
@@ -151,7 +152,7 @@ public class ChangeEnvironmentController {
             gameMenu.setGameController(gameController);
             gameMenu.setTurns(game.getTurns());
             gameMenu.setNumberOfPlayers(game.getPlayers().size());
-            //gameMenu.start(stage);
+            gameMenu.start(RegisterMenu.getStage());
             return true;
         }
         return false;
