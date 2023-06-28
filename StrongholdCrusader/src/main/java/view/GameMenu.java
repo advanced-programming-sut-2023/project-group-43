@@ -10,16 +10,21 @@ import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
 import enums.menuEnums.GameMenuCommands;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.DataBase;
 
+import java.net.URL;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
 
     private Stage stage;
-    private GameController gameController;
+    private static GameController gameController;
     private int turns, numberOfPlayers;
     private String x, y;
 
@@ -35,6 +40,10 @@ public class GameMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/gameMenu.fxml")).toExternalForm()));
+        Scene scene = new Scene(changeEnvironmentMenuPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void setTurns(int turns) {
