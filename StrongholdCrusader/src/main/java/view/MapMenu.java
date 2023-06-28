@@ -69,7 +69,12 @@ public class MapMenu extends Application {
     private GridPane loadCell(Cell cell) {
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(20,20);
+
         Image texture = getTexture(cell);
+        Image Building = getBuilding(cell);
+        Image tree = getTree(cell);
+        Image rock = getRock(cell);
+
         return gridPane;
     }
 
@@ -97,6 +102,16 @@ public class MapMenu extends Application {
         return texture;
     }
 
+    private Image getBuilding(Cell cell){
+        Image building;
+
+    }
+
+    private Image getTree(Cell cell){}
+
+    private Image getRock(Cell cell){}
+
+    //ignore tunnel
     private void setCell(GridPane cell){
         root.getChildren().add(cell);
     }
