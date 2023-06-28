@@ -188,7 +188,8 @@ public class RegisterAndLoginController {
         MainUserController mainController = new MainUserController(currentUser);
         MainMenu mainMenu = new MainMenu();
         mainMenu.setMainUserController(username);
-        (new MainMenu()).start(RegisterMenu.getStage());
+        //(new MainMenu()).start(RegisterMenu.getStage());
+        mainMenu.start(RegisterMenu.getStage());
     }
 
     public static Output choosePasswordRecoveryQuestion(int passwordRecoveryQuestionNumber,

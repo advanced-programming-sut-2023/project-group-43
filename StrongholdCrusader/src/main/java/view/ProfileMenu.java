@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainUserController;
 import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
 import enums.Output;
@@ -18,11 +19,15 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.DataBase;
+import model.User;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class ProfileMenu extends Application {
+    public User profileMenuCurrentUser;
 
     private Stage profileMenuStage;
     @FXML
@@ -38,7 +43,7 @@ public class ProfileMenu extends Application {
     @FXML
     private PasswordField newPassword;
     private PasswordField passwordConfirmation;
-    private ProfileController profileController;
+    public ProfileController profileController;
     public CheckBox sloganCheckBox;
     public Label usernameError;
     public Label passwordError;
@@ -58,52 +63,46 @@ public class ProfileMenu extends Application {
     public HBox picture = new HBox();
     public ChoiceBox avatar;
     public BorderPane pane;
-    public void setProfileController(ProfileController profileController) {
-        this.profileController = profileController;
+    public String profileMenuName;
+    public void setProfileController(String username) {
+        profileMenuName = username;
+        profileController = new ProfileController(DataBase.getInstance().getUserByUsername(profileMenuName));
     }
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("1");
         profileMenuStage = stage;
-        System.out.println("2");
-        BorderPane profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
-        //pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
-        System.out.println("3");
+        //BorderPane profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
+        BorderPane profilePane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
         Scene scene = new Scene(profilePane);
-        System.out.println("4");
         profileMenuStage.setScene(scene);
-        System.out.println("5");
         profilePane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
-        System.out.println("6");
+        if (profileController == null) System.out.println("null1");
         profileMenuStage.show();
+        if (profileController == null) System.out.println("null2");
     }
     @FXML
     private void initialize() {
-        ObservableList<String> list = FXCollections.observableArrayList();
+        /*ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll("1", "2", "3", "4");
         avatar.setItems(list);
-        avatar.setValue(profileController.getCurrentUser().getAvatarNumber());
-        newUsername.setText(profileController.getCurrentUser().getUsername());
+        avatar.setValue(profileMenuCurrentUser.getAvatarNumber());
+        newUsername.setText(profileMenuCurrentUser.getUsername());
         newUsername.setDisable(true);
         newUsernameListener();
-        newNickname.setText(profileController.getCurrentUser().getNickname());
+        newNickname.setText(profileMenuCurrentUser.getNickname());
         newNicknameListener();
         newNickname.setDisable(true);
-        newEmail.setText(profileController.getCurrentUser().getEmail());
+        newEmail.setText(profileMenuCurrentUser.getEmail());
         newEmailListener();
         newEmail.setDisable(true);
-        if (profileController.getCurrentUser().getSlogan().equals("")) newSlogan.setText("Slogan is empty");
-        else newSlogan.setText(profileController.getCurrentUser().getSlogan());
+        if (profileMenuCurrentUser.getSlogan().equals("")) newSlogan.setText("Slogan is empty");
+        else newSlogan.setText(profileMenuCurrentUser.getSlogan());
         newSlogan.setDisable(true);
         newSloganListener();
-        oldPassword.setText(profileController.getCurrentUser().getPassword());
-        newPassword.textProperty().addListener((observable, oldText, newText) -> {
-            Output output;
-            if ((output = RegisterAndLoginController.checkPassword(newPassword.getText())) == null)
-                passwordError.setText("ok");
-            else passwordError.setText(output.getString());
-        });
+        oldPassword.setText(profileMenuCurrentUser.getPassword());*/
+
+        /*
         passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkPasswordConfirmation(passwordConfirmation.getText(),
@@ -112,40 +111,44 @@ public class ProfileMenu extends Application {
             else passwordConfirmationError.setText(output.getString());
         });
         passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
+
         passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
-        new RegisterMenu().generateNewCaptcha();
-    }
-    public void newUsernameListener() {
+        new RegisterMenu().generateNewCaptcha();*/
         newUsername.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkUsername(newUsername.getText())) == null)
                 usernameError.setText("ok");
             else usernameError.setText(output.getString());
         });
-    }
-    public void newNicknameListener() {
+        newPassword.textProperty().addListener((observable, oldText, newText) -> {
+            Output output;
+            if ((output = RegisterAndLoginController.checkPassword(newPassword.getText())) == null)
+                passwordError.setText("ok");
+            else passwordError.setText(output.getString());
+        });
         newNickname.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkNickname(newNickname.getText())) == null)
                 nicknameError.setText("ok");
             else nicknameError.setText(output.getString());
         });
-    }
-    public void newEmailListener() {
         newEmail.textProperty().addListener((observable, oldText, newText) -> {
-        Output output;
-        if ((output = RegisterAndLoginController.checkEmail(newEmail.getText())) == null)
-            emailError.setText("ok");
-        else emailError.setText(output.getString());
-    });
-    }
-    public void newSloganListener() {
+            Output output;
+            if ((output = RegisterAndLoginController.checkEmail(newEmail.getText())) == null)
+                emailError.setText("ok");
+            else emailError.setText(output.getString());
+        });
         newSlogan.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkSlogan(newSlogan.getText(), sloganCheckBox.isSelected())) == null)
                 sloganError.setText("ok");
             else sloganError.setText(output.getString());
         });
+        generateNewCaptcha();
+    }
+    public void generateNewCaptcha() {
+        captchaNumber = RegisterAndLoginController.chooseCaptcha();
+        captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
     public void changeAvatar() {
         profileController.getCurrentUser().setAvatarNumber(Integer.parseInt(avatar.getValue().toString()));
@@ -197,26 +200,71 @@ public class ProfileMenu extends Application {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(output.getString());
         alert.show();
+        generateNewCaptcha();
     }
 
     public void saveNewUsername(MouseEvent mouseEvent) {
-        showAlert(profileController.changeUsername(newUsername.getText()));
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (usernameError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(profileController.changeUsername(newUsername.getText()).getString());
+        } else {
+            alert.setContentText("enter a new username!");
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.show();
+        //showAlert(profileController.changeUsername(newUsername.getText()));
     }
 
     public void saveNewNickname(MouseEvent mouseEvent) {
-        showAlert(profileController.changeNickname(newNickname.getText()));
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (nicknameError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(profileController.changeNickname(newNickname.getText()).getString());
+        } else {
+            alert.setContentText("enter a new nickname!");
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.show();
     }
 
     public void saveNewEmail(MouseEvent mouseEvent) {
-        showAlert(profileController.changeEmail(newEmail.getText()));
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (emailError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(profileController.changeEmail(newEmail.getText()).getString());
+        } else {
+            alert.setContentText("enter a new email!");
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.show();
+        //showAlert(profileController.changeEmail(newEmail.getText()));
     }
 
     public void saveNewSlogan(MouseEvent mouseEvent) {
-        showAlert(profileController.changeSlogan(newSlogan.getText()));
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (sloganError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(profileController.changeSlogan(newSlogan.getText()).getString());
+        } else {
+            alert.setContentText("enter a new slogan!");
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.show();
+        //showAlert(profileController.changeSlogan(newSlogan.getText()));
     }
 
     public void saveNewPassword(MouseEvent mouseEvent) {
-        showAlert(profileController.changePassword(oldPassword.getText(), newPassword.getText()));
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (newPassword.getText().equals("ok") && captcha.getText().equals(captchaNumber) && profileMenuCurrentUser.getPassword().equals(oldPassword.getText())) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(profileController.changePassword(oldPassword.getText(), newPassword.getText()).getString());
+        } else {
+            alert.setContentText("complete the fields correctly");
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
+        alert.show();
+        //showAlert(profileController.changePassword(oldPassword.getText(), newPassword.getText()));
     }
 
     public void removeSlogan(MouseEvent mouseEvent) {
@@ -248,7 +296,9 @@ public class ProfileMenu extends Application {
     }
 //TODO
     public void back(MouseEvent mouseEvent) throws Exception {
-        new MainMenu().start(profileMenuStage);
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.setMainUserController(profileMenuCurrentUser.getUsername());
+        mainMenu.start(RegisterMenu.getStage());
     }
     private void checkQuestion() {
         if (!passwordRecoveryAnswer.getText().equals(passwordAnswerConfirmation.getText()))

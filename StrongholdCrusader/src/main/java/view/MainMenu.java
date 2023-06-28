@@ -3,7 +3,6 @@ package view;
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
-import controller.UserControllers.ProfileController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +25,8 @@ public class MainMenu extends Application {
     @FXML
     private Pane mainPane;
 
+
+    private static String username;
     private MainUserController mainUserController;
     private User mainMenuCurrentUser;
 
@@ -36,8 +37,6 @@ public class MainMenu extends Application {
     public void setMainMenuCurrentUser(User mainMenuCurrentUser) {
         this.mainMenuCurrentUser = mainMenuCurrentUser;
     }
-
-    private static String username;
 
     public void setMainUserController(String username) {
         MainMenu.username = username;
@@ -70,15 +69,14 @@ public class MainMenu extends Application {
     public void back() throws Exception {
         RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
-        loginMenu.setLoginController(registerAndLoginController);
+        //loginMenu.setLoginController(registerAndLoginController);
         loginMenu.start(RegisterMenu.getStage());
     }
 
 
     public void enterProfileMenu() throws Exception {
-        ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
         ProfileMenu profileMenu = new ProfileMenu();
-        profileMenu.setProfileController(profileController);
+        profileMenu.setProfileController(username);
         profileMenu.start(RegisterMenu.getStage());
     }
 
