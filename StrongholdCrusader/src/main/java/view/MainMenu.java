@@ -3,7 +3,6 @@ package view;
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
-import controller.UserControllers.ProfileController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +25,18 @@ public class MainMenu extends Application {
     @FXML
     private Pane mainPane;
 
-    private MainUserController mainUserController;
 
     private static String username;
+    private MainUserController mainUserController;
+    private User mainMenuCurrentUser;
+
+    public User getMainMenuCurrentUser() {
+        return mainMenuCurrentUser;
+    }
+
+    public void setMainMenuCurrentUser(User mainMenuCurrentUser) {
+        this.mainMenuCurrentUser = mainMenuCurrentUser;
+    }
 
     public void setMainUserController(String username) {
         MainMenu.username = username;
@@ -59,19 +67,16 @@ public class MainMenu extends Application {
     }
 
     public void back() throws Exception {
+        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
-        //loginMenu.setLoginController(registerAndLoginController);
         //loginMenu.setLoginController(registerAndLoginController);
         loginMenu.start(RegisterMenu.getStage());
     }
 
 
     public void enterProfileMenu() throws Exception {
-        if (mainUserController == null) {
-            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
-        }
         ProfileMenu profileMenu = new ProfileMenu();
-        profileMenu.setProfileController(MainMenu.username);
+        profileMenu.setProfileController(username);
         profileMenu.start(RegisterMenu.getStage());
     }
 

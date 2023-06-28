@@ -17,7 +17,6 @@ public class DataBase {
     private DataBase() {
         loadData();
     }
-
     private void loadData() {
         try {
             Reader reader;
