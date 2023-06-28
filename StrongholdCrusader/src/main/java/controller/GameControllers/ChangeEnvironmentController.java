@@ -11,6 +11,7 @@ import model.buildings.CastleDepartment;
 import model.units.Unarmed;
 import model.units.Unit;
 import view.GameMenu;
+import view.RegisterMenu;
 
 import java.util.ArrayList;
 
@@ -140,20 +141,17 @@ public class ChangeEnvironmentController {
     }
 
 
-    public boolean enterGameMenu() {
-        if (game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)) &&
-                game.getCurrentPlayer().getGovernance().getBuildings() != null) {
-            GameController gameController = new GameController(game);
-            gameController.initializeGame();
-            GameMenu gameMenu = new GameMenu();
-            gameMenu.setGameController(gameController);
-            gameMenu.setTurns(game.getTurns());
-            gameMenu.setNumberOfPlayers(game.getPlayers().size());
-            //TODO --> How to start in game menu ?
-            //gameMenu.start(stage);
-            return true;
-        }
-        return false;
+    public boolean enterGameMenu(ArrayList<String> usernames, int row, int turns, int mapOption) throws Exception {
+        Output output = generateMap(usernames, row, row, turns, mapOption);
+        if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
+        GameController gameController = new GameController(game);
+        gameController.initializeGame();
+        GameMenu gameMenu = new GameMenu();
+        gameMenu.setGameController(gameController);
+        gameMenu.setTurns(game.getTurns());
+        gameMenu.setNumberOfPlayers(game.getPlayers().size());
+        gameMenu.start(RegisterMenu.getStage());
+        return true;
     }
 
     public String goToNextPerson() {
