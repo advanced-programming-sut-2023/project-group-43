@@ -17,11 +17,6 @@ public class DataBase {
     private DataBase() {
         loadData();
     }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
     private void loadData() {
         try {
             Reader reader;

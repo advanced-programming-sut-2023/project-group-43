@@ -122,7 +122,6 @@ public class RegisterAndLoginController {
         if (!password.equals(user.getPassword()))
             return Output.INCORRECT_PASSWORD;
         if (isStayLoggedIn) user.setLoggedIn(true);
-        MainUserController mainUserController = new MainUserController(user);
         return Output.SUCCESSFUL_LOGIN;
     }
 
@@ -188,9 +187,8 @@ public class RegisterAndLoginController {
         User currentUser = DataBase.getInstance().getUserByUsername(username);
         MainUserController mainController = new MainUserController(currentUser);
         MainMenu mainMenu = new MainMenu();
-        mainMenu.setMainUserController(mainController);
+        mainMenu.setMainUserController(username);
         //(new MainMenu()).start(RegisterMenu.getStage());
-        mainMenu.setMainMenuCurrentUser(currentUser);
         mainMenu.start(RegisterMenu.getStage());
     }
 
