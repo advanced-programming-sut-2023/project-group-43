@@ -94,6 +94,8 @@ public enum ImageEnum {
     OX_TETHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/oxtether.gif")).toExternalForm()));
 
 
+    //texture
+
 
 
     public Image image;

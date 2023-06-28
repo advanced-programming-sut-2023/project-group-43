@@ -2,6 +2,7 @@ package model;
 
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
+import javafx.scene.image.Image;
 import model.buildings.Building;
 import model.buildings.CastleDepartment;
 import model.units.Assassin;
@@ -22,6 +23,7 @@ public class Cell {
     private String rockDirection;
     private int cellSize;
     private boolean tunelHere = false;
+    private Image image;
 
     private int x;
     private int y;
