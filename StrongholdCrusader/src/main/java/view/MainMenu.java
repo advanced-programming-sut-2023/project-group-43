@@ -37,8 +37,12 @@ public class MainMenu extends Application {
         this.mainMenuCurrentUser = mainMenuCurrentUser;
     }
 
-    public void setMainUserController(MainUserController mainUserController) {
-        this.mainUserController = mainUserController;
+    private static String username;
+
+    public void setMainUserController(String username) {
+        MainMenu.username = username;
+        User currentUser = DataBase.getInstance().getUserByUsername(username);
+        mainUserController = new MainUserController(currentUser);
     }
 
     @Override
@@ -66,21 +70,23 @@ public class MainMenu extends Application {
     public void back() throws Exception {
         RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
-        //loginMenu.setLoginController(registerAndLoginController);
+        loginMenu.setLoginController(registerAndLoginController);
         loginMenu.start(RegisterMenu.getStage());
     }
+
+
     public void enterProfileMenu() throws Exception {
+        ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
         ProfileMenu profileMenu = new ProfileMenu();
-        //DataBase.getInstance().findLoggedInUser()
-        //profileMenu.setProfileController(new ProfileController(mainUserController.getCurrentUser()));
-        System.out.println(mainMenuCurrentUser.getUsername());
-        ProfileController profileController = new ProfileController(mainMenuCurrentUser);
         profileMenu.setProfileController(profileController);
         profileMenu.start(RegisterMenu.getStage());
     }
 
     public void enterChangeEnvironmentMenu() throws Exception {
-        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().findLoggedInUser());
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
+        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(mainUserController.getCurrentUser());
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
         changeEnvironmentMenu.start(RegisterMenu.getStage());

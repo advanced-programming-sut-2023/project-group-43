@@ -1,18 +1,41 @@
 package view;
 
 import controller.TradeController;
-import enums.Output;
-import enums.Validations;
-import enums.menuEnums.TradeMenuCommands;
+import enums.ImageEnum;
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Material;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import model.DataBase;
+import model.User;
+import model.buildings.Storage;
 
-import java.util.Scanner;
-import java.util.regex.Matcher;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class TradeMenu extends Application {
-    private  TradeController tradeController ;
-    private Stage stage;
+
+    private static Stage stage;
+    public final String css = Objects.requireNonNull(this.getClass().getResource("/css/style.css")).toExternalForm();
+    private TradeController tradeController;
+
+    private BorderPane root = new BorderPane();
+
+    private HBox hBox = new HBox();
+    private Button tradeHistory = new Button("Trade History");
+    private Button makeRequest = new Button("Make Request");
+
+    private Button back = new Button("Back");
+
+    private Text text = new Text("The business is at your disposal, my Lord");
 
     public void setTradeController(TradeController tradeController) {
         this.tradeController = tradeController;
@@ -20,57 +43,126 @@ public class TradeMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        TradeMenu.stage = stage;
+        setMainBackground();
+        initialize();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void run() {
-        Scanner scanner = Menu.getScanner();
-        String input;
-        Output output;
-        Matcher matcher;
-        System.out.println("trade menu:");
-        System.out.println(tradeController.showNotification());
-        while (true) {
-            input = scanner.nextLine();
-            output = null;
-            if (input.matches("show current menu"))
-                output = Output.TRADE_MENU;
-            if ((matcher = TradeMenuCommands.getMatcher(input, TradeMenuCommands.SEND_TRADE)).matches()) {
-                output = requestTrade(matcher);
-            } else if ((matcher = TradeMenuCommands.getMatcher(input, TradeMenuCommands.ACCEPT_TRADE)).matches()) {
-                output = acceptTrade(matcher);
-            } else if (input.matches("trade list")) {
-                System.out.println(tradeController.showTradeList());
-                continue;
-            } else if (input.matches("trade history")) {
-                System.out.println(tradeController.showTradeHistory());
-                continue;
-            } else if (input.matches("back")) {
-                System.out.println("main menu:");
-                return;
+    private void setMainBackground() {
+        root.setMinSize(1550, 800);
+        root.setBackground(new Background(new BackgroundImage(ImageEnum.TRADE_MENU.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+    }
+
+    private void initialize() throws Exception {
+
+        tradeHistory.setMinSize(100, 100);
+        makeRequest.setMinSize(100, 100);
+
+        hBox.getChildren().addAll(tradeHistory, makeRequest);
+        hBox.setSpacing(350);
+
+        hBox.setAlignment(Pos.CENTER);
+        back.setAlignment(Pos.BOTTOM_CENTER);
+
+        text.setFont(new Font(50));
+        text.setFill(Color.DARKGRAY);
+        text.setX(400);
+        text.setY(250);
+
+        back.setOnAction(ae -> {
+            try {
+                backToShop();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            if (output == null) System.out.println("invalid command");
-            else System.out.println(output.getString());
+        });
+        makeRequest.setOnAction(ae -> makeRequest());
+        tradeHistory.setOnAction(ae -> tradeHistory());
+
+        root.getChildren().add(text);
+        root.setCenter(hBox);
+        root.setBottom(back);
+
+    }
+
+    private void backToShop() throws Exception {
+        new StoreMenu().start(stage);
+    }
+
+
+    private void makeRequest() {
+
+        ArrayList<User> users = DataBase.getInstance().getUsers();
+
+        Popup makeRequest = new Popup();
+        BorderPane main = new BorderPane();
+
+        main.setBorder(Border.stroke(Color.BLACK));
+        main.setMinSize(700, 700);
+        main.setBackground(new Background(new BackgroundImage(ImageEnum.REQUEST.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+        VBox vBox = new VBox();
+
+        //TODO --> I'm not sure about users
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).equals(DataBase.getInstance().findLoggedInUser())) continue;
+            Button button = new Button();
+            int finalI = i;
+            button.setOnAction(ae -> showPersonDetails(users.get(finalI)));
+            vBox.getChildren().add(button);
         }
+
+        Button back1 = new Button("Back");
+        back1.setOnAction(ae -> makeRequest.hide());
+
+        vBox.getChildren().add(back1);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(5);
+
+        main.setCenter(vBox);
+        makeRequest.getContent().add(main);
+        makeRequest.show(stage);
     }
 
-    private Output requestTrade(Matcher matcher) {
-        String resourceType = Validations.getInfo("t", matcher.group());
-        String amount = Validations.getInfo("a", matcher.group());
-        String price = Validations.getInfo("p", matcher.group());
-        String message = Validations.getInfo("m", matcher.group());
-        if (resourceType == null || amount == null || price == null || message == null) return null;
-        if (!amount.matches("\\d+")) return null;
-        if (!price.matches("\\d+")) return null;
-        return tradeController.requestTrade(resourceType, Integer.parseInt(amount), Integer.parseInt(price), message);
+    private void showPersonDetails(User user) {
+
+        Popup infoPopUp = new Popup();
+        BorderPane main = new BorderPane();
+
+        main.setBorder(Border.stroke(Color.BLACK));
+        main.setMinSize(700, 700);
+        main.setBackground(new Background(new BackgroundImage(ImageEnum.OLD_PAPER.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+        VBox vBox = new VBox();
+
+        HashMap storage = user.getGovernance().getGovernanceResource().getStorage();
+
+        for(int i = 0 ; i < storage.size(); i++){
+            Material material = (Material) storage.get(i);
+        }
+
+
+        Button back1 = new Button("Back");
+        back1.setOnAction(ae -> infoPopUp.hide());
+
+        vBox.getChildren().add(back1);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(5);
+
+        main.setCenter(vBox);
+        infoPopUp.getContent().add(main);
+        infoPopUp.show(stage);
     }
 
-    private Output acceptTrade(Matcher matcher) {
-        String id = Validations.getInfo("i", matcher.group());
-        String message = Validations.getInfo("m", matcher.group());
-        if (id == null || message == null) return null;
-        if (!id.matches("\\d+")) return null;
-        return tradeController.acceptTrade(Integer.parseInt(id), message);
+    private void tradeHistory() {
     }
 
 }

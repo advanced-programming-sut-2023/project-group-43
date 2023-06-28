@@ -116,4 +116,8 @@ public class DataBase {
         }
         return null;
     }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
 }
