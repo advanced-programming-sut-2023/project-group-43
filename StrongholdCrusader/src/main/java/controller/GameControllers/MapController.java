@@ -14,4 +14,7 @@ public class MapController {
         this.game = game;
     }
 
+    public Game getGame() {
+        return game;
+    }
 }
