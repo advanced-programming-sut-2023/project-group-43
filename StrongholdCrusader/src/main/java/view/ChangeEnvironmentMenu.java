@@ -2,6 +2,7 @@ package view;
 
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.GameControllers.GameController;
+import controller.MainUserController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.DataBase;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -184,7 +186,9 @@ public class ChangeEnvironmentMenu extends Application {
 
     }
 
-    public void back(MouseEvent mouseEvent) {
-
+    public void back(MouseEvent mouseEvent) throws Exception {
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.setMainUserController(MainMenu.getUsername());
+        mainMenu.start(RegisterMenu.getStage());
     }
 }

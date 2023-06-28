@@ -144,18 +144,14 @@ public class ChangeEnvironmentController {
     public boolean enterGameMenu(ArrayList<String> usernames, int row, int turns, int mapOption) throws Exception {
         Output output = generateMap(usernames, row, row, turns, mapOption);
         if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
-        if (game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)) &&
-                game.getCurrentPlayer().getGovernance().getBuildings() != null) {
-            GameController gameController = new GameController(game);
-            gameController.initializeGame();
-            GameMenu gameMenu = new GameMenu();
-            gameMenu.setGameController(gameController);
-            gameMenu.setTurns(game.getTurns());
-            gameMenu.setNumberOfPlayers(game.getPlayers().size());
-            gameMenu.start(RegisterMenu.getStage());
-            return true;
-        }
-        return false;
+        GameController gameController = new GameController(game);
+        gameController.initializeGame();
+        GameMenu gameMenu = new GameMenu();
+        gameMenu.setGameController(gameController);
+        gameMenu.setTurns(game.getTurns());
+        gameMenu.setNumberOfPlayers(game.getPlayers().size());
+        gameMenu.start(RegisterMenu.getStage());
+        return true;
     }
 
     public String goToNextPerson() {
