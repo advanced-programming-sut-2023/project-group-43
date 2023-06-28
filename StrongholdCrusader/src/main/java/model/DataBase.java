@@ -18,6 +18,10 @@ public class DataBase {
         loadData();
     }
 
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
     private void loadData() {
         try {
             Reader reader;
