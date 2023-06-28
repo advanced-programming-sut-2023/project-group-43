@@ -7,6 +7,7 @@ import enums.menuEnums.EnvironmentChangeCommands;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ import java.util.regex.Matcher;
 
 public class ChangeEnvironmentMenu extends Application {
     private Stage stage;
-    private ChangeEnvironmentController changeEnvironmentController;
+    private static ChangeEnvironmentController changeEnvironmentController;
     private String x, y, type;
 
     public ChangeEnvironmentController getChangeEnvironmentController() {
@@ -27,64 +28,16 @@ public class ChangeEnvironmentMenu extends Application {
     }
 
     public void setChangeEnvironmentController(ChangeEnvironmentController changeEnvironmentController) {
-        this.changeEnvironmentController = changeEnvironmentController;
+        ChangeEnvironmentMenu.changeEnvironmentController = changeEnvironmentController;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        AnchorPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml")).toExternalForm()));
+        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/changeEnvironmentMenu.fxml")).toExternalForm()));
         Scene scene = new Scene(changeEnvironmentMenuPane);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void run() {
-        //TODO --> fix controller problem
-        changeEnvironmentController.initializeGame();
-        getReady();
-        Scanner scanner = Menu.getScanner();
-        String input;
-        Output output;
-        Matcher matcher;
-        while (true) {
-            input = scanner.nextLine();
-            output = null;
-            if (input.matches("show current menu"))
-                output = Output.CHANGE_ENVIRONMENT_MENU;
-            else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE)) != null) {
-                output = setTexture(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.SET_TEXTURE_RECTANGLE)) != null) {
-                setTextureRectangle(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.CLEAR)) != null) {
-                output = clear(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_ROCK)) != null) {
-                output = dropRock(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_TREE)) != null) {
-                output = dropTree(matcher);
-            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_BUILDING)) != null) {
-                output = dropBuilding(matcher);
-            } else if (input.matches("next")) {
-                System.out.println(changeEnvironmentController.goToNextPerson());
-                continue;
-            } else if (input.matches("back")) {
-                System.out.println("main menu:");
-                return;
-            } else if (input.matches("start game")) {
-                if (enterGameMenu()) {
-                    System.out.println("main menu:");
-                    return;
-                } else {
-                    System.out.println("you cannot start the game until everyone choose their headquarters");
-                    continue;
-                }
-            }
-            if (output != null)
-                System.out.println(output.getString());
-            else {
-                System.out.println("Invalid command");
-            }
-        }
     }
 
     private Output setTexture(Matcher matcher) {
@@ -186,4 +139,9 @@ public class ChangeEnvironmentMenu extends Application {
         changeEnvironmentController.getGame().setCurrentPlayer(changeEnvironmentController.getCurrentUser());
     }
 
+    public void startGame(MouseEvent mouseEvent) {
+    }
+
+    public void back(MouseEvent mouseEvent) {
+    }
 }
