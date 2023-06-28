@@ -140,7 +140,9 @@ public class ChangeEnvironmentController {
     }
 
 
-    public boolean enterGameMenu() {
+    public boolean enterGameMenu(ArrayList<String> usernames, int row, int column, int turns, int mapOption) {
+        Output output = generateMap(usernames, row, column, turns, mapOption);
+        if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
         if (game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)) &&
                 game.getCurrentPlayer().getGovernance().getBuildings() != null) {
             GameController gameController = new GameController(game);
@@ -149,7 +151,6 @@ public class ChangeEnvironmentController {
             gameMenu.setGameController(gameController);
             gameMenu.setTurns(game.getTurns());
             gameMenu.setNumberOfPlayers(game.getPlayers().size());
-            //TODO --> How to start in game menu ?
             //gameMenu.start(stage);
             return true;
         }
