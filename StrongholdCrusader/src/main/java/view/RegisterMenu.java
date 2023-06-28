@@ -69,7 +69,6 @@ public class RegisterMenu extends Application {
     private void setBackground(Pane pane) {
         pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/b.jpg").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
-
     }
 
     @FXML

@@ -122,6 +122,7 @@ public class RegisterAndLoginController {
         if (!password.equals(user.getPassword()))
             return Output.INCORRECT_PASSWORD;
         if (isStayLoggedIn) user.setLoggedIn(true);
+        MainUserController mainUserController = new MainUserController(user);
         return Output.SUCCESSFUL_LOGIN;
     }
 
@@ -188,7 +189,9 @@ public class RegisterAndLoginController {
         MainUserController mainController = new MainUserController(currentUser);
         MainMenu mainMenu = new MainMenu();
         mainMenu.setMainUserController(mainController);
-        (new MainMenu()).start(RegisterMenu.getStage());
+        //(new MainMenu()).start(RegisterMenu.getStage());
+        mainMenu.setMainMenuCurrentUser(currentUser);
+        mainMenu.start(RegisterMenu.getStage());
     }
 
     public static Output choosePasswordRecoveryQuestion(int passwordRecoveryQuestionNumber,

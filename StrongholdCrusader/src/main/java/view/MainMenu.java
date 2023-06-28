@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.DataBase;
+import model.User;
 
 import java.net.URL;
 import java.util.Objects;
@@ -26,6 +27,15 @@ public class MainMenu extends Application {
     private Pane mainPane;
 
     private MainUserController mainUserController;
+    private User mainMenuCurrentUser;
+
+    public User getMainMenuCurrentUser() {
+        return mainMenuCurrentUser;
+    }
+
+    public void setMainMenuCurrentUser(User mainMenuCurrentUser) {
+        this.mainMenuCurrentUser = mainMenuCurrentUser;
+    }
 
     public void setMainUserController(MainUserController mainUserController) {
         this.mainUserController = mainUserController;
@@ -59,11 +69,12 @@ public class MainMenu extends Application {
         //loginMenu.setLoginController(registerAndLoginController);
         loginMenu.start(RegisterMenu.getStage());
     }
-
-
     public void enterProfileMenu() throws Exception {
-        ProfileController profileController = new ProfileController(DataBase.getInstance().findLoggedInUser());
         ProfileMenu profileMenu = new ProfileMenu();
+        //DataBase.getInstance().findLoggedInUser()
+        //profileMenu.setProfileController(new ProfileController(mainUserController.getCurrentUser()));
+        System.out.println(mainMenuCurrentUser.getUsername());
+        ProfileController profileController = new ProfileController(mainMenuCurrentUser);
         profileMenu.setProfileController(profileController);
         profileMenu.start(RegisterMenu.getStage());
     }

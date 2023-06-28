@@ -1,6 +1,5 @@
 package view;
 
-import controller.MainUserController;
 import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
 import enums.Output;
@@ -16,17 +15,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.util.Objects;
+import java.net.URL;
 import java.util.regex.Matcher;
 
 public class ProfileMenu extends Application {
 
-    private Stage stage;
+    private Stage profileMenuStage;
     @FXML
     private TextField newUsername;
     @FXML
@@ -65,12 +63,20 @@ public class ProfileMenu extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
-        pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
+        System.out.println("1");
+        profileMenuStage = stage;
+        System.out.println("2");
+        BorderPane profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
+        //pane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
+        System.out.println("3");
+        Scene scene = new Scene(profilePane);
+        System.out.println("4");
+        profileMenuStage.setScene(scene);
+        System.out.println("5");
+        profilePane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
-        stage.show();
+        System.out.println("6");
+        profileMenuStage.show();
     }
     @FXML
     private void initialize() {
@@ -242,7 +248,7 @@ public class ProfileMenu extends Application {
     }
 //TODO
     public void back(MouseEvent mouseEvent) throws Exception {
-        new MainMenu().start(stage);
+        new MainMenu().start(profileMenuStage);
     }
     private void checkQuestion() {
         if (!passwordRecoveryAnswer.getText().equals(passwordAnswerConfirmation.getText()))
