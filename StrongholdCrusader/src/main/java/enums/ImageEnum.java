@@ -95,8 +95,8 @@ public enum ImageEnum {
 
 
     //texture
-    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/ground.png")).toExternalForm())),
-    GRAVEL_GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/gravelGround.png")).toExternalForm())),
+    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/ground.png")).toExternalForm()), "ground", ) ,
+    GRAVEL_GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/gravelGround.png")).toExternalForm()) , ),
     BOULDER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/boulder.png")).toExternalForm())),
     ROCK(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/rock.png")).toExternalForm())),
     //IRON(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/")).toExternalForm())),
