@@ -26,6 +26,7 @@ public class MapMenu extends Application {
     private Scene scene;
 
     private AnchorPane root = new AnchorPane();
+    private ScrollBar scrollBar = new ScrollBar();
 
     int x = -20;
     int y = -20;
@@ -54,15 +55,28 @@ public class MapMenu extends Application {
     }
 
     private void setScrollBar() {
-        ScrollBar scrollBar = new ScrollBar();
+        //ScrollBar scrollBar = new ScrollBar();
         scrollBar.setMinSize(1600,800);
         root.getChildren().add(scrollBar);
     }
 
     private void setCells() {
-        for(int i = 0 ; i < mapController.getGame().getCells().length ; i++){
+//        for(int i = 0 ; i < mapController.getGame().getCells().length ; i++){
+//            //System.out.println("make i cells" + i);
+//            y += 20;
+//            for(int j = 0 ; j < mapController.getGame().getCells().length ; j++){
+//                //System.out.println("make j cells " + j);
+//                x += 20;
+//                GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
+//                setCell(cell);
+//            }
+//        }
+        for(int i = 0 ; i < 10 ; i++){
+            //System.out.println("make i cells" + i);
+            x = -20;
             y += 20;
-            for(int j = 0 ; j < mapController.getGame().getCells().length ; j++){
+            for(int j = 0 ; j < 10 ; j++){
+                //System.out.println("make j cells " + j);
                 x += 20;
                 GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
                 setCell(cell);
