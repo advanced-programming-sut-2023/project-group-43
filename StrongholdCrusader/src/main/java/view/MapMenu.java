@@ -77,11 +77,11 @@ public class MapMenu extends Application {
 //        }
         for(int i = 0 ; i < mapController.getGame().getRow() ; i++){
             //System.out.println("make i cells" + i);
-            x = -150;
-            y += 150;
+            x = -100;
+            y += 100;
             for(int j = 0 ; j < mapController.getGame().getColumn() ; j++){
                 //System.out.println("make j cells " + j);
-                x += 150;
+                x += 100;
                 GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
                 setCell(cell);
             }
