@@ -97,7 +97,7 @@ public class miniMap {
     public void addListenerToFindTheSelectedBuilding() {
         for (int i = 0; i <= 38; i++) {
             allBuildingImages[i].setOnMouseClicked(mouseEvent -> {
-                selectedBuildingName = ImageEnum.getNameByImage(allBuildingImages[i]);
+                //selectedBuildingName = ImageEnum.getNameByImage(allBuildingImages[i]);
             });
         }
     }
