@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="StrongholdCrusader" options="" />
+      <module name="StrongholdCrusader" options="--add-modules java.se,java.desktop" />
     </option>
   </component>
 </project>

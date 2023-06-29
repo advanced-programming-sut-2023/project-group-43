@@ -95,7 +95,7 @@ public enum ImageEnum {
 
 
     //texture
-    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/ground.png")).toExternalForm())),
+    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/ground.jpg")).toExternalForm())),
     GRAVEL_GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/gravelGround.png")).toExternalForm())),
     BOULDER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/boulder.png")).toExternalForm())),
     ROCK(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/rock.png")).toExternalForm())),
@@ -103,13 +103,13 @@ public enum ImageEnum {
     GRASS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/denseGrass.png")).toExternalForm())),
     MEADOW(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/grass.png")).toExternalForm())),
     DENSE_GRASSLAND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/meadow.png")).toExternalForm())),
-    OIL(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/oil.png")).toExternalForm())),
+    OIL(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/oil.jpg")).toExternalForm())),
     PLAIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/plain.png")).toExternalForm())),
     SHALLOW_WATER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/shallowWater.png")).toExternalForm())),
     RIVER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm())),
     SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/smallPond.png")).toExternalForm())),
     BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.png")).toExternalForm())),
-    BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.png")).toExternalForm())),
+    BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.jpg")).toExternalForm())),
     SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.png")).toExternalForm())),
     ILLNESS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/illnessRed.png")).toExternalForm()));
     public Image image;

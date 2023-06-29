@@ -25,5 +25,4 @@ module com.example.strongholdcrusader {
     exports model.units;
     opens model.buildings to com.google.gson;
     exports model.buildings;
-
 }
