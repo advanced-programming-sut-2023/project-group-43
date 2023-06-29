@@ -1,5 +1,6 @@
 package model;
 
+import enums.environmentEnums.Texture;
 import model.buildings.Building;
 import model.units.Unit;
 
@@ -17,7 +18,7 @@ public class Game {
     private ArrayList<Trade> trades = new ArrayList<>();
 
     private static int tradeId = 0;
-    private Cell[][] cells;
+    private Cell[][] cells = new Cell[50][50] ;
 
     private Building selectedBuilding;
 
@@ -26,6 +27,16 @@ public class Game {
     private int turns;
     private int currentMapX;
     private int getCurrentMapY;
+
+    public Game() {
+        for(int i = 0 ; i < cells.length ; i++){
+            for(int j = 0 ; j < cells.length ; j++){
+                Cell cell = new Cell();
+                cell.setTexture(Texture.BEACH);
+                cells[i][j] = cell;
+            }
+        }
+    }
 
     public int getCurrentMapX() {
         return currentMapX;

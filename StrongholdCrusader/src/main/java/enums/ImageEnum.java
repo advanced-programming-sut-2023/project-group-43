@@ -52,11 +52,11 @@ public enum ImageEnum {
 
     //building
     HEADQUARTER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/headquarter.png")).toExternalForm()), "headquarter", "/images/building/headquarter.png"),
-    SMALL_STONE_GATEHOUSE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/littleGateHouse.png")).toExternalForm()), "smallStoneGatehouse", "/images/building/littleGateHouse.png"),
+    SMALL_STONE_GATEHOUSE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/smallGateHouse.png")).toExternalForm()), "smallStoneGatehouse", "/images/building/littleGateHouse.png"),
     BIG_STONE_GATEHOUSE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/bigGatehouse.png")).toExternalForm()), "bigStoneGatehouse", "/images/building/bigGatehouse.png"),
     DRAW_BRIDGE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/drawBridge.png")).toExternalForm()), "drawBridge", "/images/building/drawBridge.png"),
     LOOKOUT_TOWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/lookoutTower.png")).toExternalForm()), "lookoutTower", "/images/building/lookoutTower.png"),
-    PERIMETER_TOWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/perimterTower.png")).toExternalForm()), "perimeterTower", "/images/building/perimterTower.png"),
+    PERIMETER_TOWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/perimtrTower.png")).toExternalForm()), "perimeterTower", "/images/building/perimterTower.png"),
     DEFENSIVE_TOWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/defensiveTower.png")).toExternalForm()), "defensiveTower", "/images/building/defensiveTower.png"),
     SQUARE_TOWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/squareTower.png")).toExternalForm()), "squareTower", "/images/building/squareTower.png"),
     CIRCLE_TOWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/circleTower.png")).toExternalForm()), "circleTower", "/images/building/circleTower.png"),

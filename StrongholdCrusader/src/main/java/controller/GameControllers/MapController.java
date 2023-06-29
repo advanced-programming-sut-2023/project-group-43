@@ -8,7 +8,7 @@ import model.units.Unit;
 
 public class MapController {
 
-    private final Game game;
+    private final Game game ;
 
     public MapController(Game game) {
         this.game = game;

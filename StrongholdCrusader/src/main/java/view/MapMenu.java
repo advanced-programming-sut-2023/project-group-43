@@ -15,10 +15,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Cell;
 import model.DataBase;
+import model.Game;
 
 public class MapMenu extends Application {
 
-    private MapController mapController;
+    private MapController mapController = new MapController(new Game());
 
     private Stage stage;
 
@@ -26,8 +27,8 @@ public class MapMenu extends Application {
 
     private AnchorPane root = new AnchorPane();
 
-    int x;
-    int y;
+    int x = -20;
+    int y = -20;
     public void setMapController(MapController mapController) {
         this.mapController = mapController;
     }
@@ -60,7 +61,9 @@ public class MapMenu extends Application {
 
     private void setCells() {
         for(int i = 0 ; i < mapController.getGame().getCells().length ; i++){
+            y += 20;
             for(int j = 0 ; j < mapController.getGame().getCells().length ; j++){
+                x += 20;
                 GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
                 setCell(cell);
             }
@@ -127,6 +130,8 @@ public class MapMenu extends Application {
 
     //ignore tunnel
     private void setCell(GridPane cell){
+        cell.setLayoutX(x);
+        cell.setLayoutY(y);
         root.getChildren().add(cell);
     }
 
