@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameControllers.StoreController;
+import controller.StoreController;
 import enums.ImageEnum;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
