@@ -8,6 +8,7 @@ import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
+import javafx.scene.input.InputEvent;
 import model.*;
 import model.buildings.*;
 import model.units.*;
@@ -857,5 +858,7 @@ public class GameController {
             return new int[][]{{1, 0, -1, 0}, {0, 1, 0, -1}};
         }
     }
-
+    private void dragAndDropBuildingOnMap(Building building) {
+        //TODO
+    }
 }
