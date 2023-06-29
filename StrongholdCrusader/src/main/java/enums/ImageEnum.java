@@ -110,8 +110,8 @@ public enum ImageEnum {
     SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/smallPond.png")).toExternalForm())),
     BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.png")).toExternalForm())),
     BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.png")).toExternalForm())),
-    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.png")).toExternalForm()));
-
+    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.png")).toExternalForm())),
+    ILLNESS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/illnessRed.png")).toExternalForm()));
     public Image image;
 
     ImageEnum(Image image) {

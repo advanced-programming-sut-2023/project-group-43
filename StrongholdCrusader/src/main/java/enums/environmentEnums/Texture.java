@@ -1,6 +1,5 @@
 package enums.environmentEnums;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +19,8 @@ public enum Texture {
     SMALL_POND("small pond", false, "\u001b[48;5;189m"),
     BIG_POND("big pond", false, "\u001b[48;5;183m"),
     BEACH("beach", true, "\u001b[48;5;195m"),
-    SEA("sea", false, "\u001b[48;5;27m");
+    SEA("sea", false, "\u001b[48;5;27m"),
+    ILLNESS("illness", true, "");
     private String name;
     private boolean passable;
     private String color;
