@@ -23,7 +23,6 @@ public class Cell {
     private String rockDirection;
     private int cellSize;
     private boolean tunelHere = false;
-    private Image image;
 
     private int x;
     private int y;

@@ -53,4 +53,8 @@ public enum Texture {
         }
         return null;
     }
+
+    public String getName() {
+        return name;
+    }
 }
