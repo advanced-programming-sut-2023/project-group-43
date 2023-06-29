@@ -111,7 +111,11 @@ public enum ImageEnum {
     SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/smallPond.png")).toExternalForm()),"small pond","/images/texture/smallPond.png"),
     BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.jpg")).toExternalForm()),"big pond","/images/texture/bigPond.jpg"),
     BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.jpg")).toExternalForm()),"beach","/images/texture/beach.jpg"),
-    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.jpg")).toExternalForm()),"sea","/images/texture/sea.jpg");
+    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.jpg")).toExternalForm()),"sea","/images/texture/sea.jpg"),
+    //sampeMiniMap
+    SAMPLE_MINI_MAP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/sampleMiniMap.jpg")).toExternalForm()),"sampleMiniMap","/images/background/sampleMiniMap.jpg"),
+    //theMan
+    THE_MAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/theMan.jpg")).toExternalForm()),"theMan","/images/background/theMan.jpg");
 
 
 
@@ -136,6 +140,14 @@ public enum ImageEnum {
         return name;
     }
 
+    public static String getNameByImage(Image image) {
+        for(ImageEnum imageEnum : ImageEnum.values()){
+            if(imageEnum.getImage().equals(image)) {
+                return imageEnum.getName();
+            }
+        }
+        return null;
+    }
     public static Image getImageByName(String name){
         for(ImageEnum imageEnum : ImageEnum.values()){
             if(imageEnum.getName().equals(name)) {
