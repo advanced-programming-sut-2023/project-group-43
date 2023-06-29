@@ -138,7 +138,6 @@ public enum ImageEnum {
 
     public static Image getImageByName(String name){
         for(ImageEnum imageEnum : ImageEnum.values()){
-            System.out.println(imageEnum.getName());
             if(imageEnum.getName().equals(name)) {
                 return imageEnum.getImage();
             }
