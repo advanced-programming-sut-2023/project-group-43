@@ -2,6 +2,7 @@ package model;
 
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
+import javafx.scene.image.Image;
 import model.buildings.Building;
 import model.buildings.CastleDepartment;
 import model.units.Assassin;

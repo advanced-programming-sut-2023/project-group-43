@@ -1,23 +1,25 @@
 package model;
 
+import enums.BuildingEnums.BuildingEnum;
+import enums.environmentEnums.Texture;
 import model.buildings.Building;
 import model.units.Unit;
 
 import java.util.ArrayList;
 
 public class Game {
-    private User currentUser;
+    private User currentUser = new User("n","n","n","n","n","n","n");
 
     private User currentPlayer;
 
-    private int row;
-    private int column;
+    private int row = 15;
+    private int column = 30;
     private ArrayList<User> players = new ArrayList<>();
 
     private ArrayList<Trade> trades = new ArrayList<>();
 
     private static int tradeId = 0;
-    private Cell[][] cells;
+    private Cell[][] cells = new Cell[50][50] ;
 
     private Building selectedBuilding;
 
@@ -26,6 +28,27 @@ public class Game {
     private int turns;
     private int currentMapX;
     private int getCurrentMapY;
+
+    public Game() {
+
+        for(int i = 0 ; i < row ; i++){
+            for(int j = 0 ; j < column ; j++){
+                Cell cell = new Cell();
+                cell.setTexture(Texture.GROUND);
+                cells[i][j] = cell;
+            }
+        }
+        for(int i = 5 ; i < 8 ; i++){
+            for (int j = 10 ; j < 25 ; j++) {
+                Cell cell = new Cell();
+                cell.setTexture(Texture.DENSE_GRASSLAND);
+                cells[i][j] = cell;
+            }
+        }
+        cells[8][20].setTexture(Texture.SMALL_POND);
+        Building building = new Building(BuildingEnum.BARRACK.getName(), currentUser);
+        cells[10][10].setBuilding(building);
+    }
 
     public int getCurrentMapX() {
         return currentMapX;
