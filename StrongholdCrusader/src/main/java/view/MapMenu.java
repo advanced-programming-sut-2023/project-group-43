@@ -63,6 +63,7 @@ public class MapMenu extends Application {
         scrollBar.setBlockIncrement(10);
         root.getChildren().add(scrollBar);
     }
+
     private void setCells() {
 //        for(int i = 0 ; i < mapController.getGame().getCells().length ; i++){
 //            //System.out.println("make i cells" + i);

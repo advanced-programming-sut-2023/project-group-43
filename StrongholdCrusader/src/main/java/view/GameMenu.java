@@ -2,44 +2,32 @@ package view;
 
 import controller.GameControllers.GameController;
 import controller.GameControllers.GovernanceController;
+import controller.GameControllers.MapController;
 import controller.GameControllers.StoreController;
 import controller.TradeController;
-import enums.ImageEnum;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
 import enums.menuEnums.GameMenuCommands;
 import javafx.application.Application;
-import javafx.geometry.Orientation;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Cell;
 import model.DataBase;
-import model.Game;
 
+import java.net.URL;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
 
     private Stage stage;
-    private Scene scene;
-
-    private static GameController gameController = new GameController(new Game());
-
+    private static GameController gameController;
     private int turns, numberOfPlayers;
     private String x, y;
 
-    private AnchorPane root = new AnchorPane();
-    private ScrollBar scrollBar = new ScrollBar();
-
-    int i = -100;
-    int j = -100;
 
     public GameController getGameController() {
         return gameController;
@@ -52,8 +40,8 @@ public class GameMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        initialize();
-        scene = new Scene(root);
+        BorderPane changeEnvironmentMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/gameMenu.fxml")).toExternalForm()));
+        Scene scene = new Scene(changeEnvironmentMenuPane);
         stage.setScene(scene);
         stage.show();
     }
@@ -66,109 +54,33 @@ public class GameMenu extends Application {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-
-    private void initialize(){
-        setRootPane();
-        setScrollBar();
-        setCells();
-    }
-
-    private void setRootPane() {
-        root.setMinSize(1500,600);
-    }
-
-    private void setScrollBar() {
-        scrollBar.setMinSize(1000,700);
-        scrollBar.setValue(10);
-        scrollBar.setOrientation(Orientation.VERTICAL);
-        scrollBar.setUnitIncrement(12);
-        scrollBar.setBlockIncrement(10);
-        root.getChildren().add(scrollBar);
-    }
-
-    private void setCells() {
-        for(int i = 0 ; i < 100 ; i++){
-            i = -100;
-            j += 100;
-            for(int j = 0 ; j < 100 ; j++){
-                i += 100;
-                GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
-                setCell(cell);
+    public void run() throws Exception {
+        System.out.println("game menu:");
+        gameController.getGame().setCurrentPlayer(gameController.getGame().getCurrentUser());
+        while (turns > 0) {
+            System.out.println("turn " + (gameController.getGame().getTurns() - turns + 1) + ":");
+            System.out.println("turns left: " + turns);
+            for (int i = 0; i < numberOfPlayers; i++) {
+                onePlayerTurn();
+                gameController.goToNextPerson();
             }
+            gameController.applyChanges();
+            if (gameController.isGameEnded()) {
+                break;
+            }
+            turns--;
         }
+        gameController.updateScores();
+        System.out.println(gameController.showGameResult());
+        gameController.clearGame();
     }
 
-    private GridPane loadCell(Cell cell) {
-        GridPane gridPane = new GridPane();
-        gridPane.setMinSize(100,100);
-
-        Image texture = getTexture(cell);
-        Image building = null;
-        Image rock = null;
-
-        if(cell.getBuilding() != null)
-            building = getBuilding(cell);
-
-        if(cell.HasRock())
-            rock = getRock(cell);
-
-
-        ImageView textureImageview = new ImageView(texture);
-        ImageView item = new ImageView();
-
-        textureImageview.setFitHeight(100);
-        textureImageview.setFitWidth(100);
-        textureImageview.setImage(texture);
-
-        item.setFitWidth(80);
-        item.setFitHeight(80);
-
-        if(building != null)
-            item.setImage(building);
-
-        if(rock != null)
-            item.setImage(rock);
-
-        gridPane.getChildren().add(textureImageview);
-
-        if(item.getImage() != null)
-            gridPane.getChildren().add(item);
-
-
-        return gridPane;
+    public void enterMapMenu() throws Exception {
+        MapController mapController = new MapController(gameController.getGame());
+        MapMenu mapMenu = new MapMenu();
+        mapMenu.setMapController(mapController);
+        mapMenu.start(stage);
     }
-
-    private Image getTexture(Cell cell){
-        Image texture;
-        texture = ImageEnum.getImageByName(cell.getTexture().getName());
-        return texture;
-    }
-
-    private Image getBuilding(Cell cell){
-        Image building;
-        building = ImageEnum.getImageByName(cell.getBuilding().getName());
-        return building;
-    }
-
-    private Image getTree(Cell cell){
-        Image tree;
-        tree = ImageEnum.TREE.getImage();
-        return tree;
-    }
-
-    private Image getRock(Cell cell){
-        Image rock;
-        rock = ImageEnum.ROCK.getImage();
-        return rock;
-    }
-
-    //ignore tunnel
-    private void setCell(GridPane cell){
-        cell.setLayoutX(i);
-        cell.setLayoutY(j);
-        root.getChildren().add(cell);
-    }
-
 
     public void enterStoreMenu(String name) throws Exception {
         //TODO--> what is usage of name?
@@ -190,6 +102,182 @@ public class GameMenu extends Application {
         GovernanceMenu governanceMenu = new GovernanceMenu();
         governanceMenu.setGovernanceController(governanceController);
         governanceMenu.start(stage);
+    }
+
+    private Output selectBuilding(Matcher matcher) {
+        if (parseMatcher(matcher))
+            return gameController.selectBuilding(Integer.parseInt(x), Integer.parseInt(y));
+        return null;
+    }
+
+    private Output createUnit(Matcher matcher) {
+        String type = Validations.getInfo("t", matcher.group());
+        String count = Validations.getInfo("c", matcher.group());
+        if (type != null && count != null && count.matches("\\d+"))
+            return gameController.createUnit(type, Integer.parseInt(count));
+        return null;
+    }
+
+    private Output selectUnit(Matcher matcher) {
+        String type = Validations.getInfo("t", matcher.group());
+        if (parseMatcher(matcher) && type != null)
+            return gameController.selectUnit(Integer.parseInt(x), Integer.parseInt(y), type);
+        return null;
+    }
+
+    private Output moveUnit(Matcher matcher) {
+        if (parseMatcher(matcher))
+            return gameController.moveUnit(Integer.parseInt(x), Integer.parseInt(y));
+        return null;
+    }
+
+    private Output patrolUnit(Matcher matcher) {
+        String x1 = Validations.getInfo("x1", matcher.group());
+        String x2 = Validations.getInfo("x2", matcher.group());
+        String y1 = Validations.getInfo("y1", matcher.group());
+        String y2 = Validations.getInfo("y2", matcher.group());
+        if (x1 == null || x2 == null || y1 == null || y2 == null) return null;
+        if (x1.matches("\\d+") && x2.matches("\\d+") && y1.matches("\\d+") && y2.matches("\\d+"))
+            return gameController.patrolUnit(Integer.getInteger(x1), Integer.parseInt(y1), Integer.parseInt(x2), Integer.parseInt(y2));
+        return null;
+    }
+
+    private Output disbandUnit(Matcher matcher) {
+        return gameController.disbandUnit();
+    }
+
+    private Output setUnitState(Matcher matcher) {
+        String state = Validations.getInfo("s", matcher.group());
+        if (parseMatcher(matcher) && state != null)
+            return gameController.setUnitState(Integer.parseInt(x), Integer.parseInt(y), state);
+        return null;
+    }
+
+    private Output attack(Matcher matcher) {
+        if (parseMatcher(matcher))
+            return gameController.attack(Integer.parseInt(x), Integer.parseInt(y), null);
+        return null;
+    }
+
+    private Output attackEnemy(Matcher matcher) {
+        if (parseMatcher(matcher))
+            return gameController.attack(Integer.parseInt(x), Integer.parseInt(y), "e");
+        return null;
+    }
+
+    private Output pourOil(Matcher matcher) {
+        String direction = matcher.group("direction");
+        return gameController.pourOil(direction);
+    }
+
+    private Output digTunnel(Matcher matcher) {
+        if (parseMatcher(matcher))
+            return gameController.digTunnel(Integer.parseInt(x), Integer.parseInt(y));
+        return null;
+    }
+
+    private Output buildEquipment(Matcher matcher) {
+        String equipmentName = matcher.group("equipmentName");
+        return gameController.buildEquipment(equipmentName);
+    }
+
+    private boolean parseMatcher(Matcher matcher) {
+        x = Validations.getInfo("x", matcher.group());
+        y = Validations.getInfo("y", matcher.group());
+        if (x == null || y == null) return false;
+        if (x.matches("\\d+") && y.matches("\\d+")) return true;
+        return false;
+    }
+
+    private Output dropUnit(Matcher matcher) {
+        String x = Validations.getInfo("x", matcher.group());
+        String y = Validations.getInfo("y", matcher.group());
+        String type = Validations.getInfo("t", matcher.group());
+        String count = Validations.getInfo("c", matcher.group());
+        if (x != null && y != null && type != null && count != null) {
+            if (x.matches("\\d+") && y.matches("\\d+") && count.matches("\\d+"))
+                return gameController.dropUnit(Integer.parseInt(x), Integer.parseInt(y), type, Integer.parseInt(count));
+        }
+        return null;
+    }
+
+    private Output dropBuilding(Matcher matcher) {
+        String x = Validations.getInfo("x", matcher.group());
+        String y = Validations.getInfo("y", matcher.group());
+        String type = Validations.getInfo("t", matcher.group());
+        if (x != null && y != null && type != null) {
+            if (x.matches("\\d+") && y.matches("\\d+"))
+                return gameController.dropBuilding(Integer.parseInt(x), Integer.parseInt(y), type);
+        }
+        return null;
+    }
+
+    private void onePlayerTurn() throws Exception {
+        System.out.println(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
+        Scanner scanner = Menu.getScanner();
+        String input = "";
+        Output output;
+        Matcher matcher;
+        while (!input.equals("next person")) {
+            output = null;
+            //enter menu part
+            if (gameController.getGame().getSelectedBuilding() != null &&
+                    gameController.getGame().getSelectedBuilding().getName().matches("(market)|(barrack)|(engineer guild)|(mercenary post)")) {
+                enterStoreMenu(gameController.getGame().getSelectedBuilding().getName());
+                continue;
+            }
+            if (gameController.getGame().getSelectedBuilding() != null &&
+                    gameController.getGame().getSelectedBuilding().getName().matches("small stone gatehouse")) {
+                enterGovernmentMenu();
+                continue;
+            }
+            input = scanner.nextLine();
+            if (GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_TRADE_MENU) != null) {
+                enterTradeMenu();
+                continue;
+            } else if (GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_MAP_MENU) != null) {
+                enterMapMenu();
+                continue;
+            } else if (GameMenuCommands.getMatcher(input, GameMenuCommands.ENTER_GOVERNANCE_MENU) != null) {
+                enterGovernmentMenu();
+                continue;
+            }
+            if (input.equals("next person")) return;
+            //game
+            if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_BUILDING)) != null) {
+                output = selectBuilding(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.CREATE_UNIT)) != null) {
+                output = createUnit(matcher);
+            } else if (GameMenuCommands.getMatcher(input, GameMenuCommands.REPAIR_CASTLE) != null) {
+                output = gameController.repairCastle();
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT)) != null) {
+                output = selectUnit(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.MOVE_UNIT)) != null) {
+                output = moveUnit(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SET_UNITS_STATE)) != null) {
+                output = setUnitState(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.ATTACK)) != null) {
+                output = attack(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.ATTACK_ENEMY)) != null) {
+                output = attackEnemy(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.POUR_OIL)) != null) {
+                output = pourOil(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DIG_TUNNEL)) != null) {
+                output = digTunnel(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.BUILD_EQUIPMENT)) != null) {
+                output = buildEquipment(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DISBAND_UNIT)) != null) {
+                output = disbandUnit(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.PATROL_UNIT)) != null) {
+                output = patrolUnit(matcher);
+            } else if ((matcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DROP_UNIT)) != null) {
+                output = dropUnit(matcher);
+            } else if ((matcher = EnvironmentChangeCommands.getMatcher(input, EnvironmentChangeCommands.DROP_BUILDING)) != null) {
+                output = dropBuilding(matcher);
+            }
+            if (output == null) System.out.println("Invalid Command!");
+            else System.out.println(output.getString());
+        }
     }
 
 }
