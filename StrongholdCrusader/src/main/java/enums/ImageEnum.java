@@ -47,7 +47,7 @@ public enum ImageEnum {
     UNIT(new Image(ImageEnum.class.getResource("").toExternalForm()), "unit", ""),
 
     //stickers
-    COIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/material/coin.png")).toExternalForm())),
+    COIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/material/coin.png")).toExternalForm()),"coin","/images/material/coin.png"),
 
     //building
     HEADQUARTER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/headquarter.png")).toExternalForm()), "headquarter", "/images/building/headquarter.png"),
@@ -91,26 +91,26 @@ public enum ImageEnum {
     MARKET(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/market.png")).toExternalForm()), "market", "/images/building/market.png"),
     ENGINEER_GUILD(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/enginnerGuild.gif")).toExternalForm()), "engineerGuild", "/images/building/enginnerGuild.gif"),
     MERCENARY_POST(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/mercenaryPost.png")).toExternalForm()), "mercenaryPost","/images/building/mercenaryPost.png"),
-    OX_TETHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/oxtether.gif")).toExternalForm()), "oxTether", "/images/building/oxtether.gif");
+    OX_TETHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/oxtether.gif")).toExternalForm()), "oxTether", "/images/building/oxtether.gif"),
 
 
     //texture
-    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/ground.png")).toExternalForm()), "ground", ) ,
-    GRAVEL_GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/gravelGround.png")).toExternalForm()) , ),
-    BOULDER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/boulder.png")).toExternalForm())),
-    ROCK(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/rock.png")).toExternalForm())),
+    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/ground.png")).toExternalForm()), "ground","/images/texture/ground.png"),
+    GRAVEL_GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/gravelGround.png")).toExternalForm()),"gravelGround" ,""),
+    BOULDER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/boulder.png")).toExternalForm()),"boulder","/images/texture/boulder.png"),
+    ROCK(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/rock.png")).toExternalForm()),"rock","/images/texture/rock.png"),
     //IRON(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/")).toExternalForm())),
-    GRASS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/denseGrass.png")).toExternalForm())),
-    MEADOW(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/grass.png")).toExternalForm())),
-    DENSE_GRASSLAND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/meadow.png")).toExternalForm())),
-    OIL(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/oil.png")).toExternalForm())),
-    PLAIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/plain.png")).toExternalForm())),
-    SHALLOW_WATER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/shallowWater.png")).toExternalForm())),
-    RIVER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm())),
-    SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/smallPond.png")).toExternalForm())),
-    BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.png")).toExternalForm())),
-    BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.png")).toExternalForm())),
-    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.png")).toExternalForm()));
+    GRASS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/denseGrass.png")).toExternalForm()),"grass","/images/texture/denseGrass.png"),
+    MEADOW(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/grass.png")).toExternalForm()),"meadow","/images/texture/grass.png"),
+    DENSE_GRASSLAND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/meadow.png")).toExternalForm()) ,"denseGrassland", "/images/texture/meadow.png"),
+    OIL(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/oil.png")).toExternalForm()),"oil","/images/texture/oil.png"),
+    PLAIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/plain.png")).toExternalForm()) ,"plain" , "/images/texture/plain.png"),
+    SHALLOW_WATER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/shallowWater.png")).toExternalForm()) ,"shallowWater","/images/texture/shallowWater.png"),
+    RIVER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm()),"river","/images/texture/river.png"),
+    SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/smallPond.png")).toExternalForm()),"smallPond","/images/texture/smallPond.png"),
+    BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.png")).toExternalForm()),"bigPond","/images/texture/bigPond.png"),
+    BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.png")).toExternalForm()),"beach","/images/texture/beach.png"),
+    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.png")).toExternalForm()),"sea","/images/texture/sea.png");
 
     private Image image;
     private String name;
