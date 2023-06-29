@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
@@ -71,45 +72,58 @@ public class MapMenu extends Application {
         gridPane.setMinSize(20,20);
 
         Image texture = getTexture(cell);
-        Image Building = getBuilding(cell);
+        Image building = getBuilding(cell);
         Image tree = getTree(cell);
         Image rock = getRock(cell);
+
+        ImageView textureImageview = new ImageView(texture);
+        textureImageview.setFitHeight(20);
+        textureImageview.setFitWidth(20);
+
+        ImageView item = new ImageView();
+        item.setFitWidth(10);
+        item.setFitHeight(10);
+
+
+        if(building != null)
+            item.setImage(building);
+
+        if(tree != null)
+            item.setImage(tree);
+
+        if(rock != null)
+            item.setImage(rock);
+
+        gridPane.getChildren().add(textureImageview);
+        if(item.getImage() != null)
+            gridPane.getChildren().add(item);
 
         return gridPane;
     }
 
     private Image getTexture(Cell cell){
         Image texture;
-        switch (cell.getTexture()){
-            case SEA -> ;
-            case OIL ->;
-            case IRON ->;
-            case ROCK -> ;
-            case BEACH -> ;
-            case GRASS -> ;
-            case PLAIN -> ;
-            case DENSE_GRASSLAND -> ;
-            case RIVER -> ;
-            case GROUND -> ;
-            case BIG_POND -> ;
-            case SMALL_POND -> ;
-            case SHALLOW_WATER -> ;
-            case BOULDER -> ;
-            case MEADOW ->;
-            case GRAVEL_GROUND -> ;
-            default -> texture = null;
-        }
+        texture = ImageEnum.getImageByName(cell.getTexture().name());
         return texture;
     }
 
     private Image getBuilding(Cell cell){
         Image building;
-
+        building = ImageEnum.getImageByName(cell.getTexture().name());
+        return building;
     }
 
-    private Image getTree(Cell cell){}
+    private Image getTree(Cell cell){
+        Image tree;
+        tree = ImageEnum.TREE.getImage();
+        return tree;
+    }
 
-    private Image getRock(Cell cell){}
+    private Image getRock(Cell cell){
+        Image rock;
+        rock = ImageEnum.ROCK.getImage();
+        return rock;
+    }
 
     //ignore tunnel
     private void setCell(GridPane cell){
