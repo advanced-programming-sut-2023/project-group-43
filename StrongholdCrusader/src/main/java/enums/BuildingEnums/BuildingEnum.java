@@ -44,6 +44,7 @@ public enum BuildingEnum {
     BARRACK("barrack", 0, 15, 0, 300, 0, ImageEnum.BARRACK.getImage()),
     //------> 2) foods
     BAKERY("bakery", 10, 0, 0, 100, 1, ImageEnum.BAKERY.getImage()),
+
     DAIRY_PRODUCTS("dairy products", 10, 0, 0, 100, 1, ImageEnum.DAIRY_PRODUCT.getImage()),
     BEER_BREWING("beer brewing", 10, 0, 0, 100, 1, ImageEnum.BEER_BREWING.getImage()),
     MILL("mill", 20, 0, 0, 200, 3, ImageEnum.MILL.getImage()),
