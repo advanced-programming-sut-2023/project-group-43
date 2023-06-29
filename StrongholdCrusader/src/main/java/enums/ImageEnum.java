@@ -48,7 +48,7 @@ public enum ImageEnum {
 
     //stickers
     COIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/material/coin.png")).toExternalForm()),"coin","/images/material/coin.png"),
-    TREE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/material/coin.png")).toExternalForm()),"tree","/images/building/tree.png"),
+    TREE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/tree.png")).toExternalForm()),"tree","/images/building/tree.png"),
 
     //building
     HEADQUARTER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/building/headquarter.png")).toExternalForm()), "headquarter", "/images/building/headquarter.png"),
@@ -96,22 +96,22 @@ public enum ImageEnum {
 
 
     //texture
-    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/ground.png")).toExternalForm()), "ground","/images/texture/default.jpg"),
+    GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/default.jpg")).toExternalForm()), "ground","/images/texture/default.jpg"),
     GRAVEL_GROUND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/pebble.jpg")).toExternalForm()),"Gravel ground" ,"/images/texture/pebble.jpg"),
     BOULDER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/boulder.png")).toExternalForm()),"boulder","/images/texture/boulder.png"),
     ROCK(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/rock.png")).toExternalForm()),"rock","/images/texture/rock.png"),
     //IRON(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/")).toExternalForm())),
-    GRASS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/denseGrass.png")).toExternalForm()),"grass","/images/texture/denseGrass.jpg"),
+    GRASS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/denseGrass.jpg")).toExternalForm()),"grass","/images/texture/denseGrass.jpg"),
     MEADOW(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/grass.png")).toExternalForm()),"meadow","/images/texture/grass.png"),
-    DENSE_GRASSLAND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/meadow.png")).toExternalForm()) ,"dense grassland", "/images/texture/meadow.jpg"),
-    OIL(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/oil.png")).toExternalForm()),"oil","/images/texture/oil.jpg"),
+    DENSE_GRASSLAND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/meadow.jpg")).toExternalForm()) ,"dense grassland", "/images/texture/meadow.jpg"),
+    OIL(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/oil.jpg")).toExternalForm()),"oil","/images/texture/oil.jpg"),
     PLAIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/plain.png")).toExternalForm()) ,"plain" , "/images/texture/plain.png"),
     SHALLOW_WATER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/shallowWater.png")).toExternalForm()) ,"shallow water","/images/texture/shallowWater.png"),
     RIVER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm()),"river","/images/texture/river.png"),
     SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/smallPond.png")).toExternalForm()),"small pond","/images/texture/smallPond.png"),
-    BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.png")).toExternalForm()),"big pond","/images/texture/bigPond.jpg"),
-    BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.png")).toExternalForm()),"beach","/images/texture/beach.jpg"),
-    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.png")).toExternalForm()),"sea","/images/texture/sea.jpg");
+    BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.jpg")).toExternalForm()),"big pond","/images/texture/bigPond.jpg"),
+    BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.jpg")).toExternalForm()),"beach","/images/texture/beach.jpg"),
+    SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.jpg")).toExternalForm()),"sea","/images/texture/sea.jpg");
 
 
 
@@ -138,8 +138,10 @@ public enum ImageEnum {
 
     public static Image getImageByName(String name){
         for(ImageEnum imageEnum : ImageEnum.values()){
-            if(imageEnum.getName().equals(name))
+            System.out.println(imageEnum.getName());
+            if(imageEnum.getName().equals(name)) {
                 return imageEnum.getImage();
+            }
         }
         return null;
     }

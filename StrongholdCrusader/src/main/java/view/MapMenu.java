@@ -4,6 +4,7 @@ import controller.GameControllers.MapController;
 import enums.ImageEnum;
 import enums.environmentEnums.Texture;
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
@@ -28,8 +29,8 @@ public class MapMenu extends Application {
     private AnchorPane root = new AnchorPane();
     private ScrollBar scrollBar = new ScrollBar();
 
-    int x = -20;
-    int y = -20;
+    int x = -50;
+    int y = -50;
     public void setMapController(MapController mapController) {
         this.mapController = mapController;
     }
@@ -51,12 +52,15 @@ public class MapMenu extends Application {
     }
 
     private void setRootPane() {
-        root.setMinSize(1600,800);
+        root.setMinSize(1500,600);
     }
 
     private void setScrollBar() {
-        //ScrollBar scrollBar = new ScrollBar();
-        scrollBar.setMinSize(1600,800);
+        scrollBar.setMinSize(1000,700);
+        scrollBar.setValue(10);
+        scrollBar.setOrientation(Orientation.VERTICAL);
+        scrollBar.setUnitIncrement(12);
+        scrollBar.setBlockIncrement(10);
         root.getChildren().add(scrollBar);
     }
 
@@ -71,13 +75,13 @@ public class MapMenu extends Application {
 //                setCell(cell);
 //            }
 //        }
-        for(int i = 0 ; i < 10 ; i++){
+        for(int i = 0 ; i < mapController.getGame().getRow() ; i++){
             //System.out.println("make i cells" + i);
-            x = -20;
-            y += 20;
-            for(int j = 0 ; j < 10 ; j++){
+            x = -50;
+            y += 50;
+            for(int j = 0 ; j < mapController.getGame().getColumn() ; j++){
                 //System.out.println("make j cells " + j);
-                x += 20;
+                x += 50;
                 GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
                 setCell(cell);
             }
@@ -86,47 +90,57 @@ public class MapMenu extends Application {
 
     private GridPane loadCell(Cell cell) {
         GridPane gridPane = new GridPane();
-        gridPane.setMinSize(20,20);
+        gridPane.setMinSize(50,50);
 
         Image texture = getTexture(cell);
-        Image building = getBuilding(cell);
+
+        Image building = null;
+        if(cell.getBuilding() != null)
+            building = getBuilding(cell);
+
         Image tree = getTree(cell);
         Image rock = getRock(cell);
 
+
         ImageView textureImageview = new ImageView(texture);
-        textureImageview.setFitHeight(20);
-        textureImageview.setFitWidth(20);
+        textureImageview.setFitHeight(50);
+        textureImageview.setFitWidth(50);
+        textureImageview.setImage(texture);
 
         ImageView item = new ImageView();
-        item.setFitWidth(10);
-        item.setFitHeight(10);
+        item.setFitWidth(30);
+        item.setFitHeight(30);
 
 
         if(building != null)
             item.setImage(building);
 
         if(tree != null)
-            item.setImage(tree);
+            //item.setImage(tree);
 
         if(rock != null)
-            item.setImage(rock);
+            //item.setImage(rock);
 
         gridPane.getChildren().add(textureImageview);
-        if(item.getImage() != null)
+
+        if(item.getImage() != null) {
+            System.out.println("add item");
             gridPane.getChildren().add(item);
+        }
 
         return gridPane;
     }
 
     private Image getTexture(Cell cell){
         Image texture;
+        System.out.println("cell name is " + cell.getTexture().name());
         texture = ImageEnum.getImageByName(cell.getTexture().name());
         return texture;
     }
 
     private Image getBuilding(Cell cell){
         Image building;
-        building = ImageEnum.getImageByName(cell.getTexture().name());
+        building = ImageEnum.getImageByName(cell.getBuilding().getName());
         return building;
     }
 
