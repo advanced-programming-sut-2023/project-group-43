@@ -15,7 +15,7 @@ public class miniMap {
     public ScrollBar scrollBar;
     public Pane pane = new Pane();
     public AnchorPane leftAnchorPane = new AnchorPane();
-    public Building selectedBuildingName;
+    public String selectedBuildingName;
     public ImageView[] allBuildingImages = new ImageView[41];
 
     public miniMap() {
@@ -96,8 +96,9 @@ public class miniMap {
     }
     public void addListenerToFindTheSelectedBuilding() {
         for (int i = 0; i <= 38; i++) {
+            String name = ImageEnum.getNameByImage(allBuildingImages[i].getImage());
             allBuildingImages[i].setOnMouseClicked(mouseEvent -> {
-                selectedBuildingName = ImageEnum.getNameByImage(allBuildingImages[i].getImage());
+                selectedBuildingName = name;
             });
         }
     }
