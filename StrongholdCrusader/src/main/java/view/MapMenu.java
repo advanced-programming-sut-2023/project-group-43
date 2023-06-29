@@ -2,7 +2,6 @@ package view;
 
 import controller.GameControllers.MapController;
 import enums.ImageEnum;
-import enums.environmentEnums.Texture;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -11,11 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Cell;
-import model.DataBase;
 import model.Game;
 
 public class MapMenu extends Application {
@@ -65,22 +61,10 @@ public class MapMenu extends Application {
     }
 
     private void setCells() {
-//        for(int i = 0 ; i < mapController.getGame().getCells().length ; i++){
-//            //System.out.println("make i cells" + i);
-//            y += 20;
-//            for(int j = 0 ; j < mapController.getGame().getCells().length ; j++){
-//                //System.out.println("make j cells " + j);
-//                x += 20;
-//                GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
-//                setCell(cell);
-//            }
-//        }
         for(int i = 0 ; i < mapController.getGame().getRow() ; i++){
-            //System.out.println("make i cells" + i);
             x = -100;
             y += 100;
             for(int j = 0 ; j < mapController.getGame().getColumn() ; j++){
-                //System.out.println("make j cells " + j);
                 x += 100;
                 GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
                 setCell(cell);
