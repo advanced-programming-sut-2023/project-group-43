@@ -15,6 +15,7 @@ import model.units.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 public class GameController {
 
@@ -387,6 +388,8 @@ public class GameController {
         updateWorkersEfficiency();
         updateDamageEfficiency();
         removeDeadGovernance();
+        illness();
+        updateIllness();
     }
 
     private void completeBuildings() {
@@ -598,6 +601,44 @@ public class GameController {
             }
         }
     }
+    public void illness() {
+        int length = game.getCells().length;
+        int width = game.getCells()[0].length;
+        Random lengthRandom = new Random();
+        int lengthResult = lengthRandom.nextInt(length + 1) - 1;
+        Random widthRandom = new Random();
+        int widthResult = widthRandom.nextInt(width + 1) - 1;
+        int flag = 0;
+        if (lengthResult >= 0 && widthResult >= 0) {
+            for (int i = 0; i < game.getCells()[lengthResult][widthResult].getUnits().size(); i++) {
+                if (game.getCells()[lengthResult][widthResult].getUnits().get(i).getName().equals("engineer"))
+                    flag = 1;
+            }
+        }
+        if (flag == 0) {
+            game.getCells()[lengthResult][widthResult].setIllness(true);
+            game.getCells()[lengthResult][widthResult].setTexture(Texture.ILLNESS);
+        }
+    }
+    private void updateIllness() {
+        for (int i = 0; i < game.getCells().length; i++) {
+            for (int j = 0; j < game.getCells()[0].length; j++) {
+                if (game.getCells()[i][j].isIllness() && game.getCells()[i][j].getBuilding() != null) {
+                    int flag = 0;
+                    for (int k = 0; k < game.getCells()[i][j].getUnits().size(); k++) {
+                        if (game.getCells()[i][j].getUnits().get(k).getOwner().equals(game.getCells()[i][j].getBuilding().getOwner()) && game.getCells()[i][j].getUnits().get(k).getName().equals("engineer"))
+                            flag = 1;
+                    }
+                    if (flag == 0)
+                        game.getCells()[i][j].getBuilding().getOwner().getGovernance().setPopularity(game.getCells()[i][j].getBuilding().getOwner().getGovernance().getPopulation() - 1);
+                    else {
+                        game.getCells()[i][j].setTexture(Texture.GROUND);
+                        game.getCells()[i][j].setIllness(false);
+                    }
+                }
+            }
+        }
+    }
 
     private void updateTaxIncome() {
         Governance governance;
@@ -694,7 +735,6 @@ public class GameController {
                 game.getPlayers().get(i).getGovernance().setLordDead(true);
         }
     }
-
 
     public boolean isGameEnded() {
         return game.getPlayers().size() == calculateDeadGovernance() + 1;
