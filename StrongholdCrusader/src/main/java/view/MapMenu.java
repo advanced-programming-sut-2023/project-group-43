@@ -29,8 +29,8 @@ public class MapMenu extends Application {
     private AnchorPane root = new AnchorPane();
     private ScrollBar scrollBar = new ScrollBar();
 
-    int x = -50;
-    int y = -50;
+    int x = -100;
+    int y = -100;
     public void setMapController(MapController mapController) {
         this.mapController = mapController;
     }
@@ -77,11 +77,11 @@ public class MapMenu extends Application {
 //        }
         for(int i = 0 ; i < mapController.getGame().getRow() ; i++){
             //System.out.println("make i cells" + i);
-            x = -50;
-            y += 50;
+            x = -150;
+            y += 150;
             for(int j = 0 ; j < mapController.getGame().getColumn() ; j++){
                 //System.out.println("make j cells " + j);
-                x += 50;
+                x += 150;
                 GridPane cell = loadCell(mapController.getGame().getCells()[i][j]);
                 setCell(cell);
             }
@@ -90,51 +90,47 @@ public class MapMenu extends Application {
 
     private GridPane loadCell(Cell cell) {
         GridPane gridPane = new GridPane();
-        gridPane.setMinSize(50,50);
+        gridPane.setMinSize(100,100);
 
         Image texture = getTexture(cell);
-
         Image building = null;
+        Image rock = null;
+
         if(cell.getBuilding() != null)
             building = getBuilding(cell);
 
-        Image tree = getTree(cell);
-        Image rock = getRock(cell);
+        if(cell.HasRock())
+            rock = getRock(cell);
 
 
         ImageView textureImageview = new ImageView(texture);
-        textureImageview.setFitHeight(50);
-        textureImageview.setFitWidth(50);
+        ImageView item = new ImageView();
+
+        textureImageview.setFitHeight(100);
+        textureImageview.setFitWidth(100);
         textureImageview.setImage(texture);
 
-        ImageView item = new ImageView();
-        item.setFitWidth(30);
-        item.setFitHeight(30);
-
+        item.setFitWidth(80);
+        item.setFitHeight(80);
 
         if(building != null)
             item.setImage(building);
 
-        if(tree != null)
-            //item.setImage(tree);
-
         if(rock != null)
-            //item.setImage(rock);
+            item.setImage(rock);
 
         gridPane.getChildren().add(textureImageview);
 
-        if(item.getImage() != null) {
-            System.out.println("add item");
+        if(item.getImage() != null)
             gridPane.getChildren().add(item);
-        }
+
 
         return gridPane;
     }
 
     private Image getTexture(Cell cell){
         Image texture;
-        System.out.println("cell name is " + cell.getTexture().name());
-        texture = ImageEnum.getImageByName(cell.getTexture().name());
+        texture = ImageEnum.getImageByName(cell.getTexture().getName());
         return texture;
     }
 
