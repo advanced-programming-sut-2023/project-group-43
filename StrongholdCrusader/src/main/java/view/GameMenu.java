@@ -34,7 +34,7 @@ public class GameMenu extends Application {
     private AnchorPane anchorPane = new AnchorPane();
     private ScrollBar scrollBar = new ScrollBar();
 
-    private int size = 100;
+    private int size = 50;
     private int xPosition = 0;
     private int yPosition = 0;
 
@@ -76,6 +76,36 @@ public class GameMenu extends Application {
         addDirectionButton(down, "down", 600, 600);
         addDirectionButton(right, "right", 1200, 400);
         addDirectionButton(left, "back", 10, 400);
+        addFunctions(up, down, right, left);
+    }
+
+    private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left) {
+        up.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (yPosition > size) yPosition -= size;
+                setCells();
+            }
+        });
+        down.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (yPosition < size * gameController.getGame().getColumn()) yPosition += size;
+                setCells();
+            }
+        });right.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (xPosition < size * gameController.getGame().getRow()) xPosition += size;
+                setCells();
+            }
+        });left.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (xPosition > size) xPosition -= size;
+                setCells();
+            }
+        });
     }
 
     private void addDirectionButton(Rectangle rectangle, String address, int x, int y) {
@@ -199,9 +229,11 @@ public class GameMenu extends Application {
 
     //ignore tunnel
     private void setCell(GridPane cell, int i, int j) {
-        cell.setLayoutX(i);
-        cell.setLayoutY(j);
-        root.getChildren().add(cell);
+        if (i >= 0 && i < 1200 && j >= 0 && j < 600) {
+            cell.setLayoutX(i);
+            cell.setLayoutY(j);
+            root.getChildren().add(cell);
+        }
     }
 
     public void setTurns(int turns) {
