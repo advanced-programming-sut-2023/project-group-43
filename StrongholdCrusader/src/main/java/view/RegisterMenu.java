@@ -90,7 +90,8 @@ public class RegisterMenu extends Application {
             if ((output = RegisterAndLoginController.checkPassword(password.getText())) == null)
                 System.out.println("todo");
                 //passwordError.setText("ok");
-            //else passwordError.setText(output.getString());
+            //else passwordError.setText(output.getString());خ
+            System.out.println("nothing");
         });
         passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
