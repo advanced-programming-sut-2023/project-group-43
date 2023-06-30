@@ -53,7 +53,9 @@ public class ChangeEnvironmentController {
         }
         game.setCells(new Cell[row][column]);
         GameController.setDefaultMaps(row, column);
+
         Cell[][] cells = GameController.getDefaultMaps(mapOption);
+
         game.setCells(cells);
         game.setTurns(turns);
         return Output.SUCCESSFUL_MAP_GENERATION;
@@ -144,36 +146,18 @@ public class ChangeEnvironmentController {
     public boolean enterGameMenu(ArrayList<String> usernames, int row, int turns, int mapOption) throws Exception {
         Output output = generateMap(usernames, row, row, turns, mapOption);
         if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
+
         GameController gameController = new GameController(game);
         gameController.initializeGame();
+
         GameMenu gameMenu = new GameMenu();
         gameMenu.setGameController(gameController);
         gameMenu.setTurns(game.getTurns());
         gameMenu.setNumberOfPlayers(game.getPlayers().size());
         gameMenu.start(RegisterMenu.getStage());
+
         return true;
     }
 
-    public String goToNextPerson() {
-        User user = null;
-        boolean isNextPlayerFound = false;
-        if (game.getCurrentPlayer().getGovernance().getBuildingByName("headquarter") == null) {
-            return "you haven't selected your headquarter yet";
-        }
-        for (User player : game.getPlayers()) {
-            if (isNextPlayerFound) {
-                game.setCurrentPlayer(player);
-                user = player;
-                break;
-            }
-            if (player.equals(game.getCurrentPlayer())) {
-                isNextPlayerFound = true;
-            }
-        }
-        if (user == null) {
-            return "everyone has changed map please start game";
-        }
-        return game.getCurrentPlayer().getUsername() + " can change map";
-    }
 
 }
