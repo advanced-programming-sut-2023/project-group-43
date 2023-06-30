@@ -20,7 +20,7 @@ import java.util.Random;
 
 public class GameController {
 
-    private final Game game;
+    private final Game game ;
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
