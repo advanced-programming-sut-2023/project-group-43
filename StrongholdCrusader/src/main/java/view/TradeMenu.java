@@ -112,8 +112,8 @@ public class TradeMenu extends Application {
 
         //TODO --> I'm not sure about users
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).equals(DataBase.getInstance().findLoggedInUser())) continue;
-            Button button = new Button();
+            if (users.get(i).equals(tradeController.getGame().getCurrentUser()))continue;
+            Button button = new Button(users.get(i).getUsername());
             int finalI = i;
             button.setOnAction(ae -> showPersonDetails(users.get(finalI)));
             vBox.getChildren().add(button);
@@ -145,8 +145,15 @@ public class TradeMenu extends Application {
 
         HashMap storage = user.getGovernance().getGovernanceResource().getStorage();
 
+        System.out.println( "governance" + user.getGovernance() == null);
+        System.out.println( "governance resource is null " + user.getGovernance().getGovernanceResource() == null);
+        System.out.println( "storage is null" + user.getGovernance().getGovernanceResource().getStorage() == null);
+        System.out.println("size :" + user.getGovernance().getGovernanceResource().getStorage().size());
+
         for(int i = 0 ; i < storage.size(); i++){
             Material material = (Material) storage.get(i);
+            Button materialButton = new Button();
+            vBox.getChildren().add(materialButton);
         }
 
 

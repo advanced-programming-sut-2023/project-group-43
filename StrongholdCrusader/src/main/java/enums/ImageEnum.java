@@ -108,7 +108,7 @@ public enum ImageEnum {
     PLAIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/plain.png")).toExternalForm()) ,"plain" , "/images/texture/plain.png"),
     SHALLOW_WATER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/shallowWater.png")).toExternalForm()) ,"shallow water","/images/texture/shallowWater.png"),
     RIVER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm()),"river","/images/texture/river.png"),
-    SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/smallPond.png")).toExternalForm()),"small pond","/images/texture/smallPond.png"),
+    SMALL_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm()),"small pond","/images/texture/smallPond.png"),
     BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.jpg")).toExternalForm()),"big pond","/images/texture/bigPond.jpg"),
     BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.jpg")).toExternalForm()),"beach","/images/texture/beach.jpg"),
     SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.jpg")).toExternalForm()),"sea","/images/texture/sea.jpg"),

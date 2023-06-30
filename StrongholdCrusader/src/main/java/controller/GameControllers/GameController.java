@@ -73,7 +73,7 @@ public class GameController {
                 else if ((i % 9) == 1) cells[i][j].setTexture(Texture.GRAVEL_GROUND);
                 else if ((i % 9) == 2) cells[i][j].setTexture(Texture.BOULDER);
                 else if ((i % 9) == 3) cells[i][j].setTexture(Texture.ROCK);
-                else if ((i % 9) == 4) cells[i][j].setTexture(Texture.IRON);
+                else if ((i % 9) == 4) cells[i][j].setTexture(Texture.GROUND);
                 else if ((i % 9) == 5) cells[i][j].setTexture(Texture.GRASS);
                 else if ((i % 9) == 6) cells[i][j].setTexture(Texture.MEADOW);
                 else if ((i % 9) == 7) cells[i][j].setTexture(Texture.DENSE_GRASSLAND);
@@ -91,13 +91,13 @@ public class GameController {
                 else if ((i % 9) == 2) cells2[i][j].setTexture(Texture.ROCK);
                 else if ((i % 9) == 3) cells2[i][j].setTexture(Texture.BOULDER);
                 else if ((i % 9) == 4) cells2[i][j].setTexture(Texture.GRASS);
-                else if ((i % 9) == 5) cells2[i][j].setTexture(Texture.IRON);
+                else if ((i % 9) == 5) cells2[i][j].setTexture(Texture.GROUND);
                 else if ((i % 9) == 6) cells2[i][j].setTexture(Texture.DENSE_GRASSLAND);
                 else if ((i % 9) == 7) cells2[i][j].setTexture(Texture.PLAIN);
                 else cells2[i][j].setTexture(Texture.MEADOW);
             }
         }
-        completeMap(column, cells2, Texture.BEACH, Texture.BIG_POND, Texture.SMALL_POND, Texture.RIVER, Texture.SHALLOW_WATER, Texture.OIL);
+        completeMap(column, cells2, Texture.BEACH, Texture.GROUND, Texture.GROUND, Texture.RIVER, Texture.SHALLOW_WATER, Texture.OIL);
         defaultMaps.put("option number 2", cells2);
     }
 
