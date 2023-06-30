@@ -42,20 +42,21 @@ public class ProfileMenu extends Application {
     private PasswordField oldPassword;
     @FXML
     private PasswordField newPassword;
+    @FXML
     private PasswordField passwordConfirmation;
-    public ProfileController profileController;
+    public static ProfileController profileController;
     public CheckBox sloganCheckBox;
+    public CheckBox randomSlogan;
+    public Label sloganError;
     public Label usernameError;
     public Label passwordError;
     public Label passwordConfirmationError;
-    public Label sloganError;
     public Label emailError;
     public Label nicknameError;
     public TextField passwordRecoveryAnswer;
     public ChoiceBox<String> passwordRecoveryQuestion;
     public TextField passwordAnswerConfirmation;
     public Label questionError;
-    public CheckBox randomSlogan;
     public Rectangle captchaRec;
     public TextField captcha;
     private String captchaNumber;
@@ -63,55 +64,34 @@ public class ProfileMenu extends Application {
     public HBox picture = new HBox();
     public ChoiceBox avatar;
     public BorderPane pane;
-    public String profileMenuName;
     public void setProfileController(String username) {
-        profileMenuName = username;
-        profileController = new ProfileController(DataBase.getInstance().getUserByUsername(profileMenuName));
+        User currentUser = DataBase.getInstance().getUserByUsername(username);
+       profileController = new ProfileController(currentUser);
     }
     @Override
     public void start(Stage stage) throws Exception {
         profileMenuStage = stage;
-        //BorderPane profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
-        BorderPane profilePane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
+        BorderPane profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
+        //BorderPane profilePane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
         Scene scene = new Scene(profilePane);
         profileMenuStage.setScene(scene);
         profilePane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
-        if (profileController == null) System.out.println("null1");
         profileMenuStage.show();
-        if (profileController == null) System.out.println("null2");
     }
     @FXML
     private void initialize() {
-        /*ObservableList<String> list = FXCollections.observableArrayList();
-        list.addAll("1", "2", "3", "4");
-        avatar.setItems(list);
-        avatar.setValue(profileMenuCurrentUser.getAvatarNumber());
-        newUsername.setText(profileMenuCurrentUser.getUsername());
-        newUsername.setDisable(true);
-        newUsernameListener();
-        newNickname.setText(profileMenuCurrentUser.getNickname());
-        newNicknameListener();
-        newNickname.setDisable(true);
-        newEmail.setText(profileMenuCurrentUser.getEmail());
-        newEmailListener();
-        newEmail.setDisable(true);
-        if (profileMenuCurrentUser.getSlogan().equals("")) newSlogan.setText("Slogan is empty");
-        else newSlogan.setText(profileMenuCurrentUser.getSlogan());
-        newSlogan.setDisable(true);
-        newSloganListener();
-        oldPassword.setText(profileMenuCurrentUser.getPassword());*/
-
+        //ObservableList<String> list = FXCollections.observableArrayList();
+        //list.addAll("1", "2", "3", "4");
+        //avatar.setItems(list);
+        //avatar.setValue(profileMenuCurrentUser.getAvatarNumber());
+        newUsername.setText(profileController.getCurrentUser().getUsername());
+        newNickname.setText(profileController.getCurrentUser().getNickname());
+        newEmail.setText(profileController.getCurrentUser().getEmail());
+        if (profileController.getCurrentUser().getSlogan() == null) newSlogan.setText("Slogan is empty");
+        else newSlogan.setText(profileController.getCurrentUser().getSlogan());
         /*
-        passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
-            Output output;
-            if ((output = RegisterAndLoginController.checkPasswordConfirmation(passwordConfirmation.getText(),
-                    newPassword.getText())) == null)
-                passwordConfirmationError.setText("ok");
-            else passwordConfirmationError.setText(output.getString());
-        });
         passwordAnswerConfirmation.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
-
         passwordRecoveryAnswer.textProperty().addListener((observable, oldText, newText) -> checkQuestion());
         new RegisterMenu().generateNewCaptcha();*/
         newUsername.textProperty().addListener((observable, oldText, newText) -> {
@@ -120,17 +100,23 @@ public class ProfileMenu extends Application {
                 usernameError.setText("ok");
             else usernameError.setText(output.getString());
         });
+        newNickname.textProperty().addListener((observable, oldText, newText) -> {
+            Output output;
+            if ((output = RegisterAndLoginController.checkNickname(newNickname.getText())) == null)
+                nicknameError.setText("ok");
+            else nicknameError.setText(output.getString());
+        });
         newPassword.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkPassword(newPassword.getText())) == null)
                 passwordError.setText("ok");
             else passwordError.setText(output.getString());
         });
-        newNickname.textProperty().addListener((observable, oldText, newText) -> {
+        passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
-            if ((output = RegisterAndLoginController.checkNickname(newNickname.getText())) == null)
-                nicknameError.setText("ok");
-            else nicknameError.setText(output.getString());
+            if ((output = RegisterAndLoginController.checkPasswordConfirmation(passwordConfirmation.getText(), newPassword.getText())) == null)
+                passwordConfirmationError.setText("ok");
+            else passwordConfirmationError.setText(output.getString());
         });
         newEmail.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
@@ -202,17 +188,27 @@ public class ProfileMenu extends Application {
         alert.show();
         generateNewCaptcha();
     }
-
+    public void enterProfileMenu() throws Exception {
+        String username = profileController.getCurrentUser().getUsername();
+        ProfileMenu profileMenu = new ProfileMenu();
+        profileMenu.setProfileController(username);
+        profileMenu.start(RegisterMenu.getStage());
+    }
     public void saveNewUsername(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.NONE);
         if (usernameError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText(profileController.changeUsername(newUsername.getText()).getString());
         } else {
-            alert.setContentText("enter a new username!");
+            alert.setContentText("enter a new username or enter the captcha correctly!");
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
+        try {
+            enterProfileMenu();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //showAlert(profileController.changeUsername(newUsername.getText()));
     }
 
@@ -222,10 +218,15 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText(profileController.changeNickname(newNickname.getText()).getString());
         } else {
-            alert.setContentText("enter a new nickname!");
+            alert.setContentText("enter a new nickname or enter the captcha correctly!");
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
+        try {
+            enterProfileMenu();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void saveNewEmail(MouseEvent mouseEvent) {
@@ -234,10 +235,15 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText(profileController.changeEmail(newEmail.getText()).getString());
         } else {
-            alert.setContentText("enter a new email!");
+            alert.setContentText("enter a new email or enter the captcha correctly!");
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
+        try {
+            enterProfileMenu();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //showAlert(profileController.changeEmail(newEmail.getText()));
     }
 
@@ -247,23 +253,33 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText(profileController.changeSlogan(newSlogan.getText()).getString());
         } else {
-            alert.setContentText("enter a new slogan!");
+            alert.setContentText("enter a new slogan or enter the captcha correctly!");
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
+        try {
+            enterProfileMenu();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //showAlert(profileController.changeSlogan(newSlogan.getText()));
     }
 
     public void saveNewPassword(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.NONE);
-        if (newPassword.getText().equals("ok") && captcha.getText().equals(captchaNumber) && profileMenuCurrentUser.getPassword().equals(oldPassword.getText())) {
+        if (newPassword.getText().equals("ok") && passwordConfirmation.getText().equals("ok") && captcha.getText().equals(captchaNumber) && profileController.getCurrentUser().getPassword().equals(oldPassword.getText())) {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText(profileController.changePassword(oldPassword.getText(), newPassword.getText()).getString());
         } else {
-            alert.setContentText("complete the fields correctly");
+            alert.setContentText("complete the fields correctly or enter the captcha correctly!");
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
+        try {
+            enterProfileMenu();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //showAlert(profileController.changePassword(oldPassword.getText(), newPassword.getText()));
     }
 
@@ -304,5 +320,22 @@ public class ProfileMenu extends Application {
             questionError.setText("not equal");
         else if (passwordAnswerConfirmation.getText().isEmpty()) questionError.setText("empty field");
         else questionError.setText("ok");
+    }
+    public void activateSlogan() {
+        if (sloganCheckBox.isSelected()) {
+            newSlogan.setDisable(false);
+            sloganError.setText("empty field!");
+        } else {
+            newSlogan.setDisable(true);
+            newSlogan.setText("");
+            sloganError.setText("ok");
+        }
+    }
+    public void chooseRandomSlogan() {
+        if (randomSlogan.isSelected()) {
+            sloganCheckBox.setSelected(true);
+            newSlogan.setDisable(false);
+            newSlogan.setText(RegisterAndLoginController.makeRandomSlogan());
+        }
     }
 }
