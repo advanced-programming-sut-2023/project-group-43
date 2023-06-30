@@ -6,7 +6,9 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -33,6 +35,9 @@ public class GovernanceMenu extends Application {
     public Rectangle back;
     public Rectangle allRec;
     public Label all;
+    public ChoiceBox foodChoiceBox;
+    public ChoiceBox taxChoiceBox;
+    public ScrollBar taxScrollBall;
     private Stage stage;
 
     private static Pane pane;
@@ -118,5 +123,9 @@ public class GovernanceMenu extends Application {
         GameMenu gameMenu = new GameMenu();
         gameMenu.setGameController(gameController);
         gameMenu.start(RegisterMenu.getStage());
+    }
+
+    public void applyChanges(MouseEvent mouseEvent) {
+        
     }
 }
