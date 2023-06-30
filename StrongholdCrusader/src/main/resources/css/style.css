@@ -12,7 +12,7 @@ Label {
     -fx-font-family: "Arial Black";
 }
 
-ChoiceBox {
+ChoiceBox, ScrollBar {
     -fx-background-color: #f6e0b9;
 
     -fx-background-radius: 15 15 15 15;

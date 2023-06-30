@@ -3,9 +3,12 @@ package view;
 import controller.GameControllers.GameController;
 import controller.GameControllers.GovernanceController;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -18,7 +21,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.regex.Matcher;
 
 
 public class GovernanceMenu extends Application {
@@ -37,10 +39,7 @@ public class GovernanceMenu extends Application {
     public Label all;
     public ChoiceBox foodChoiceBox;
     public ChoiceBox taxChoiceBox;
-    public ScrollBar taxScrollBall;
-    private Stage stage;
-
-    private static Pane pane;
+    public ScrollBar fearScrollBar;
 
     public GovernanceController getGovernanceController() {
         return governanceController;
@@ -67,6 +66,17 @@ public class GovernanceMenu extends Application {
         main.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/main.png").toExternalForm())));
         back.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/back.png").toExternalForm())));
         updateImages();
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.addAll("-2", "-1", "0", "1", "2");
+        foodChoiceBox.setItems(list);
+        foodChoiceBox.setValue(governanceController.getGame().getCurrentPlayer().getGovernance().getFoodRate().getRateNumber());
+        ObservableList<String> list2 = FXCollections.observableArrayList();
+        list2.addAll("-3", "-2", "-1", "0", "1", "2", "3");
+        taxChoiceBox.setItems(list2);
+        taxChoiceBox.setValue(governanceController.getGame().getCurrentPlayer().getGovernance().getTaxRate().getRateNumber());
+        fearScrollBar.setMin(-3);
+        fearScrollBar.setMax(8);
+        fearScrollBar.setValue(governanceController.getGame().getCurrentPlayer().getGovernance().getFearRate());
     }
 
     private void updateImages() {
@@ -103,18 +113,15 @@ public class GovernanceMenu extends Application {
 
     }
 
-    private String foodRate(Matcher matcher) {
-        int rate = Integer.parseInt(matcher.group("rate"));
+    private String foodRate(int rate) {
         return (governanceController.foodRate(rate)).getString();
     }
 
-    public String taxRate(Matcher matcher) {
-        int rate = Integer.parseInt(matcher.group("rate"));
+    public String taxRate(int rate) {
         return (governanceController.taxRate(rate)).getString();
     }
 
-    public String fearRate(Matcher matcher) {
-        int rate = Integer.parseInt(matcher.group("rate"));
+    public String fearRate(int rate) {
         return (governanceController.fearRate(rate)).getString();
     }
 
@@ -126,6 +133,13 @@ public class GovernanceMenu extends Application {
     }
 
     public void applyChanges(MouseEvent mouseEvent) {
-        
+        foodRate(Integer.parseInt(foodChoiceBox.getValue().toString()));
+        taxRate(Integer.parseInt(taxChoiceBox.getValue().toString()));
+        int fearRate = (int) Math.floor(fearScrollBar.getValue());
+        fearRate(fearRate);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("changes saved successfully!");
+        alert.show();
+        updateImages();
     }
 }
