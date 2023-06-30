@@ -6,6 +6,8 @@ import enums.Validations;
 import model.DataBase;
 import model.User;
 
+import java.util.ArrayList;
+
 public class ProfileController {
 
     User currentUser;
@@ -64,8 +66,18 @@ public class ProfileController {
         return currentUser.getScore();
     }
 
-    public int displayRank() {
-        return DataBase.getInstance().getRank(currentUser);
+    public String displayRank() {
+        StringBuilder output = new StringBuilder();
+        ArrayList<User> rankedUsers = DataBase.getInstance().getUsers();
+        for (int i = 0; i < rankedUsers.size(); i++) {
+            if (i != rankedUsers.size() - 1) {
+                output.append((i + 1) + " . " + rankedUsers.get(i).getUsername() + " : " + rankedUsers.get(i).getScore() + "\n");
+            }
+            else {
+                output.append((i + 1) + " . " + rankedUsers.get(i).getUsername() + " : " + rankedUsers.get(i).getScore());
+            }
+        }
+        return output.toString();
     }
 
     public String displaySlogan() {

@@ -3,13 +3,16 @@ package view;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
+import enums.ImageEnum;
 import enums.Output;
 import enums.Validations;
 import javafx.application.Application;
+import javafx.beans.binding.BooleanExpression;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -22,13 +25,15 @@ import javafx.stage.Stage;
 import model.DataBase;
 import model.User;
 
+import java.io.FileInputStream;
 import java.net.URL;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class ProfileMenu extends Application {
     public User profileMenuCurrentUser;
-
+    public Scene scene;
+    public static BorderPane profilePane;
     private Stage profileMenuStage;
     @FXML
     private TextField newUsername;
@@ -61,8 +66,11 @@ public class ProfileMenu extends Application {
     public TextField captcha;
     private String captchaNumber;
     public HBox userInfo = new HBox();
-    public HBox picture = new HBox();
-    public ChoiceBox avatar;
+    @FXML
+    public ChoiceBox<String> avatar = new ChoiceBox<>();
+    //public TextField avatarNumber;
+    @FXML
+    private Label avatarError;
     public BorderPane pane;
     public void setProfileController(String username) {
         User currentUser = DataBase.getInstance().getUserByUsername(username);
@@ -70,10 +78,15 @@ public class ProfileMenu extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
+        //ObservableList<String> list = FXCollections.observableArrayList();
+        //list.addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19");
+        //avatar.setItems(list);
         profileMenuStage = stage;
-        BorderPane profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
+        profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
         //BorderPane profilePane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
-        Scene scene = new Scene(profilePane);
+        Group root = new Group(changeAvatar());
+        profilePane.getChildren().add(root);
+        scene = new Scene(profilePane);
         profileMenuStage.setScene(scene);
         profilePane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/profileMenu.jpg").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
@@ -81,10 +94,6 @@ public class ProfileMenu extends Application {
     }
     @FXML
     private void initialize() {
-        //ObservableList<String> list = FXCollections.observableArrayList();
-        //list.addAll("1", "2", "3", "4");
-        //avatar.setItems(list);
-        //avatar.setValue(profileMenuCurrentUser.getAvatarNumber());
         newUsername.setText(profileController.getCurrentUser().getUsername());
         newNickname.setText(profileController.getCurrentUser().getNickname());
         newEmail.setText(profileController.getCurrentUser().getEmail());
@@ -100,6 +109,16 @@ public class ProfileMenu extends Application {
                 usernameError.setText("ok");
             else usernameError.setText(output.getString());
         });
+        avatar.setOnAction((event) -> {
+            int selectedIndex = avatar.getSelectionModel().getSelectedIndex();
+            Output output;
+            if ((output = RegisterAndLoginController.checkAvatar(avatar.getSelectionModel().getSelectedItem(), avatar.getSelectionModel().isEmpty())) == null)
+                avatarError.setText("ok");
+            else avatarError.setText(output.getString());
+        });
+        /*avatarNumber.textProperty().addListener((observable, oldText, newText) -> {
+
+        });*/
         newNickname.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkNickname(newNickname.getText())) == null)
@@ -136,13 +155,48 @@ public class ProfileMenu extends Application {
         captchaNumber = RegisterAndLoginController.chooseCaptcha();
         captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
-    public void changeAvatar() {
-        profileController.getCurrentUser().setAvatarNumber(Integer.parseInt(avatar.getValue().toString()));
-        if (picture.getChildren().size() > 0)
-            picture.getChildren().remove(0);
-        updateAvatar();
+    @FXML
+    private void saveNewAvatar(MouseEvent mouseEvent) {
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        if (!captcha.getText().equals(captchaNumber) || !avatarError.getText().equals("ok")) {
+            alert.setContentText("enter the captcha correctly or select a number!");
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.show();
+        }
+        else {
+            alert.setContentText("avatar changed successfully");
+            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+            alert.show();
+            if (avatar.getSelectionModel().isEmpty()) { profileController.getCurrentUser().setAvatarNumber(1); }
+            else { profileController.getCurrentUser().setAvatarNumber(Integer.parseInt(avatar.getSelectionModel().getSelectedItem().toString())); }
+            StringBuilder avatarPath = new StringBuilder();
+            avatarPath.append("/images/avatar/" + profileController.getCurrentUser().getAvatarNumber() + ".png");
+            Image image = new Image(Objects.requireNonNull(ProfileMenu.class.getResource(avatarPath.toString())).toExternalForm());
+            ImageView imageView = new ImageView(image);
+            imageView.setX(25);
+            imageView.setY(10);
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(30);
+            imageView.setPreserveRatio(true);
+            //updateAvatar();
+            Group root = new Group(imageView);
+            profilePane.getChildren().add(root);
+        }
+        generateNewCaptcha();
     }
-    private void updateAvatar() {
+    public ImageView changeAvatar() {
+        profileController.getCurrentUser().setAvatarNumber(1);
+        Image image = new Image(Objects.requireNonNull(ProfileMenu.class.getResource("/images/avatar/1.png")).toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setX(25);
+        imageView.setY(10);
+        imageView.setFitHeight(30);
+        imageView.setFitWidth(30);
+        imageView.setPreserveRatio(true);
+        //updateAvatar();
+        return imageView;
+    }
+    /*private void updateAvatar() {
         pane.getChildren().remove(picture);
         picture = new HBox();
         picture.setLayoutX(120);
@@ -152,36 +206,7 @@ public class ProfileMenu extends Application {
                 profileController.getCurrentUser().getAvatarNumber() + ".jpg").toExternalForm())));
         picture.getChildren().add(rectangle);
         pane.getChildren().add(picture);
-    }
-    private void updateUsername() {
-        if (userInfo.getChildren().size() > 0)
-            userInfo.getChildren().remove(0);
-        pane.getChildren().remove(userInfo);
-        userInfo = new HBox();
-        Label username = new Label();
-        username.setText("username: " + profileController.getCurrentUser().getUsername());
-        username.setLayoutX(100);
-        username.setLayoutY(100);
-        userInfo = new HBox();
-        userInfo.setLayoutY(10);
-        userInfo.setLayoutX(250);
-        userInfo.getChildren().add(username);
-        pane.getChildren().add(userInfo);
-    }
-    private Output changePassword(Matcher matcher) {
-        String oldPassword = Validations.getInfo("o", matcher.group());
-        String newPassword = Validations.getInfo("n", matcher.group());
-        if (oldPassword == null || newPassword == null) return null;
-        return profileController.changePassword(oldPassword, newPassword);
-    }
-
-    private Output changeInfo(Matcher matcher) {
-        String info = null, flag = null;
-        flag = matcher.group("flag");
-        if ((info = matcher.group("info")) == null)
-            info = matcher.group("info2");
-        return profileController.changeInfo(flag, info);
-    }
+    }*/
     public void showAlert(Output output) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(output.getString());
@@ -204,14 +229,9 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
-        try {
-            enterProfileMenu();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        generateNewCaptcha();
         //showAlert(profileController.changeUsername(newUsername.getText()));
     }
-
     public void saveNewNickname(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.NONE);
         if (nicknameError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
@@ -222,13 +242,8 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
-        try {
-            enterProfileMenu();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        generateNewCaptcha();
     }
-
     public void saveNewEmail(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.NONE);
         if (emailError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
@@ -239,14 +254,9 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
-        try {
-            enterProfileMenu();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        generateNewCaptcha();
         //showAlert(profileController.changeEmail(newEmail.getText()));
     }
-
     public void saveNewSlogan(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.NONE);
         if (sloganError.getText().equals("ok") && captcha.getText().equals(captchaNumber)) {
@@ -257,14 +267,9 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
-        try {
-            enterProfileMenu();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        generateNewCaptcha();
         //showAlert(profileController.changeSlogan(newSlogan.getText()));
     }
-
     public void saveNewPassword(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.NONE);
         if (newPassword.getText().equals("ok") && passwordConfirmation.getText().equals("ok") && captcha.getText().equals(captchaNumber) && profileController.getCurrentUser().getPassword().equals(oldPassword.getText())) {
@@ -275,52 +280,38 @@ public class ProfileMenu extends Application {
             alert.setAlertType(Alert.AlertType.ERROR);
         }
         alert.show();
-        try {
-            enterProfileMenu();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        generateNewCaptcha();
         //showAlert(profileController.changePassword(oldPassword.getText(), newPassword.getText()));
     }
-
     public void removeSlogan(MouseEvent mouseEvent) {
         showAlert(profileController.removeSlogan());
+        generateNewCaptcha();
     }
-
     public void displaySlogan(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(profileController.displaySlogan());
         alert.show();
+        generateNewCaptcha();
     }
-
     public void displayHighScore(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(String.valueOf(profileController.displayHighScore()));
         alert.show();
+        generateNewCaptcha();
     }
-
     public void displayRank(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(String.valueOf(profileController.displayRank()));
         alert.show();
+        generateNewCaptcha();
     }
-
     public void displayProfile(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(profileController.displayAllProfile());
         alert.show();
+        generateNewCaptcha();
     }
 //TODO
-    public void back(MouseEvent mouseEvent) throws Exception {
-        //(new MainMenu()).setMainUserController(profileController.getCurrentUser().getUsername());
-        (new MainMenu()).start(RegisterMenu.getStage());
-    }
-    private void checkQuestion() {
-        if (!passwordRecoveryAnswer.getText().equals(passwordAnswerConfirmation.getText()))
-            questionError.setText("not equal");
-        else if (passwordAnswerConfirmation.getText().isEmpty()) questionError.setText("empty field");
-        else questionError.setText("ok");
-    }
     public void activateSlogan() {
         if (sloganCheckBox.isSelected()) {
             newSlogan.setDisable(false);
@@ -337,5 +328,43 @@ public class ProfileMenu extends Application {
             newSlogan.setDisable(false);
             newSlogan.setText(RegisterAndLoginController.makeRandomSlogan());
         }
+    }
+    public void back(MouseEvent mouseEvent) throws Exception {
+        //(new MainMenu()).setMainUserController(profileController.getCurrentUser().getUsername());
+        (new MainMenu()).start(RegisterMenu.getStage());
+    }
+    private void checkQuestion() {
+        if (!passwordRecoveryAnswer.getText().equals(passwordAnswerConfirmation.getText()))
+            questionError.setText("not equal");
+        else if (passwordAnswerConfirmation.getText().isEmpty()) questionError.setText("empty field");
+        else questionError.setText("ok");
+    }
+    private void updateUsername() {
+        if (userInfo.getChildren().size() > 0)
+            userInfo.getChildren().remove(0);
+        pane.getChildren().remove(userInfo);
+        userInfo = new HBox();
+        Label username = new Label();
+        username.setText("username: " + profileController.getCurrentUser().getUsername());
+        username.setLayoutX(100);
+        username.setLayoutY(100);
+        userInfo = new HBox();
+        userInfo.setLayoutY(10);
+        userInfo.setLayoutX(250);
+        userInfo.getChildren().add(username);
+        pane.getChildren().add(userInfo);
+    }
+    private Output changePassword(Matcher matcher) {
+        String oldPassword = Validations.getInfo("o", matcher.group());
+        String newPassword = Validations.getInfo("n", matcher.group());
+        if (oldPassword == null || newPassword == null) return null;
+        return profileController.changePassword(oldPassword, newPassword);
+    }
+    private Output changeInfo(Matcher matcher) {
+        String info = null, flag = null;
+        flag = matcher.group("flag");
+        if ((info = matcher.group("info")) == null)
+            info = matcher.group("info2");
+        return profileController.changeInfo(flag, info);
     }
 }
