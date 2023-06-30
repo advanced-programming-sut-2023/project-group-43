@@ -61,6 +61,8 @@ public class GameController {
     }
 
     public static void setDefaultMaps(int row, int column) {
+        System.out.println("this is row " + row);
+        System.out.println("this is column " + column);
         Cell[][] cells = new Cell[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {

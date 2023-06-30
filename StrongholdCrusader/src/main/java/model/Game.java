@@ -20,7 +20,7 @@ public class Game {
     private ArrayList<Trade> trades = new ArrayList<>();
 
     private static int tradeId = 0;
-    private Cell[][] cells = new Cell[200][200] ;
+    private Cell[][] cells;
 
     private Building selectedBuilding;
 

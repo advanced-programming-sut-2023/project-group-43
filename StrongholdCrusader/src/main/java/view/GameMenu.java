@@ -26,7 +26,7 @@ public class GameMenu extends Application {
     private Stage stage;
     private Scene scene;
 
-    private static GameController gameController = new GameController(new Game());
+    private static GameController gameController ;
     private int turns, numberOfPlayers;
     private String x, y;
 
@@ -95,16 +95,31 @@ public class GameMenu extends Application {
         root.getChildren().add(scrollBar);
     }
 
-    private void setCells() {
-        for (int i = 0; i < 15; i++) {
+//    private void setCells() {
+//        for (int i = 0; i < 15; i++) {
+//            i = -100;
+//            j += 100;
+//            for (int j = 0; j < 30; j++) {
+//                i += 100;
+//                if (j < gameController.getGame().getColumn() && i < gameController.getGame().getRow()) {
+//                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
+//                    setCell(cell);
+//                }
+//            }
+//        }
+//    }
+
+
+    private void setCells(){
+        for (int i = 0 ; i < gameController.getGame().getRow() ; i++){
+            System.out.println("This is " + i );
             i = -100;
             j += 100;
-            for (int j = 0; j < 30; j++) {
+            for(int j = 0 ; j < gameController.getGame().getColumn() ; j++){
+                System.out.println("This is " + j );
                 i += 100;
-                if (j < gameController.getGame().getColumn() && i < gameController.getGame().getRow()) {
-                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
-                    setCell(cell);
-                }
+                GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
+                setCell(cell);
             }
         }
     }

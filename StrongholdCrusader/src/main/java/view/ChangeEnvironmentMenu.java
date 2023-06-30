@@ -116,7 +116,7 @@ public class ChangeEnvironmentMenu extends Application {
 
     public void back(MouseEvent mouseEvent) throws Exception {
         MainMenu mainMenu = new MainMenu();
-        //mainMenu.setMainUserController(MainMenu.getUsername());
+        mainMenu.setMainUserController(MainMenu.getUsername());
         mainMenu.start(RegisterMenu.getStage());
     }
 }

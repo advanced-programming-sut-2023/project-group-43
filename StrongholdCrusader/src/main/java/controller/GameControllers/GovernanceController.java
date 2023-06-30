@@ -21,27 +21,6 @@ public class GovernanceController {
         return game;
     }
 
-    public String showPopularityFactors() {
-        return """
-                <<<Popularity Factors>>
-                Food
-                Tax
-                Fear
-                Religion""";
-    }
-
-    public String showPopularity() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getPopularity());
-    }
-
-    public String showFoodList() {
-        return """
-                <<<Food List>>>
-                meat
-                cheese
-                apple
-                bread""";
-    }
 
     public Output foodRate(int rate) {
         RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("food", rate);
