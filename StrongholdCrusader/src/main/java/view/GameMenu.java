@@ -8,9 +8,7 @@ import enums.ImageEnum;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,9 +34,9 @@ public class GameMenu extends Application {
     private AnchorPane anchorPane = new AnchorPane();
     private ScrollBar scrollBar = new ScrollBar();
 
-    int i = -100;
-    int j = -100;
-
+    private int size = 100;
+    private int xPosition = 0;
+    private int yPosition = 0;
 
     public GameController getGameController() {
         return gameController;
@@ -62,9 +60,7 @@ public class GameMenu extends Application {
 
     @FXML
     public void initialize() {
-
         setRootPane();
-        setScrollBar();
         setCells();
         gameController.initializeGame();
     }
@@ -72,6 +68,23 @@ public class GameMenu extends Application {
     private void setRootPane() {
         root.setMinSize(1500, 600);
         addButton(anchorPane);
+        Rectangle up = new Rectangle();
+        Rectangle down = new Rectangle();
+        Rectangle right = new Rectangle();
+        Rectangle left = new Rectangle();
+        addDirectionButton(up, "up", 600, 10);
+        addDirectionButton(down, "down", 600, 600);
+        addDirectionButton(right, "right", 1200, 400);
+        addDirectionButton(left, "back", 10, 400);
+    }
+
+    private void addDirectionButton(Rectangle rectangle, String address, int x, int y) {
+        rectangle.setWidth(50);
+        rectangle.setHeight(50);
+        rectangle.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/" + address +".png").toExternalForm())));
+        rectangle.setLayoutX(x);
+        rectangle.setLayoutY(y);
+        anchorPane.getChildren().add(rectangle);
     }
 
     private void addButton(AnchorPane root) {
@@ -94,15 +107,6 @@ public class GameMenu extends Application {
         root.getChildren().add(button);
     }
 
-    private void setScrollBar() {
-        scrollBar.setMinSize(1000, 700);
-        scrollBar.setValue(10);
-        scrollBar.setOrientation(Orientation.VERTICAL);
-        scrollBar.setUnitIncrement(12);
-        scrollBar.setBlockIncrement(10);
-        root.getChildren().add(scrollBar);
-    }
-
 //    private void setCells() {
 //        for (int i = 0; i < 15; i++) {
 //            i = -100;
@@ -123,7 +127,7 @@ public class GameMenu extends Application {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
                     GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
-                    setCell(cell, x * 100, y * 100);
+                    setCell(cell, x * size + xPosition, y * size + yPosition);
                 }
             }
         }
@@ -131,7 +135,7 @@ public class GameMenu extends Application {
 
     private GridPane loadCell(Cell cell) {
         GridPane gridPane = new GridPane();
-        gridPane.setMinSize(100, 100);
+        gridPane.setMinSize(size, size);
 
         Image texture = getTexture(cell);
         Image building = null;
