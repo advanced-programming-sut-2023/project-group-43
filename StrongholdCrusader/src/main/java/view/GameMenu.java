@@ -6,7 +6,10 @@ import controller.GameControllers.StoreController;
 import controller.TradeController;
 import enums.ImageEnum;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,7 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import model.Cell;
 
@@ -30,6 +35,7 @@ public class GameMenu extends Application {
 
 
     private AnchorPane root = new AnchorPane();
+    private AnchorPane anchorPane = new AnchorPane();
     private ScrollBar scrollBar = new ScrollBar();
 
     int i = -100;
@@ -43,18 +49,21 @@ public class GameMenu extends Application {
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
-
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        anchorPane.getChildren().add(root);
+        root.setMaxHeight(800);
+        root.setMaxWidth(800);
         initialize();
-        scene = new Scene(root);
+        scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
     }
 
+    @FXML
+    public void initialize() {
 
-    private void initialize() {
         setRootPane();
         setScrollBar();
         setCells();
@@ -63,7 +72,7 @@ public class GameMenu extends Application {
 
     private void setRootPane() {
         root.setMinSize(1500, 600);
-        addButton(root);
+        addButton(anchorPane);
     }
 
     private void addButton(AnchorPane root) {
@@ -114,7 +123,7 @@ public class GameMenu extends Application {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
                 System.out.println("This is " + y);
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
-                    if (x < 10 && y < 7) {
+                    if (x < 60 && y < 60) {
                         GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
                         setCell(cell, x * 100, y * 100);
                     }
