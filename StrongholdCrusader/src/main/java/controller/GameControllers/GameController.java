@@ -36,6 +36,7 @@ public class GameController {
     }
 
     public void initializeGame() {
+        game.setCurrentPlayer(game.getPlayers().get(0));
         for (User player : game.getPlayers()) {
             player.getGovernance().setGovernanceResource(new GovernanceResource());
             player.getGovernance().getGovernanceResource().setOwner(player);

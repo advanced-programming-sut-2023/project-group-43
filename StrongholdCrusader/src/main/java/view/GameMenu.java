@@ -60,6 +60,7 @@ public class GameMenu extends Application {
         setRootPane();
         setScrollBar();
         setCells();
+        gameController.initializeGame();
     }
 
     private void setRootPane() {
