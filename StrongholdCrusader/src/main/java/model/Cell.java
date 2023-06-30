@@ -26,6 +26,15 @@ public class Cell {
 
     private int x;
     private int y;
+    private boolean illness = false;
+
+    public boolean isIllness() {
+        return illness;
+    }
+
+    public void setIllness(boolean illness) {
+        this.illness = illness;
+    }
 
     public boolean isTunelHere() {
         return tunelHere;

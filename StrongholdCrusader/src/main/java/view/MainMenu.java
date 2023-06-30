@@ -80,10 +80,6 @@ public class MainMenu extends Application {
         profileMenu.start(RegisterMenu.getStage());
     }
 
-    public static String getUsername() {
-        return username;
-    }
-
     public void enterChangeEnvironmentMenu() throws Exception {
         if (mainUserController == null) {
             mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));

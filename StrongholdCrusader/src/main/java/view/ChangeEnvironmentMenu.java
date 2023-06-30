@@ -126,7 +126,7 @@ public class ChangeEnvironmentMenu extends Application {
         String allPlayers = players.getText();
         Scanner scanner = new Scanner(allPlayers);
         ArrayList<String> usernames = new ArrayList<>();
-        usernames.add(MainMenu.getUsername());
+        //usernames.add(MainMenu.getUsername());
         while (scanner.hasNextLine()) {
             usernames.add(scanner.nextLine());
         }
@@ -188,7 +188,7 @@ public class ChangeEnvironmentMenu extends Application {
 
     public void back(MouseEvent mouseEvent) throws Exception {
         MainMenu mainMenu = new MainMenu();
-        mainMenu.setMainUserController(MainMenu.getUsername());
+        //mainMenu.setMainUserController(MainMenu.getUsername());
         mainMenu.start(RegisterMenu.getStage());
     }
 }
