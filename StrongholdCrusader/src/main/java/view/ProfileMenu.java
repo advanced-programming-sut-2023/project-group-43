@@ -296,9 +296,8 @@ public class ProfileMenu extends Application {
     }
 //TODO
     public void back(MouseEvent mouseEvent) throws Exception {
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.setMainUserController(profileMenuCurrentUser.getUsername());
-        mainMenu.start(RegisterMenu.getStage());
+        //(new MainMenu()).setMainUserController(profileController.getCurrentUser().getUsername());
+        (new MainMenu()).start(RegisterMenu.getStage());
     }
     private void checkQuestion() {
         if (!passwordRecoveryAnswer.getText().equals(passwordAnswerConfirmation.getText()))
