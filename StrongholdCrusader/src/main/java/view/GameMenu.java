@@ -18,15 +18,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Cell;
-import model.DataBase;
-import model.Game;
 
 public class GameMenu extends Application {
 
     private Stage stage;
     private Scene scene;
 
-    private static GameController gameController ;
+    private static GameController gameController;
     private int turns, numberOfPlayers;
     private String x, y;
 
@@ -110,17 +108,16 @@ public class GameMenu extends Application {
 //    }
 
 
-    private void setCells(){
-        for (int i = 0 ; i < gameController.getGame().getRow() ; i++){
-            System.out.println("This is " + i );
-            i = -100;
-            j += 100;
-            for(int j = 0 ; j < gameController.getGame().getColumn() ; j++){
-                System.out.println("This is " + j );
-                i += 100;
-                if (i < gameController.getGame().getRow() && j < gameController.getGame().getColumn()) {
-                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
-                    setCell(cell);
+    private void setCells() {
+        for (int x = 0; x < gameController.getGame().getRow(); x++) {
+            System.out.println("This is " + x);
+            for (int y = 0; y < gameController.getGame().getColumn(); y++) {
+                System.out.println("This is " + y);
+                if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
+                    if (x < 10 && y < 7) {
+                        GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
+                        setCell(cell, x * 100, y * 100);
+                    }
                 }
             }
         }
@@ -191,7 +188,7 @@ public class GameMenu extends Application {
     }
 
     //ignore tunnel
-    private void setCell(GridPane cell) {
+    private void setCell(GridPane cell, int i, int j) {
         cell.setLayoutX(i);
         cell.setLayoutY(j);
         root.getChildren().add(cell);

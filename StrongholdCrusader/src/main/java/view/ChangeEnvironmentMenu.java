@@ -111,7 +111,6 @@ public class ChangeEnvironmentMenu extends Application {
             alert.setContentText("you cannot start the game");
             alert.show();
         }
-
     }
 
     public void back(MouseEvent mouseEvent) throws Exception {
