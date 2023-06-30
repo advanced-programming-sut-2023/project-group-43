@@ -6,11 +6,14 @@ import controller.GameControllers.StoreController;
 import controller.TradeController;
 import enums.ImageEnum;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -61,6 +64,19 @@ public class GameMenu extends Application {
 
     private void setRootPane() {
         root.setMinSize(1500, 600);
+        Button button = new Button();
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    enterGovernmentMenu();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        button.setText("governance menu");
+        root.getChildren().add(button);
     }
 
     private void setScrollBar() {
