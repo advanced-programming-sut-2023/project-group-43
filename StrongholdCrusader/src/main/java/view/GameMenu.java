@@ -198,7 +198,7 @@ public class GameMenu extends Application {
     }
 
     private void enterGovernmentMenu() throws Exception {
-        GovernanceController governanceController = new GovernanceController(getGameController().getGame().getCurrentUser(), gameController.getGame());
+        GovernanceController governanceController = new GovernanceController(getGameController().getGame().getCurrentPlayer(), gameController.getGame());
         GovernanceMenu governanceMenu = new GovernanceMenu();
         governanceMenu.setGovernanceController(governanceController);
         governanceMenu.start(stage);
