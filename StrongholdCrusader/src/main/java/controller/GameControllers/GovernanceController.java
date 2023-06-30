@@ -4,6 +4,9 @@ import enums.Output;
 import enums.RateNumber;
 import model.Game;
 import model.User;
+import model.buildings.Building;
+
+import java.util.ArrayList;
 
 public class GovernanceController {
     private final User currentUser;
@@ -18,27 +21,6 @@ public class GovernanceController {
         return game;
     }
 
-    public String showPopularityFactors() {
-        return """
-                <<<Popularity Factors>>
-                Food
-                Tax
-                Fear
-                Religion""";
-    }
-
-    public String showPopularity() {
-        return String.valueOf(game.getCurrentPlayer().getGovernance().getPopularity());
-    }
-
-    public String showFoodList() {
-        return """
-                <<<Food List>>>
-                meat
-                cheese
-                apple
-                bread""";
-    }
 
     public Output foodRate(int rate) {
         RateNumber rateNumber = RateNumber.getRateNumberEnumByTypeAndRateNumber("food", rate);
@@ -58,6 +40,11 @@ public class GovernanceController {
 
     public int showTaxRate() {
         return (game.getCurrentPlayer().getGovernance().getTaxRate().getRateNumber());
+    }
+
+    public int showReligionRate() {
+        ArrayList<Building> buildings = game.getCurrentPlayer().getGovernance().getAllBuildingsByName("church");
+        return buildings.size();
     }
 
     public Output fearRate(int rate) {

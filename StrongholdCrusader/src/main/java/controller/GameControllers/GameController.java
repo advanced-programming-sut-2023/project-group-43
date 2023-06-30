@@ -20,7 +20,7 @@ import java.util.Random;
 
 public class GameController {
 
-    private final Game game;
+    private final Game game ;
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
@@ -36,6 +36,7 @@ public class GameController {
     }
 
     public void initializeGame() {
+        game.setCurrentPlayer(game.getPlayers().get(0));
         for (User player : game.getPlayers()) {
             player.getGovernance().setGovernanceResource(new GovernanceResource());
             player.getGovernance().getGovernanceResource().setOwner(player);
@@ -46,9 +47,9 @@ public class GameController {
             player.getGovernance().setPopulation(15);
             player.getGovernance().setUnemployedPopulation(15);
             player.getGovernance().setGold(100000);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, 50);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, 50);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.IRON, 50);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, 1000);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, 1000);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.IRON, 1000);
             initializeResources(player);
         }
     }
@@ -60,6 +61,8 @@ public class GameController {
     }
 
     public static void setDefaultMaps(int row, int column) {
+        System.out.println("this is row " + row);
+        System.out.println("this is column " + column);
         Cell[][] cells = new Cell[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
@@ -365,18 +368,8 @@ public class GameController {
         return Output.EQUIPMENT_CREATED_SUCCESSFULLY;
     }
 
-    public Output disbandUnit() {
-        if (game.getSelectedUnit().size() == 0) return Output.NO_UNIT_FOR_DISBANDING;
-        else {
-            for (Unit unit : game.getSelectedUnit()) {
-                unit.setPreviousCell(unit.getCell());
-                unit.setCell(village);
-            }
-            return Output.UNIT_DISBANDED_SUCCESSFULLY;
-        }
-    }
-
     public void applyChanges() {
+        savePopularity();
         completeBuildings();
         updateUnitTargets();
         updateMovements();
@@ -391,6 +384,12 @@ public class GameController {
         removeDeadGovernance();
         illness();
         updateIllness();
+    }
+
+    private void savePopularity() {
+        for (User user: game.getPlayers()) {
+            user.getGovernance().setPopularityChange(user.getGovernance().getPopularity());
+        }
     }
 
     private void completeBuildings() {

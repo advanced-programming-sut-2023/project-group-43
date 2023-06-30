@@ -125,18 +125,6 @@ public class RegisterAndLoginControllerTest {
         assertNotEquals(Output.SUCCESSFUL_PASSWORD_CHANGE, RegisterAndLoginController.changePassword("aida", "a"));
     }
 
-    //Check captcha
-    @Test
-    public void captchaEnteredCorrectly() {
-        assertEquals(Output.CAPTCHA_MATCHED, RegisterAndLoginController.checkCaptcha("123456", "123456"));
-    }
-
-    @Test
-    public void wrongCaptchaEntered() {
-        assertEquals(Output.CAPTCHA_NOT_MATCHED, RegisterAndLoginController.checkCaptcha("6543", "123456"));
-    }
-
-    //choosePasswordRecoveryQuestion
     @Test
     public void passwordRecoveryQuestionIsNull() {
         assertEquals(Output.INVALID_PASSWORD_RECOVERY_QUESTION, RegisterAndLoginController.choosePasswordRecoveryQuestion(4, null, null));

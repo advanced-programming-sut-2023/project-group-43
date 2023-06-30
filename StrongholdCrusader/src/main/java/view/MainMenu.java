@@ -30,6 +30,14 @@ public class MainMenu extends Application {
     private MainUserController mainUserController;
     private User mainMenuCurrentUser;
 
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setUsername(String username) {
+        MainMenu.username = username;
+    }
+
     public User getMainMenuCurrentUser() {
         return mainMenuCurrentUser;
     }
