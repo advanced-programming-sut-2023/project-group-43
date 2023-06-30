@@ -118,8 +118,10 @@ public class GameMenu extends Application {
             for(int j = 0 ; j < gameController.getGame().getColumn() ; j++){
                 System.out.println("This is " + j );
                 i += 100;
-                GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
-                setCell(cell);
+                if (i < gameController.getGame().getRow() && j < gameController.getGame().getColumn()) {
+                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
+                    setCell(cell);
+                }
             }
         }
     }
