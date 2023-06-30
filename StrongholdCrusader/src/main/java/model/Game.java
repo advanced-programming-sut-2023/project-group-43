@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Game {
 
     private GameController gameController ;
-    private User currentUser = new User("n","n","n","n","n","n","n");
+    private User currentUser;
     private User currentPlayer;
     private int row;
     private int column;
@@ -30,27 +30,15 @@ public class Game {
     private int currentMapX;
     private int getCurrentMapY;
 
-    public Game() {
-        this.row = 15;
-        this.column = 30;
 
-        for(int i = 0 ; i < row ; i++){
-            for(int j = 0 ; j < column ; j++){
-                Cell cell = new Cell();
-                cell.setTexture(Texture.GROUND);
-                cells[i][j] = cell;
-            }
-        }
-        for(int i = 5 ; i < 8 ; i++){
-            for (int j = 10 ; j < 25 ; j++) {
-                Cell cell = new Cell();
-                cell.setTexture(Texture.DENSE_GRASSLAND);
-                cells[i][j] = cell;
-            }
-        }
-        cells[8][20].setTexture(Texture.SMALL_POND);
-        Building building = new Building(BuildingEnum.BARRACK.getName(), currentUser);
-        cells[10][10].setBuilding(building);
+
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public int getCurrentMapX() {
@@ -85,13 +73,6 @@ public class Game {
         return players;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
 
     public User getCurrentPlayer() {
         return currentPlayer;
@@ -148,6 +129,9 @@ public class Game {
     public int getColumn() {
         return column;
     }
+
+
+
 
     public void addTrade(Trade trade) {
         trade.setId(tradeId);

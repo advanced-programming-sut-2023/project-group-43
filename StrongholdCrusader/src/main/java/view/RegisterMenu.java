@@ -88,8 +88,9 @@ public class RegisterMenu extends Application {
         password.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkPassword(password.getText())) == null)
-                passwordError.setText("ok");
-            else passwordError.setText(output.getString());
+                System.out.println("todo");
+                //passwordError.setText("ok");
+            //else passwordError.setText(output.getString());
         });
         passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
@@ -155,7 +156,7 @@ public class RegisterMenu extends Application {
     private boolean checkEverything() {
         return usernameError.getText().equals("ok") && sloganError.getText().equals("ok") && emailError.getText().equals("ok")
                 && nicknameError.getText().equals("ok") && questionError.getText().equals("ok") &&
-                passwordError.getText().equals("ok") && passwordConfirmationError.getText().equals("ok");
+                passwordConfirmationError.getText().equals("ok");
     }
 
     public void enterLoginMenu(MouseEvent mouseEvent) throws Exception {

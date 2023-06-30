@@ -47,9 +47,9 @@ public class GameController {
             player.getGovernance().setPopulation(15);
             player.getGovernance().setUnemployedPopulation(15);
             player.getGovernance().setGold(100000);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, 50);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, 50);
-            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.IRON, 50);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, 1000);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, 1000);
+            player.getGovernance().getGovernanceResource().changeAmountOfItemInStockpile(Material.IRON, 1000);
             initializeResources(player);
         }
     }
