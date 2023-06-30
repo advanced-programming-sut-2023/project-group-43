@@ -11,7 +11,7 @@
         <HBox alignment="CENTER" spacing="20">
             <VBox alignment="CENTER" spacing="10">
                 <Label style="-fx-font-size: 20" text="Popularity"/>
-                <Rectangle fx:id="main" width="200" height="200"/>
+                <Rectangle fx:id="main" width="175" height="175"/>
                 <Rectangle fx:id="back" onMouseClicked="#back" width="50" height="50"/>
             </VBox>
             <VBox alignment="CENTER" spacing="10">
