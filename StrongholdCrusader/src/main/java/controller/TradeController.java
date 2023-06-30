@@ -14,6 +14,10 @@ public class TradeController {
         this.game = game;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public Output requestTrade(String resource, int resourceAmount, int price, String message) {
         Trade trade = new Trade(game.getCurrentPlayer(), resource, resourceAmount, price, message);
         game.addTrade(trade);
@@ -89,4 +93,6 @@ public class TradeController {
         }
         return output.toString();
     }
+
+
 }

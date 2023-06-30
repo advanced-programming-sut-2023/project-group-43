@@ -53,7 +53,7 @@ public class TradeMenu extends Application {
     }
 
     private void setMainBackground() {
-        root.setMinSize(1550, 800);
+        root.setMinSize(1400, 700);
         root.setBackground(new Background(new BackgroundImage(ImageEnum.TRADE_MENU.getImage(),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
 
@@ -72,7 +72,7 @@ public class TradeMenu extends Application {
 
         text.setFont(new Font(50));
         text.setFill(Color.DARKGRAY);
-        text.setX(400);
+        text.setX(300);
         text.setY(250);
 
         back.setOnAction(ae -> {
@@ -98,7 +98,7 @@ public class TradeMenu extends Application {
 
     private void makeRequest() {
 
-        ArrayList<User> users = DataBase.getInstance().getUsers();
+        ArrayList<User> users = tradeController.getGame().getPlayers();
 
         Popup makeRequest = new Popup();
         BorderPane main = new BorderPane();

@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -119,13 +120,23 @@ public class GameMenu extends Application {
         anchorPane.getChildren().add(rectangle);
     }
 
-    private void addButton(AnchorPane root) {
+    private void addButton(AnchorPane root){
         Rectangle button = new Rectangle();
         button.setWidth(200);
         button.setHeight(200);
         button.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/game_menu/man.png").toExternalForm())));
         button.setLayoutX(1000);
         button.setLayoutY(500);
+        //temporary button for trade menu
+        Button tradeMenu = new Button("trade menu");
+        root.getChildren().add(tradeMenu);
+        tradeMenu.setOnAction(ae -> {
+            try {
+                enterTradeMenu();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -139,19 +150,6 @@ public class GameMenu extends Application {
         root.getChildren().add(button);
     }
 
-//    private void setCells() {
-//        for (int i = 0; i < 15; i++) {
-//            i = -100;
-//            j += 100;
-//            for (int j = 0; j < 30; j++) {
-//                i += 100;
-//                if (j < gameController.getGame().getColumn() && i < gameController.getGame().getRow()) {
-//                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
-//                    setCell(cell);
-//                }
-//            }
-//        }
-//    }
 
 
     private void setCells() {
