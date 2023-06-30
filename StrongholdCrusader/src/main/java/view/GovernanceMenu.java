@@ -1,5 +1,6 @@
 package view;
 
+import controller.GameControllers.GameController;
 import controller.GameControllers.GovernanceController;
 import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -31,6 +33,8 @@ public class GovernanceMenu extends Application {
     public Label fearRate;
     public Label religionRate;
     private static GovernanceController governanceController;
+    public Rectangle main;
+    public Rectangle back;
     private Stage stage;
 
     private static Pane pane;
@@ -46,7 +50,7 @@ public class GovernanceMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane pane = FXMLLoader.load(
-                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/governanceMenu.fxml")).toExternalForm()));
+                new URL((GovernanceMenu.class.getResource("/fxml/governanceMenu.fxml")).toExternalForm()));
 
         Scene scene = new Scene(pane);
         setBackground(pane);
@@ -57,6 +61,8 @@ public class GovernanceMenu extends Application {
 
     @FXML
     public void initialize() {
+        main.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/main.png").toExternalForm())));
+        back.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/back.png").toExternalForm())));
         updateImages();
     }
 
@@ -99,4 +105,10 @@ public class GovernanceMenu extends Application {
         return (governanceController.fearRate(rate)).getString();
     }
 
+    public void back(MouseEvent mouseEvent) throws Exception {
+        GameController gameController = new GameController(governanceController.getGame());
+        GameMenu gameMenu = new GameMenu();
+        gameMenu.setGameController(gameController);
+        gameMenu.start(RegisterMenu.getStage());
+    }
 }
