@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
 <BorderPane xmlns="http://javafx.com/javafx"
-                xmlns:fx="http://javafx.com/fxml"
-                fx:controller="view.GovernanceMenu"
-                prefHeight="600.0" prefWidth="800.0">
-
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.GovernanceMenu"
+            prefHeight="600.0" prefWidth="800.0">
+<center>
+    <VBox alignment="CENTER" spacing="10">
+        <HBox spacing="20" alignment="CENTER">
+            <Rectangle fx:id="foodRec" height="20" width="20"/>
+            <Label text="Food"/>
+            <Label fx:id="foodRate"/>
+        </HBox>
+        <HBox spacing="20" alignment="CENTER">
+            <Rectangle fx:id="taxRec" height="20" width="20"/>
+            <Label text="Tax"/>
+            <Label fx:id="taxRate"/>
+        </HBox>
+        <HBox spacing="20" alignment="CENTER">
+            <Rectangle fx:id="fearRec" height="20" width="20"/>
+            <Label text="Fear"/>
+            <Label fx:id="fearRate"/>
+        </HBox>
+        <HBox spacing="20" alignment="CENTER">
+            <Rectangle fx:id="religionRec" height="20" width="20"/>
+            <Label text="Religion"/>
+            <Label fx:id="religionRate"/>
+        </HBox>
+    </VBox>
+</center>
 </BorderPane>

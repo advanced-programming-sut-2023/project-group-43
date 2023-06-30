@@ -4,17 +4,37 @@ import controller.GameControllers.GovernanceController;
 import enums.Output;
 import enums.menuEnums.GovernanceMenuCommands;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBase;
 import model.User;
 
+import java.net.URL;
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 import static view.Menu.scanner;
 
 public class GovernanceMenu extends Application {
+    public Rectangle foodRec;
+    public Rectangle taxRec;
+    public Rectangle fearRec;
+    public Rectangle religionRec;
+    public Label foodRate;
+    public Label taxRate;
+    public Label fearRate;
+    public Label religionRate;
     private GovernanceController governanceController;
     private Stage stage;
+
+    private static Pane pane;
 
     public GovernanceController getGovernanceController() {
         return governanceController;
@@ -26,50 +46,45 @@ public class GovernanceMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        BorderPane pane = FXMLLoader.load(
+                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/loginMenu.fxml")).toExternalForm()));
+
+        Scene scene = new Scene(pane);
+        setBackground(pane);
+        stage.setScene(scene);
+        setBackground(pane);
+        stage.show();
     }
 
-    public void run() {
-        String input;
-        Matcher matcher;
-        System.out.println("governance menu:");
-        while (true) {
-            input = scanner.nextLine();
-            if (input.matches("show current menu"))
-                System.out.println(Output.GOVERNANCE_MENU.getString());
-            else if (input.matches("back")) {
-                if (governanceController.getGame().getSelectedBuilding() != null) {
-                    if (governanceController.getGame().getSelectedBuilding().getName().equals("small stone gatehouse"))
-                        governanceController.getGame().setSelectedBuilding(null);
-                }
-                System.out.println("game menu:");
-                return;
-            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY_FACTORS) != null) {
-                System.out.println(governanceController.showPopularityFactors());
-            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_POPULARITY) != null) {
-                System.out.println(governanceController.showPopularity());
-            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.SHOW_FOOD_LIST) != null) {
-                System.out.println(governanceController.showFoodList());
-            } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE)) != null) {
-                System.out.println(foodRate(matcher));
-
-            } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FOOD_RATE_SHOW)) != null) {
-                System.out.println(governanceController.showFoodRate());
-            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE) != null) {
-                System.out.println(taxRate(matcher));
-            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.TAX_RATE_SHOW) != null) {
-                System.out.println(governanceController.showTaxRate());
-            } else if ((matcher = GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE)) != null) {
-                System.out.println(fearRate(matcher));
-            } else if (GovernanceMenuCommands.getMatcher(input, GovernanceMenuCommands.FEAR_RATE_SHOW) != null)
-                System.out.println(governanceController.showFearRate());
-            else {
-                System.out.println("Invalid command");
-            }
-        }
+    @FXML
+    public void initialize() {
+        updateImages();
     }
 
+    private void updateImages() {
+        int foodRateNum = governanceController.showFoodRate();
+        int taxRateNum = governanceController.showTaxRate();
+        int fearRateNum = governanceController.showFearRate();
+        int religionRateNum = getGovernanceController().showReligionRate();
+        setImage(foodRateNum, foodRec, foodRate);
+        setImage(taxRateNum, taxRec, taxRate);
+        setImage(fearRateNum, fearRec, fearRate);
+        setImage(religionRateNum, religionRec, religionRate);
+    }
 
+    private void setImage(int rate, Rectangle rec, Label label) {
+        int imageNumber = 2;
+        if (rate < 0) imageNumber = 1;
+        else if (rate > 0) imageNumber = 3;
+        rec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/" + imageNumber + ".png").toExternalForm())));
+        label.setText(((Integer)rate).toString());
+    }
+
+    private void setBackground(Pane pane) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/oldPaper.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+    }
     private String foodRate(Matcher matcher) {
         int rate = Integer.parseInt(matcher.group("rate"));
         return (governanceController.foodRate(rate)).getString();
