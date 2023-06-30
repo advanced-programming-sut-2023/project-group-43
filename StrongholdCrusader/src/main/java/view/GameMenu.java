@@ -17,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Cell;
 
@@ -73,7 +75,10 @@ public class GameMenu extends Application {
     }
 
     private void addButton(AnchorPane root) {
-        Button button = new Button();
+        Rectangle button = new Rectangle();
+        button.setWidth(200);
+        button.setHeight(200);
+        button.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/game_menu/man.png").toExternalForm())));
         button.setLayoutX(1000);
         button.setLayoutY(500);
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -86,7 +91,6 @@ public class GameMenu extends Application {
                 }
             }
         });
-        button.setText("governance menu");
         root.getChildren().add(button);
     }
 
