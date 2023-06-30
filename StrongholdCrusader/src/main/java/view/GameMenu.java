@@ -74,8 +74,8 @@ public class GameMenu extends Application {
         Rectangle left = new Rectangle();
         addDirectionButton(up, "up", 600, 10);
         addDirectionButton(down, "down", 600, 600);
-        addDirectionButton(right, "right", 1200, 400);
-        addDirectionButton(left, "back", 10, 400);
+        addDirectionButton(right, "right", 1200, 300);
+        addDirectionButton(left, "back", 10, 300);
         addFunctions(up, down, right, left);
     }
 
@@ -90,16 +90,18 @@ public class GameMenu extends Application {
         up.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (yPosition < size * gameController.getGame().getColumn()) yPosition += size;
+                if (yPosition < (size * gameController.getGame().getColumn() - 600)) yPosition += size;
                 setCells();
             }
-        });left.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        });
+        left.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (xPosition < size * gameController.getGame().getRow()) xPosition += size;
+                if (xPosition < (size * gameController.getGame().getRow() - 1200)) xPosition += size;
                 setCells();
             }
-        });right.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        });
+        right.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (xPosition > size) xPosition -= size;
@@ -111,7 +113,7 @@ public class GameMenu extends Application {
     private void addDirectionButton(Rectangle rectangle, String address, int x, int y) {
         rectangle.setWidth(50);
         rectangle.setHeight(50);
-        rectangle.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/" + address +".png").toExternalForm())));
+        rectangle.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/face_mask/" + address + ".png").toExternalForm())));
         rectangle.setLayoutX(x);
         rectangle.setLayoutY(y);
         anchorPane.getChildren().add(rectangle);
