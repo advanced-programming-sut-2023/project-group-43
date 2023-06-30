@@ -1,5 +1,6 @@
 package model;
 
+import controller.GameControllers.GameController;
 import enums.BuildingEnums.BuildingEnum;
 import enums.environmentEnums.Texture;
 import model.buildings.Building;
@@ -8,18 +9,18 @@ import model.units.Unit;
 import java.util.ArrayList;
 
 public class Game {
+
+    private GameController gameController ;
     private User currentUser = new User("n","n","n","n","n","n","n");
-
     private User currentPlayer;
-
-    private int row = 15;
-    private int column = 30;
+    private int row;
+    private int column;
     private ArrayList<User> players = new ArrayList<>();
 
     private ArrayList<Trade> trades = new ArrayList<>();
 
     private static int tradeId = 0;
-    private Cell[][] cells = new Cell[50][50] ;
+    private Cell[][] cells = new Cell[200][200] ;
 
     private Building selectedBuilding;
 
@@ -30,6 +31,8 @@ public class Game {
     private int getCurrentMapY;
 
     public Game() {
+        this.row = 15;
+        this.column = 30;
 
         for(int i = 0 ; i < row ; i++){
             for(int j = 0 ; j < column ; j++){
