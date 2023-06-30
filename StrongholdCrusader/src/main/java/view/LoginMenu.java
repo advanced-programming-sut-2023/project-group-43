@@ -60,23 +60,7 @@ public class LoginMenu extends Application {
         captchaRec.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/captcha/" + captchaNumber + ".png").toExternalForm())));
     }
 
-    private void forgetPassword(Matcher matcher) {
-        String username;
-        if ((username = matcher.group("username")) == null)
-            username = matcher.group("username2");
-        String question;
-        System.out.println((question = RegisterAndLoginController.forgetPassword(username)));
-        if (!question.equals("user does not exist")) {
-            Scanner scanner = Menu.getScanner();
-            String answer = scanner.nextLine();
-            Output output = RegisterAndLoginController.checkPasswordRecoveryAnswer(username, answer);
-            System.out.println(output.getString());
-            if (output.equals(Output.CORRECT_PASSWORD_RECOVERY_ANSWER)) {
-                String password = scanner.nextLine();
-                System.out.println(RegisterAndLoginController.changePassword(username, password).getString());
-            }
-        }
-    }
+
 
     private void checkForPause(Output output) {
         if (output != null && output.equals(Output.INCORRECT_PASSWORD)) incorrectPasswords++;

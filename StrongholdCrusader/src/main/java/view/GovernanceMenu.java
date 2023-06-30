@@ -20,7 +20,6 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
-import static view.Menu.scanner;
 
 public class GovernanceMenu extends Application {
     public Rectangle foodRec;

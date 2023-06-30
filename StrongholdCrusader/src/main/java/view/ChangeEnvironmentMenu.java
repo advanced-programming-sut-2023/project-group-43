@@ -145,38 +145,6 @@ public class ChangeEnvironmentMenu extends Application {
         return x != null && y != null && type != null && x.matches("\\d+") && y.matches("\\d+");
     }
 
-    private void getReady() {
-        String input;
-        Scanner scanner = Menu.getScanner();
-        System.out.println("change environment menu:");
-        System.out.println("Enter the rows and columns of your desire battle ground : ");
-        int row = scanner.nextInt();
-        int column = scanner.nextInt();
-        System.out.println("Enter players username:");
-        ArrayList<String> playersArraylist = new ArrayList<>();
-        input = scanner.nextLine();
-        while (true) {
-            input = scanner.nextLine();
-            if (input.matches("\\S*end\\S*")) break;
-            playersArraylist.add(input);
-        }
-        System.out.println("number of turns:");
-        input = scanner.nextLine();
-        while (!input.matches("\\d+")) {
-            System.out.println("wrong input");
-            input = scanner.nextLine();
-        }
-        int turns = Integer.parseInt(input);
-        System.out.println("choose your desire map:\nenter 1 or 2");
-        int mapOption = Integer.parseInt(scanner.nextLine());
-        while (mapOption != 2 && mapOption != 1) {
-            System.out.println("wrong map number");
-            mapOption = scanner.nextInt();
-        }
-        System.out.println(changeEnvironmentController.generateMap(playersArraylist, row, column, turns, mapOption).getString());
-        changeEnvironmentController.getGame().setCurrentPlayer(changeEnvironmentController.getCurrentUser());
-    }
-
     public void startGame(MouseEvent mouseEvent) throws Exception {
         if (!enterGameMenu()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
