@@ -64,7 +64,13 @@ public class GameMenu extends Application {
 
     private void setRootPane() {
         root.setMinSize(1500, 600);
+        addButton(root);
+    }
+
+    private void addButton(AnchorPane root) {
         Button button = new Button();
+        button.setLayoutX(1000);
+        button.setLayoutY(500);
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {

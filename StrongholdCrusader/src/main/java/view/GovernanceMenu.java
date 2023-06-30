@@ -30,7 +30,7 @@ public class GovernanceMenu extends Application {
     public Label taxRate;
     public Label fearRate;
     public Label religionRate;
-    private GovernanceController governanceController;
+    private static GovernanceController governanceController;
     private Stage stage;
 
     private static Pane pane;
@@ -40,13 +40,13 @@ public class GovernanceMenu extends Application {
     }
 
     public void setGovernanceController(GovernanceController governanceController) {
-        this.governanceController = governanceController;
+        GovernanceMenu.governanceController = governanceController;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane pane = FXMLLoader.load(
-                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/loginMenu.fxml")).toExternalForm()));
+                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/governanceMenu.fxml")).toExternalForm()));
 
         Scene scene = new Scene(pane);
         setBackground(pane);
