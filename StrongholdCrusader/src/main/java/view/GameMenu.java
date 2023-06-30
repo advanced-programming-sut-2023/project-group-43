@@ -80,26 +80,26 @@ public class GameMenu extends Application {
     }
 
     private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left) {
-        up.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        down.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (yPosition > size) yPosition -= size;
                 setCells();
             }
         });
-        down.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        up.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (yPosition < size * gameController.getGame().getColumn()) yPosition += size;
                 setCells();
             }
-        });right.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        });left.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (xPosition < size * gameController.getGame().getRow()) xPosition += size;
                 setCells();
             }
-        });left.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        });right.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (xPosition > size) xPosition -= size;
