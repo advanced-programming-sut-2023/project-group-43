@@ -83,9 +83,12 @@ public class ChangeEnvironmentMenu extends Application {
         String allPlayers = players.getText();
         Scanner scanner = new Scanner(allPlayers);
         ArrayList<String> usernames = new ArrayList<>();
+        //this is for current user
         usernames.add(MainMenu.getUsername());
         while (scanner.hasNextLine()) {
-            usernames.add(scanner.nextLine());
+            String username = scanner.nextLine();
+            System.out.println(username);
+            usernames.add(username);
         }
         return changeEnvironmentController.enterGameMenu(usernames,
                 Integer.parseInt(rows.getValue().toString()), Integer.parseInt(turns.getValue().toString()),
