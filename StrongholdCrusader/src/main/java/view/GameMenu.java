@@ -6,8 +6,6 @@ import controller.GameControllers.StoreController;
 import controller.TradeController;
 import enums.ImageEnum;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
@@ -18,9 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import model.Cell;
 
@@ -49,6 +45,7 @@ public class GameMenu extends Application {
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
+
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
@@ -119,14 +116,10 @@ public class GameMenu extends Application {
 
     private void setCells() {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
-            System.out.println("This is " + x);
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
-                System.out.println("This is " + y);
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
-                    if (x < 60 && y < 60) {
-                        GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
-                        setCell(cell, x * 100, y * 100);
-                    }
+                    GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
+                    setCell(cell, x * 100, y * 100);
                 }
             }
         }

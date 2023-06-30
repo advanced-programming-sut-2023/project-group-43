@@ -58,9 +58,9 @@ public class ChangeEnvironmentMenu extends Application {
     @FXML
     public void initialize() {
         ObservableList<String> list = FXCollections.observableArrayList();
-        list.addAll("100", "150", "200", "250", "300");
+        list.addAll("30", "40", "50", "60");
         rows.setItems(list);
-        rows.setValue("100");
+        rows.setValue("50");
         ObservableList<String> list2 = FXCollections.observableArrayList();
         list2.addAll("1", "2");
         map.setItems(list2);
