@@ -2,33 +2,21 @@ package view;
 
 import controller.GameControllers.GameController;
 import controller.GameControllers.GovernanceController;
-import controller.GameControllers.MapController;
 import controller.GameControllers.StoreController;
 import controller.TradeController;
 import enums.ImageEnum;
-import enums.Output;
-import enums.Validations;
-import enums.menuEnums.EnvironmentChangeCommands;
-import enums.menuEnums.GameMenuCommands;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Cell;
 import model.DataBase;
 import model.Game;
-
-import java.net.URL;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class GameMenu extends Application {
 
@@ -65,18 +53,18 @@ public class GameMenu extends Application {
     }
 
 
-    private void initialize(){
+    private void initialize() {
         setRootPane();
         setScrollBar();
         setCells();
     }
 
     private void setRootPane() {
-        root.setMinSize(1500,600);
+        root.setMinSize(1500, 600);
     }
 
     private void setScrollBar() {
-        scrollBar.setMinSize(1000,700);
+        scrollBar.setMinSize(1000, 700);
         scrollBar.setValue(10);
         scrollBar.setOrientation(Orientation.VERTICAL);
         scrollBar.setUnitIncrement(12);
@@ -85,30 +73,31 @@ public class GameMenu extends Application {
     }
 
     private void setCells() {
-        for(int i = 0 ; i < 15 ; i++){
+        for (int i = 0; i < 15; i++) {
             i = -100;
             j += 100;
-            for(int j = 0 ; j < 30 ; j++){
+            for (int j = 0; j < 30; j++) {
                 i += 100;
-
+                if (j < gameController.getGame().getColumn() && i < gameController.getGame().getRow()) {
                     GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
                     setCell(cell);
+                }
             }
         }
     }
 
     private GridPane loadCell(Cell cell) {
         GridPane gridPane = new GridPane();
-        gridPane.setMinSize(100,100);
+        gridPane.setMinSize(100, 100);
 
         Image texture = getTexture(cell);
         Image building = null;
         Image rock = null;
 
-        if(cell.getBuilding() != null)
+        if (cell.getBuilding() != null)
             building = getBuilding(cell);
 
-        if(cell.HasRock())
+        if (cell.HasRock())
             rock = getRock(cell);
 
 
@@ -122,47 +111,47 @@ public class GameMenu extends Application {
         item.setFitWidth(80);
         item.setFitHeight(80);
 
-        if(building != null)
+        if (building != null)
             item.setImage(building);
 
-        if(rock != null)
+        if (rock != null)
             item.setImage(rock);
 
         gridPane.getChildren().add(textureImageview);
 
-        if(item.getImage() != null)
+        if (item.getImage() != null)
             gridPane.getChildren().add(item);
 
 
         return gridPane;
     }
 
-    private Image getTexture(Cell cell){
+    private Image getTexture(Cell cell) {
         Image texture;
         texture = ImageEnum.getImageByName(cell.getTexture().getName());
         return texture;
     }
 
-    private Image getBuilding(Cell cell){
+    private Image getBuilding(Cell cell) {
         Image building;
         building = ImageEnum.getImageByName(cell.getBuilding().getName());
         return building;
     }
 
-    private Image getTree(Cell cell){
+    private Image getTree(Cell cell) {
         Image tree;
         tree = ImageEnum.TREE.getImage();
         return tree;
     }
 
-    private Image getRock(Cell cell){
+    private Image getRock(Cell cell) {
         Image rock;
         rock = ImageEnum.ROCK.getImage();
         return rock;
     }
 
     //ignore tunnel
-    private void setCell(GridPane cell){
+    private void setCell(GridPane cell) {
         cell.setLayoutX(i);
         cell.setLayoutY(j);
         root.getChildren().add(cell);
@@ -175,7 +164,6 @@ public class GameMenu extends Application {
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
-
 
 
     public void enterStoreMenu(String name) throws Exception {
@@ -199,9 +187,6 @@ public class GameMenu extends Application {
         governanceMenu.setGovernanceController(governanceController);
         governanceMenu.start(stage);
     }
-
-
-
 
 
 }
