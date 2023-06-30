@@ -366,18 +366,8 @@ public class GameController {
         return Output.EQUIPMENT_CREATED_SUCCESSFULLY;
     }
 
-    public Output disbandUnit() {
-        if (game.getSelectedUnit().size() == 0) return Output.NO_UNIT_FOR_DISBANDING;
-        else {
-            for (Unit unit : game.getSelectedUnit()) {
-                unit.setPreviousCell(unit.getCell());
-                unit.setCell(village);
-            }
-            return Output.UNIT_DISBANDED_SUCCESSFULLY;
-        }
-    }
-
     public void applyChanges() {
+        savePopularity();
         completeBuildings();
         updateUnitTargets();
         updateMovements();
@@ -392,6 +382,12 @@ public class GameController {
         removeDeadGovernance();
         illness();
         updateIllness();
+    }
+
+    private void savePopularity() {
+        for (User user: game.getPlayers()) {
+            user.getGovernance().setPopularityChange(user.getGovernance().getPopularity());
+        }
     }
 
     private void completeBuildings() {

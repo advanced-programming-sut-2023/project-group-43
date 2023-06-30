@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class Governance {
     private boolean isLordDead;
     private int popularity;
+
+    private int popularityChange = 0;
     private int population;
 
     private int unemployedPopulation;
@@ -178,4 +180,11 @@ public class Governance {
         return null;
     }
 
+    public int getPopularityChange() {
+        return popularityChange;
+    }
+
+    public void setPopularityChange(int popularityChange) {
+        this.popularityChange = popularityChange;
+    }
 }

@@ -35,6 +35,11 @@
                     <Label text="Religion"/>
                     <Label fx:id="religionRate"/>
                 </HBox>
+                <HBox spacing="20" alignment="CENTER">
+                    <Rectangle fx:id="allRec" height="20" width="20"/>
+                    <Label text="in the coming month:"/>
+                    <Label fx:id="all"/>
+                </HBox>
             </VBox>
         </HBox>
     </center>
