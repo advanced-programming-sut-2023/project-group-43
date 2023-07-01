@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import model.Trade;
 import model.User;
 
 import java.util.ArrayList;
@@ -27,22 +28,22 @@ public class TradeMenu extends Application {
     public final String css = Objects.requireNonNull(this.getClass().getResource("/css/style.css")).toExternalForm();
     private TradeController tradeController;
 
-    private BorderPane root = new BorderPane();
+    private final BorderPane root = new BorderPane();
 
-    private HBox hBox = new HBox();
-    private Button tradeHistory = new Button("Trade History");
-    private Button makeRequest = new Button("Make Request");
+    private final HBox hBox = new HBox();
+    private final Button tradeHistory = new Button("Trade History");
+    private final Button makeRequest = new Button("Make Request");
 
-    private Button back = new Button("Back");
+    private final Button back = new Button("Back");
 
-    private Text text = new Text("The business is at your disposal, my Lord");
+    private final Text text = new Text("The business is at your disposal, my Lord");
 
     private Popup personDetailInfoPopUp;
     private Popup materialInfoPopUp;
     private Popup error;
 
     private TextField errorText;
-    private Button backError;
+
     public void setTradeController(TradeController tradeController) {
         this.tradeController = tradeController;
     }
@@ -65,7 +66,7 @@ public class TradeMenu extends Application {
 
     }
 
-    private void initialize() throws Exception {
+    private void initialize() {
 
         tradeHistory.setMinSize(100, 100);
         makeRequest.setMinSize(100, 100);
@@ -111,10 +112,8 @@ public class TradeMenu extends Application {
         errorText = new TextField();
         errorText.setMinSize(100 , 100);
 
-        backError = new Button("Back");
-        backError.setOnAction(actionEvent -> {
-            error.hide();
-        });
+        Button backError = new Button("Back");
+        backError.setOnAction(actionEvent -> error.hide());
 
         backError.setAlignment(Pos.BOTTOM_CENTER);
         errorText.setAlignment(Pos.CENTER);
@@ -142,7 +141,6 @@ public class TradeMenu extends Application {
 
         VBox vBox = new VBox();
 
-        //TODO --> I'm not sure about users
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).equals(tradeController.getGame().getCurrentUser()))continue;
             Button button = new Button(users.get(i).getUsername());
@@ -259,12 +257,15 @@ public class TradeMenu extends Application {
 
         submit.setOnAction(actionEvent -> {
             if(request.isSelected()){
-                Output output = tradeController.requestTrade(material.getName(),textFieldNumber.get(),material.getSellingPrice() * textFieldNumber.get() ,message.getText());
+                //minus means request
+                Output output = tradeController.requestTrade(material.getName(),-textFieldNumber.get(),-material.getSellingPrice() * textFieldNumber.get() ,message.getText());
                 System.out.println(output.getString());
                 setTradeAdded();
             }
             if(donate.isSelected()){
-
+                Output output = tradeController.requestTrade(material.getName(),-textFieldNumber.get(),-material.getSellingPrice() * textFieldNumber.get() ,message.getText());
+                System.out.println(output.getString());
+                setTradeAdded();
             }
         });
 
@@ -294,6 +295,47 @@ public class TradeMenu extends Application {
         personDetailInfoPopUp.show(stage);
     }
     private void tradeHistory() {
+        Popup tradeHistory = new Popup();
+        BorderPane main = new BorderPane();
+
+        main.setBorder(Border.stroke(Color.BLACK));
+        main.setMinSize(700, 700);
+        main.setBackground(new Background(new BackgroundImage(ImageEnum.REQUEST.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+        VBox root = new VBox();
+        VBox requestsReceived = new VBox();
+        VBox requestsSent = new VBox();
+
+        TextField textField = new TextField();
+        for (int i = 0; i < tradeController.getGame().getTrades().size(); i++) {
+            Trade trade = tradeController.getGame().getTrades().get(i);
+            if(trade.getPrice() < 0){
+                String situation ;
+                if(trade.isAccepted()) {
+                    situation = "Trade is accepted";
+                    textField.setText( "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" +"amount : " + trade.getAmount() + "price : "+
+                            -trade.getPrice() + "\n" + situation + "\n"
+                    + "receiver : " + trade.getReceiver() + "\n" + "message : " + trade.getMessage());
+                }
+                else
+                    situation = "Trade is not accepted";
+                textField.setText( "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" +"amount : " + trade.getAmount() + "price : "+
+                        -trade.getPrice() + "\n" + situation + "\n" + "message : " + trade.getMessage());
+            }
+            if(trade.getPrice() > 0){
+                //donate part
+            }
+        }
+
+        Button back1 = new Button("Back");
+        back1.setOnAction(ae -> tradeHistory.hide());
+
+        root.getChildren().addAll(requestsSent,requestsReceived,back1);
+        main.setCenter(root);
+
+        tradeHistory.getContent().add(main);
+        tradeHistory.show(stage);
     }
 
 }
