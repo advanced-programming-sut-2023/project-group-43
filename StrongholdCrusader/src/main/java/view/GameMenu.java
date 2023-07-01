@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,6 +51,8 @@ public class GameMenu extends Application {
 
     private int firstX, firstY;
 
+    private Label label = new Label();
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -59,6 +62,10 @@ public class GameMenu extends Application {
         root.setMaxWidth(800);
         initialize();
         scene = new Scene(anchorPane);
+        label.setLayoutY(300);
+        label.setLayoutX(1210);
+        gameController.initializeGame();
+        label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         stage.setScene(scene);
         stage.show();
     }
@@ -71,7 +78,6 @@ public class GameMenu extends Application {
         //gameController.illness();
         //gameController.updateIllness();
         dragAndDropBuildingOnMap();
-        gameController.initializeGame();
     }
 
     public static void setGameController(GameController gameController) {
@@ -182,9 +188,9 @@ public class GameMenu extends Application {
             }
         });
         Button nextPerson = new Button("next person");
-        tradeMenu.setLayoutX(1200);
-        tradeMenu.setLayoutY(700);
-        root.getChildren().add(tradeMenu);
+        nextPerson.setLayoutX(1200);
+        nextPerson.setLayoutY(700);
+        nextPerson.getChildren().add(nextPerson);
         tradeMenu.setOnAction(ae -> {
             try {
                 goToNextPerson();
@@ -204,6 +210,7 @@ public class GameMenu extends Application {
 
     private void goToNextPerson() throws Exception {
         gameController.goToNextPerson();
+        label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         if (gameController.getGame().getCurrentPlayer().equals(gameController.getGame().getPlayers().get(gameController.getGame().getPlayers().size() - 1))) {
             gameController.applyChanges();
             turns--;
