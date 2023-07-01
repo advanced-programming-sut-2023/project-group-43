@@ -8,10 +8,6 @@ import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
-import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import model.*;
 import model.buildings.*;
 import model.units.*;
@@ -23,7 +19,7 @@ import java.util.Random;
 
 public class GameController {
 
-    private final Game game ;
+    private final Game game;
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
@@ -47,14 +43,12 @@ public class GameController {
         output.append("texture : " + cell.getTexture().getName() + "\n");
         if (cell.getTreeType() == null) {
             output.append("tree : no tree in this cell\n");
-        }
-        else {
+        } else {
             output.append("tree : " + cell.getTreeType().getTreeType() + "\n");
         }
         if (cell.getBuilding() == null) {
             output.append("buildings : no building in this cell");
-        }
-        else {
+        } else {
             output.append("buildings : " + cell.getBuilding().getName());
         }
         output.append("units :");
@@ -427,7 +421,7 @@ public class GameController {
     }
 
     private void savePopularity() {
-        for (User user: game.getPlayers()) {
+        for (User user : game.getPlayers()) {
             user.getGovernance().setPopularityChange(user.getGovernance().getPopularity());
         }
     }
@@ -641,6 +635,7 @@ public class GameController {
             }
         }
     }
+
     public void illness() {
         int length = game.getCells().length;
         int width = game.getCells()[0].length;
@@ -660,6 +655,7 @@ public class GameController {
             game.getCells()[lengthResult][widthResult].setTexture(Texture.ILLNESS);
         }
     }
+
     private void updateIllness() {
         for (int i = 0; i < game.getCells().length; i++) {
             for (int j = 0; j < game.getCells()[0].length; j++) {
@@ -896,5 +892,28 @@ public class GameController {
         } else {
             return new int[][]{{1, 0, -1, 0}, {0, 1, 0, -1}};
         }
+    }
+
+    public String allCellsInfo(int firstX, int firstY, int finalX, int finalY) {
+        int units = 0;
+        double averageRate = 0;
+        int minRate = 1000;
+        int maxRate = 0;
+        for (int i = firstX; i <= finalX; i++) {
+            for (int j = firstY; j <= finalY; j++) {
+                Cell cell = game.getCells()[i][j];
+                units += cell.getUnits().size();
+                if (cell.getBuilding() != null && cell.getBuilding() instanceof Producer) {
+                    int rate = ((Producer) cell.getBuilding()).getProductionRate();
+                    averageRate += rate;
+                    if (rate > maxRate) maxRate = rate;
+                    if (rate < minRate) minRate = rate;
+                } else {
+                    minRate = 0;
+                }
+            }
+        }
+        averageRate /= ((finalX - firstX + 1) * (finalY - firstY + 1));
+        return "units: " + units + "\naverage rate: " + averageRate + "\nminimum rate: " + minRate + "\nmaximum rate: " + maxRate;
     }
 }
