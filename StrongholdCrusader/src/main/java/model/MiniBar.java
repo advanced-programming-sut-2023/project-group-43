@@ -95,6 +95,7 @@ public class MiniBar {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(name + " is selected\nnow you should choose a cell to place " + name + " on it");
                 alert.show();
+                //System.out.println(name + " is selected\nnow you should choose a cell to place " + name + " on it");
                 selectedBuildingName = name;
             });
         }
