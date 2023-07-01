@@ -213,6 +213,7 @@ public class GameMenu extends Application {
                             else {
                                 alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
                                 gameController.getMiniBar().selectedBuildingName = null;
+                                resetCells();
                             }
                             alert.show();
                         }
@@ -305,12 +306,12 @@ public class GameMenu extends Application {
         ImageView textureImageview = new ImageView(texture);
         ImageView item = new ImageView();
 
-        textureImageview.setFitHeight(100);
-        textureImageview.setFitWidth(100);
+        textureImageview.setFitHeight(size);
+        textureImageview.setFitWidth(size);
         textureImageview.setImage(texture);
 
-        item.setFitWidth(80);
-        item.setFitHeight(80);
+        item.setFitWidth(0.8 * size);
+        item.setFitHeight(0.8 * size);
 
         if (building != null)
             item.setImage(building);
