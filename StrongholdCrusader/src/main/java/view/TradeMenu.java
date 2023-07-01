@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -179,23 +180,7 @@ public class TradeMenu extends Application {
 
         Button back = new Button("Back");
         back.setOnAction(ae -> backToInfo());
-//
-//        ProgressBar pb = new ProgressBar();
-//        TilePane r = new TilePane();
-//        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-//            public void handle(ActionEvent e)
-//            {
-//                double ii = 0.1;
-//                pb.setProgress(ii);
-//            }
-//
-//        };
-//
-//        Button b = new Button("increase");
-//        b.setOnAction(event);
-//
-//        r.getChildren().add(pb);
-//        r.getChildren().add(b);
+
         VBox vBox = new VBox();
 
         HBox hBox1 = new HBox();
@@ -221,8 +206,19 @@ public class TradeMenu extends Application {
         hBox.getChildren().addAll(request,donate);
         hBox.setSpacing(20);
 
-        vBox.getChildren().addAll(hBox1,hBox);
+        ImageView imageView = new ImageView(ImageEnum.getImageByName(material.getName()));
+        imageView.setFitWidth(50);
+        imageView.setFitHeight(50);
+
+
+        hBox.setAlignment(Pos.CENTER);
+        hBox1.setAlignment(Pos.CENTER);
+
+        vBox.getChildren().addAll(imageView,hBox1,hBox);
+        vBox.setSpacing(20);
+        vBox.setAlignment(Pos.CENTER);
         main.setCenter(vBox);
+        back.setAlignment(Pos.CENTER);
         main.setBottom(back);
 
         materialInfoPopUp.getContent().add(main);
