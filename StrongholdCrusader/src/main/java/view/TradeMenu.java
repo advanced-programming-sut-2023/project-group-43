@@ -201,15 +201,18 @@ public class TradeMenu extends Application {
         HBox hBox1 = new HBox();
         Button increase = new Button("+");
         Button decrease = new Button("-");
+
         AtomicInteger textFieldNumber = new AtomicInteger();
         TextField number = new TextField(String.valueOf(textFieldNumber.get()));
         hBox1.getChildren().addAll(increase ,number , decrease );
         hBox1.setSpacing(10);
         increase.setOnAction(actionEvent -> {
             textFieldNumber.getAndIncrement();
+            number.setText(textFieldNumber.toString());
         });
         decrease.setOnAction(actionEvent -> {
             textFieldNumber.getAndDecrement();
+            number.setText(textFieldNumber.toString());
         });
 
         HBox hBox = new HBox();
