@@ -797,6 +797,7 @@ public class GameController {
     }
 
     public String showGameResult() {
+        updateScores();
         StringBuilder ans = new StringBuilder();
         ans.append("<<<GAME OVER>>>" + "\n");
         ans.append("The winner of the game is ").append(findWinner().getUsername()).append("\n");

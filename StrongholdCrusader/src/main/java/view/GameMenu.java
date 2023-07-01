@@ -62,9 +62,10 @@ public class GameMenu extends Application {
         root.setMaxWidth(800);
         initialize();
         scene = new Scene(anchorPane);
-        label.setLayoutY(300);
-        label.setLayoutX(1210);
         gameController.initializeGame();
+        label.setLayoutY(200);
+        label.setLayoutX(1210);
+        anchorPane.getChildren().add(label);
         label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         stage.setScene(scene);
         stage.show();
@@ -175,29 +176,6 @@ public class GameMenu extends Application {
         button.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/game_menu/man.png").toExternalForm())));
         button.setLayoutX(1000);
         button.setLayoutY(500);
-        //temporary button for trade menu
-        Button tradeMenu = new Button("trade menu");
-        tradeMenu.setLayoutX(1200);
-        tradeMenu.setLayoutY(500);
-        root.getChildren().add(tradeMenu);
-        tradeMenu.setOnAction(ae -> {
-            try {
-                enterTradeMenu();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-        Button nextPerson = new Button("next person");
-        nextPerson.setLayoutX(1200);
-        nextPerson.setLayoutY(700);
-        root.getChildren().add(nextPerson);
-        tradeMenu.setOnAction(ae -> {
-            try {
-                goToNextPerson();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
         button.setOnMouseClicked(mouseEvent -> {
             try {
                 enterGovernmentMenu();
@@ -206,12 +184,37 @@ public class GameMenu extends Application {
             }
         });
         root.getChildren().add(button);
+        //temporary button for trade menu
+        Button tradeMenu = new Button("trade menu");
+        tradeMenu.setLayoutX(1200);
+        tradeMenu.setLayoutY(100);
+        root.getChildren().add(tradeMenu);
+        tradeMenu.setOnAction(ae -> {
+            try {
+                enterTradeMenu();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        //temporary button for next person
+        Button nextPerson = new Button();
+        nextPerson.setText("next person");
+        nextPerson.setLayoutX(1200);
+        nextPerson.setLayoutY(500);
+        nextPerson.setOnAction(ae -> {
+            try {
+                goToNextPerson();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        root.getChildren().add(nextPerson);
     }
 
     private void goToNextPerson() throws Exception {
         gameController.goToNextPerson();
         label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
-        if (gameController.getGame().getCurrentPlayer().equals(gameController.getGame().getPlayers().get(gameController.getGame().getPlayers().size() - 1))) {
+        if (gameController.getGame().getCurrentPlayer().equals(gameController.getGame().getPlayers().get(0))) {
             gameController.applyChanges();
             turns--;
             if (gameController.isGameEnded() || turns <= 0) {
