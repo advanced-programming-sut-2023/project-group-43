@@ -5,10 +5,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import view.ProfileMenu;
 
 public class MiniBar {
     public Stage stage;
@@ -40,6 +41,13 @@ public class MiniBar {
 //        allBuildingImages[40].setFitHeight(180);
 //        allBuildingImages[40].setFitWidth(180);
         //pane.getChildren().add(allBuildingImages[40]);
+        setBackground(hBox);
+    }
+
+    private void setBackground(HBox pane) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/oldPaper.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
     }
     public void setAllBuildingImages() {
         allBuildingImages[0] = new ImageView(ImageEnum.APPLE_GARDEN.getImage());
