@@ -70,6 +70,7 @@ public class GameMenu extends Application {
         setCells();
         //gameController.illness();
         //gameController.updateIllness();
+        dragAndDropBuildingOnMap();
         gameController.initializeGame();
     }
 
@@ -78,9 +79,9 @@ public class GameMenu extends Application {
     }
     private void addMiniBar() {
         MiniBar miniBar = new MiniBar();
+        GameController.setMiniBar(miniBar);
         Pane pane = miniBar.getPane();
         pane.setLayoutY(560);
-        gameController.setMiniBar(miniBar);
         anchorPane.getChildren().add(pane);
     }
 
@@ -249,21 +250,24 @@ public class GameMenu extends Application {
 
     private void dragAndDropBuildingOnMap() {
         gameController.getMiniBar().addListenerToFindTheSelectedBuilding();
-        for (int i = 0; i < gameController.getGame().getRow(); i++) {
-            for (int j = 0; j < gameController.getGame().getColumn(); j++) {
-                GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
-                int finalX = i;
-                int finalY = j;
-                cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (gameController.getMiniBar().selectedBuildingName != null) {
+        System.out.println(">" + gameController.getMiniBar().selectedBuildingName + "<");
+        if (gameController.getMiniBar().selectedBuildingName != null) {
+            System.out.println("it is not null");
+            for (int i = 0; i < gameController.getGame().getRow(); i++) {
+                for (int j = 0; j < gameController.getGame().getColumn(); j++) {
+                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
+                    int finalX = i;
+                    int finalY = j;
+                    cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            System.out.println("this cell is touched to in dragAndDrop");
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
                             alert.show();
                         }
-                    }
-                });
+                    });
+                }
             }
         }
     }
