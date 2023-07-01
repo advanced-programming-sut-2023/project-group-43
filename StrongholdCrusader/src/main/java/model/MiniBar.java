@@ -3,17 +3,16 @@ package model;
 import enums.ImageEnum;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import view.ProfileMenu;
 
 public class MiniBar {
-    public Stage stage;
-    public Scene scene;
     private ScrollBar scrollBar;
     private Pane pane = new Pane();
     private ScrollPane scrollPane = new ScrollPane();
@@ -90,9 +89,7 @@ public class MiniBar {
         allBuildingImages[37] = new ImageView(ImageEnum.WHEAT_FARM.getImage());
         allBuildingImages[38] = new ImageView(ImageEnum.WOOD_CUTTER.getImage());
         allBuildingImages[39] = new ImageView(ImageEnum.SAMPLE_MINI_MAP.getImage());//
-        allBuildingImages[40] = new ImageView(ImageEnum.THE_MAN.getImage());//
-    }
-
+        }
     public void addingBuildingImagesOnLeftAnchorPane() {
         for (int i = 0; i <= 38; i++) {
             allBuildingImages[i].setFitHeight(100);
@@ -113,6 +110,9 @@ public class MiniBar {
         for (int i = 0; i <= 38; i++) {
             String name = ImageEnum.getNameByImage(allBuildingImages[i].getImage());
             allBuildingImages[i].setOnMouseClicked(mouseEvent -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText(name + " is selected\nnow you should choose a cell to place " + name + " on it");
+                alert.show();
                 selectedBuildingName = name;
             });
         }
