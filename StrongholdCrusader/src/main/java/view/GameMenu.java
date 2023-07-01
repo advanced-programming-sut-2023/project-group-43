@@ -62,12 +62,12 @@ public class GameMenu extends Application {
     @FXML
     public void initialize() {
         setRootPane();
+        setButtons();
         setCells();
         gameController.initializeGame();
     }
 
-    private void setRootPane() {
-        root.setMinSize(1500, 600);
+    private void setButtons() {
         addButton(anchorPane);
         Rectangle up = new Rectangle();
         Rectangle down = new Rectangle();
@@ -80,35 +80,50 @@ public class GameMenu extends Application {
         addFunctions(up, down, right, left);
     }
 
+    private void setRootPane() {
+        root.setMinSize(1500, 600);
+    }
+
     private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left) {
         down.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (yPosition > size) yPosition -= size;
-                setCells();
+                if ((600 / size) - yPosition < gameController.getGame().getColumn()) {
+                    yPosition -= 1;
+                    resetCells();
+                }
             }
         });
         up.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (yPosition < (size * gameController.getGame().getColumn() - 600)) yPosition += size;
-                setCells();
+                if (yPosition < 0) yPosition += 1;
+                resetCells();
             }
         });
         left.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (xPosition < (size * gameController.getGame().getRow() - 1200)) xPosition += size;
-                setCells();
+                if (xPosition < 0) xPosition += 1;
+                resetCells();
             }
         });
         right.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (xPosition > size) xPosition -= size;
-                setCells();
+                if ((1200 / size) - xPosition < gameController.getGame().getRow()) xPosition -= 1;
+                resetCells();
             }
         });
+    }
+
+    private void resetCells() {
+        anchorPane.getChildren().removeAll(anchorPane.getChildren());
+        root.getChildren().removeAll(root.getChildren());
+        anchorPane.getChildren().add(root);
+        root.setMaxHeight(800);
+        root.setMaxWidth(800);
+        initialize();
     }
 
     private void addDirectionButton(Rectangle rectangle, String address, int x, int y) {
@@ -120,7 +135,7 @@ public class GameMenu extends Application {
         anchorPane.getChildren().add(rectangle);
     }
 
-    private void addButton(AnchorPane root){
+    private void addButton(AnchorPane root) {
         Rectangle button = new Rectangle();
         button.setWidth(200);
         button.setHeight(200);
@@ -129,6 +144,8 @@ public class GameMenu extends Application {
         button.setLayoutY(500);
         //temporary button for trade menu
         Button tradeMenu = new Button("trade menu");
+        tradeMenu.setLayoutX(1200);
+        tradeMenu.setLayoutY(500);
         root.getChildren().add(tradeMenu);
         tradeMenu.setOnAction(ae -> {
             try {
@@ -151,13 +168,12 @@ public class GameMenu extends Application {
     }
 
 
-
     private void setCells() {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
                     GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
-                    setCell(cell, x * size + xPosition, y * size + yPosition);
+                    setCell(cell, size * (x + xPosition), size * (y + yPosition));
                 }
             }
         }

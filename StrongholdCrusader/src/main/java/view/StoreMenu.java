@@ -1,5 +1,6 @@
 package view;
 
+import controller.GameControllers.GameController;
 import controller.GameControllers.StoreController;
 import enums.ImageEnum;
 import javafx.application.Application;
@@ -64,7 +65,10 @@ public class StoreMenu extends Application {
         storeTable.setStoreController(storeController);
         storeTable.start(stage);
     }
-    public void back() {
-        //TODO
+    public void back() throws Exception {
+        GameController gameController = new GameController(storeController.getGame());
+        GameMenu gameMenu = new GameMenu();
+        gameMenu.setGameController(gameController);
+        gameMenu.start(RegisterMenu.getStage());
     }
 }
