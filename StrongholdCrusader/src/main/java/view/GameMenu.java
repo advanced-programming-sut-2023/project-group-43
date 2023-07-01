@@ -190,7 +190,7 @@ public class GameMenu extends Application {
         Button nextPerson = new Button("next person");
         nextPerson.setLayoutX(1200);
         nextPerson.setLayoutY(700);
-        nextPerson.getChildren().add(nextPerson);
+        root.getChildren().add(nextPerson);
         tradeMenu.setOnAction(ae -> {
             try {
                 goToNextPerson();
