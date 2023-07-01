@@ -73,18 +73,22 @@ public class GameMenu extends Application {
         Rectangle down = new Rectangle();
         Rectangle right = new Rectangle();
         Rectangle left = new Rectangle();
+        Rectangle plus = new Rectangle();
+        Rectangle minus = new Rectangle();
         addDirectionButton(up, "up", 600, 10);
         addDirectionButton(down, "down", 600, 600);
         addDirectionButton(right, "right", 1200, 300);
         addDirectionButton(left, "back", 10, 300);
-        addFunctions(up, down, right, left);
+        addDirectionButton(plus, "plus", 1500,10);
+        addDirectionButton(minus, "minus", 1500, 70);
+        addFunctions(up, down, right, left, plus, minus);
     }
 
     private void setRootPane() {
         root.setMinSize(1500, 600);
     }
 
-    private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left) {
+    private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left, Rectangle plus, Rectangle minus) {
         down.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -112,6 +116,20 @@ public class GameMenu extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if ((1200 / size) - xPosition < gameController.getGame().getRow()) xPosition -= 1;
+                resetCells();
+            }
+        });
+        plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (size < 100) size *= 2;
+                resetCells();
+            }
+        });
+        minus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (size > 25) size /= 2;
                 resetCells();
             }
         });
