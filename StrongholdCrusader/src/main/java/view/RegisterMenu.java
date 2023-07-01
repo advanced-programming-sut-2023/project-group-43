@@ -44,6 +44,8 @@ public class RegisterMenu extends Application {
     public CheckBox randomSlogan;
     public Rectangle captchaRec;
     public TextField captcha;
+    public CheckBox randomPassword;
+    public Label passwordText;
     private String captchaNumber;
 
     public static void main(String[] args) {
@@ -180,6 +182,14 @@ public class RegisterMenu extends Application {
             sloganCheckBox.setSelected(true);
             slogan.setDisable(false);
             slogan.setText(RegisterAndLoginController.makeRandomSlogan());
+        }
+    }
+
+    public void chooseRandomPassword() {
+        if (randomPassword.isSelected()) {
+            String passwordString = RegisterAndLoginController.makeRandomPassword();
+            passwordText.setText(passwordString);
+            password.setText(passwordString);
         }
     }
 }
