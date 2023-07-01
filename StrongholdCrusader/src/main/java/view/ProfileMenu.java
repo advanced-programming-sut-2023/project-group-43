@@ -318,7 +318,6 @@ public class ProfileMenu extends Application {
         }
     }
     public void back(MouseEvent mouseEvent) throws Exception {
-        //(new MainMenu()).setMainUserController(profileController.getCurrentUser().getUsername());
         (new MainMenu()).start(RegisterMenu.getStage());
     }
     private void checkQuestion() {

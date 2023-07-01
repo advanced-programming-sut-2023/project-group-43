@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -101,37 +102,18 @@ public class MiniBar {
         scrollPane.setContent(hBox);
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(10));
-        /*imageView.setOnMouseClicked(mouseEvent -> {});
-        Button appleFarm = new Button("appleFarm");
-        Group root = new Group(imageView);
-        leftAnchorPane.getChildren().add(root);*/
     }
     public void addListenerToFindTheSelectedBuilding() {
         for (int i = 0; i <= 38; i++) {
             String name = ImageEnum.getNameByImage(allBuildingImages[i].getImage());
             allBuildingImages[i].setOnMouseClicked(mouseEvent -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText(name + " is selected\nnow you should choose a cell to place " + name + " on it");
+                alert.setContentText("\"" + name + "\" is selected\nnow you should choose a cell to place \"" + name + "\" on it");
                 alert.show();
                 selectedBuildingName = name;
             });
         }
     }
-    /*private class ButtonClickListener implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            String command = e.getActionCommand();
-            if( command.equals( "OK" ))  {
-                //statusLabel.setText("Ok Button clicked.");
-            }
-            else if( command.equals( "Submit" ) )  {
-                //statusLabel.setText("Submit Button clicked.");
-            }
-            else  {
-                //statusLabel.setText("Cancel Button clicked.");
-            }
-        }
-    }*/
-
     public Pane getPane() {
         return pane;
     }

@@ -41,15 +41,6 @@ public class GameMenu extends Application {
     private int size = 50;
     private int xPosition = 0;
     private int yPosition = 0;
-
-    public GameController getGameController() {
-        return gameController;
-    }
-
-    public void setGameController(GameController gameController) {
-        this.gameController = gameController;
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
@@ -67,14 +58,22 @@ public class GameMenu extends Application {
         addMiniBar();
         setButtons();
         setCells();
-        dragAndDropBuildingOnMap();
+        gameController.illness();
+        gameController.updateIllness();
         gameController.initializeGame();
     }
+    public GameController getGameController() {
+        return gameController;
+    }
 
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
     private void addMiniBar() {
         MiniBar miniBar = new MiniBar();
         Pane pane = miniBar.getPane();
         pane.setLayoutY(560);
+        gameController.setMiniBar(miniBar);
         anchorPane.getChildren().add(pane);
     }
 
@@ -86,20 +85,22 @@ public class GameMenu extends Application {
         Rectangle left = new Rectangle();
         Rectangle plus = new Rectangle();
         Rectangle minus = new Rectangle();
+        Rectangle back = new Rectangle();
         addDirectionButton(up, "up", 600, 10);
         addDirectionButton(down, "down", 600, 600);
         addDirectionButton(right, "right", 1200, 300);
         addDirectionButton(left, "back", 10, 300);
         addDirectionButton(plus, "plus", 10,10);
         addDirectionButton(minus, "minus", 10, 70);
-        addFunctions(up, down, right, left, plus, minus);
+        addDirectionButton(back, "backButton", 1200, 10);
+        addFunctions(up, down, right, left, plus, minus, back);
     }
 
     private void setRootPane() {
         root.setMinSize(1500, 600);
     }
 
-    private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left, Rectangle plus, Rectangle minus) {
+    private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left, Rectangle plus, Rectangle minus, Rectangle back) {
         down.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -142,6 +143,16 @@ public class GameMenu extends Application {
             public void handle(MouseEvent mouseEvent) {
                 if (size > 25) size /= 2;
                 resetCells();
+            }
+        });
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    (new ChangeEnvironmentMenu()).start(RegisterMenu.getStage());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
@@ -220,29 +231,6 @@ public class GameMenu extends Application {
                 }
             }
         }
-    }
-    private void dragAndDropBuildingOnMap() {
-        gameController.getMiniBar().addListenerToFindTheSelectedBuilding();
-        System.out.println(">" + gameController.getMiniBar().selectedBuildingName + "<");
-        if (gameController.getMiniBar().selectedBuildingName != null) {
-            System.out.println("it is not null");
-            for (int i = 0; i < gameController.getGame().getRow(); i++) {
-                for (int j = 0; j < gameController.getGame().getColumn(); j++) {
-                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
-                    int finalX = i;
-                    int finalY = j;
-                    cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            System.out.println("this cell is touched to in dragAndDrop");
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
-                            alert.show();
-                        }
-                    });
-                }
-            }
-    }
     }
     private GridPane loadCell(Cell cell) {
         GridPane gridPane = new GridPane();

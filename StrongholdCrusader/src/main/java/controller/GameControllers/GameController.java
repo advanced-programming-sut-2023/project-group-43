@@ -422,8 +422,6 @@ public class GameController {
         updateWorkersEfficiency();
         updateDamageEfficiency();
         removeDeadGovernance();
-        illness();
-        updateIllness();
     }
 
     private void savePopularity() {
@@ -660,7 +658,7 @@ public class GameController {
             game.getCells()[lengthResult][widthResult].setTexture(Texture.ILLNESS);
         }
     }
-    private void updateIllness() {
+    public void updateIllness() {
         for (int i = 0; i < game.getCells().length; i++) {
             for (int j = 0; j < game.getCells()[0].length; j++) {
                 if (game.getCells()[i][j].isIllness() && game.getCells()[i][j].getBuilding() != null) {
