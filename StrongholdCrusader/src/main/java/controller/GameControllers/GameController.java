@@ -8,10 +8,6 @@ import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
-import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import model.*;
 import model.buildings.*;
 import model.units.*;
@@ -21,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
-    private final Game game ;
+    private final Game game;
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
@@ -899,5 +895,28 @@ public class GameController {
         } else {
             return new int[][]{{1, 0, -1, 0}, {0, 1, 0, -1}};
         }
+    }
+
+    public String allCellsInfo(int firstX, int firstY, int finalX, int finalY) {
+        int units = 0;
+        double averageRate = 0;
+        int minRate = 1000;
+        int maxRate = 0;
+        for (int i = firstX; i <= finalX; i++) {
+            for (int j = firstY; j <= finalY; j++) {
+                Cell cell = game.getCells()[i][j];
+                units += cell.getUnits().size();
+                if (cell.getBuilding() != null && cell.getBuilding() instanceof Producer) {
+                    int rate = ((Producer) cell.getBuilding()).getProductionRate();
+                    averageRate += rate;
+                    if (rate > maxRate) maxRate = rate;
+                    if (rate < minRate) minRate = rate;
+                } else {
+                    minRate = 0;
+                }
+            }
+        }
+        averageRate /= ((finalX - firstX + 1) * (finalY - firstY + 1));
+        return "units: " + units + "\naverage rate: " + averageRate + "\nminimum rate: " + minRate + "\nmaximum rate: " + maxRate;
     }
 }
