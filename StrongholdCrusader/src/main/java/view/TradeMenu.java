@@ -4,27 +4,21 @@ import controller.TradeController;
 import enums.ImageEnum;
 import enums.environmentEnums.Material;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import model.DataBase;
-import model.GovernanceResource;
 import model.User;
-import model.buildings.Storage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TradeMenu extends Application {
 
@@ -155,7 +149,8 @@ public class TradeMenu extends Application {
 
         for(int i = 0 ; i < materials.size(); i++){
             Button materialButton = new Button(materials.get(i).getName());
-            materialButton.setOnAction(actionEvent -> showMaterialDetail());
+            int finalI = i;
+            materialButton.setOnAction(actionEvent -> showMaterialDetail(materials.get(finalI)));
             vBox.getChildren().add(materialButton);
         }
 
@@ -172,7 +167,7 @@ public class TradeMenu extends Application {
         personDetailInfoPopUp.show(stage);
     }
 
-    private void showMaterialDetail(){
+    private void showMaterialDetail(Material material){
         personDetailInfoPopUp.hide();
         materialInfoPopUp = new Popup();
         BorderPane main = new BorderPane();
@@ -201,7 +196,30 @@ public class TradeMenu extends Application {
 //
 //        r.getChildren().add(pb);
 //        r.getChildren().add(b);
+        VBox vBox = new VBox();
 
+        HBox hBox1 = new HBox();
+        Button increase = new Button("+");
+        Button decrease = new Button("-");
+        AtomicInteger textFieldNumber = new AtomicInteger();
+        TextField number = new TextField(String.valueOf(textFieldNumber.get()));
+        hBox1.getChildren().addAll(increase ,number , decrease );
+        hBox1.setSpacing(10);
+        increase.setOnAction(actionEvent -> {
+            textFieldNumber.getAndIncrement();
+        });
+        decrease.setOnAction(actionEvent -> {
+            textFieldNumber.getAndDecrement();
+        });
+
+        HBox hBox = new HBox();
+        Button request = new Button("Request");
+        Button donate = new Button("Donate");
+        hBox.getChildren().addAll(request,donate);
+        hBox.setSpacing(20);
+
+        vBox.getChildren().addAll(hBox1,hBox);
+        main.setCenter(vBox);
         main.setBottom(back);
 
         materialInfoPopUp.getContent().add(main);
