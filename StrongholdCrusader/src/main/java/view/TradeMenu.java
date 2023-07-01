@@ -4,9 +4,13 @@ import controller.TradeController;
 import enums.ImageEnum;
 import enums.environmentEnums.Material;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -37,6 +41,9 @@ public class TradeMenu extends Application {
     private Button back = new Button("Back");
 
     private Text text = new Text("The business is at your disposal, my Lord");
+
+    private Popup personDetailInfoPopUp;
+    private Popup materialInfoPopUp;
 
     public void setTradeController(TradeController tradeController) {
         this.tradeController = tradeController;
@@ -134,7 +141,7 @@ public class TradeMenu extends Application {
 
     private void showPersonDetails(User user) {
 
-        Popup infoPopUp = new Popup();
+        personDetailInfoPopUp = new Popup();
         BorderPane main = new BorderPane();
 
         main.setBorder(Border.stroke(Color.BLACK));
@@ -148,22 +155,63 @@ public class TradeMenu extends Application {
 
         for(int i = 0 ; i < materials.size(); i++){
             Button materialButton = new Button(materials.get(i).getName());
+            materialButton.setOnAction(actionEvent -> showMaterialDetail());
             vBox.getChildren().add(materialButton);
         }
 
 
         Button back1 = new Button("Back");
-        back1.setOnAction(ae -> infoPopUp.hide());
+        back1.setOnAction(ae -> personDetailInfoPopUp.hide());
 
         vBox.getChildren().add(back1);
         vBox.setAlignment(Pos.CENTER);
-        vBox.setSpacing(5);
+        vBox.setSpacing(3);
 
         main.setCenter(vBox);
-        infoPopUp.getContent().add(main);
-        infoPopUp.show(stage);
+        personDetailInfoPopUp.getContent().add(main);
+        personDetailInfoPopUp.show(stage);
     }
 
+    private void showMaterialDetail(){
+        personDetailInfoPopUp.hide();
+        materialInfoPopUp = new Popup();
+        BorderPane main = new BorderPane();
+
+        main.setBorder(Border.stroke(Color.BLACK));
+        main.setMinSize(700, 700);
+        main.setBackground(new Background(new BackgroundImage(ImageEnum.OLD_PAPER.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+        Button back = new Button("Back");
+        back.setOnAction(ae -> backToInfo());
+//
+//        ProgressBar pb = new ProgressBar();
+//        TilePane r = new TilePane();
+//        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+//            public void handle(ActionEvent e)
+//            {
+//                double ii = 0.1;
+//                pb.setProgress(ii);
+//            }
+//
+//        };
+//
+//        Button b = new Button("increase");
+//        b.setOnAction(event);
+//
+//        r.getChildren().add(pb);
+//        r.getChildren().add(b);
+
+        main.setBottom(back);
+
+        materialInfoPopUp.getContent().add(main);
+        materialInfoPopUp.show(stage);
+    }
+
+    private void backToInfo(){
+        materialInfoPopUp.hide();
+        personDetailInfoPopUp.show(stage);
+    }
     private void tradeHistory() {
     }
 
