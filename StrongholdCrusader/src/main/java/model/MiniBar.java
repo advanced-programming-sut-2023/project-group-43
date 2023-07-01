@@ -115,4 +115,8 @@ public class MiniBar {
             }
         }
     }*/
+
+    public Pane getPane() {
+        return pane;
+    }
 }
