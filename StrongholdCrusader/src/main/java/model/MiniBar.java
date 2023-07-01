@@ -22,10 +22,10 @@ public class MiniBar {
 
     public MiniBar() {
         this.pane.setMinSize(1600, 200);
-        this.scrollPane.setMinSize(1000, 200);
+        this.scrollPane.setMaxSize(1000, 250);
         //scrollBar = new ScrollBar();
         //scrollBar.setMinSize(1000,10);
-        hBox.setMinSize(1000, 10);
+        hBox.setMaxSize(1000, 200);
         setAllBuildingImages();
         addingBuildingImagesOnLeftAnchorPane();
         //leftAnchorPane.getChildrenUnmodifiable().add(scrollBar);
