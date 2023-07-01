@@ -83,6 +83,7 @@ public enum Output {
     NO_UNIT("no unit in this cell"),
     NOT_ENOUGH_STONE("warning : not enough stone for repairment!"),
     SUCCESSFUL_REPAIRMENT("repairment done successfully"),
+    NOT_ENOUGH_UNITS("error : not enough units for dragging this building!"),
 
 
     //Governance outputs

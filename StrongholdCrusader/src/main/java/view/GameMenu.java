@@ -58,8 +58,8 @@ public class GameMenu extends Application {
         addMiniBar();
         setButtons();
         setCells();
-        gameController.illness();
-        gameController.updateIllness();
+        //gameController.illness();
+        //gameController.updateIllness();
         gameController.initializeGame();
     }
     public GameController getGameController() {
