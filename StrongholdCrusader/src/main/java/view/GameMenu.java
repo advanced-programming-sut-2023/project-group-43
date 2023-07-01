@@ -181,6 +181,17 @@ public class GameMenu extends Application {
                 throw new RuntimeException(e);
             }
         });
+        Button nextPerson = new Button("next person");
+        tradeMenu.setLayoutX(1200);
+        tradeMenu.setLayoutY(700);
+        root.getChildren().add(tradeMenu);
+        tradeMenu.setOnAction(ae -> {
+            try {
+                goToNextPerson();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         button.setOnMouseClicked(mouseEvent -> {
             try {
                 enterGovernmentMenu();
@@ -190,11 +201,29 @@ public class GameMenu extends Application {
         });
         root.getChildren().add(button);
     }
-    public void showAlert(Output output) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(output.getString());
-        alert.show();
+
+    private void goToNextPerson() throws Exception {
+        gameController.goToNextPerson();
+        if (gameController.getGame().getCurrentPlayer().equals(gameController.getGame().getPlayers().get(gameController.getGame().getPlayers().size() - 1))) {
+            gameController.applyChanges();
+            turns--;
+            if (gameController.isGameEnded() || turns <= 0) {
+                endGame();
+            }
+        }
     }
+
+    private void endGame() throws Exception {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(gameController.showGameResult());
+        alert.show();
+        back();
+    }
+
+    private void back() throws Exception {
+        gameController.enterMainMenu();
+    }
+
     private void setCells() {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
