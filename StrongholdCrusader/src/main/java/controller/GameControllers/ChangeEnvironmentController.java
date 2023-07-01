@@ -121,26 +121,6 @@ public class ChangeEnvironmentController {
         game.getCells()[x - 1][y - 1].setTreeType(treeType);
         return Output.DROP_TREE;
     }
-
-    public Output dropBuilding(int x, int y, String type) {
-        if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
-            return Output.WRONG_COORDINATES;
-        if (!type.matches("headquarter")) return Output.INVALID_BUILDING;
-        if (game.getCells()[x - 1][y - 1].getBuilding() != null) return Output.INVALID_CELL;
-        if (game.getCurrentPlayer().getGovernance().getAllBuildingsByName("headquarter").size() > 0)
-            return Output.INVALID_BUILDING;
-        Building building = new CastleDepartment("headquarter", game.getCurrentPlayer(), 1, 20, 0);
-        building.setCell(game.getCells()[x - 1][y - 1]);
-        game.getCells()[x - 1][y - 1].setBuilding(building);
-        game.getCurrentPlayer().getGovernance().addBuilding(building);
-        Unit unit = new Unarmed(game.getCurrentPlayer(), "lord", TroopType.LORD);
-        unit.setState(UnitState.STANDING);
-        unit.setCell(building.getCell());
-        game.getCells()[x - 1][y - 1].addUnit(unit);
-        return Output.SUCCESSFUL_ACTION;
-    }
-
-
     public boolean enterGameMenu(ArrayList<String> usernames, int row, int turns, int mapOption) throws Exception {
         Output output = generateMap(usernames, row, row, turns, mapOption);
         if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;

@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import model.Cell;
 import model.DataBase;
 import model.Game;
+import model.buildings.Building;
 
 public class GameMenu extends Application {
 
@@ -67,6 +68,7 @@ public class GameMenu extends Application {
         setRootPane();
         setButtons();
         setCells();
+        dragAndDropBuildingOnMap();
         gameController.initializeGame();
     }
 
@@ -212,7 +214,26 @@ public class GameMenu extends Application {
             }
         }
     }
-
+    private void dragAndDropBuildingOnMap() {
+        gameController.getMiniBar().addListenerToFindTheSelectedBuilding();
+        for (int i = 0; i < gameController.getGame().getRow(); i++) {
+            for (int j = 0; j < gameController.getGame().getColumn(); j++) {
+                GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
+                int finalX = i;
+                int finalY = j;
+                cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (gameController.getMiniBar().selectedBuildingName != null) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
+                            alert.show();
+                        }
+                    }
+                });
+            }
+        }
+    }
     private GridPane loadCell(Cell cell) {
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(size, size);

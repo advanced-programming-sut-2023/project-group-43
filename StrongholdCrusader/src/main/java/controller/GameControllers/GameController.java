@@ -8,7 +8,10 @@ import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
-import javafx.scene.input.InputEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import model.*;
 import model.buildings.*;
 import model.units.*;
@@ -24,11 +27,21 @@ public class GameController {
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
+    private static MiniBar miniBar = new MiniBar();
 
 
     public GameController(Game game) {
         this.game = game;
     }
+
+    public static MiniBar getMiniBar() {
+        return miniBar;
+    }
+
+    public static void setMiniBar(MiniBar miniBar) {
+        GameController.miniBar = miniBar;
+    }
+
     public String cellInfo(Cell cell) {
         StringBuilder output = new StringBuilder();
         output.append("texture : " + cell.getTexture().getName() + "\n");
@@ -883,8 +896,5 @@ public class GameController {
         } else {
             return new int[][]{{1, 0, -1, 0}, {0, 1, 0, -1}};
         }
-    }
-    private void dragAndDropBuildingOnMap(Building building) {
-        //TODO
     }
 }

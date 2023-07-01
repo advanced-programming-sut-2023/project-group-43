@@ -7,9 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.buildings.Building;
 
-public class miniMap {
+public class MiniBar {
     public Stage stage;
     public Scene scene;
     public ScrollBar scrollBar;
@@ -18,7 +17,7 @@ public class miniMap {
     public String selectedBuildingName;
     public ImageView[] allBuildingImages = new ImageView[41];
 
-    public miniMap() {
+    public MiniBar() {
         this.pane.setMinSize(1600, 200);
         this.leftAnchorPane.setMinSize(1000, 200);
         scrollBar = new ScrollBar();
