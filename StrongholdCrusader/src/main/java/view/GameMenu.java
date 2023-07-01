@@ -72,12 +72,9 @@ public class GameMenu extends Application {
         gameController.updateIllness();
         gameController.initializeGame();
     }
-    public GameController getGameController() {
-        return gameController;
-    }
 
-    public void setGameController(GameController gameController) {
-        this.gameController = gameController;
+    public static void setGameController(GameController gameController) {
+        GameMenu.gameController = gameController;
     }
     private void addMiniBar() {
         MiniBar miniBar = new MiniBar();
@@ -111,58 +108,37 @@ public class GameMenu extends Application {
     }
 
     private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left, Rectangle plus, Rectangle minus, Rectangle back) {
-        down.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if ((600 / size) - yPosition < gameController.getGame().getColumn()) {
-                    yPosition -= 1;
-                    resetCells();
-                }
-            }
-        });
-        up.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (yPosition < 0) yPosition += 1;
+        down.setOnMouseClicked(mouseEvent -> {
+            if ((600 / size) - yPosition < gameController.getGame().getColumn()) {
+                yPosition -= 1;
                 resetCells();
             }
         });
-        left.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (xPosition < 0) xPosition += 1;
-                resetCells();
-            }
+        up.setOnMouseClicked(mouseEvent -> {
+            if (yPosition < 0) yPosition += 1;
+            resetCells();
         });
-        right.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if ((1200 / size) - xPosition < gameController.getGame().getRow()) xPosition -= 1;
-                resetCells();
-            }
+        left.setOnMouseClicked(mouseEvent -> {
+            if (xPosition < 0) xPosition += 1;
+            resetCells();
         });
-        plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (size < 100) size *= 2;
-                resetCells();
-            }
+        right.setOnMouseClicked(mouseEvent -> {
+            if ((1200 / size) - xPosition < gameController.getGame().getRow()) xPosition -= 1;
+            resetCells();
         });
-        minus.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (size > 25) size /= 2;
-                resetCells();
-            }
+        plus.setOnMouseClicked(mouseEvent -> {
+            if (size < 100) size *= 2;
+            resetCells();
         });
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    (new ChangeEnvironmentMenu()).start(RegisterMenu.getStage());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        minus.setOnMouseClicked(mouseEvent -> {
+            if (size > 25) size /= 2;
+            resetCells();
+        });
+        back.setOnMouseClicked(mouseEvent -> {
+            try {
+                (new ChangeEnvironmentMenu()).start(RegisterMenu.getStage());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
     }
@@ -204,14 +180,11 @@ public class GameMenu extends Application {
                 throw new RuntimeException(e);
             }
         });
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    enterGovernmentMenu();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        button.setOnMouseClicked(mouseEvent -> {
+            try {
+                enterGovernmentMenu();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
         root.getChildren().add(button);
@@ -233,39 +206,27 @@ public class GameMenu extends Application {
     }
 
     private void setCellFunctions(GridPane cell, int finalX, int finalY) {
-        cell.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (!isCellSelected) {
-                    isCellSelected = true;
-                    firstY = finalY;
-                    firstX = finalX;
-                }
+        cell.setOnMousePressed(mouseEvent -> {
+            if (!isCellSelected) {
+                isCellSelected = true;
+                firstY = finalY;
+                firstX = finalX;
             }
         });
 
-        cell.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                x = finalX;
-                y = finalY;
-            }
+        cell.setOnMouseMoved(mouseEvent -> {
+            x = finalX;
+            y = finalY;
         });
-        cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
-                alert.show();
-            }
+        cell.setOnMouseClicked(mouseEvent -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
+            alert.show();
         });
-        cell.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                isCellSelected = false;
-                if ((firstX != x || firstY != y))
-                    showAllCells(firstX, firstY, x, y);
-            }
+        cell.setOnMouseReleased(mouseEvent -> {
+            isCellSelected = false;
+            if ((firstX != x || firstY != y))
+                showAllCells(firstX, firstY, x, y);
         });
     }
 
