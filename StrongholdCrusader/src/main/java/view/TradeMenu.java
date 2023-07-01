@@ -2,13 +2,12 @@ package view;
 
 import controller.TradeController;
 import enums.ImageEnum;
+import enums.Output;
 import enums.environmentEnums.Material;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -189,21 +188,28 @@ public class TradeMenu extends Application {
         Button decrease = new Button("-");
 
         AtomicInteger textFieldNumber = new AtomicInteger();
-        TextField number = new TextField(String.valueOf(textFieldNumber.get()));
+        TextArea number = new TextArea(String.valueOf(textFieldNumber.get()));
+        number.setMaxHeight(50);
+        number.setMaxWidth(50);
+
         hBox1.getChildren().addAll(increase ,number , decrease );
         hBox1.setSpacing(10);
+
         increase.setOnAction(actionEvent -> {
             textFieldNumber.getAndIncrement();
             number.setText(textFieldNumber.toString());
         });
         decrease.setOnAction(actionEvent -> {
             textFieldNumber.getAndDecrement();
+            if(textFieldNumber.get()  < 0 )
+                setOutOfRangeError();
             number.setText(textFieldNumber.toString());
         });
 
         HBox hBox = new HBox();
-        Button request = new Button("Request");
-        Button donate = new Button("Donate");
+        RadioButton request = new RadioButton("Request");
+        RadioButton donate = new RadioButton("Donate");
+
         hBox.getChildren().addAll(request,donate);
         hBox.setSpacing(20);
 
@@ -211,14 +217,29 @@ public class TradeMenu extends Application {
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
 
-        TextArea textArea = new TextArea();
-        textArea.setMaxWidth(100);
-        textArea.setMaxHeight(100);
+
+        TextArea message = new TextArea();
+        message.setMaxWidth(100);
+        message.setMaxHeight(100);
 
         hBox.setAlignment(Pos.CENTER);
         hBox1.setAlignment(Pos.CENTER);
 
-        vBox.getChildren().addAll(imageView,textArea,hBox1,hBox);
+        Button submit = new Button("Submit");
+        submit.setAlignment(Pos.CENTER);
+
+        submit.setOnAction(actionEvent -> {
+            if(request.isHover()){
+                Output output = tradeController.requestTrade(material.getName(),textFieldNumber.get(),material.getSellingPrice() * textFieldNumber.get() ,message.getText());
+                setTradeAdded();
+            }
+            if(donate.isHover()){
+
+            }
+        });
+
+
+        vBox.getChildren().addAll(imageView,hBox1,hBox,submit);
         vBox.setSpacing(20);
         vBox.setAlignment(Pos.CENTER);
         main.setCenter(vBox);
@@ -229,6 +250,17 @@ public class TradeMenu extends Application {
         materialInfoPopUp.show(stage);
     }
 
+    private void setOutOfRangeError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText("out of range!");
+        alert.showAndWait();
+    }
+
+    private void setTradeAdded(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Trade added!");
+        alert.showAndWait();
+    }
     private void backToInfo(){
         materialInfoPopUp.hide();
         personDetailInfoPopUp.show(stage);
