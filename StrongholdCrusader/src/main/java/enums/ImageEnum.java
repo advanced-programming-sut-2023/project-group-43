@@ -112,8 +112,33 @@ public enum ImageEnum {
     BIG_POND(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/bigPond.jpg")).toExternalForm()),"big pond","/images/texture/bigPond.jpg"),
     BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.jpg")).toExternalForm()),"beach","/images/texture/beach.jpg"),
     SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.jpg")).toExternalForm()),"sea","/images/texture/sea.jpg"),
-    //sampeMiniMap
-    SAMPLE_MINI_MAP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/sampleMiniMap.jpg")).toExternalForm()),"sampleMiniMap","/images/background/sampleMiniMap.jpg");
+    //sampleMiniMap
+    SAMPLE_MINI_MAP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/sampleMiniMap.jpg")).toExternalForm()),"sampleMiniMap","/images/background/sampleMiniMap.jpg"),
+
+    //units
+    LORD(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()) , "lord" ,"/images/units/sampleMiniMap.jpg"),
+    WORKER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()) , "worker","/images/units/sampleMiniMap.jpg"),
+    ARCHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()) ,"archer","/images/units/sampleMiniMap.jpg"),
+    CROSSBOWMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()) , "crossbowman","/images/units/sampleMiniMap.jpg"),
+    SWORDSMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()) ,"swordsman","/images/units/sampleMiniMap.jpg"),
+    ARCHER_BOW(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"archerBow","/images/units/sampleMiniMap.jpg"),
+    BLACKMONK(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"blackmonk","/images/units/sampleMiniMap.jpg"),
+    SLAVE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"slave","/images/units/sampleMiniMap.jpg"),
+    SLINGER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"slinger","/images/units/sampleMiniMap.jpg"),
+    HORSE_ARCHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"horseArcher","/images/units/sampleMiniMap.jpg"),
+    ARABIAN_SWORDSMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"arabianSwordsman","/images/units/sampleMiniMap.jpg"),
+    FIRE_THROWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"fireThrower","/images/units/sampleMiniMap.jpg"),
+    PIKEMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"pikeman","/images/units/sampleMiniMap.jpg"),
+    MACEMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"maceman","/images/units/sampleMiniMap.jpg"),
+    KNIGHT(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"knight","/images/units/sampleMiniMap.jpg"),
+    TUNNLER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"tunneler","/images/units/sampleMiniMap.jpg"),
+    SPEARMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"spearman","/images/units/sampleMiniMap.jpg"),
+    LADDERMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"ladderman","/images/units/sampleMiniMap.jpg"),
+    ENGINNER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"engineer","/images/units/sampleMiniMap.jpg"),
+    ASSASSIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"assassin","/images/units/sampleMiniMap.jpg"),
+    DOG(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/sampleMiniMap.jpg")).toExternalForm()),"dog","/images/units/sampleMiniMap.jpg")
+
+    ;
 
 
 
