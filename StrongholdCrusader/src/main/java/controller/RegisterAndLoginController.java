@@ -43,6 +43,10 @@ public class RegisterAndLoginController {
         if (slogan.isEmpty() && hasSlogan) return Output.EMPTY_FIELD;
         return null;
     }
+    public static Output checkAvatar(String avatarNumber, boolean hasAvatar) {
+        if (avatarNumber.isEmpty() && hasAvatar) return Output.EMPTY_FIELD;
+        return null;
+    }
 
     public static Output checkPasswordConfirmation(String passwordConfirmation, String password) {
         if (!password.equals(passwordConfirmation)) {
