@@ -79,8 +79,8 @@ public class GameMenu extends Application {
         addDirectionButton(down, "down", 600, 600);
         addDirectionButton(right, "right", 1200, 300);
         addDirectionButton(left, "back", 10, 300);
-        addDirectionButton(plus, "plus", 1500,10);
-        addDirectionButton(minus, "minus", 1500, 70);
+        addDirectionButton(plus, "plus", 10,10);
+        addDirectionButton(minus, "minus", 10, 70);
         addFunctions(up, down, right, left, plus, minus);
     }
 
