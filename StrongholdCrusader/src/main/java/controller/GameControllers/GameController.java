@@ -57,7 +57,7 @@ public class GameController {
         else {
             output.append("buildings : " + cell.getBuilding().getName());
         }
-        output.append("units :");
+        output.append("\nunits :");
         for (int i = 0; i < game.getPlayers().size(); i++) {
             int eachPlayersUnits = 0;
             for (int j = 0; j < cell.getUnits().size(); j++) {

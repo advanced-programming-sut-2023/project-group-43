@@ -83,7 +83,6 @@ public class ProfileMenu extends Application {
         //avatar.setItems(list);
         profileMenuStage = stage;
         profilePane = FXMLLoader.load(new URL(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml").toExternalForm()));
-        //BorderPane profilePane = FXMLLoader.load(Objects.requireNonNull(ProfileMenu.class.getResource("/fxml/ProfileMenu.fxml")));
         Group root = new Group(changeAvatar());
         profilePane.getChildren().add(root);
         scene = new Scene(profilePane);

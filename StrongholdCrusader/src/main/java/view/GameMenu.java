@@ -22,9 +22,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Cell;
-import model.DataBase;
-import model.Game;
-import model.buildings.Building;
 
 public class GameMenu extends Application {
 
@@ -68,6 +65,7 @@ public class GameMenu extends Application {
         setRootPane();
         setButtons();
         setCells();
+        anchorPane.getChildren().add(gameController.getMiniBar().leftAnchorPane);
         dragAndDropBuildingOnMap();
         gameController.initializeGame();
     }

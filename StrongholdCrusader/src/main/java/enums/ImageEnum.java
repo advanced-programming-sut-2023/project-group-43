@@ -113,9 +113,7 @@ public enum ImageEnum {
     BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.jpg")).toExternalForm()),"beach","/images/texture/beach.jpg"),
     SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.jpg")).toExternalForm()),"sea","/images/texture/sea.jpg"),
     //sampeMiniMap
-    SAMPLE_MINI_MAP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/sampleMiniMap.jpg")).toExternalForm()),"sampleMiniMap","/images/background/sampleMiniMap.jpg"),
-    //theMan
-    THE_MAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/theMan.jpg")).toExternalForm()),"theMan","/images/background/theMan.jpg");
+    SAMPLE_MINI_MAP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/sampleMiniMap.jpg")).toExternalForm()),"sampleMiniMap","/images/background/sampleMiniMap.jpg");
 
 
 
