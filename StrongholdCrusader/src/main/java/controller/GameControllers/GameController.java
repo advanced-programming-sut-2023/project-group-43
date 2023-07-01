@@ -29,6 +29,33 @@ public class GameController {
     public GameController(Game game) {
         this.game = game;
     }
+    public String cellInfo(Cell cell) {
+        StringBuilder output = new StringBuilder();
+        output.append("texture : " + cell.getTexture().getName() + "\n");
+        if (cell.getTreeType() == null) {
+            output.append("tree : no tree in this cell\n");
+        }
+        else {
+            output.append("tree : " + cell.getTreeType().getTreeType() + "\n");
+        }
+        if (cell.getBuilding() == null) {
+            output.append("buildings : no building in this cell");
+        }
+        else {
+            output.append("buildings : " + cell.getBuilding().getName());
+        }
+        output.append("units :");
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            int eachPlayersUnits = 0;
+            for (int j = 0; j < cell.getUnits().size(); j++) {
+                if (cell.getUnits().get(j).getOwner().equals(game.getPlayers().get(i))) {
+                    eachPlayersUnits++;
+                }
+            }
+            output.append("\n" + game.getPlayers().get(i).getUsername() + " : " + eachPlayersUnits);
+        }
+        return output.toString();
+    }
 
     public static Cell[][] getDefaultMaps(int mapOption) {
         if (mapOption == 1) return defaultMaps.get("option number 1");
