@@ -50,13 +50,6 @@ public class GameMenu extends Application {
 
     private int firstX, firstY;
 
-    public GameController getGameController() {
-        return gameController;
-    }
-
-    public void setGameController(GameController gameController) {
-        this.gameController = gameController;
-    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -411,7 +404,7 @@ public class GameMenu extends Application {
         tradeMenu.start(stage);
     }
     private void enterGovernmentMenu() throws Exception {
-        GovernanceController governanceController = new GovernanceController(getGameController().getGame().getCurrentPlayer(), gameController.getGame());
+        GovernanceController governanceController = new GovernanceController(gameController.getGame().getCurrentPlayer(), gameController.getGame());
         GovernanceMenu governanceMenu = new GovernanceMenu();
         governanceMenu.setGovernanceController(governanceController);
         governanceMenu.start(RegisterMenu.getStage());
