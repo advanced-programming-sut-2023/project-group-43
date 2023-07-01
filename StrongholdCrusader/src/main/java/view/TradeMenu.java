@@ -7,7 +7,10 @@ import enums.environmentEnums.Material;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -26,18 +29,13 @@ public class TradeMenu extends Application {
 
     private static Stage stage;
     public final String css = Objects.requireNonNull(this.getClass().getResource("/css/style.css")).toExternalForm();
-    private TradeController tradeController;
-
     private final BorderPane root = new BorderPane();
-
     private final HBox hBox = new HBox();
     private final Button tradeHistory = new Button("Trade History");
     private final Button makeRequest = new Button("Make Request");
-
     private final Button back = new Button("Back");
-
     private final Text text = new Text("The business is at your disposal, my Lord");
-
+    private TradeController tradeController;
     private Popup personDetailInfoPopUp;
     private Popup materialInfoPopUp;
     private Popup error;
@@ -105,12 +103,12 @@ public class TradeMenu extends Application {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
 
 
-        main.setMinSize(200,200);
+        main.setMinSize(200, 200);
         error.setWidth(200);
         error.setHeight(200);
 
         errorText = new TextField();
-        errorText.setMinSize(100 , 100);
+        errorText.setMinSize(100, 100);
 
         Button backError = new Button("Back");
         backError.setOnAction(actionEvent -> error.hide());
@@ -142,7 +140,7 @@ public class TradeMenu extends Application {
         VBox vBox = new VBox();
 
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).equals(tradeController.getGame().getCurrentUser()))continue;
+            if (users.get(i).equals(tradeController.getGame().getCurrentUser())) continue;
             Button button = new Button(users.get(i).getUsername());
             int finalI = i;
             button.setOnAction(ae -> showPersonDetails(users.get(finalI)));
@@ -173,9 +171,9 @@ public class TradeMenu extends Application {
 
         VBox vBox = new VBox();
 
-        ArrayList<Material>materials = user.getGovernance().getGovernanceResource().getOnlineMaterials();
+        ArrayList<Material> materials = user.getGovernance().getGovernanceResource().getOnlineMaterials();
 
-        for(int i = 0 ; i < materials.size(); i++){
+        for (int i = 0; i < materials.size(); i++) {
             Button materialButton = new Button(materials.get(i).getName());
             int finalI = i;
             materialButton.setOnAction(actionEvent -> showMaterialDetail(materials.get(finalI)));
@@ -195,7 +193,7 @@ public class TradeMenu extends Application {
         personDetailInfoPopUp.show(stage);
     }
 
-    private void showMaterialDetail(Material material){
+    private void showMaterialDetail(Material material) {
         personDetailInfoPopUp.hide();
         materialInfoPopUp = new Popup();
         BorderPane main = new BorderPane();
@@ -219,7 +217,7 @@ public class TradeMenu extends Application {
         number.setMaxHeight(50);
         number.setMaxWidth(50);
 
-        hBox1.getChildren().addAll(increase ,number , decrease );
+        hBox1.getChildren().addAll(increase, number, decrease);
         hBox1.setSpacing(10);
 
         increase.setOnAction(actionEvent -> {
@@ -228,7 +226,7 @@ public class TradeMenu extends Application {
         });
         decrease.setOnAction(actionEvent -> {
             textFieldNumber.getAndDecrement();
-            if(textFieldNumber.get()  < 0 )
+            if (textFieldNumber.get() < 0)
                 setOutOfRangeError();
             number.setText(textFieldNumber.toString());
         });
@@ -237,7 +235,7 @@ public class TradeMenu extends Application {
         RadioButton request = new RadioButton("Request");
         RadioButton donate = new RadioButton("Donate");
 
-        hBox.getChildren().addAll(request,donate);
+        hBox.getChildren().addAll(request, donate);
         hBox.setSpacing(20);
 
         ImageView imageView = new ImageView(ImageEnum.getImageByName(material.getName()));
@@ -256,21 +254,21 @@ public class TradeMenu extends Application {
         submit.setAlignment(Pos.CENTER);
 
         submit.setOnAction(actionEvent -> {
-            if(request.isSelected()){
+            if (request.isSelected()) {
                 //minus means request
-                Output output = tradeController.requestTrade(material.getName(),-textFieldNumber.get(),-material.getSellingPrice() * textFieldNumber.get() ,message.getText());
+                Output output = tradeController.requestTrade(material.getName(), -textFieldNumber.get(), -material.getSellingPrice() * textFieldNumber.get(), message.getText());
                 System.out.println(output.getString());
                 setTradeAdded();
             }
-            if(donate.isSelected()){
-                Output output = tradeController.requestTrade(material.getName(),-textFieldNumber.get(),-material.getSellingPrice() * textFieldNumber.get() ,message.getText());
+            if (donate.isSelected()) {
+                Output output = tradeController.requestTrade(material.getName(), -textFieldNumber.get(), -material.getSellingPrice() * textFieldNumber.get(), message.getText());
                 System.out.println(output.getString());
                 setTradeAdded();
             }
         });
 
 
-        vBox.getChildren().addAll(imageView,hBox1,hBox,submit,message);
+        vBox.getChildren().addAll(imageView, hBox1, hBox, submit, message);
         vBox.setSpacing(20);
         vBox.setAlignment(Pos.CENTER);
         main.setCenter(vBox);
@@ -281,21 +279,11 @@ public class TradeMenu extends Application {
         materialInfoPopUp.show(stage);
     }
 
-    private void setOutOfRangeError(){
-        String message = "ERROR\nOut Of Range";
-        errorText.setText(message);
-        error.show(stage);
-    }
-
-    private void setTradeAdded(){
-        String message = "MY LORD\nTrade added!";
-        errorText.setText(message);
-        error.show(stage);
-    }
-    private void backToInfo(){
+    private void backToInfo() {
         materialInfoPopUp.hide();
         personDetailInfoPopUp.show(stage);
     }
+
     private void tradeHistory() {
         System.out.println("inside trade history");
         Popup tradeHistory = new Popup();
@@ -326,71 +314,105 @@ public class TradeMenu extends Application {
         for (int i = 0; i < tradeController.getGame().getTrades().size(); i++) {
             Trade trade = tradeController.getGame().getTrades().get(i);
 
-            if(trade.getSender().equals(tradeController.getGame().getCurrentUser())) {
+            if (trade.getSender().equals(tradeController.getGame().getCurrentUser())) {
 
                 String type = null;
                 if (trade.getPrice() > 0)
                     type = "Donate";
-                if(trade.getPrice() < 0)
+                if (trade.getPrice() < 0)
                     type = "Request";
 
                 int money = trade.getPrice();
-                if(money < 0)
-                    money = money * -1;
-
-                String situation;
-
-                    if (trade.isAccepted()) {
-                        situation = "Trade is accepted";
-                        textField.setText( type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " + "\n" +
-                                money + "\n" + situation + "\n"
-                                + "receiver : " + trade.getReceiver() + "\n" + "message : " + trade.getMessage());
-                        requestsSent.getChildren().add(textField);
-                    } else {
-                        situation = "Trade is not accepted";
-                        textField.setText(  type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " + "\n" +
-                                money + "\n" + situation + "\n" + "message : " + trade.getMessage());
-                        requestsSent.getChildren().add(textField);
-                    }
-                }
-
-            else{
-                String type = null;
-                if (trade.getPrice() > 0)
-                    type = "Donate";
-                if(trade.getPrice() < 0)
-                    type = "Request";
-
-                int money = trade.getPrice();
-                if(money < 0)
+                if (money < 0)
                     money = money * -1;
 
                 String situation;
 
                 if (trade.isAccepted()) {
                     situation = "Trade is accepted";
-                    textField.setText( type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " + "\n" +
+                    textField.setText(type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " + "\n" +
                             money + "\n" + situation + "\n"
                             + "receiver : " + trade.getReceiver() + "\n" + "message : " + trade.getMessage());
-                    requestsReceived.getChildren().add(textField);
+                    requestsSent.getChildren().add(textField);
                 } else {
                     situation = "Trade is not accepted";
-                    textField.setText(  type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " + "\n" +
+                    textField.setText(type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " + "\n" +
                             money + "\n" + situation + "\n" + "message : " + trade.getMessage());
-                    requestsReceived.getChildren().add(textField);
+                    requestsSent.getChildren().add(textField);
                 }
+            } else {
+                String type = null;
+                if (trade.getPrice() > 0)
+                    type = "Donate";
+                if (trade.getPrice() < 0)
+                    type = "Request";
+
+                int money = trade.getPrice();
+                if (money < 0)
+                    money = money * -1;
+
+                String situation;
+
+                BorderPane borderPane = new BorderPane();
+                borderPane.setMaxHeight(100);
+                borderPane.setMaxWidth(100);
+
+                situation = "Trade :";
+                textField.setText(type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " + "\n" +
+                        money + "\n" + situation + "\n"
+                        + "receiver : " + trade.getReceiver() + "\n" + "message : " + trade.getMessage());
+
+                RadioButton accept = new RadioButton("Accept");
+                RadioButton decline = new RadioButton("Decline");
+
+                borderPane.setCenter(textField);
+                borderPane.setRight(accept);
+                borderPane.setLeft(decline);
+
+                requestsReceived.getChildren().add(borderPane);
+
+                accept.setOnAction(actionEvent -> {
+                    if(accept.isSelected()){
+                        tradeController.acceptTrade(trade.getId(),trade.getMessage());
+                        borderPane.getChildren().add(borderPane);
+                        tradeAccepted();
+                    }
+                });
+                decline.setOnAction(actionEvent -> {
+                    if(!accept.isSelected()){
+                        borderPane.getChildren().remove(borderPane);
+                    }
+                });
+
             }
 
+            Button back1 = new Button("Back");
+            back1.setOnAction(ae -> tradeHistory.hide());
+
+            root.getChildren().addAll(requestsSent, requestsReceived, back1);
+            main.setCenter(root);
+
+            tradeHistory.getContent().add(main);
+            tradeHistory.show(stage);
         }
 
-        Button back1 = new Button("Back");
-        back1.setOnAction(ae -> tradeHistory.hide());
 
-        root.getChildren().addAll(requestsSent,requestsReceived,back1);
-        main.setCenter(root);
-
-        tradeHistory.getContent().add(main);
-        tradeHistory.show(stage);
+    }
+    private void setOutOfRangeError() {
+        String message = "ERROR : Out Of Range";
+        errorText.setText(message);
+        error.show(stage);
     }
 
+    private void setTradeAdded() {
+        String message = "MY LORD : Trade added!";
+        errorText.setText(message);
+        error.show(stage);
+    }
+
+    private void tradeAccepted(){
+        String message = "trade accepted";
+        errorText.setText(message);
+        error.show(stage);
+    }
 }
