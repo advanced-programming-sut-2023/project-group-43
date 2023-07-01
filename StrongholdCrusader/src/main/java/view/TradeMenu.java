@@ -411,7 +411,7 @@ public class TradeMenu extends Application {
     }
 
     private void tradeAccepted(){
-        String message = "trade accepted";
+        String message = "Trade accepted";
         errorText.setText(message);
         error.show(stage);
     }
