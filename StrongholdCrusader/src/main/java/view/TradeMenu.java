@@ -39,7 +39,10 @@ public class TradeMenu extends Application {
 
     private Popup personDetailInfoPopUp;
     private Popup materialInfoPopUp;
+    private Popup error;
 
+    private TextField errorText;
+    private Button backError;
     public void setTradeController(TradeController tradeController) {
         this.tradeController = tradeController;
     }
@@ -92,6 +95,32 @@ public class TradeMenu extends Application {
         root.setCenter(hBox);
         root.setBottom(back);
 
+        error = new Popup();
+        BorderPane main = new BorderPane();
+
+        main.setBorder(Border.stroke(Color.BLACK));
+        main.setMinSize(700, 700);
+        main.setBackground(new Background(new BackgroundImage(ImageEnum.OLD_PAPER.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
+
+        main.setMinSize(200,200);
+        error.setWidth(200);
+        error.setHeight(200);
+
+        errorText = new TextField();
+        errorText.setMinSize(100 , 100);
+
+        backError = new Button("Back");
+        backError.setOnAction(actionEvent -> {
+            error.hide();
+        });
+
+        backError.setAlignment(Pos.BOTTOM_CENTER);
+        errorText.setAlignment(Pos.CENTER);
+        main.setCenter(errorText);
+        main.setBottom(backError);
+        error.getContent().add(main);
     }
 
     private void backToShop() throws Exception {
@@ -229,17 +258,18 @@ public class TradeMenu extends Application {
         submit.setAlignment(Pos.CENTER);
 
         submit.setOnAction(actionEvent -> {
-            if(request.isHover()){
+            if(request.isSelected()){
                 Output output = tradeController.requestTrade(material.getName(),textFieldNumber.get(),material.getSellingPrice() * textFieldNumber.get() ,message.getText());
+                System.out.println(output.getString());
                 setTradeAdded();
             }
-            if(donate.isHover()){
+            if(donate.isSelected()){
 
             }
         });
 
 
-        vBox.getChildren().addAll(imageView,hBox1,hBox,submit);
+        vBox.getChildren().addAll(imageView,hBox1,hBox,submit,message);
         vBox.setSpacing(20);
         vBox.setAlignment(Pos.CENTER);
         main.setCenter(vBox);
@@ -250,16 +280,14 @@ public class TradeMenu extends Application {
         materialInfoPopUp.show(stage);
     }
 
-    private void setOutOfRangeError() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText("out of range!");
-        alert.showAndWait();
+    private void setOutOfRangeError(){
+        errorText.setText("ERROR\nOut Of Range");
+        error.show(stage);
     }
 
     private void setTradeAdded(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Trade added!");
-        alert.showAndWait();
+        errorText.setText("MY LORD\nTrade added!");
+        error.show(stage);
     }
     private void backToInfo(){
         materialInfoPopUp.hide();

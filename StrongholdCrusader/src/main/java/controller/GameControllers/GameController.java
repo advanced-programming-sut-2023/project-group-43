@@ -43,15 +43,17 @@ public class GameController {
         output.append("texture : " + cell.getTexture().getName() + "\n");
         if (cell.getTreeType() == null) {
             output.append("tree : no tree in this cell\n");
-        } else {
+        }
+        else {
             output.append("tree : " + cell.getTreeType().getTreeType() + "\n");
         }
         if (cell.getBuilding() == null) {
             output.append("buildings : no building in this cell");
-        } else {
+        }
+        else {
             output.append("buildings : " + cell.getBuilding().getName());
         }
-        output.append("units :");
+        output.append("\nunits :");
         for (int i = 0; i < game.getPlayers().size(); i++) {
             int eachPlayersUnits = 0;
             for (int j = 0; j < cell.getUnits().size(); j++) {
@@ -421,7 +423,7 @@ public class GameController {
     }
 
     private void savePopularity() {
-        for (User user : game.getPlayers()) {
+        for (User user: game.getPlayers()) {
             user.getGovernance().setPopularityChange(user.getGovernance().getPopularity());
         }
     }
@@ -635,7 +637,6 @@ public class GameController {
             }
         }
     }
-
     public void illness() {
         int length = game.getCells().length;
         int width = game.getCells()[0].length;
@@ -655,7 +656,6 @@ public class GameController {
             game.getCells()[lengthResult][widthResult].setTexture(Texture.ILLNESS);
         }
     }
-
     private void updateIllness() {
         for (int i = 0; i < game.getCells().length; i++) {
             for (int j = 0; j < game.getCells()[0].length; j++) {
