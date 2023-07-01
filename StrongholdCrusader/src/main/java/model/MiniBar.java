@@ -1,41 +1,46 @@
 package model;
 
 import enums.ImageEnum;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MiniBar {
     public Stage stage;
     public Scene scene;
-    public ScrollBar scrollBar;
-    public Pane pane = new Pane();
-    public AnchorPane leftAnchorPane = new AnchorPane();
+    private ScrollBar scrollBar;
+    private Pane pane = new Pane();
+    private ScrollPane leftAnchorPane = new ScrollPane();
+    private HBox hBox = new HBox();
     public String selectedBuildingName;
     public ImageView[] allBuildingImages = new ImageView[41];
 
     public MiniBar() {
         this.pane.setMinSize(1600, 200);
         this.leftAnchorPane.setMinSize(1000, 200);
-        scrollBar = new ScrollBar();
-        scrollBar.setMinSize(1000,200);
+        //scrollBar = new ScrollBar();
+        //scrollBar.setMinSize(1000,10);
+        hBox.setMinSize(1000, 10);
         setAllBuildingImages();
         addingBuildingImagesOnLeftAnchorPane();
-        leftAnchorPane.getChildren().add(scrollBar);
+        //leftAnchorPane.getChildrenUnmodifiable().add(scrollBar);
         pane.getChildren().add(leftAnchorPane);
         allBuildingImages[39].setX(1100);
         allBuildingImages[39].setY(100);
         allBuildingImages[39].setFitHeight(180);
         allBuildingImages[39].setFitWidth(180);
-        pane.getChildren().add(allBuildingImages[39]);
+        //pane.getChildren().add(allBuildingImages[39]);
         allBuildingImages[40].setX(1400);
         allBuildingImages[40].setY(100);
         allBuildingImages[40].setFitHeight(180);
         allBuildingImages[40].setFitWidth(180);
-        pane.getChildren().add(allBuildingImages[40]);
+        //pane.getChildren().add(allBuildingImages[40]);
     }
     public void setAllBuildingImages() {
         allBuildingImages[0] = new ImageView(ImageEnum.APPLE_GARDEN.getImage());
@@ -80,14 +85,18 @@ public class MiniBar {
         allBuildingImages[39] = new ImageView(ImageEnum.SAMPLE_MINI_MAP.getImage());//
         allBuildingImages[40] = new ImageView(ImageEnum.THE_MAN.getImage());//
     }
+
     public void addingBuildingImagesOnLeftAnchorPane() {
         for (int i = 0; i <= 38; i++) {
-            allBuildingImages[i].setFitHeight(10);
-            allBuildingImages[i].setFitWidth(10);
-            allBuildingImages[i].setX(i * 10);
+            allBuildingImages[i].setFitHeight(100);
+            allBuildingImages[i].setFitWidth(100);
+            allBuildingImages[i].setX(i * 100);
             allBuildingImages[i].setY(50);
-            leftAnchorPane.getChildren().add(allBuildingImages[i]);
+            hBox.getChildren().add(allBuildingImages[i]);
         }
+        leftAnchorPane.setContent(hBox);
+        hBox.setSpacing(10);
+        hBox.setPadding(new Insets(10));
         /*imageView.setOnMouseClicked(mouseEvent -> {});
         Button appleFarm = new Button("appleFarm");
         Group root = new Group(imageView);
