@@ -214,6 +214,7 @@ public class TradeMenu extends Application {
         hBox.setAlignment(Pos.CENTER);
         hBox1.setAlignment(Pos.CENTER);
 
+        System.out.println("test");
         vBox.getChildren().addAll(imageView,hBox1,hBox);
         vBox.setSpacing(20);
         vBox.setAlignment(Pos.CENTER);
