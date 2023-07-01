@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -16,21 +15,21 @@ public class MiniBar {
     public Scene scene;
     private ScrollBar scrollBar;
     private Pane pane = new Pane();
-    private ScrollPane leftAnchorPane = new ScrollPane();
+    private ScrollPane scrollPane = new ScrollPane();
     private HBox hBox = new HBox();
     public String selectedBuildingName;
     public ImageView[] allBuildingImages = new ImageView[41];
 
     public MiniBar() {
         this.pane.setMinSize(1600, 200);
-        this.leftAnchorPane.setMinSize(1000, 200);
+        this.scrollPane.setMinSize(1000, 200);
         //scrollBar = new ScrollBar();
         //scrollBar.setMinSize(1000,10);
         hBox.setMinSize(1000, 10);
         setAllBuildingImages();
         addingBuildingImagesOnLeftAnchorPane();
         //leftAnchorPane.getChildrenUnmodifiable().add(scrollBar);
-        pane.getChildren().add(leftAnchorPane);
+        pane.getChildren().add(scrollPane);
         allBuildingImages[39].setX(1100);
         allBuildingImages[39].setY(100);
         allBuildingImages[39].setFitHeight(180);
@@ -94,7 +93,7 @@ public class MiniBar {
             allBuildingImages[i].setY(50);
             hBox.getChildren().add(allBuildingImages[i]);
         }
-        leftAnchorPane.setContent(hBox);
+        scrollPane.setContent(hBox);
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(10));
         /*imageView.setOnMouseClicked(mouseEvent -> {});
