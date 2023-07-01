@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -44,6 +43,9 @@ public class RegisterMenu extends Application {
     public CheckBox randomSlogan;
     public Rectangle captchaRec;
     public TextField captcha;
+    public CheckBox randomPassword;
+    public Label passwordText;
+    public ChoiceBox chooseSlogan;
     private String captchaNumber;
 
     public static void main(String[] args) {
@@ -73,6 +75,23 @@ public class RegisterMenu extends Application {
 
     @FXML
     public void initialize() {
+        ObservableList<String> slogans = FXCollections.observableArrayList();
+        slogans.addAll("none","My men approach, you will trouble me no more",
+                "Damn you Boy! I will have revenge!",
+                "I will tear down your castle, stone by stone if I have to! But i will have your head!",
+                "Soon you will see what it means to be Real Warfare!",
+                "Is there no one who will rid me of your irritating presence?!",
+                "Your time on this earth is limited. Time to say your prayers!",
+                "I will kill you soon! You and all your vermin!");
+        chooseSlogan.setItems(slogans);
+        chooseSlogan.setValue("none");
+        chooseSlogan.valueProperty().addListener((observable, oldText, newText) -> {
+            if (!chooseSlogan.getValue().equals("none")) {
+                sloganCheckBox.setSelected(true);
+                slogan.setDisable(false);
+                slogan.setText(chooseSlogan.getValue().toString());
+            }
+        });
         ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll("What is my father’s name?",
                 "What was my first pet’s name?",
@@ -88,10 +107,8 @@ public class RegisterMenu extends Application {
         password.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
             if ((output = RegisterAndLoginController.checkPassword(password.getText())) == null)
-                System.out.println("todo");
-                //passwordError.setText("ok");
-            //else passwordError.setText(output.getString());خ
-            System.out.println("nothing");
+            passwordError.setText("ok");
+            else passwordError.setText(output.getString());
         });
         passwordConfirmation.textProperty().addListener((observable, oldText, newText) -> {
             Output output;
@@ -160,7 +177,7 @@ public class RegisterMenu extends Application {
                 passwordConfirmationError.getText().equals("ok");
     }
 
-    public void enterLoginMenu(MouseEvent mouseEvent) throws Exception {
+    public void enterLoginMenu() throws Exception {
         (new LoginMenu()).start(stage);
     }
 
@@ -180,6 +197,14 @@ public class RegisterMenu extends Application {
             sloganCheckBox.setSelected(true);
             slogan.setDisable(false);
             slogan.setText(RegisterAndLoginController.makeRandomSlogan());
+        }
+    }
+
+    public void chooseRandomPassword() {
+        if (randomPassword.isSelected()) {
+            String passwordString = RegisterAndLoginController.makeRandomPassword();
+            passwordText.setText(passwordString);
+            password.setText(passwordString);
         }
     }
 }

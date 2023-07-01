@@ -16,8 +16,14 @@
                 <Label fx:id="usernameError" styleClass="error"/>
             </HBox>
             <HBox alignment="CENTER" spacing="20">
+                <Label text="random password" styleClass="menuLabel"/>
+                <CheckBox onMouseClicked="#chooseRandomPassword" fx:id="randomPassword"/>
+                <Label fx:id="passwordText" styleClass="error"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
                 <Label text="password:" styleClass="menuLabel"/>
                 <PasswordField fx:id="password" promptText="password"/>
+                <Label fx:id="passwordError" styleClass="error"/>
             </HBox>
             <HBox alignment="CENTER" spacing="20">
                 <Label text="confirm password:" styleClass="menuLabel"/>
@@ -27,6 +33,10 @@
             <HBox alignment="CENTER" spacing="20">
                 <Label text="random slogan" styleClass="menuLabel"/>
                 <CheckBox onMouseClicked="#chooseRandomSlogan" fx:id="randomSlogan"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <Label text="choose slogan:"/>
+                <ChoiceBox fx:id="chooseSlogan"/>
             </HBox>
             <HBox alignment="CENTER" spacing="20">
                 <CheckBox onMouseClicked="#activateSlogan" fx:id="sloganCheckBox"/>
