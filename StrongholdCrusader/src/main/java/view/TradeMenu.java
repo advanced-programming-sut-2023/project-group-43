@@ -2,18 +2,19 @@ package view;
 
 import controller.TradeController;
 import enums.ImageEnum;
+import enums.environmentEnums.Material;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Material;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import model.DataBase;
+import model.GovernanceResource;
 import model.User;
 import model.buildings.Storage;
 
@@ -143,16 +144,10 @@ public class TradeMenu extends Application {
 
         VBox vBox = new VBox();
 
-        HashMap storage = user.getGovernance().getGovernanceResource().getStorage();
+        ArrayList<Material>materials = user.getGovernance().getGovernanceResource().getOnlineMaterials();
 
-        System.out.println( "governance" + user.getGovernance() == null);
-        System.out.println( "governance resource is null " + user.getGovernance().getGovernanceResource() == null);
-        System.out.println( "storage is null" + user.getGovernance().getGovernanceResource().getStorage() == null);
-        System.out.println("size :" + user.getGovernance().getGovernanceResource().getStorage().size());
-
-        for(int i = 0 ; i < storage.size(); i++){
-            Material material = (Material) storage.get(i);
-            Button materialButton = new Button();
+        for(int i = 0 ; i < materials.size(); i++){
+            Button materialButton = new Button(materials.get(i).getName());
             vBox.getChildren().add(materialButton);
         }
 

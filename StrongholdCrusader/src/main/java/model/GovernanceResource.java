@@ -19,6 +19,12 @@ public class GovernanceResource {
         return storage;
     }
 
+    public ArrayList getOnlineMaterials(){
+        ArrayList<Material> materials = new ArrayList<>();
+        materials.addAll(storage.keySet());
+        return materials;
+    }
+
     public static String chooseStorage(Material material) {
         return switch (material.getType()) {
             case "mineral" -> "stockpile";

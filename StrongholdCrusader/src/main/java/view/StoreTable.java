@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
@@ -51,7 +52,7 @@ public class StoreTable extends Application {
         for (Material material : materials) {
             Button button = new Button(material.getName());
             ImageView imageView = new ImageView();
-            imageView.setImage(material.getImage());
+            imageView.setImage(new Image(Objects.requireNonNull(material.getImageAddress())));
 
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
@@ -113,7 +114,7 @@ public class StoreTable extends Application {
 
         BorderPane left = new BorderPane();
         ImageView pic = new ImageView();
-        pic.setImage(material.getImage());
+        pic.setImage((new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm())));
         pic.setFitWidth(80);
         pic.setFitHeight(80);
         Label number = new Label();
