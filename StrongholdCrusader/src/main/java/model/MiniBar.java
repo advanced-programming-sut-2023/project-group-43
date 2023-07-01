@@ -25,20 +25,20 @@ public class MiniBar {
         this.scrollPane.setMaxSize(1000, 250);
         //scrollBar = new ScrollBar();
         //scrollBar.setMinSize(1000,10);
-        hBox.setMaxSize(1000, 200);
+        hBox.setMaxSize(1000, 250);
         setAllBuildingImages();
         addingBuildingImagesOnLeftAnchorPane();
         //leftAnchorPane.getChildrenUnmodifiable().add(scrollBar);
         pane.getChildren().add(scrollPane);
-        allBuildingImages[39].setX(1100);
-        allBuildingImages[39].setY(100);
-        allBuildingImages[39].setFitHeight(180);
-        allBuildingImages[39].setFitWidth(180);
-        //pane.getChildren().add(allBuildingImages[39]);
-        allBuildingImages[40].setX(1400);
-        allBuildingImages[40].setY(100);
-        allBuildingImages[40].setFitHeight(180);
-        allBuildingImages[40].setFitWidth(180);
+//        allBuildingImages[39].setX(1100);
+//        allBuildingImages[39].setY(100);
+//        allBuildingImages[39].setFitHeight(180);
+//        allBuildingImages[39].setFitWidth(180);
+//        //pane.getChildren().add(allBuildingImages[39]);
+//        allBuildingImages[40].setX(1400);
+//        allBuildingImages[40].setY(100);
+//        allBuildingImages[40].setFitHeight(180);
+//        allBuildingImages[40].setFitWidth(180);
         //pane.getChildren().add(allBuildingImages[40]);
     }
     public void setAllBuildingImages() {

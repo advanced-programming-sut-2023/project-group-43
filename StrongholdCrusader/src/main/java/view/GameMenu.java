@@ -79,7 +79,7 @@ public class GameMenu extends Application {
     private void addMiniBar() {
         MiniBar miniBar = new MiniBar();
         Pane pane = miniBar.getPane();
-        pane.setLayoutY(500);
+        pane.setLayoutY(560);
         anchorPane.getChildren().add(pane);
     }
 
