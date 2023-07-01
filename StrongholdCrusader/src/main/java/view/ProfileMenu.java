@@ -196,17 +196,6 @@ public class ProfileMenu extends Application {
         //updateAvatar();
         return imageView;
     }
-    /*private void updateAvatar() {
-        pane.getChildren().remove(picture);
-        picture = new HBox();
-        picture.setLayoutX(120);
-        picture.setLayoutY(10);
-        Rectangle rectangle = new Rectangle(100, 100, 100, 100);
-        rectangle.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/image/pic" +
-                profileController.getCurrentUser().getAvatarNumber() + ".jpg").toExternalForm())));
-        picture.getChildren().add(rectangle);
-        pane.getChildren().add(picture);
-    }*/
     public void showAlert(Output output) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(output.getString());

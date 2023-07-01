@@ -5,10 +5,12 @@ import controller.GameControllers.GovernanceController;
 import controller.GameControllers.StoreController;
 import controller.TradeController;
 import enums.ImageEnum;
+import enums.Output;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
@@ -20,6 +22,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Cell;
+import model.DataBase;
+import model.Game;
 
 public class GameMenu extends Application {
 
@@ -58,7 +62,6 @@ public class GameMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
     @FXML
     public void initialize() {
         setRootPane();
@@ -184,14 +187,27 @@ public class GameMenu extends Application {
         });
         root.getChildren().add(button);
     }
-
-
+    public void showAlert(Output output) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(output.getString());
+        alert.show();
+    }
     private void setCells() {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
                     GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
                     setCell(cell, size * (x + xPosition), size * (y + yPosition));
+                    int finalX = x;
+                    int finalY = y;
+                    cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
+                            alert.show();
+                        }
+                    });
                 }
             }
         }
@@ -293,13 +309,10 @@ public class GameMenu extends Application {
         tradeMenu.setTradeController(tradeController);
         tradeMenu.start(stage);
     }
-
     private void enterGovernmentMenu() throws Exception {
         GovernanceController governanceController = new GovernanceController(getGameController().getGame().getCurrentPlayer(), gameController.getGame());
         GovernanceMenu governanceMenu = new GovernanceMenu();
         governanceMenu.setGovernanceController(governanceController);
         governanceMenu.start(RegisterMenu.getStage());
     }
-
-
 }
