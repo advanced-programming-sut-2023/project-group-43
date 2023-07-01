@@ -1,32 +1,52 @@
 package model;
 
 import enums.ImageEnum;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollBar;
-import javafx.scene.image.Image;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import view.ProfileMenu;
 
 public class MiniBar {
-    public ScrollBar scrollBar;
-    public Pane pane = new Pane();
-    public AnchorPane leftAnchorPane = new AnchorPane();
+    private ScrollBar scrollBar;
+    private Pane pane = new Pane();
+    private ScrollPane scrollPane = new ScrollPane();
+    private HBox hBox = new HBox();
     public String selectedBuildingName;
     public ImageView[] allBuildingImages = new ImageView[41];
 
     public MiniBar() {
         this.pane.setMinSize(1600, 200);
-        this.leftAnchorPane.setMinSize(1000, 400);
-        leftAnchorPane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/oldPaper.png").toExternalForm()),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
-        leftAnchorPane.setLayoutY(600);
+        this.scrollPane.setMaxSize(1000, 250);
+        //scrollBar = new ScrollBar();
+        //scrollBar.setMinSize(1000,10);
+        hBox.setMaxSize(1000, 250);
         setAllBuildingImages();
         addingBuildingImagesOnLeftAnchorPane();
-        //leftAnchorPane.getChildren().add(scrollBar);
-        pane.getChildren().add(leftAnchorPane);
+        //leftAnchorPane.getChildrenUnmodifiable().add(scrollBar);
+        pane.getChildren().add(scrollPane);
+//        allBuildingImages[39].setX(1100);
+//        allBuildingImages[39].setY(100);
+//        allBuildingImages[39].setFitHeight(180);
+//        allBuildingImages[39].setFitWidth(180);
+//        //pane.getChildren().add(allBuildingImages[39]);
+//        allBuildingImages[40].setX(1400);
+//        allBuildingImages[40].setY(100);
+//        allBuildingImages[40].setFitHeight(180);
+//        allBuildingImages[40].setFitWidth(180);
+        //pane.getChildren().add(allBuildingImages[40]);
+        setBackground(hBox);
+    }
+
+    private void setBackground(HBox pane) {
+        pane.setBackground(new Background(new BackgroundImage(new Image(ProfileMenu.class.getResource("/images/background/oldPaper.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+
     }
     public void setAllBuildingImages() {
         allBuildingImages[0] = new ImageView(ImageEnum.APPLE_GARDEN.getImage());
@@ -69,20 +89,18 @@ public class MiniBar {
         allBuildingImages[37] = new ImageView(ImageEnum.WHEAT_FARM.getImage());
         allBuildingImages[38] = new ImageView(ImageEnum.WOOD_CUTTER.getImage());
         allBuildingImages[39] = new ImageView(ImageEnum.SAMPLE_MINI_MAP.getImage());//
-    }
+        }
     public void addingBuildingImagesOnLeftAnchorPane() {
         for (int i = 0; i <= 38; i++) {
-            allBuildingImages[i].setFitHeight(40);
-            allBuildingImages[i].setFitWidth(20);
-            allBuildingImages[i].setX(i * 20);
+            allBuildingImages[i].setFitHeight(100);
+            allBuildingImages[i].setFitWidth(100);
+            allBuildingImages[i].setX(i * 100);
             allBuildingImages[i].setY(50);
-            leftAnchorPane.getChildren().add(allBuildingImages[i]);
+            hBox.getChildren().add(allBuildingImages[i]);
         }
-        allBuildingImages[39].setX(800);
-        allBuildingImages[39].setY(0);
-        allBuildingImages[39].setFitHeight(90);
-        allBuildingImages[39].setFitWidth(100);
-        leftAnchorPane.getChildren().add(allBuildingImages[39]);
+        scrollPane.setContent(hBox);
+        hBox.setSpacing(10);
+        hBox.setPadding(new Insets(10));
         /*imageView.setOnMouseClicked(mouseEvent -> {});
         Button appleFarm = new Button("appleFarm");
         Group root = new Group(imageView);
@@ -95,7 +113,6 @@ public class MiniBar {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(name + " is selected\nnow you should choose a cell to place " + name + " on it");
                 alert.show();
-                //System.out.println(name + " is selected\nnow you should choose a cell to place " + name + " on it");
                 selectedBuildingName = name;
             });
         }
@@ -114,4 +131,8 @@ public class MiniBar {
             }
         }
     }*/
+
+    public Pane getPane() {
+        return pane;
+    }
 }

@@ -18,11 +18,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Cell;
-
+import model.MiniBar;
 public class GameMenu extends Application {
 
     private Stage stage;
@@ -63,11 +64,18 @@ public class GameMenu extends Application {
     @FXML
     public void initialize() {
         setRootPane();
+        addMiniBar();
         setButtons();
-        anchorPane.getChildren().add(gameController.getMiniBar().leftAnchorPane);
         setCells();
-        //dragAndDropBuildingOnMap();
+        dragAndDropBuildingOnMap();
         gameController.initializeGame();
+    }
+
+    private void addMiniBar() {
+        MiniBar miniBar = new MiniBar();
+        Pane pane = miniBar.getPane();
+        pane.setLayoutY(560);
+        anchorPane.getChildren().add(pane);
     }
 
     private void setButtons() {
