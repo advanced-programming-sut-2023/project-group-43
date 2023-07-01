@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -210,12 +211,14 @@ public class TradeMenu extends Application {
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
 
+        TextArea textArea = new TextArea();
+        textArea.setMaxWidth(100);
+        textArea.setMaxHeight(100);
 
         hBox.setAlignment(Pos.CENTER);
         hBox1.setAlignment(Pos.CENTER);
 
-        System.out.println("test");
-        vBox.getChildren().addAll(imageView,hBox1,hBox);
+        vBox.getChildren().addAll(imageView,textArea,hBox1,hBox);
         vBox.setSpacing(20);
         vBox.setAlignment(Pos.CENTER);
         main.setCenter(vBox);
