@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,6 +51,8 @@ public class GameMenu extends Application {
 
     private int firstX, firstY;
 
+    private Label label = new Label();
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -59,6 +62,11 @@ public class GameMenu extends Application {
         root.setMaxWidth(800);
         initialize();
         scene = new Scene(anchorPane);
+        gameController.initializeGame();
+        label.setLayoutY(200);
+        label.setLayoutX(1210);
+        anchorPane.getChildren().add(label);
+        label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         stage.setScene(scene);
         stage.show();
     }
@@ -71,7 +79,6 @@ public class GameMenu extends Application {
         //gameController.illness();
         //gameController.updateIllness();
         dragAndDropBuildingOnMap();
-        gameController.initializeGame();
     }
 
     public static void setGameController(GameController gameController) {
@@ -169,18 +176,6 @@ public class GameMenu extends Application {
         button.setFill(new ImagePattern(new Image(RegisterMenu.class.getResource("/images/game_menu/man.png").toExternalForm())));
         button.setLayoutX(1000);
         button.setLayoutY(500);
-        //temporary button for trade menu
-        Button tradeMenu = new Button("trade menu");
-        tradeMenu.setLayoutX(1200);
-        tradeMenu.setLayoutY(500);
-        root.getChildren().add(tradeMenu);
-        tradeMenu.setOnAction(ae -> {
-            try {
-                enterTradeMenu();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
         button.setOnMouseClicked(mouseEvent -> {
             try {
                 enterGovernmentMenu();
@@ -189,12 +184,56 @@ public class GameMenu extends Application {
             }
         });
         root.getChildren().add(button);
+        //temporary button for trade menu
+        Button tradeMenu = new Button("trade menu");
+        tradeMenu.setLayoutX(1200);
+        tradeMenu.setLayoutY(100);
+        root.getChildren().add(tradeMenu);
+        tradeMenu.setOnAction(ae -> {
+            try {
+                enterTradeMenu();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        //temporary button for next person
+        Button nextPerson = new Button();
+        nextPerson.setText("next person");
+        nextPerson.setLayoutX(1200);
+        nextPerson.setLayoutY(500);
+        nextPerson.setOnAction(ae -> {
+            try {
+                goToNextPerson();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        root.getChildren().add(nextPerson);
     }
-    public void showAlert(Output output) {
+
+    private void goToNextPerson() throws Exception {
+        gameController.goToNextPerson();
+        label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
+        if (gameController.getGame().getCurrentPlayer().equals(gameController.getGame().getPlayers().get(0))) {
+            gameController.applyChanges();
+            turns--;
+            if (gameController.isGameEnded() || turns <= 0) {
+                endGame();
+            }
+        }
+    }
+
+    private void endGame() throws Exception {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(output.getString());
+        alert.setContentText(gameController.showGameResult());
         alert.show();
+        back();
     }
+
+    private void back() throws Exception {
+        gameController.enterMainMenu();
+    }
+
     private void setCells() {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {

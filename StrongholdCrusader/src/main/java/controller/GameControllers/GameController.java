@@ -1,5 +1,6 @@
 package controller.GameControllers;
 
+import controller.MainUserController;
 import enums.BuildingEnums.BuildingEnum;
 import enums.Output;
 import enums.RateNumber;
@@ -8,9 +9,12 @@ import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
+import javafx.scene.shape.Rectangle;
 import model.*;
 import model.buildings.*;
 import model.units.*;
+import view.MainMenu;
+import view.RegisterMenu;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -793,6 +797,7 @@ public class GameController {
     }
 
     public String showGameResult() {
+        updateScores();
         StringBuilder ans = new StringBuilder();
         ans.append("<<<GAME OVER>>>" + "\n");
         ans.append("The winner of the game is ").append(findWinner().getUsername()).append("\n");
@@ -918,5 +923,11 @@ public class GameController {
         }
         averageRate /= ((finalX - firstX + 1) * (finalY - firstY + 1));
         return "units: " + units + "\naverage rate: " + averageRate + "\nminimum rate: " + minRate + "\nmaximum rate: " + maxRate;
+    }
+
+    public void enterMainMenu() throws Exception {
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.setMainUserController(game.getCurrentUser().getUsername());
+        mainMenu.start(RegisterMenu.getStage());
     }
 }
