@@ -201,6 +201,22 @@ public class GameMenu extends Application {
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
                     GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
                     setCell(cell, size * (x + xPosition), size * (y + yPosition), x, y);
+                    gameController.getMiniBar().addListenerToFindTheSelectedBuilding();
+                    int finalX = x;
+                    int finalY = y;
+                    cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            if (gameController.getMiniBar().selectedBuildingName == null)
+                                alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
+                            else {
+                                alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
+                                gameController.getMiniBar().selectedBuildingName = null;
+                            }
+                            alert.show();
+                        }
+                    });
                 }
             }
         }
