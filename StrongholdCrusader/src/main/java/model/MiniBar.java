@@ -2,6 +2,7 @@ package model;
 
 import enums.ImageEnum;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -91,6 +92,9 @@ public class MiniBar {
         for (int i = 0; i <= 38; i++) {
             String name = ImageEnum.getNameByImage(allBuildingImages[i].getImage());
             allBuildingImages[i].setOnMouseClicked(mouseEvent -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText(name + " is selected\nnow you should choose a cell to place " + name + " on it");
+                alert.show();
                 selectedBuildingName = name;
             });
         }

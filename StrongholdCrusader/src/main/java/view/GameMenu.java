@@ -187,11 +187,6 @@ public class GameMenu extends Application {
         });
         root.getChildren().add(button);
     }
-    public void showAlert(Output output) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(output.getString());
-        alert.show();
-    }
     private void setCells() {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
@@ -223,6 +218,7 @@ public class GameMenu extends Application {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         if (gameController.getMiniBar().selectedBuildingName != null) {
+                            System.out.println("this cell is touched to in dragAndDrop");
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
                             alert.show();
