@@ -307,24 +307,43 @@ public class TradeMenu extends Application {
         VBox requestsReceived = new VBox();
         VBox requestsSent = new VBox();
 
+        Text rr = new Text("Request Received : ");
+        Text rs = new Text("Request Sent : ");
+
+        requestsReceived.getChildren().add(rr);
+        requestsSent.getChildren().add(requestsSent);
+
         TextField textField = new TextField();
         for (int i = 0; i < tradeController.getGame().getTrades().size(); i++) {
             Trade trade = tradeController.getGame().getTrades().get(i);
-            if(trade.getPrice() < 0){
-                String situation ;
-                if(trade.isAccepted()) {
-                    situation = "Trade is accepted";
-                    textField.setText( "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" +"amount : " + trade.getAmount() + "price : "+
-                            -trade.getPrice() + "\n" + situation + "\n"
-                    + "receiver : " + trade.getReceiver() + "\n" + "message : " + trade.getMessage());
+
+            if(trade.getSender().equals(tradeController.getGame().getCurrentUser())) {
+
+                String type = null;
+                if (trade.getPrice() > 0)
+                    type = "Donate";
+                if(trade.getPrice() < 0)
+                    type = "Request";
+
+                    String situation;
+                    if (trade.isAccepted()) {
+                        situation = "Trade is accepted";
+                        textField.setText( type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " +
+                                -trade.getPrice() + "\n" + situation + "\n"
+                                + "receiver : " + trade.getReceiver() + "\n" + "message : " + trade.getMessage());
+                        requestsSent.getChildren().add(textField);
+                    } else {
+                        situation = "Trade is not accepted";
+                        textField.setText(  type + "\n" + "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" + "amount : " + trade.getAmount() + "price : " +
+                                -trade.getPrice() + "\n" + situation + "\n" + "message : " + trade.getMessage());
+                        requestsSent.getChildren().add(textField);
+                    }
                 }
-                else
-                    situation = "Trade is not accepted";
-                textField.setText( "id : " + trade.getId() + "\n" + trade.getResourceName() + "\n" +"amount : " + trade.getAmount() + "price : "+
-                        -trade.getPrice() + "\n" + situation + "\n" + "message : " + trade.getMessage());
-            }
+
+
+
             if(trade.getPrice() > 0){
-                //donate part
+
             }
         }
 
