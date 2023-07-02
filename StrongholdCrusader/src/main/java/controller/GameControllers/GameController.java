@@ -268,11 +268,11 @@ public class GameController {
         return Output.NO_BUILDING;
     }
 
-    public Output selectUnit(int x, int y, String type) {
+    public Output selectUnit(int x, int y) {
         if (isCoordinateInvalid(x, y)) return Output.WRONG_COORDINATES;
         ArrayList<Unit> selectedUnits = new ArrayList<>();
         for (Unit unit : game.getCells()[x - 1][y - 1].getUnits()) {
-            if (unit.getName().equals(type) && unit.getOwner().equals(game.getCurrentPlayer())) {
+            if (unit.getOwner().equals(game.getCurrentPlayer())) {
                 selectedUnits.add(unit);
             }
         }
@@ -323,14 +323,7 @@ public class GameController {
         return Output.UNIT_STATE_SET_SUCCESSFULLY;
     }
 
-    public Output attack(int x, int y, String item) {
-        if (item != null)
-            return attackToEnemy(x, y);
-        else
-            return airAttack(x, y);
-    }
-
-    private Output attackToEnemy(int x, int y) {
+    public Output attackToEnemy(int x, int y) {
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         for (Unit unit : game.getSelectedUnit()) {
             if (unit instanceof Troop) {
@@ -347,7 +340,7 @@ public class GameController {
         return Output.SUCCESSFUL_ACTION;
     }
 
-    private Output airAttack(int x, int y) {
+    public Output airAttack(int x, int y) {
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         for (Unit unit : game.getSelectedUnit()) {
             if (unit.getName().equals("archer")) {

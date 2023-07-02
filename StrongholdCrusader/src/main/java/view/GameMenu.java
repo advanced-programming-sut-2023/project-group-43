@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -36,8 +37,14 @@ public class GameMenu extends Application {
     private Stage stage;
     private Scene scene;
 
+
+    private boolean isUnitSelected = false;
+    private boolean isUnitTargetSelected = false;
+    private boolean isPouringOil = false;
+
     private static GameController gameController;
-    private int turns, numberOfPlayers;
+    private int turns;
+    private boolean isAttacking = false;
     private int x, y;
 
     private boolean isAnyPanelOpen = false;
@@ -56,6 +63,8 @@ public class GameMenu extends Application {
     private int size = 50;
     private int xPosition = 0;
     private int yPosition = 0;
+
+    private boolean isAirAttacking;
 
     private int firstX, firstY;
 
@@ -79,7 +88,24 @@ public class GameMenu extends Application {
         barrack.addListenerToFindUnit(gameController);
         mercenaryPost.addListenerToFindUnit(gameController);
         stage.setScene(scene);
+        setSceneOnKeyBoardPress(scene);
         stage.show();
+    }
+
+    private void setSceneOnKeyBoardPress(Scene scene) {
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.S) {
+                isUnitSelected = true;
+            } else if (event.getCode() == KeyCode.M) {
+                isUnitTargetSelected = true;
+            } else if (event.getCode() == KeyCode.A) {
+                isAttacking = true;
+            } else if (event.getCode() == KeyCode.B) {
+                isAirAttacking = true;
+            } else if (event.getCode() == KeyCode.P) {
+                isPouringOil = true;
+            }
+        });
     }
 
     @FXML
@@ -300,7 +326,27 @@ public class GameMenu extends Application {
         });
         cell.setOnMouseClicked(mouseEvent -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            if (gameController.getMiniBar().selectedBuildingName == null) {
+            if (isUnitSelected) {
+                isUnitSelected = false;
+                alert.setContentText(gameController.selectUnit(finalX + 1, finalY + 1).getString());
+            }
+            else if (isUnitTargetSelected) {
+                isUnitTargetSelected = false;
+                alert.setContentText(gameController.moveUnit(finalX + 1, finalY + 1).getString());
+            }
+            else if (isAttacking) {
+                isAttacking = false;
+                alert.setContentText(gameController.attackToEnemy(finalX + 1, finalY + 1).getString());
+            }
+            else if (isAirAttacking) {
+                isAirAttacking = false;
+                alert.setContentText(gameController.airAttack(finalX + 1, finalY + 1).getString());
+            }
+            else if (isPouringOil) {
+                isPouringOil = false;
+                alert.setContentText(gameController.pourOil("up").getString());
+            }
+            else if (gameController.getMiniBar().selectedBuildingName == null) {
                 alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
                 gameController.selectBuilding(finalX + 1, finalY + 1);
                 gameController.dropUnit(finalX + 1, finalY + 1, 1);
@@ -478,10 +524,6 @@ public class GameMenu extends Application {
 
     public void setTurns(int turns) {
         this.turns = turns;
-    }
-
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
     }
 
 
