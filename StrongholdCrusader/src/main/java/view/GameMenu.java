@@ -27,6 +27,10 @@ import model.MiniBar;
 import model.pannels.Barrack;
 import model.pannels.EngineerGuild;
 import model.pannels.MercenaryPost;
+import model.units.Unit;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class GameMenu extends Application {
 
@@ -294,6 +298,7 @@ public class GameMenu extends Application {
             if (gameController.getMiniBar().selectedBuildingName == null) {
                 alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
                 gameController.selectBuilding(finalX + 1, finalY + 1);
+                gameController.dropUnit(finalX + 1, finalY + 1, 1);
             } else {
                 alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
                 gameController.getMiniBar().selectedBuildingName = null;
@@ -407,6 +412,10 @@ public class GameMenu extends Application {
 
         if (building != null)
             item.setImage(building);
+        else if (cell.getUnits().size() > 0) {
+            for (Image image: getUnit(cell))
+                item.setImage(image);
+        }
 
         if (rock != null)
             item.setImage(rock);
@@ -442,6 +451,14 @@ public class GameMenu extends Application {
         Image rock;
         rock = ImageEnum.ROCK.getImage();
         return rock;
+    }
+
+    private ArrayList<Image> getUnit(Cell cell) {
+        ArrayList<Image> units = new ArrayList<>();
+        for (Unit unit: cell.getUnits()) {
+            units.add(ImageEnum.getImageByName(unit.getName()));
+        }
+        return units;
     }
 
     //ignore tunnel

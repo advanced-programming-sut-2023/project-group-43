@@ -163,10 +163,10 @@ public class Governance {
         population += amount;
     }
 
-    public ArrayList<Unit> getNewUnits(String name) {
+    public ArrayList<Unit> getNewUnits() {
         ArrayList<Unit> newUnits = new ArrayList<>();
         for (Unit unit : units) {
-            if (unit.getCell() == null && unit.getName().equals(name))
+            if (unit.getCell() == null)
                 newUnits.add(unit);
         }
         return newUnits;
