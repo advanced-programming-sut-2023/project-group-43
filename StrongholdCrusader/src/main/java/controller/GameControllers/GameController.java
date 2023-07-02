@@ -240,8 +240,8 @@ public class GameController {
         return Output.SUCCESSFUL_UNIT_CREATION;
     }
 
-    public Output dropUnit(int x, int y, String type, int count) {
-        ArrayList<Unit> units = game.getCurrentPlayer().getGovernance().getNewUnits(type);
+    public Output dropUnit(int x, int y, int count) {
+        ArrayList<Unit> units = game.getCurrentPlayer().getGovernance().getNewUnits();
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         if (units.size() < count) return Output.NOT_ENOUGH_UNIT;
         Cell cell = game.getCells()[x - 1][y - 1];

@@ -1,7 +1,9 @@
 package model.pannels;
 
+import controller.GameControllers.GameController;
 import enums.ImageEnum;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -49,5 +51,18 @@ public class EngineerGuild {
 
     public Pane getPane() {
         return pane;
+    }
+    public VBox getVbox() {
+        return vbox;
+    }
+    public void addListenerToFindUnit(GameController gameController) {
+        for (int i = 0; i <= 1; i++) {
+            String name = ImageEnum.getNameByImage(allUnitsImages[i].getImage());
+            allUnitsImages[i].setOnMouseClicked(mouseEvent -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText(gameController.createUnit(name, 1).getString());
+                alert.show();
+            });
+        }
     }
 }

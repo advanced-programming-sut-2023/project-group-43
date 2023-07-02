@@ -27,6 +27,10 @@ import model.MiniBar;
 import model.pannels.Barrack;
 import model.pannels.EngineerGuild;
 import model.pannels.MercenaryPost;
+import model.units.Unit;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class GameMenu extends Application {
 
@@ -72,6 +76,9 @@ public class GameMenu extends Application {
         label.setLayoutX(1210);
         anchorPane.getChildren().add(label);
         label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
+        engineerGuild.addListenerToFindUnit(gameController);
+        barrack.addListenerToFindUnit(gameController);
+        mercenaryPost.addListenerToFindUnit(gameController);
         stage.setScene(scene);
         stage.show();
     }
@@ -106,6 +113,10 @@ public class GameMenu extends Application {
         Pane mercenaryPostPane = mercenaryPost.getPane();
         mercenaryPostPane.setLayoutX(1200);
         mercenaryPostPane.setLayoutY(50);
+        anchorPane.getChildren().addAll(barrackPane, engineerPane, mercenaryPostPane);
+        engineerGuild.getPane().setVisible(false);
+        mercenaryPost.getPane().setVisible(false);
+        barrack.getPane().setVisible(false);
     }
 
     private void setButtons() {
@@ -249,7 +260,9 @@ public class GameMenu extends Application {
     private void back() throws Exception {
         if (isAnyPanelOpen) {
             isAnyPanelOpen = false;
-            anchorPane.getChildren().removeAll(mercenaryPost.getPane(), engineerGuild.getPane(), barrack.getPane());
+            engineerGuild.getPane().setVisible(false);
+            barrack.getPane().setVisible(false);
+            mercenaryPost.getPane().setVisible(false);
         } else
             gameController.enterMainMenu();
     }
@@ -285,16 +298,17 @@ public class GameMenu extends Application {
             if (gameController.getMiniBar().selectedBuildingName == null) {
                 alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
                 gameController.selectBuilding(finalX + 1, finalY + 1);
-                try {
-                    checkSelectBuilding();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                gameController.dropUnit(finalX + 1, finalY + 1, 1);
             } else {
                 alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
                 gameController.getMiniBar().selectedBuildingName = null;
             }
             resetCells();
+            try {
+                checkSelectBuilding();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             alert.show();
         });
         cell.setOnMouseReleased(mouseEvent -> {
@@ -316,15 +330,18 @@ public class GameMenu extends Application {
     }
 
     private void enterMercenaryPost() {
-        anchorPane.getChildren().add(mercenaryPost.getPane());
+        isAnyPanelOpen = true;
+        mercenaryPost.getPane().setVisible(true);
     }
 
     private void enterEngineerGuild() {
-        anchorPane.getChildren().add(engineerGuild.getPane());
+        isAnyPanelOpen = true;
+        engineerGuild.getPane().setVisible(true);
     }
 
     private void enterBarrack() {
-        anchorPane.getChildren().add(engineerGuild.getPane());
+        isAnyPanelOpen = true;
+        barrack.getPane().setVisible(true);
     }
 
     private void showAllCells(int firstX, int firstY, int finalX, int finalY) {
@@ -395,6 +412,10 @@ public class GameMenu extends Application {
 
         if (building != null)
             item.setImage(building);
+        else if (cell.getUnits().size() > 0) {
+            for (Image image: getUnit(cell))
+                item.setImage(image);
+        }
 
         if (rock != null)
             item.setImage(rock);
@@ -430,6 +451,14 @@ public class GameMenu extends Application {
         Image rock;
         rock = ImageEnum.ROCK.getImage();
         return rock;
+    }
+
+    private ArrayList<Image> getUnit(Cell cell) {
+        ArrayList<Image> units = new ArrayList<>();
+        for (Unit unit: cell.getUnits()) {
+            units.add(ImageEnum.getImageByName(unit.getName()));
+        }
+        return units;
     }
 
     //ignore tunnel
