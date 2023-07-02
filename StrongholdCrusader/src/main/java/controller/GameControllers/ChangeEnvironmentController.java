@@ -131,7 +131,6 @@ public class ChangeEnvironmentController {
         GameMenu gameMenu = new GameMenu();
         gameMenu.setGameController(gameController);
         gameMenu.setTurns(game.getTurns());
-        gameMenu.setNumberOfPlayers(game.getPlayers().size());
         gameMenu.start(RegisterMenu.getStage());
 
         return true;
