@@ -52,7 +52,8 @@ public class StoreTable extends Application {
         for (Material material : materials) {
             Button button = new Button(material.getName());
             ImageView imageView = new ImageView();
-            imageView.setImage(new Image(Objects.requireNonNull(material.getImageAddress())));
+            System.out.println("material name" + material.getName());
+            imageView.setImage(material.getImage());
 
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
@@ -86,7 +87,7 @@ public class StoreTable extends Application {
 
 
     private void setBackground() {
-        root.setMinSize(1550, 800);
+        root.setMinSize(1500, 700);
         root.setBackground(new Background(new BackgroundImage(ImageEnum.WOOD_MENU.getImage(),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
     }

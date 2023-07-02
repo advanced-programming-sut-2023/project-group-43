@@ -7,37 +7,36 @@ import java.util.ArrayList;
 
 public enum Material {
     //minerals
-    STONE("mineral", "stone", 4, 2, 0, ImageEnum.STONE.getAddress()),
-    WOOD("mineral", "wood", 3, 1, 0, ImageEnum.WOOD.getAddress()),
-    IRON("mineral", "iron", 45, 25, 0, ImageEnum.IRON.getAddress()),
-    TAR("mineral", "tar", 16, 8, 0, ImageEnum.TAR.getAddress()),
+    STONE("mineral", "stone", 4, 2, 0, ImageEnum.STONE.getImage()),
+    WOOD("mineral", "wood", 3, 1, 0, ImageEnum.WOOD.getImage()),
+    IRON("mineral", "iron", 45, 25, 0, ImageEnum.IRON.getImage()),
+    TAR("mineral", "tar", 16, 8, 0, ImageEnum.TAR.getImage()),
     //foods
-    WHEAT("food", "wheat", 23, 8, 0, ImageEnum.WHEAT.getAddress()),
-    APPLE("food", "apple", 8, 4, 0, ImageEnum.APPLE.getAddress()),
-    CHEESE("food", "cheese", 8, 4, 0, ImageEnum.CHEESE.getAddress()),
-    MEAT("food", "meat", 8, 4, 0, ImageEnum.MEAT.getAddress()),
-    FROZEN_MEAT("food", "frozenMeat", 4, 2, 0, ImageEnum.FROZEN_MEAT.getAddress()),
-    BREAD("food", "bread", 8, 4, 0, ImageEnum.BREAD.getAddress()),
-    HOP("food", "hop", 15, 8, 0, ImageEnum.HOP.getAddress()),
-    FLOUR("food", "flour", 32, 10, 0, ImageEnum.FLOUR.getAddress()),
-    BEER("food", "beer", 24, 12, 0, ImageEnum.BEER.getAddress()),
+    WHEAT("food", "wheat", 23, 8, 0, ImageEnum.WHEAT.getImage()),
+    APPLE("food", "apple", 8, 4, 0, ImageEnum.APPLE.getImage()),
+    CHEESE("food", "cheese", 8, 4, 0, ImageEnum.CHEESE.getImage()),
+    MEAT("food", "meat", 8, 4, 0, ImageEnum.MEAT.getImage()),
+    FROZEN_MEAT("food", "frozenMeat", 4, 2, 0, ImageEnum.FROZEN_MEAT.getImage()),
+    BREAD("food", "bread", 8, 4, 0, ImageEnum.BREAD.getImage()),
+    HOP("food", "hop", 15, 8, 0, ImageEnum.HOP.getImage()),
+    FLOUR("food", "flour", 32, 10, 0, ImageEnum.FLOUR.getImage()),
+    BEER("food", "beer", 24, 12, 0, ImageEnum.BEER.getImage()),
     //weapons
-    BOW("weapon", "bow", 31, 15, 3, ImageEnum.BOW.getAddress()),
-    SWORD("weapon", "sword", 58, 30, 1, ImageEnum.SWORD.getAddress()),
-    SPEAR("weapon", "spear", 20, 10, 2, ImageEnum.SPEAR.getAddress()),
-    CUDGEL("weapon", "cudgel", 58, 30, 1, ImageEnum.CUDGEL.getAddress()),
-    GRENADE("weapon", "grenade", 36, 18, 2, ImageEnum.GRENADE.getAddress()),
-    HOOK("weapon", "hook", 36, 18, 0, ImageEnum.HOOK.getAddress()),
-    TORCH("weapon", "torch", 36, 18, 1, ImageEnum.TORCH.getAddress()),
-    GRAVEL("weapon", "gravel", 36, 18, 1, ImageEnum.GRAVEL.getAddress()),
+    BOW("weapon", "bow", 31, 15, 3, ImageEnum.BOW.getImage()),
+    SWORD("weapon", "sword", 58, 30, 1, ImageEnum.SWORD.getImage()),
+    SPEAR("weapon", "spear", 20, 10, 2, ImageEnum.SPEAR.getImage()),
+    CUDGEL("weapon", "cudgel", 58, 30, 1, ImageEnum.CUDGEL.getImage()),
+    GRENADE("weapon", "grenade", 36, 18, 2, ImageEnum.GRENADE.getImage()),
+    HOOK("weapon", "hook", 36, 18, 0, ImageEnum.HOOK.getImage()),
+    TORCH("weapon", "torch", 36, 18, 1, ImageEnum.TORCH.getImage()),
+    GRAVEL("weapon", "gravel", 36, 18, 1, ImageEnum.GRAVEL.getImage()),
     //tools
-    LADDER("tool", "ladder", 25, 12, 0, ImageEnum.LADDER.getAddress()),
-    ARMOUR("tool", "armour", 58, 30, 0, ImageEnum.ARMOUR.getAddress()),
+    LADDER("tool", "ladder", 25, 12, 0, ImageEnum.LADDER.getImage()),
+    ARMOUR("tool", "armour", 58, 30, 0, ImageEnum.ARMOUR.getImage()),
     //else
-    HORSE("animal", "horse", 0, 0, 0, ImageEnum.HORSE.getAddress()
-    ),
-    PEASANT("human", "peasant", 0, 0, 0, ImageEnum.PEASANT.getAddress()),
-    UNIT("human", "unit", 0, 0, 0, ImageEnum.UNIT.getAddress()),
+    HORSE("animal", "horse", 0, 0, 0, ImageEnum.HORSE.getImage()),
+    PEASANT("human", "peasant", 0, 0, 0, ImageEnum.PEASANT.getImage()),
+    UNIT("human", "unit", 0, 0, 0, ImageEnum.UNIT.getImage()),
 
     ;
     private String type;
@@ -45,15 +44,16 @@ public enum Material {
     private int buyingPrice;
     private int sellingPrice;
     private int range;
-    private String imageAddress;
+    private Image image;
 
-    Material(String type, String name, int buyingPrice, int sellingPrice, int range, String imageAddress) {
+    Material(String type, String name, int buyingPrice, int sellingPrice, int range, Image imageAddress) {
         this.type = type;
         this.name = name;
         this.buyingPrice = buyingPrice;
         this.sellingPrice = sellingPrice;
         this.range = range;
-        this.imageAddress = imageAddress;
+
+        this.image = imageAddress;
     }
 
     public static Material getMaterialByName(String name) {
@@ -95,7 +95,7 @@ public enum Material {
         return range;
     }
 
-    public String getImageAddress() {
-        return imageAddress;
+    public Image getImage() {
+        return image;
     }
 }
