@@ -211,23 +211,12 @@ public class GameMenu extends Application {
             }
         });
         root.getChildren().add(button);
-        //temporary button for trade menu
-        Button storeMenu = new Button("test store menu");
-        storeMenu.setLayoutX(1000);
-        storeMenu.setLayoutY(100);
-        root.getChildren().add(storeMenu);
-        storeMenu.setOnAction(ae -> {
-            try {
-                enterStoreMenu();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+
         //temporary button for next person
         Button nextPerson = new Button();
         nextPerson.setText("next person");
         nextPerson.setLayoutX(1200);
-        nextPerson.setLayoutY(500);
+        nextPerson.setLayoutY(650);
         nextPerson.setOnAction(ae -> {
             try {
                 goToNextPerson();
