@@ -272,6 +272,7 @@ public class GameMenu extends Application {
     private void goToNextPerson() throws Exception {
         gameController.goToNextPerson();
         label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
+        resetCells();
         if (gameController.getGame().getCurrentPlayer().equals(gameController.getGame().getPlayers().get(0))) {
             gameController.applyChanges();
             turns--;
