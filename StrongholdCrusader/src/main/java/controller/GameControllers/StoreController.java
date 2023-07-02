@@ -20,6 +20,10 @@ public class StoreController {
         return game;
     }
 
+    public static GameController getGameController() {
+        return gameController;
+    }
+
     public Output buy(String itemName, int amount) {
         Governance governance = game.getCurrentPlayer().getGovernance();
 
