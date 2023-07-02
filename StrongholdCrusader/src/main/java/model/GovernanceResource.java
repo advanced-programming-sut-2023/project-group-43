@@ -63,6 +63,7 @@ public class GovernanceResource {
                 storage.put(material, amount);
             } else
                 storage.put(material, getAmountOfItemInStockpile(material) + amount);
+            //tr
         }
     }
 
