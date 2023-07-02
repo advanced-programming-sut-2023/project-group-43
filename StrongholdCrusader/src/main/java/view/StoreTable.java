@@ -28,7 +28,7 @@ public class StoreTable extends Application {
     private final HBox images = new HBox();
     private String item;
     private StoreController storeController;
-    private Popup notification;
+    private Popup notification = new Popup();
 
     public void setStoreController(StoreController storeController) {
         this.storeController = storeController;
@@ -160,29 +160,38 @@ public class StoreTable extends Application {
     }
 
     private void buy(Material material, TextField number, TextField coin) {
+        System.out.println("this is primary " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+
         Output output = storeController.buy(material.getName(), 1);
 
-        number.setText(String.valueOf(material.getRange()));
+        System.out.println("this is second " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+
+        number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
 
         setNotificationPopup(output);
     }
 
     private void sell(Material material, TextField number, TextField coin) {
+
+        System.out.println("this is primary " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+
         Output output = storeController.sell(material.getName(), 1);
 
-        number.setText(String.valueOf(material.getRange()));
+        System.out.println("this is second " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+
+        number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
 
         setNotificationPopup(output);
     }
 
 
     private void setNotificationPopup(Output output){
-        notification.setHeight(100);
-        notification.setWidth(100);
+        notification.setHeight(200);
+        notification.setWidth(200);
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setMaxWidth(100);
-        borderPane.setMaxHeight(100);
+        borderPane.setMaxWidth(200);
+        borderPane.setMaxHeight(200);
 
         Button back = new Button();
         back.setOnAction(actionEvent -> notification.hide());

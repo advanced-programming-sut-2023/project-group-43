@@ -50,12 +50,7 @@ public class StoreMenu extends Application {
 
 
     private void setButton(){
-        System.out.println(weapon == null);
-        System.out.println(food == null);
-        System.out.println(tool  == null);
-        System.out.println(mineral == null);
-        System.out.println(enter == null);
-        System.out.println(back == null);
+
         weapon.setOnAction(actionEvent -> {
             try {
                 setWeaponOnTable();
@@ -138,7 +133,7 @@ public class StoreMenu extends Application {
         System.out.println("inside back");
         GameController gameController = new GameController(StoreController.getGame());
         GameMenu gameMenu = new GameMenu();
-        gameMenu.setGameController(gameController);
+        GameMenu.setGameController(gameController);
         gameMenu.start(StoreMenu.stage);
     }
 
