@@ -55,4 +55,8 @@ public class Barrack {
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10));
     }
+
+    public Pane getPane() {
+        return pane;
+    }
 }

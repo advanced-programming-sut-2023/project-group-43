@@ -50,4 +50,8 @@ public class MercenaryPost {
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10));
     }
+
+    public Pane getPane() {
+        return pane;
+    }
 }
