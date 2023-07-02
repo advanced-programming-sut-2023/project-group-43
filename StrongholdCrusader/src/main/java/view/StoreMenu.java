@@ -20,12 +20,17 @@ public class StoreMenu extends Application {
 
     private static Stage stage;
     private Pane storeMenuPane;
-    private StoreController storeController;
-    @FXML
-    private Button back;
+    private static StoreController storeController;
+
+    public Button weapon;
+    public Button tool;
+    public Button food ;
+    public Button mineral;
+    public Button enter ;
+    public Button back ;
 
     public void setStoreController(StoreController storeController) {
-        this.storeController = storeController;
+        StoreMenu.storeController = storeController;
     }
 
     @Override
@@ -33,10 +38,67 @@ public class StoreMenu extends Application {
         StoreMenu.stage = stage;
         storeMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(this.getClass().getResource("/fxml/storeMenu.fxml")).toExternalForm()));
         setMainBackground();
-
         Scene mainScene = new Scene(storeMenuPane);
         stage.setScene(mainScene);
         stage.show();
+    }
+
+    @FXML
+    public void initialize(){
+        setButton();
+    }
+
+
+    private void setButton(){
+        System.out.println(weapon == null);
+        System.out.println(food == null);
+        System.out.println(tool  == null);
+        System.out.println(mineral == null);
+        System.out.println(enter == null);
+        System.out.println(back == null);
+        weapon.setOnAction(actionEvent -> {
+            try {
+                setWeaponOnTable();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        food.setOnAction(actionEvent -> {
+            try {
+                setFoodOnTable();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        tool.setOnAction(actionEvent -> {
+            try {
+                setToolOnTable();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        mineral.setOnAction(actionEvent -> {
+            try {
+                setMineralOnTable();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        enter.setOnAction(actionEvent -> {
+            try {
+                enterTradeMenu();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        back.setOnAction(actionEvent -> {
+            try {
+                back();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     private void setMainBackground() {
@@ -45,41 +107,42 @@ public class StoreMenu extends Application {
 
     }
 
-    public void setFoodOnTable() throws Exception {
+    private void setFoodOnTable() throws Exception {
         StoreTable storeTable = new StoreTable();
         storeTable.setItem("food");
         storeTable.setStoreController(storeController);
         storeTable.start(stage);
     }
 
-    public void setWeaponOnTable() throws Exception {
+    private void setWeaponOnTable() throws Exception {
         StoreTable storeTable = new StoreTable();
         storeTable.setItem("weapon");
         storeTable.setStoreController(storeController);
         storeTable.start(stage);
     }
 
-    public void setToolOnTable() throws Exception {
+    private void setToolOnTable() throws Exception {
         StoreTable storeTable = new StoreTable();
         storeTable.setItem("tool");
         storeTable.setStoreController(storeController);
         storeTable.start(stage);
     }
-    public void setMineralOnTable() throws Exception {
+    private void setMineralOnTable() throws Exception {
         StoreTable storeTable = new StoreTable();
         storeTable.setItem("mineral");
         storeTable.setStoreController(storeController);
         storeTable.start(stage);
     }
-    public void back() throws Exception {
+    @FXML
+    private void back() throws Exception {
         System.out.println("inside back");
-        GameController gameController = new GameController(storeController.getGame());
+        GameController gameController = new GameController(StoreController.getGame());
         GameMenu gameMenu = new GameMenu();
         gameMenu.setGameController(gameController);
         gameMenu.start(StoreMenu.stage);
     }
 
-    public void enterTradeMenu() throws Exception {
+    private void enterTradeMenu() throws Exception {
         TradeController tradeController = new TradeController(storeController.getGame());
         TradeMenu tradeMenu = new TradeMenu();
         tradeMenu.setTradeController(tradeController);

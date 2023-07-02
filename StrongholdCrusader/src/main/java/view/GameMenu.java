@@ -411,6 +411,7 @@ public class GameMenu extends Application {
 
 
     public void enterStoreMenu() throws Exception {
+        System.out.println("enter store menu");
         StoreController storeController = new StoreController(gameController.getGame(), gameController);
         StoreMenu storeMenu = new StoreMenu();
         storeMenu.setStoreController(storeController);

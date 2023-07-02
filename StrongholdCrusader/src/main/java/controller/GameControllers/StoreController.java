@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
 public class StoreController {
 
-    private final Game game;
-    private final GameController gameController;
+    private static Game game = null;
+    private static GameController gameController;
     private String storeName;
 
     public StoreController(Game game, GameController gameController) {
-        this.game = game;
-        this.gameController = gameController;
+        StoreController.game = game;
+        StoreController.gameController = gameController;
     }
 
     public Output buy(String itemName, int amount) {
@@ -85,7 +85,7 @@ public class StoreController {
         return Output.SUCCESSFUL_SALE;
     }
 
-    public Game getGame() {
+    public static Game getGame() {
         return game;
     }
 }

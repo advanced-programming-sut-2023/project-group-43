@@ -41,15 +41,15 @@
             </font>
         </Text>
         <Button layoutX="448.0" layoutY="272.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0"
-                text="Weapons" onMouseClicked="#setWeaponOnTable"/>
+                text="Weapons" fx:id="weapon"/>
         <Button layoutX="207.0" layoutY="272.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="137.0"
-                text="Tools" onMouseClicked="#setToolOnTable"/>
+                text="Tools" fx:id="tool"/>
         <Button layoutX="212.0" layoutY="442.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0"
-                text="Foods" onMouseClicked="#setFoodOnTable"/>
+                text="Foods" fx:id="food"/>
         <Button layoutX="456.0" layoutY="442.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0"
-                text="Minerals" onMouseClicked="#setMineralOnTable"/>
-        <Button  layoutX="34.0" layoutY="546.0" mnemonicParsing="false" text="Back" onMouseClicked="#back"/>
+                text="Minerals" fx:id="mineral"/>
+        <Button  layoutX="34.0" layoutY="546.0" mnemonicParsing="false" text="Back" fx:id="back"/>
 
-        <Button  layoutX="660.0" layoutY="546.0" mnemonicParsing="false" text="Trade Menu" onMouseClicked="#enterTradeMenu"/>
+        <Button  layoutX="660.0" layoutY="546.0" mnemonicParsing="false" text="Trade Menu" fx:id="enter"/>
     </children>
 </Pane>
