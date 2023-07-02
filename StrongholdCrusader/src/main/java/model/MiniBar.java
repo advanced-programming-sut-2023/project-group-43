@@ -2,18 +2,13 @@ package model;
 
 import enums.ImageEnum;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
 public class MiniBar {
-    private ScrollBar scrollBar;
     private Pane pane = new Pane();
     private ScrollPane scrollPane = new ScrollPane();
     private HBox hBox = new HBox();

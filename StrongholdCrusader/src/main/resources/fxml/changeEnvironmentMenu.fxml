@@ -33,6 +33,11 @@
                     <Cursor fx:constant="HAND" />
                 </cursor>
             </Button>
+            <Button onMouseClicked="#mapStore" text="map store">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Button>
             <Button onMouseClicked="#back" text="back">
                 <cursor>
                     <Cursor fx:constant="HAND" />

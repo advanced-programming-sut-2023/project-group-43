@@ -118,4 +118,10 @@ public class ChangeEnvironmentMenu extends Application {
         mainMenu.setMainUserController(MainMenu.getUsername());
         mainMenu.start(RegisterMenu.getStage());
     }
+
+    public void mapStore(MouseEvent mouseEvent) {
+        MapStore mapStore = new MapStore();
+        mapStore.setCurrentUser(changeEnvironmentController.getCurrentUser());
+        //mapStore.start(RegisterMenu.getStage());
+    }
 }
