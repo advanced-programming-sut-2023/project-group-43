@@ -322,14 +322,17 @@ public class GameMenu extends Application {
     }
 
     private void enterMercenaryPost() {
+        isAnyPanelOpen = true;
         mercenaryPost.getPane().setVisible(true);
     }
 
     private void enterEngineerGuild() {
+        isAnyPanelOpen = true;
         engineerGuild.getPane().setVisible(true);
     }
 
     private void enterBarrack() {
+        isAnyPanelOpen = true;
         barrack.getPane().setVisible(true);
     }
 
