@@ -307,6 +307,7 @@ public class GameMenu extends Application {
     private void checkSelectBuilding() throws Exception {
         if (gameController.getGame().getSelectedBuilding() != null) {
             String name = gameController.getGame().getSelectedBuilding().getName();
+            System.out.println(name);
             if (name.equals("market")) enterStoreMenu();
             else if (name.equals("barrack")) enterBarrack();
             else if (name.equals("engineer guild")) enterEngineerGuild();

@@ -38,6 +38,9 @@ public class DataBase {
     }
 
     public void saveData() {
+        for (User user: users) {
+            user.setGovernance(null);
+        }
         try {
             Gson gson = new Gson();
             String json = gson.toJson(users);

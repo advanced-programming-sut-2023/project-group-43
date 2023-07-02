@@ -61,7 +61,7 @@ public enum BuildingEnum {
     CATHEDRAL("cathedral", 0, 0, 1000, 200, 0, ImageEnum.CATHEDRAL.getImage()),
     INN("inn", 20, 0, 100, 200, 1, ImageEnum.INN.getImage()),
     //<<<----------store---------->>>
-    MARKET("market", 5, 0, 0, 100, 1, ImageEnum.MARKET.getImage()),
+    MARKET("market", 5, 0, 0, 100, 0, ImageEnum.MARKET.getImage()),
     ENGINEER_GUILD("engineer guild", 10, 0, 100, 200, 0, ImageEnum.ENGINEER_GUILD.getImage()),
     MERCENARY_POST("mercenary post", 10, 0, 0, 200, 0, ImageEnum.MERCENARY_POST.getImage()),
     //none
