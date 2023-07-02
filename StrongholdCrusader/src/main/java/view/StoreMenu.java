@@ -2,10 +2,13 @@ package view;
 
 import controller.GameControllers.GameController;
 import controller.GameControllers.StoreController;
+import controller.TradeController;
 import enums.ImageEnum;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -18,6 +21,8 @@ public class StoreMenu extends Application {
     private static Stage stage;
     private Pane storeMenuPane;
     private StoreController storeController;
+    @FXML
+    private Button back;
 
     public void setStoreController(StoreController storeController) {
         this.storeController = storeController;
@@ -28,6 +33,7 @@ public class StoreMenu extends Application {
         StoreMenu.stage = stage;
         storeMenuPane = FXMLLoader.load(new URL(Objects.requireNonNull(this.getClass().getResource("/fxml/storeMenu.fxml")).toExternalForm()));
         setMainBackground();
+
         Scene mainScene = new Scene(storeMenuPane);
         stage.setScene(mainScene);
         stage.show();
@@ -66,9 +72,17 @@ public class StoreMenu extends Application {
         storeTable.start(stage);
     }
     public void back() throws Exception {
+        System.out.println("inside back");
         GameController gameController = new GameController(storeController.getGame());
         GameMenu gameMenu = new GameMenu();
         gameMenu.setGameController(gameController);
-        gameMenu.start(RegisterMenu.getStage());
+        gameMenu.start(StoreMenu.stage);
+    }
+
+    public void enterTradeMenu() throws Exception {
+        TradeController tradeController = new TradeController(storeController.getGame());
+        TradeMenu tradeMenu = new TradeMenu();
+        tradeMenu.setTradeController(tradeController);
+        tradeMenu.start(stage);
     }
 }

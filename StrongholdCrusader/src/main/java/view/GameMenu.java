@@ -185,13 +185,13 @@ public class GameMenu extends Application {
         });
         root.getChildren().add(button);
         //temporary button for trade menu
-        Button tradeMenu = new Button("trade menu");
-        tradeMenu.setLayoutX(1200);
-        tradeMenu.setLayoutY(100);
-        root.getChildren().add(tradeMenu);
-        tradeMenu.setOnAction(ae -> {
+        Button storeMenu = new Button("test store menu");
+        storeMenu.setLayoutX(1000);
+        storeMenu.setLayoutY(100);
+        root.getChildren().add(storeMenu);
+        storeMenu.setOnAction(ae -> {
             try {
-                enterTradeMenu();
+                enterStoreMenu();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -410,8 +410,7 @@ public class GameMenu extends Application {
     }
 
 
-    public void enterStoreMenu(String name) throws Exception {
-        //TODO--> what is usage of name?
+    public void enterStoreMenu() throws Exception {
         StoreController storeController = new StoreController(gameController.getGame(), gameController);
         StoreMenu storeMenu = new StoreMenu();
         storeMenu.setStoreController(storeController);
