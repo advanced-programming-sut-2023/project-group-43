@@ -72,6 +72,9 @@ public class GameMenu extends Application {
         label.setLayoutX(1210);
         anchorPane.getChildren().add(label);
         label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
+        engineerGuild.addListenerToFindUnit(gameController);
+        barrack.addListenerToFindUnit(gameController);
+        mercenaryPost.addListenerToFindUnit(gameController);
         stage.setScene(scene);
         stage.show();
     }
