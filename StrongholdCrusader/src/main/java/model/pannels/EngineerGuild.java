@@ -50,4 +50,7 @@ public class EngineerGuild {
     public Pane getPane() {
         return pane;
     }
+    public VBox getVbox() {
+        return vbox;
+    }
 }

@@ -59,4 +59,8 @@ public class Barrack {
     public Pane getPane() {
         return pane;
     }
+
+    public VBox getVbox() {
+        return vbox;
+    }
 }
