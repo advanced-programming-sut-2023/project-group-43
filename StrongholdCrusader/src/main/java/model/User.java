@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
     private String username;
@@ -18,6 +19,7 @@ public class User {
 
     private ArrayList<Trade> trades = new ArrayList<>();
     private int avatarNumber = 4;
+    private HashMap<String, Cell[][]> mapsOfThisUser;
 
 
     public User(String username, String password, String nickname, String email,
@@ -29,6 +31,15 @@ public class User {
         this.passwordRecoveryQuestion = passwordRecoveryQuestion;
         this.PasswordRecoveryAnswer = PasswordRecoveryAnswer;
         this.slogan = slogan;
+        this.mapsOfThisUser = new HashMap<>();
+    }
+
+    public HashMap<String, Cell[][]> getMapsOfThisUser() {
+        return mapsOfThisUser;
+    }
+
+    public void setMapsOfThisUser(HashMap<String, Cell[][]> mapsOfThisUser) {
+        this.mapsOfThisUser = mapsOfThisUser;
     }
 
     public int getAvatarNumber() {
