@@ -90,7 +90,7 @@ public class MiniBar {
         hBox.setPadding(new Insets(10));
     }
     public void addListenerToFindTheSelectedBuilding() {
-        for (int i = 0; i <= 40; i++) {
+        for (int i = 0; i <= 39; i++) {
             String name = ImageEnum.getNameByImage(allBuildingImages[i].getImage());
             allBuildingImages[i].setOnMouseClicked(mouseEvent -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
