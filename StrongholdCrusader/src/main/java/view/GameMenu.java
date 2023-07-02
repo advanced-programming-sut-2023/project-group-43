@@ -29,7 +29,6 @@ import model.pannels.EngineerGuild;
 import model.pannels.MercenaryPost;
 import model.units.Unit;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameMenu extends Application {
@@ -92,6 +91,22 @@ public class GameMenu extends Application {
         //gameController.illness();
         //gameController.updateIllness();
         dragAndDropBuildingOnMap();
+    }
+
+    private void addMiniMap() {
+        Pane map = new Pane();
+        map.setMaxSize(100, 100);
+        map.setLayoutX(1200);
+        map.setLayoutY(500);
+        for (int i = 0; i < gameController.getGame().getRow(); i++) {
+            for(int j = 0; j < gameController.getGame().getColumn(); j++) {
+                GridPane cell = loadCell(gameController.getGame().getCells()[i][j], 1);
+                cell.setLayoutX(i);
+                cell.setLayoutY(j);
+                map.getChildren().add(cell);
+            }
+        }
+        anchorPane.getChildren().add(map);
     }
 
     public static void setGameController(GameController gameController) {
@@ -197,6 +212,7 @@ public class GameMenu extends Application {
     }
 
     private void addButton(AnchorPane root) {
+        addMiniMap();
         Rectangle button = new Rectangle();
         button.setWidth(200);
         button.setHeight(200);
@@ -260,7 +276,7 @@ public class GameMenu extends Application {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
-                    GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
+                    GridPane cell = loadCell(gameController.getGame().getCells()[x][y], size);
                     setCell(cell, size * (x + xPosition), size * (y + yPosition), x, y);
                     gameController.getMiniBar().addListenerToFindTheSelectedBuilding();
 
@@ -357,7 +373,7 @@ public class GameMenu extends Application {
             System.out.println("it is not null");
             for (int i = 0; i < gameController.getGame().getRow(); i++) {
                 for (int j = 0; j < gameController.getGame().getColumn(); j++) {
-                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
+                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j], 1);
                     int finalX = i;
                     int finalY = j;
                     cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -374,7 +390,7 @@ public class GameMenu extends Application {
         }
     }
 
-    private GridPane loadCell(Cell cell) {
+    private GridPane loadCell(Cell cell, int size) {
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(size, size);
 

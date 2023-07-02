@@ -60,6 +60,9 @@
                     <Label text="fear rate:"/>
                     <ScrollBar fx:id="fearScrollBar"/>
                 </HBox>
+                <HBox spacing="20" alignment="CENTER">
+                    <Label fx:id="population"/>
+                </HBox>
                 <Button onMouseClicked="#applyChanges" text="apply">
                     <cursor>
                         <Cursor fx:constant="HAND"/>

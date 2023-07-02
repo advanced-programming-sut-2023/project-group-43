@@ -40,6 +40,7 @@ public class GovernanceMenu extends Application {
     public ChoiceBox foodChoiceBox;
     public ChoiceBox taxChoiceBox;
     public ScrollBar fearScrollBar;
+    public Label population;
 
     public GovernanceController getGovernanceController() {
         return governanceController;
@@ -77,6 +78,7 @@ public class GovernanceMenu extends Application {
         fearScrollBar.setMin(-3);
         fearScrollBar.setMax(8);
         fearScrollBar.setValue(governanceController.getGame().getCurrentPlayer().getGovernance().getFearRate());
+        population.setText("population: " + governanceController.getGame().getCurrentPlayer().getGovernance().getPopulation());
     }
 
     private void updateImages() {
