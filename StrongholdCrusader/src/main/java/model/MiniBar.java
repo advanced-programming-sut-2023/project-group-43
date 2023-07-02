@@ -23,23 +23,10 @@ public class MiniBar {
     public MiniBar() {
         this.pane.setMinSize(1600, 200);
         this.scrollPane.setMaxSize(1000, 250);
-        //scrollBar = new ScrollBar();
-        //scrollBar.setMinSize(1000,10);
         hBox.setMaxSize(1000, 250);
         setAllBuildingImages();
         addingBuildingImagesOnLeftAnchorPane();
-        //leftAnchorPane.getChildrenUnmodifiable().add(scrollBar);
         pane.getChildren().add(scrollPane);
-//        allBuildingImages[39].setX(1100);
-//        allBuildingImages[39].setY(100);
-//        allBuildingImages[39].setFitHeight(180);
-//        allBuildingImages[39].setFitWidth(180);
-//        //pane.getChildren().add(allBuildingImages[39]);
-//        allBuildingImages[40].setX(1400);
-//        allBuildingImages[40].setY(100);
-//        allBuildingImages[40].setFitHeight(180);
-//        allBuildingImages[40].setFitWidth(180);
-        //pane.getChildren().add(allBuildingImages[40]);
         setBackground(hBox);
     }
 
@@ -103,7 +90,7 @@ public class MiniBar {
         hBox.setPadding(new Insets(10));
     }
     public void addListenerToFindTheSelectedBuilding() {
-        for (int i = 0; i <= 38; i++) {
+        for (int i = 0; i <= 39; i++) {
             String name = ImageEnum.getNameByImage(allBuildingImages[i].getImage());
             allBuildingImages[i].setOnMouseClicked(mouseEvent -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
