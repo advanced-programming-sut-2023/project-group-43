@@ -201,7 +201,7 @@ public class GameController {
             return Output.NOT_ENOUGH_RESOURCE;
         if (governance.getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < building.getStone())
             return Output.NOT_ENOUGH_RESOURCE;
-        if (governance.getUnits().size() < building.getLadderlans()) return Output.NOT_ENOUGH_UNITS;
+        if (governance.getUnemployedPopulation() < building.getLadderlans()) return Output.NOT_ENOUGH_UNITS;
         governance.changeGoldAmount(-building.getCost());
         governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, building.getWood());
         governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, building.getStone());
