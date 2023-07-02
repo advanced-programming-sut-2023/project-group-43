@@ -2,11 +2,13 @@ package view;
 
 import controller.GameControllers.StoreController;
 import enums.ImageEnum;
+import enums.Output;
 import enums.environmentEnums.Material;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -26,6 +28,7 @@ public class StoreTable extends Application {
     private final HBox images = new HBox();
     private String item;
     private StoreController storeController;
+    private Popup notification;
 
     public void setStoreController(StoreController storeController) {
         this.storeController = storeController;
@@ -106,7 +109,8 @@ public class StoreTable extends Application {
         imageView.setImage(ImageEnum.COIN.getImage());
         imageView.setFitWidth(80);
         imageView.setFitHeight(80);
-        Label coin = new Label();
+
+        TextField coin = new TextField();
         coin.setMinSize(100, 100);
         //TODO  2 MUST CHANGED TO USER DATA BASE
         coin.setText(String.valueOf(2));
@@ -115,10 +119,12 @@ public class StoreTable extends Application {
 
         BorderPane left = new BorderPane();
         ImageView pic = new ImageView();
-        pic.setImage((new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/river.png")).toExternalForm())));
+
+        pic.setImage(material.getImage());
         pic.setFitWidth(80);
         pic.setFitHeight(80);
-        Label number = new Label();
+
+        TextField number = new TextField();
         number.setMinSize(100, 100);
         number.setText(String.valueOf(material.getRange()));
         left.setBottom(pic);
@@ -137,6 +143,7 @@ public class StoreTable extends Application {
         sell.setOnAction(actionEvent -> sell(material, number, coin));
         buy.setOnAction(actionEvent -> buy(material, number, coin));
         back.setOnAction(actionEvent -> popup.hide());
+
         vBox.getChildren().addAll(buy, sell, back);
         vBox.setSpacing(60);
         center.setCenter(vBox);
@@ -152,18 +159,40 @@ public class StoreTable extends Application {
         popup.show(stage);
     }
 
-    private void buy(Material material, Label number, Label coin) {
-        storeController.buy(material.getName(), 1);
+    private void buy(Material material, TextField number, TextField coin) {
+        Output output = storeController.buy(material.getName(), 1);
+
         number.setText(String.valueOf(material.getRange()));
-        coin.setText("-1");
-        //TODO ---> create alert after map
+
+        setNotificationPopup(output);
     }
 
-    private void sell(Material material, Label number, Label coin) {
-        storeController.sell(material.getName(), 1);
+    private void sell(Material material, TextField number, TextField coin) {
+        Output output = storeController.sell(material.getName(), 1);
+
         number.setText(String.valueOf(material.getRange()));
-        coin.setText("-1");
-        //TODO
+
+        setNotificationPopup(output);
+    }
+
+
+    private void setNotificationPopup(Output output){
+        notification.setHeight(100);
+        notification.setWidth(100);
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setMaxWidth(100);
+        borderPane.setMaxHeight(100);
+
+        Button back = new Button();
+        back.setOnAction(actionEvent -> notification.hide());
+        TextField textField = new TextField(output.getString());
+
+        borderPane.setCenter(textField);
+        borderPane.setBottom(back);
+
+        notification.getContent().add(borderPane);
+        notification.show(stage);
     }
 
 }

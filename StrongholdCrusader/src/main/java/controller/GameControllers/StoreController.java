@@ -1,45 +1,43 @@
 package controller.GameControllers;
 
-import controller.GameControllers.GameController;
 import enums.Output;
 import enums.environmentEnums.Material;
 import model.Game;
 import model.Governance;
 
-import java.util.ArrayList;
-
 public class StoreController {
 
     private static Game game = null;
     private static GameController gameController;
-    private String storeName;
+
 
     public StoreController(Game game, GameController gameController) {
         StoreController.game = game;
         StoreController.gameController = gameController;
     }
 
+    public static Game getGame() {
+        return game;
+    }
+
     public Output buy(String itemName, int amount) {
         Governance governance = game.getCurrentPlayer().getGovernance();
-        switch (storeName) {
-            case "market" -> {
-                Material material = Material.getMaterialByName(itemName);
-                if (material == null)
-                    return Output.ITEM_NOR_FOUND;
-                if (governance.getGold() < amount * material.getBuyingPrice())
-                    return Output.NOT_ENOUGH_MONEY;
-                governance.changeGoldAmount(-amount * material.getBuyingPrice());
-                governance.getGovernanceResource().changeAmountOfItemInStockpile(material, amount);
-                return Output.SUCCESSFUL_PURCHASE;
-            }
-            case "engineer guild", "barrack", "mercenary post" -> {
-                if (isPossible(storeName, itemName)) {
-                    return gameController.createUnit(itemName, amount);
-                }
-                return Output.WRONG_SELECT_FOR_BUILDING;
-            }
-        }
-        return null;
+
+        Material material = Material.getMaterialByName(itemName);
+        if (material == null)
+            return Output.ITEM_NOR_FOUND;
+        if (governance.getGold() < amount * material.getBuyingPrice())
+            return Output.NOT_ENOUGH_MONEY;
+        governance.changeGoldAmount(-amount * material.getBuyingPrice());
+        governance.getGovernanceResource().changeAmountOfItemInStockpile(material, amount);
+        return Output.SUCCESSFUL_PURCHASE;
+//            case "engineer guild", "barrack", "mercenary post" -> {
+//                if (isPossible(storeName, itemName)) {
+//                    return gameController.createUnit(itemName, amount);
+//                }
+//                return Output.WRONG_SELECT_FOR_BUILDING;
+//            }
+//        }
     }
 
     private boolean isPossible(String storeName, String itemName) {
@@ -73,19 +71,17 @@ public class StoreController {
     }
 
     public Output sell(String itemName, int amount) {
-        if (!storeName.matches("market")) return Output.WRONG_SELECT_FOR_BUILDING;
         Material material = Material.getMaterialByName(itemName);
         Governance governance = game.getCurrentPlayer().getGovernance();
         if (material == null)
             return Output.ITEM_NOR_FOUND;
+
         if (governance.getGovernanceResource().getAmountOfItemInStockpile(material) < amount)
             return Output.NOT_ENOUGH_QUANTITY;
+
         game.getCurrentPlayer().getGovernance().changeGoldAmount(amount * material.getSellingPrice());
         governance.getGovernanceResource().changeAmountOfItemInStockpile(material, -amount);
-        return Output.SUCCESSFUL_SALE;
-    }
 
-    public static Game getGame() {
-        return game;
+        return Output.SUCCESSFUL_SALE;
     }
 }
