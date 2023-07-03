@@ -113,6 +113,7 @@ public enum ImageEnum {
     BEACH(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/beach.jpg")).toExternalForm()),"beach","/images/texture/beach.jpg"),
     SEA(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/sea.jpg")).toExternalForm()),"sea","/images/texture/sea.jpg"),
     ILLNESS(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/poison.png")).toExternalForm()),"poison","/images/texture/poison.png"),
+    FIRE_TEXTURE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/texture/fire.jpg")).toExternalForm()), "fire_texture", "/images/texture/fire.png"),
     //sampleMiniMap
     SAMPLE_MINI_MAP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/sampleMiniMap.jpg")).toExternalForm()),"sampleMiniMap","/images/background/sampleMiniMap.jpg"),
 
@@ -126,9 +127,9 @@ public enum ImageEnum {
     BLACKMONK(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/blackMonk.png")).toExternalForm()),"blackmonk","/images/units/blackMonk.png"),
     SLAVE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/slave.png")).toExternalForm()),"slave","/images/units/slave.png"),
     SLINGER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/slinger.png")).toExternalForm()),"slinger","/images/units/slinger.png"),
-    HORSE_ARCHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/horseArcher.png")).toExternalForm()),"horseArcher","/images/units/horseArcher.png"),
-    ARABIAN_SWORDSMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/swordsman.png")).toExternalForm()),"arabianSwordsman","/images/units/swordsman.png"),
-    FIRE_THROWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/fireThrower.png")).toExternalForm()),"fireThrower","/images/units/fireThrower.png"),
+    HORSE_ARCHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/horseArcher.png")).toExternalForm()),"horse archer","/images/units/horseArcher.png"),
+    ARABIAN_SWORDSMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/swordsman.png")).toExternalForm()),"arabian swordsman","/images/units/swordsman.png"),
+    FIRE_THROWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/fireThrower.png")).toExternalForm()),"fire thrower","/images/units/fireThrower.png"),
    PIKEMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/pikeman.png")).toExternalForm()),"pikeman","/images/units/pikeman.png"),
     MACEMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/maceman.png")).toExternalForm()),"maceman","/images/units/maceman.png"),
     KNIGHT(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/knight.png")).toExternalForm()),"knight","/images/units/knight.png"),

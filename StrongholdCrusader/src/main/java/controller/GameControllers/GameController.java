@@ -359,6 +359,9 @@ public class GameController {
 
     private void attack(int x, int y, Unit unit) {
         Cell cell = game.getCells()[x - 1][y - 1];
+        if (unit.getName().equals("fire thrower")) {
+            cell.setTexture(Texture.FIRE_TEXTURE);
+        }
         Building building = cell.getBuilding();
         if (building != null && building.getOwner().equals(game.getCurrentPlayer())) {
             building.setHp(building.getHp() - (int) Math.floor(unit.getHitPoint()));

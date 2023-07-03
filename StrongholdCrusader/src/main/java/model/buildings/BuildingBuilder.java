@@ -9,8 +9,9 @@ public class BuildingBuilder {
     public static Producer producer;
 
     public static Building BuildingBuilder(String name, User owner) {
-        //TODO : we should declare people capacity with details
         switch (name) {
+            case "headquarter":
+                return new CastleDepartment(name, owner, 1, 10, 1);
             case "small stone gatehouse":
                 return new CastleDepartment(name, owner, 8, 0, 0);
             case "big stone gatehouse":

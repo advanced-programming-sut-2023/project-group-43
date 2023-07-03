@@ -23,6 +23,8 @@ public enum Texture {
     BIG_POND("big pond", false, "\u001b[48;5;183m"),
     BEACH("beach", true, "\u001b[48;5;195m"),
     SEA("sea", false, "\u001b[48;5;27m"),
+
+    FIRE_TEXTURE("fire_texture", true, Color.RED.toString()),
     ILLNESS("illness", true, Color.RED.toString());
     private String name;
     private boolean passable;
