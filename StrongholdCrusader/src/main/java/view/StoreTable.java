@@ -160,11 +160,11 @@ public class StoreTable extends Application {
     }
 
     private void buy(Material material, TextField number, TextField coin) {
-        System.out.println("this is primary " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("before " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
-        Output output = storeController.buy(material.getName(), 1);
+        Output output = storeController.buy(material, 1);
 
-        System.out.println("this is second " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("after " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
         number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
 
@@ -173,11 +173,11 @@ public class StoreTable extends Application {
 
     private void sell(Material material, TextField number, TextField coin) {
 
-        System.out.println("this is primary " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("before " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
-        Output output = storeController.sell(material.getName(), 1);
+        Output output = storeController.sell(material, 1);
 
-        System.out.println("this is second " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("after " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
         number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
 

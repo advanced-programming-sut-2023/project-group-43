@@ -1,8 +1,6 @@
 package model;
 
 import enums.environmentEnums.Material;
-import model.buildings.Building;
-import model.buildings.Storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,17 +12,6 @@ public class GovernanceResource {
 
     //before starting game you should set items for stockpile based on material enum
 
-
-    public HashMap<Material, Integer> getStorage() {
-        return storage;
-    }
-
-    public ArrayList getOnlineMaterials(){
-        ArrayList<Material> materials = new ArrayList<>();
-        materials.addAll(storage.keySet());
-        return materials;
-    }
-
     public static String chooseStorage(Material material) {
         return switch (material.getType()) {
             case "mineral" -> "stockpile";
@@ -34,6 +21,16 @@ public class GovernanceResource {
                     "armoury";
             default -> null;
         };
+    }
+
+    public HashMap<Material, Integer> getStorage() {
+        return storage;
+    }
+
+    public ArrayList getOnlineMaterials() {
+        ArrayList<Material> materials = new ArrayList<>();
+        materials.addAll(storage.keySet());
+        return materials;
     }
 
     public void setOwner(User owner) {
@@ -50,21 +47,10 @@ public class GovernanceResource {
     }
 
     public void changeAmountOfItemInStockpile(Material material, int amount) {
-        ArrayList<Building> storages = owner.getGovernance().getAllBuildingsByName(chooseStorage(material));
-        if (material.equals(Material.WOOD) || material.equals(Material.STONE) || material.equals(Material.IRON)) {
-            if (storage.get(material) == null) {
-                storage.put(material, amount);
-            } else
-                storage.put(material, getAmountOfItemInStockpile(material) + amount);
-        } else if (storages.size() > 0) {
-            Storage building = (Storage) storages.get(0);
-            if (storage.get(material) + amount > building.getCapacity() * storages.size()) return;
-            if (storage.get(material) == null) {
-                storage.put(material, amount);
-            } else
-                storage.put(material, getAmountOfItemInStockpile(material) + amount);
-            //tr
-        }
+        if (storage.get(material) == null) {
+            storage.put(material, amount);
+        } else
+            storage.put(material, getAmountOfItemInStockpile(material) + amount);
     }
 
     public int amountOfFoodInStorage() {
