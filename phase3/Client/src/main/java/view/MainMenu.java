@@ -89,10 +89,7 @@ public class MainMenu extends Application {
     }
 
     public void enterChangeEnvironmentMenu() throws Exception {
-        if (mainUserController == null) {
-            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
-        }
-        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(mainUserController.getCurrentUser());
+        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().getUserByUsername(MainMenu.username));
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
         changeEnvironmentMenu.start(RegisterMenu.getStage());

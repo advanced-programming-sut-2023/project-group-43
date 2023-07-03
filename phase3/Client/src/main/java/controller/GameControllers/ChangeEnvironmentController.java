@@ -1,5 +1,6 @@
 package controller.GameControllers;
 
+import com.google.gson.Gson;
 import enums.Output;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
@@ -10,6 +11,8 @@ import model.buildings.Building;
 import model.buildings.CastleDepartment;
 import model.units.Unarmed;
 import model.units.Unit;
+import network.Client;
+import network.Packet;
 import view.GameMenu;
 import view.RegisterMenu;
 
@@ -125,14 +128,8 @@ public class ChangeEnvironmentController {
         Output output = generateMap(usernames, row, row, turns, mapOption);
         if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
 
-        GameController gameController = new GameController(game);
-        gameController.initializeGame();
-
-        GameMenu gameMenu = new GameMenu();
-        gameMenu.setGameController(gameController);
-        gameMenu.setTurns(game.getTurns());
-        gameMenu.start(RegisterMenu.getStage());
-
+        Packet packet = new Packet("start game", null, (new Gson()).toJson(game));
+        Client.dataOutputStream.writeUTF(packet.toJson());
         return true;
     }
 

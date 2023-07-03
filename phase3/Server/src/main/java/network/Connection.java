@@ -3,12 +3,14 @@ package network;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import model.DataBase;
+import model.Game;
 import model.User;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Connection extends Thread {
     Socket socket;
@@ -59,11 +61,35 @@ public class Connection extends Thread {
                         case "login":
                             Client client = new Client(DataBase.getInstance().getUserByUsername(value), this);
                             DataBase.getInstance().getClients().add(client);
+                        case "start game":
+                            Game game = (new Gson()).fromJson(value, Game.class);
+                            ArrayList<Client> clients = new ArrayList<>();
+                            for (User player: game.getPlayers()) {
+                                for (Client clientGame: DataBase.getInstance().getClients()) {
+                                    if (player.equals(clientGame.getUser())) clients.add(clientGame);
+                                }
+                            }
+                            if (game.getPlayers().size() == clients.size()) {
+                                startGame(clients, game);
+                            } else {
+                                showError(clients, game);
+                            }
                     }
                 } catch (JsonSyntaxException e) {
                     dataOutputStream.writeUTF("400: Missing topic or command fields.");
                 }
             }
+        }
+    }
+
+    private void showError(ArrayList<Client> clients, Game game) throws IOException {
+        clients.get(0).getConnection().dataOutputStream.writeUTF("some players are not online!");
+    }
+
+    private void startGame(ArrayList<Client> clients, Game game) throws IOException {
+        for (Client client: clients) {
+            Packet packet = new Packet("game", null, (new Gson()).toJson(game));
+            client.getConnection().dataOutputStream.writeUTF(packet.toJson());
         }
     }
 
