@@ -48,12 +48,12 @@ public class RegisterMenu extends Application {
     public ChoiceBox chooseSlogan;
     private String captchaNumber;
 
-    public static void main(String[] args) {
+    public static void main() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DataBase.getInstance().saveData();
             System.exit(0);
         }));
-        launch(RegisterMenu.class, args);
+        launch(RegisterMenu.class);
     }
 
     @Override
