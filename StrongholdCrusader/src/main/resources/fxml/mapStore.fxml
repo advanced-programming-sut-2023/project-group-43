@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.MapStore"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/style.css">
+    <VBox  alignment="CENTER">
+        <HBox>
+            <Label text="player you want to choose a map from : "/>
+            <TextField promptText="enter player name" styleClass="text-input" fx:id="choosePlayer"/>
+            <Label fx:id="choosePlayerError" styleClass="error"/>
+        </HBox>
+        <HBox>
+            <Label text="map number : "/>
+            <TextField promptText="enter map number" styleClass="text-input" fx:id="chooseMapNumber"/>
+            <Label fx:id="chooseMapNumberError" styleClass="error"/>
+        </HBox>
+        <HBox>
+            <Label text="destination player : "/>
+            <TextField promptText="enter destination player name" styleClass="text-input" fx:id="third"/>
+            <Label fx:id="thirdError" styleClass="error"/>
+        </HBox>
+        <HBox>
+            <Label text="map name : "/>
+            <TextField promptText="enter your desire map name for saving this map or sending it" styleClass="text-input" fx:id="mapName"/>
+        </HBox>
+        <HBox>
+            <Button text="send map" onMouseClicked="#sendMap">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </HBox>
+        <HBox>
+            <Button text="save map" onMouseClicked="#saveMap">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </HBox>
+        <HBox>
+            <Button text="back" onMouseClicked="#back">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </HBox>
+    </VBox>
+</Pane>

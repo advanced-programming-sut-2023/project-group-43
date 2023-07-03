@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String username;
@@ -38,8 +39,25 @@ public class User {
         return mapsOfThisUser;
     }
 
-    public void setMapsOfThisUser(HashMap<String, Cell[][]> mapsOfThisUser) {
-        this.mapsOfThisUser = mapsOfThisUser;
+    public void addToMapsOfThisUser(String newMapName, Cell[][] newMap) {
+        this.mapsOfThisUser.put(newMapName, newMap);
+    }
+    public static <K, V> K getKey(Map<K, V> map, V value)
+    {
+        for (Map.Entry<K, V> entry: map.entrySet())
+        {
+            if (value.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+    public String getNameByMap(Cell[][] selectedMap) {
+        return getKey(this.mapsOfThisUser, selectedMap);
+    }
+    public Boolean mapWithThisName(String  name) {
+        if (this.mapsOfThisUser.get(name) == null) return false;
+        else return true;
     }
 
     public int getAvatarNumber() {
