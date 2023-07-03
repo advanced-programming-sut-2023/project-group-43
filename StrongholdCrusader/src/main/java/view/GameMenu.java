@@ -42,6 +42,10 @@ public class GameMenu extends Application {
     private boolean isUnitTargetSelected = false;
     private boolean isPouringOil = false;
 
+    private boolean isCopying = false, isPasting = false;
+
+    private String clipboard;
+
     private static GameController gameController;
     private int turns;
     private boolean isAttacking = false;
@@ -104,6 +108,10 @@ public class GameMenu extends Application {
                 isAirAttacking = true;
             } else if (event.getCode() == KeyCode.P) {
                 isPouringOil = true;
+            } else if (event.getCode() == KeyCode.C) {
+                isCopying = true;
+            } else if (event.getCode() == KeyCode.V) {
+                isPasting = true;
             }
         });
     }
@@ -346,6 +354,20 @@ public class GameMenu extends Application {
             else if (isPouringOil) {
                 isPouringOil = false;
                 alert.setContentText(gameController.pourOil("up").getString());
+            }
+            else if (isCopying) {
+                isCopying = false;
+                if (gameController.getGame().getCells()[finalX][finalY].getBuilding() != null) {
+                    clipboard = gameController.getGame().getCells()[finalX][finalY].getBuilding().getName();
+                    alert.setContentText("copied!");
+                }
+                else {
+                    alert.setContentText("no building to copy!");
+                }
+            }
+            else if (isPasting) {
+                isPasting = false;
+                alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, clipboard).getString());
             }
             else if (gameController.getMiniBar().selectedBuildingName == null) {
                 alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
