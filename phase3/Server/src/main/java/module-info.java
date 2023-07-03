@@ -27,4 +27,6 @@ module com.example.strongholdcrusader {
     exports model.buildings;
     opens network to com.google.gson;
     exports network;
+    opens controller.GameControllers to com.google.gson;
+    exports controller.GameControllers;
 }

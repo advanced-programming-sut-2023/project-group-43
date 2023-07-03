@@ -17,11 +17,6 @@ public class Client {
         Client.dataInputStream = new DataInputStream(socket.getInputStream());
         Client.dataOutputStream = new DataOutputStream(socket.getOutputStream());
         new NotificationReceiver(Client.dataInputStream).start();
-        handleClient();
     }
 
-    private void handleClient() {
-        RegisterMenu registerMenu = new RegisterMenu();
-        registerMenu.main();
-    }
 }

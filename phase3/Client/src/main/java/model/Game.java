@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private GameController gameController ;
     private User currentUser;
     private User currentPlayer;
     private int row;
@@ -27,8 +26,6 @@ public class Game {
     private ArrayList<Unit> selectedUnit = new ArrayList<>();
 
     private int turns;
-    private int currentMapX;
-    private int getCurrentMapY;
 
 
 
@@ -39,22 +36,6 @@ public class Game {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
-    }
-
-    public int getCurrentMapX() {
-        return currentMapX;
-    }
-
-    public void setCurrentMapX(int currentMapX) {
-        this.currentMapX = currentMapX;
-    }
-
-    public int getGetCurrentMapY() {
-        return getCurrentMapY;
-    }
-
-    public void setGetCurrentMapY(int getCurrentMapY) {
-        this.getCurrentMapY = getCurrentMapY;
     }
 
     public int getTurns() {

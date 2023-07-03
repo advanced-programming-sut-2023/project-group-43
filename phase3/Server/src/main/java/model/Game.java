@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private GameController gameController ;
     private User currentUser;
     private User currentPlayer;
     private int row;

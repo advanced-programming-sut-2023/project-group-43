@@ -24,8 +24,8 @@ public enum Texture {
     BEACH("beach", true, "\u001b[48;5;195m"),
     SEA("sea", false, "\u001b[48;5;27m"),
 
-    FIRE_TEXTURE("fire_texture", true, Color.RED.toString()),
-    ILLNESS("illness", true, Color.RED.toString());
+    FIRE_TEXTURE("fire_texture", true, "\u001b[48;5;27m"),
+    ILLNESS("illness", true, "\u001b[48;5;27m");
     private String name;
     private boolean passable;
     private String color;
