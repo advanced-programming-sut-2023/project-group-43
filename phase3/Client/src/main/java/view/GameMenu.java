@@ -122,8 +122,6 @@ public class GameMenu extends Application {
         addMiniBar();
         setButtons();
         setCells();
-        //gameController.illness();
-        //gameController.updateIllness();
         dragAndDropBuildingOnMap();
     }
 
@@ -555,15 +553,9 @@ public class GameMenu extends Application {
         StoreController storeController = new StoreController(gameController.getGame(), gameController);
         StoreMenu storeMenu = new StoreMenu();
         storeMenu.setStoreController(storeController);
-        storeMenu.start(stage);
+        storeMenu.start(RegisterMenu.getStage());
     }
 
-    private void enterTradeMenu() throws Exception {
-        TradeController tradeController = new TradeController(gameController.getGame());
-        TradeMenu tradeMenu = new TradeMenu();
-        tradeMenu.setTradeController(tradeController);
-        tradeMenu.start(stage);
-    }
 
     private void enterGovernmentMenu() throws Exception {
         GovernanceController governanceController = new GovernanceController(gameController.getGame().getCurrentPlayer(), gameController.getGame());
