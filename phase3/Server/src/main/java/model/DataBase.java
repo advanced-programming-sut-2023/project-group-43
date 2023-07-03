@@ -87,6 +87,10 @@ public class DataBase {
         return null;
     }
 
+    public String getJsonString() {
+        return (new Gson()).toJson(users);
+    }
+
     private class sortUsers implements Comparator<User> {
         public int compare(User a, User b) {
             if (a.getScore() != b.getScore()) return b.getScore() - a.getScore();

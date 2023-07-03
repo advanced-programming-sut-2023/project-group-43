@@ -16,7 +16,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBase;
+import network.Server;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class RegisterMenu extends Application {
@@ -48,12 +50,13 @@ public class RegisterMenu extends Application {
     public ChoiceBox chooseSlogan;
     private String captchaNumber;
 
-    public static void main() {
+    public static void main(String[] args) throws IOException {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DataBase.getInstance().saveData();
             System.exit(0);
         }));
-        launch(RegisterMenu.class);
+        new Server(8000);
+        //launch(RegisterMenu.class);
     }
 
     @Override

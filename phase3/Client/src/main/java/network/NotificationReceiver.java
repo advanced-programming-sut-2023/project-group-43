@@ -1,6 +1,7 @@
 package network;
 
 import com.google.gson.Gson;
+import model.DataBase;
 import network.Packet;
 
 import java.io.DataInputStream;
@@ -26,7 +27,15 @@ public class NotificationReceiver extends Thread {
                 System.out.println(data);
             else {
                 Packet packet = new Gson().fromJson(data, Packet.class);
+                getPacket(packet);
             }
+        }
+    }
+
+    private void getPacket(Packet packet) {
+        switch (packet.command) {
+            case "users":
+                DataBase.getInstance().setUsers(packet.value);
         }
     }
 }

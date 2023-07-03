@@ -1,5 +1,6 @@
 package network;
 
+import model.DataBase;
 import view.RegisterMenu;
 
 import java.io.DataInputStream;

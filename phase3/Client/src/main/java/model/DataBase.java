@@ -15,28 +15,17 @@ public class DataBase {
     ArrayList<User> users = new ArrayList<>();
 
     private DataBase() {
-        loadData();
-    }
-    private void loadData() {
-        try {
-            Reader reader;
-            try {
-                reader = new FileReader("data.json");
-            } catch (FileNotFoundException e) {
-                return;
-            }
-            Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-            for (JsonElement jsonElement : jsonArray)
-                users.add(gson.fromJson(jsonElement, User.class));
-            for (User user : users) {
-                user.setGovernance(new Governance());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
+    public void setUsers(String json) {
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(json, JsonArray.class);
+        for (JsonElement jsonElement : jsonArray)
+            users.add(gson.fromJson(jsonElement, User.class));
+        for (User user : users) {
+            user.setGovernance(new Governance());
+        }
+    }
     public void saveData() {
         for (User user: users) {
             user.setGovernance(null);
