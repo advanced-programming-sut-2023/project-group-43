@@ -100,21 +100,6 @@ public class DataBase {
         return usersScoreboard;
     }
 
-    public int getRank(User user) {
-        for (int i = 0; i < scoreboard().size(); i++) {
-            if (scoreboard().get(i).equals(user))
-                return (i + 1);
-        }
-        return -1;
-    }
-
-    public User findLoggedInUser() {
-        for (User user : users) {
-            if (user.isLoggedIn) return user;
-        }
-        return null;
-    }
-
     public ArrayList<User> getUsers() {
         return users;
     }
