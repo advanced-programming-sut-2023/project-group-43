@@ -23,8 +23,6 @@ public class NotificationReceiver extends Thread {
                 System.out.println(data);
             else {
                 Packet packet = new Gson().fromJson(data, Packet.class);
-                if (packet.command.equals("new task added"))
-                    System.out.println(packet.command + " name: " + packet.topic);
             }
         }
     }

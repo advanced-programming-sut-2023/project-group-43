@@ -11,5 +11,6 @@ public class Client {
         Socket socket = new Socket(host, port);
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
     }
 }
