@@ -112,8 +112,8 @@ public class StoreTable extends Application {
 
         TextField coin = new TextField();
         coin.setMinSize(100, 100);
-        //TODO  2 MUST CHANGED TO USER DATA BASE
-        coin.setText(String.valueOf(2));
+        coin.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGold()));
+
         right.setBottom(imageView);
         right.setRight(coin);
 
@@ -167,6 +167,7 @@ public class StoreTable extends Application {
         System.out.println("after " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
         number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
+        coin.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGold()));
 
         setNotificationPopup(output);
     }
@@ -180,6 +181,7 @@ public class StoreTable extends Application {
         System.out.println("after " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
         number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
+        coin.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGold()));
 
         setNotificationPopup(output);
     }
