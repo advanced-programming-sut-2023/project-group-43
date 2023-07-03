@@ -2,6 +2,8 @@ package network;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import model.DataBase;
+import model.User;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -43,7 +45,9 @@ public class Connection extends Thread {
                     String command = packet.command;
                     dataOutputStream.writeUTF("");
                     switch (command) {
-
+                        case "new user":
+                            User user = (new Gson()).fromJson(packet.value, User.class);
+                            DataBase.getInstance().addUser(user);
                     }
                 } catch (JsonSyntaxException e) {
                     dataOutputStream.writeUTF("400: Missing topic or command fields.");

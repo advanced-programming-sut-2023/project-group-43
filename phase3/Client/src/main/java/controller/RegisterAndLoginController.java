@@ -1,11 +1,15 @@
 package controller;
 
+import com.google.gson.Gson;
 import enums.Output;
 import model.DataBase;
 import model.User;
+import network.Client;
+import network.Packet;
 import view.MainMenu;
 import view.RegisterMenu;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -213,10 +217,12 @@ public class RegisterAndLoginController {
                                           String email,
                                           String slogan,
                                           String passwordRecoveryQuestion,
-                                          String passwordRecoveryAnswer) {
+                                          String passwordRecoveryAnswer) throws IOException {
         String SHA = makeShaCode(password);
         User user = new User(username, SHA, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan);
         DataBase.getInstance().addUser(user);
+        Packet packet = new Packet("new user", null, (new Gson()).toJson(user));
+        Client.dataOutputStream.writeUTF(packet.toJson());
         return Output.SUCCESSFUL_REGISTER;
     }
 

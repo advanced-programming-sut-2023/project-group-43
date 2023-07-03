@@ -56,7 +56,6 @@ public class RegisterMenu extends Application {
             System.exit(0);
         }));
         new Server(8000);
-        //launch(RegisterMenu.class);
     }
 
     @Override
