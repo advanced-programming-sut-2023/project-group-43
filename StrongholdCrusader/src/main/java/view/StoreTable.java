@@ -112,8 +112,8 @@ public class StoreTable extends Application {
 
         TextField coin = new TextField();
         coin.setMinSize(100, 100);
-        //TODO  2 MUST CHANGED TO USER DATA BASE
-        coin.setText(String.valueOf(2));
+        coin.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGold()));
+
         right.setBottom(imageView);
         right.setRight(coin);
 
@@ -160,26 +160,28 @@ public class StoreTable extends Application {
     }
 
     private void buy(Material material, TextField number, TextField coin) {
-        System.out.println("this is primary " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("before " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
-        Output output = storeController.buy(material.getName(), 1);
+        Output output = storeController.buy(material, 1);
 
-        System.out.println("this is second " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("after " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
         number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
+        coin.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGold()));
 
         setNotificationPopup(output);
     }
 
     private void sell(Material material, TextField number, TextField coin) {
 
-        System.out.println("this is primary " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("before " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
-        Output output = storeController.sell(material.getName(), 1);
+        Output output = storeController.sell(material, 1);
 
-        System.out.println("this is second " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
+        System.out.println("after " + StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material));
 
         number.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGovernanceResource().getAmountOfItemInStockpile(material)));
+        coin.setText(String.valueOf(StoreController.getGameController().getGame().getCurrentPlayer().getGovernance().getGold()));
 
         setNotificationPopup(output);
     }

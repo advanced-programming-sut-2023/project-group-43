@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -36,8 +37,18 @@ public class GameMenu extends Application {
     private Stage stage;
     private Scene scene;
 
+
+    private boolean isUnitSelected = false;
+    private boolean isUnitTargetSelected = false;
+    private boolean isPouringOil = false;
+
+    private boolean isCopying = false, isPasting = false;
+
+    private String clipboard;
+
     private static GameController gameController;
-    private int turns, numberOfPlayers;
+    private int turns;
+    private boolean isAttacking = false;
     private int x, y;
 
     private boolean isAnyPanelOpen = false;
@@ -46,7 +57,6 @@ public class GameMenu extends Application {
 
 
     private AnchorPane root = new AnchorPane();
-    private AnchorPane rootForMiniMap = new AnchorPane();
     private AnchorPane anchorPane = new AnchorPane();
     private ScrollBar scrollBar = new ScrollBar();
 
@@ -55,9 +65,10 @@ public class GameMenu extends Application {
     private Barrack barrack = new Barrack();
 
     private int size = 50;
-    private int sizeForMiniMap = 5;
     private int xPosition = 0;
     private int yPosition = 0;
+
+    private boolean isAirAttacking;
 
     private int firstX, firstY;
 
@@ -68,9 +79,6 @@ public class GameMenu extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         anchorPane.getChildren().add(root);
-        gameController.getMiniBar().getPane().getChildren().add(rootForMiniMap);
-        rootForMiniMap.setMaxHeight(80);
-        rootForMiniMap.setMaxWidth(80);
         root.setMaxHeight(800);
         root.setMaxWidth(800);
         initialize();
@@ -84,19 +92,55 @@ public class GameMenu extends Application {
         barrack.addListenerToFindUnit(gameController);
         mercenaryPost.addListenerToFindUnit(gameController);
         stage.setScene(scene);
+        setSceneOnKeyBoardPress(scene);
         stage.show();
+    }
+
+    private void setSceneOnKeyBoardPress(Scene scene) {
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.S) {
+                isUnitSelected = true;
+            } else if (event.getCode() == KeyCode.M) {
+                isUnitTargetSelected = true;
+            } else if (event.getCode() == KeyCode.A) {
+                isAttacking = true;
+            } else if (event.getCode() == KeyCode.B) {
+                isAirAttacking = true;
+            } else if (event.getCode() == KeyCode.P) {
+                isPouringOil = true;
+            } else if (event.getCode() == KeyCode.C) {
+                isCopying = true;
+            } else if (event.getCode() == KeyCode.V) {
+                isPasting = true;
+            }
+        });
     }
 
     @FXML
     public void initialize() {
         setRootPane();
-        setRootForMiniMapPane();
         addMiniBar();
         setButtons();
         setCells();
         //gameController.illness();
         //gameController.updateIllness();
         dragAndDropBuildingOnMap();
+    }
+
+    private void addMiniMap() {
+        Pane map = new Pane();
+        map.setMaxSize(100, 100);
+        map.setLayoutX(1200);
+        map.setLayoutY(500);
+        for (int i = 0; i < gameController.getGame().getRow(); i++) {
+            for(int j = 0; j < gameController.getGame().getColumn(); j++) {
+                GridPane cell = loadCell(gameController.getGame().getCells()[i][j], 1);
+                cell.setLayoutX(i);
+                cell.setLayoutY(j);
+                map.getChildren().add(cell);
+            }
+        }
+        anchorPane.getChildren().add(map);
     }
 
     public static void setGameController(GameController gameController) {
@@ -146,9 +190,6 @@ public class GameMenu extends Application {
     private void setRootPane() {
         root.setMinSize(1500, 600);
     }
-    private void setRootForMiniMapPane() {
-        rootForMiniMap.setMinSize(150, 60);
-    }
 
     private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left, Rectangle plus, Rectangle minus, Rectangle back) {
         down.setOnMouseClicked(mouseEvent -> {
@@ -189,13 +230,9 @@ public class GameMenu extends Application {
     private void resetCells() {
         anchorPane.getChildren().removeAll(anchorPane.getChildren());
         root.getChildren().removeAll(root.getChildren());
-        rootForMiniMap.getChildren().removeAll(rootForMiniMap.getChildren());
         anchorPane.getChildren().add(root);
-        gameController.getMiniBar().getPane().getChildren().add(rootForMiniMap);
         root.setMaxHeight(800);
         root.setMaxWidth(800);
-        rootForMiniMap.setMaxHeight(80);
-        rootForMiniMap.setMaxWidth(80);
         initialize();
     }
 
@@ -209,6 +246,7 @@ public class GameMenu extends Application {
     }
 
     private void addButton(AnchorPane root) {
+        addMiniMap();
         Rectangle button = new Rectangle();
         button.setWidth(200);
         button.setHeight(200);
@@ -244,6 +282,7 @@ public class GameMenu extends Application {
         label.setText(gameController.getGame().getCurrentPlayer().getUsername() + " is playing");
         if (gameController.getGame().getCurrentPlayer().equals(gameController.getGame().getPlayers().get(0))) {
             gameController.applyChanges();
+            resetCells();
             turns--;
             if (gameController.isGameEnded() || turns <= 0) {
                 endGame();
@@ -267,31 +306,15 @@ public class GameMenu extends Application {
         } else
             gameController.enterMainMenu();
     }
-    //ignore tunnel
-    private void setCell(GridPane cell, int i, int j, int x, int y) {
-        if (i >= 0 && i < 1200 && j >= 0 && j < 600) {
-            cell.setLayoutX(i);
-            cell.setLayoutY(j);
-            root.getChildren().add(cell);
-            setCellFunctions(cell, x, y);
-        }
-    }
-    private void setCellForMiniBar(GridPane cell, int i, int j, int x, int y) {
-        if (i >= 0 && i < 1200 && j >= 0 && j < 600) {
-            cell.setLayoutX(i);
-            cell.setLayoutY(j);
-            rootForMiniMap.getChildren().add(cell);
-        }
-    }
+
     private void setCells() {
         for (int x = 0; x < gameController.getGame().getRow(); x++) {
             for (int y = 0; y < gameController.getGame().getColumn(); y++) {
                 if (x < gameController.getGame().getRow() && y < gameController.getGame().getColumn()) {
-                    GridPane cell = loadCell(gameController.getGame().getCells()[x][y]);
+                    GridPane cell = loadCell(gameController.getGame().getCells()[x][y], size);
                     setCell(cell, size * (x + xPosition), size * (y + yPosition), x, y);
-                    GridPane cellForMiniMap = makeMiniMap(gameController.getGame().getCells()[x][y]);
-                    setCellForMiniBar(cell, sizeForMiniMap * (x + (1000 + xPosition)), sizeForMiniMap * (y + (1000 + yPosition)), x, y);
                     gameController.getMiniBar().addListenerToFindTheSelectedBuilding();
+
                 }
             }
         }
@@ -312,7 +335,41 @@ public class GameMenu extends Application {
         });
         cell.setOnMouseClicked(mouseEvent -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            if (gameController.getMiniBar().selectedBuildingName == null) {
+            if (isUnitSelected) {
+                isUnitSelected = false;
+                alert.setContentText(gameController.selectUnit(finalX + 1, finalY + 1).getString());
+            }
+            else if (isUnitTargetSelected) {
+                isUnitTargetSelected = false;
+                alert.setContentText(gameController.moveUnit(finalX + 1, finalY + 1).getString());
+            }
+            else if (isAttacking) {
+                isAttacking = false;
+                alert.setContentText(gameController.attackToEnemy(finalX + 1, finalY + 1).getString());
+            }
+            else if (isAirAttacking) {
+                isAirAttacking = false;
+                alert.setContentText(gameController.airAttack(finalX + 1, finalY + 1).getString());
+            }
+            else if (isPouringOil) {
+                isPouringOil = false;
+                alert.setContentText(gameController.pourOil("up").getString());
+            }
+            else if (isCopying) {
+                isCopying = false;
+                if (gameController.getGame().getCells()[finalX][finalY].getBuilding() != null) {
+                    clipboard = gameController.getGame().getCells()[finalX][finalY].getBuilding().getName();
+                    alert.setContentText("copied!");
+                }
+                else {
+                    alert.setContentText("no building to copy!");
+                }
+            }
+            else if (isPasting) {
+                isPasting = false;
+                alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, clipboard).getString());
+            }
+            else if (gameController.getMiniBar().selectedBuildingName == null) {
                 alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
                 gameController.selectBuilding(finalX + 1, finalY + 1);
                 gameController.dropUnit(finalX + 1, finalY + 1, 1);
@@ -380,15 +437,18 @@ public class GameMenu extends Application {
 
     private void dragAndDropBuildingOnMap() {
         gameController.getMiniBar().addListenerToFindTheSelectedBuilding();
+        System.out.println(">" + gameController.getMiniBar().selectedBuildingName + "<");
         if (gameController.getMiniBar().selectedBuildingName != null) {
+            System.out.println("it is not null");
             for (int i = 0; i < gameController.getGame().getRow(); i++) {
                 for (int j = 0; j < gameController.getGame().getColumn(); j++) {
-                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j]);
+                    GridPane cell = loadCell(gameController.getGame().getCells()[i][j], 1);
                     int finalX = i;
                     int finalY = j;
                     cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
+                            System.out.println("this cell is touched to in dragAndDrop");
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
                             alert.show();
@@ -398,37 +458,8 @@ public class GameMenu extends Application {
             }
         }
     }
-    private GridPane makeMiniMap(Cell cell) {
-        GridPane gridPane = new GridPane();
-        gridPane.setMinSize(sizeForMiniMap, sizeForMiniMap);
-        Image texture = getTexture(cell);
-        Image building = null;
-        Image rock = null;
-        if (cell.getBuilding() != null)
-            building = getBuilding(cell);
-        if (cell.HasRock())
-            rock = getRock(cell);
-        ImageView textureImageview = new ImageView(texture);
-        ImageView item = new ImageView();
-        textureImageview.setFitHeight(sizeForMiniMap);
-        textureImageview.setFitWidth(sizeForMiniMap);
-        textureImageview.setImage(texture);
-        item.setFitWidth(0.8 * sizeForMiniMap);
-        item.setFitHeight(0.8 * sizeForMiniMap);
-        if (building != null)
-            item.setImage(building);
-        else if (cell.getUnits().size() > 0) {
-            for (Image image: getUnit(cell))
-                item.setImage(image);
-        }
-        if (rock != null)
-            item.setImage(rock);
-        gridPane.getChildren().add(textureImageview);
-        if (item.getImage() != null)
-            gridPane.getChildren().add(item);
-        return gridPane;
-    }
-    private GridPane loadCell(Cell cell) {
+
+    private GridPane loadCell(Cell cell, int size) {
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(size, size);
 
@@ -504,12 +535,18 @@ public class GameMenu extends Application {
         return units;
     }
 
-    public void setTurns(int turns) {
-        this.turns = turns;
+    //ignore tunnel
+    private void setCell(GridPane cell, int i, int j, int x, int y) {
+        if (i >= 0 && i < 1200 && j >= 0 && j < 600) {
+            cell.setLayoutX(i);
+            cell.setLayoutY(j);
+            root.getChildren().add(cell);
+            setCellFunctions(cell, x, y);
+        }
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
+    public void setTurns(int turns) {
+        this.turns = turns;
     }
 
 
