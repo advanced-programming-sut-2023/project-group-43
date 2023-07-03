@@ -6,6 +6,7 @@ import java.util.Comparator;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import network.Client;
 
 
 public class DataBase {
@@ -13,6 +14,7 @@ public class DataBase {
     private static DataBase dataBase = null;
 
     ArrayList<User> users = new ArrayList<>();
+    ArrayList<Client> clients = new ArrayList<>();
 
     private DataBase() {
         loadData();
@@ -121,5 +123,9 @@ public class DataBase {
 
     public ArrayList<User> getUsers() {
         return users;
+    }
+
+    public ArrayList<Client> getClients() {
+        return clients;
     }
 }

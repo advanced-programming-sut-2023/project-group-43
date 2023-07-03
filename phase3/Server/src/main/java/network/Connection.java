@@ -29,7 +29,16 @@ public class Connection extends Thread {
         try {
             handleClient();
         } catch (IOException e) {
+            removeConnection();
             throw new RuntimeException(e);
+        }
+    }
+
+    private void removeConnection() {
+        for (Client client: DataBase.getInstance().getClients()) {
+            if(client.getConnection().equals(this)) {
+                DataBase.getInstance().getClients().remove(client);
+            }
         }
     }
 
@@ -40,14 +49,16 @@ public class Connection extends Thread {
                 String data = dataInputStream.readUTF();
                 try {
                     Packet packet = new Gson().fromJson(data, Packet.class);
-                    String topic = packet.topic;
                     String value = packet.value;
                     String command = packet.command;
                     dataOutputStream.writeUTF("");
                     switch (command) {
                         case "new user":
-                            User user = (new Gson()).fromJson(packet.value, User.class);
+                            User user = (new Gson()).fromJson(value, User.class);
                             DataBase.getInstance().addUser(user);
+                        case "login":
+                            Client client = new Client(DataBase.getInstance().getUserByUsername(value), this);
+                            DataBase.getInstance().getClients().add(client);
                     }
                 } catch (JsonSyntaxException e) {
                     dataOutputStream.writeUTF("400: Missing topic or command fields.");

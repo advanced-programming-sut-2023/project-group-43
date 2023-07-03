@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBase;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class RegisterMenu extends Application {
@@ -156,7 +157,7 @@ public class RegisterMenu extends Application {
         return stage;
     }
 
-    public void createUser() {
+    public void createUser() throws IOException {
         Alert alert = new Alert(Alert.AlertType.NONE);
         if (checkEverything() && captcha.getText().equals(captchaNumber)) {
             alert.setAlertType(Alert.AlertType.INFORMATION);
