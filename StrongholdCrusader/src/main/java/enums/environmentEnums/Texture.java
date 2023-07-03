@@ -1,5 +1,8 @@
 package enums.environmentEnums;
 
+import enums.ImageEnum;
+import javafx.scene.paint.Color;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +23,7 @@ public enum Texture {
     BIG_POND("big pond", false, "\u001b[48;5;183m"),
     BEACH("beach", true, "\u001b[48;5;195m"),
     SEA("sea", false, "\u001b[48;5;27m"),
-    ILLNESS("illness", true, "");
+    ILLNESS("illness", true, Color.RED.toString());
     private String name;
     private boolean passable;
     private String color;

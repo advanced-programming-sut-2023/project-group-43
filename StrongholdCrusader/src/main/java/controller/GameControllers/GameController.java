@@ -2,6 +2,7 @@ package controller.GameControllers;
 
 import controller.MainUserController;
 import enums.BuildingEnums.BuildingEnum;
+import enums.ImageEnum;
 import enums.Output;
 import enums.RateNumber;
 import enums.environmentEnums.Material;
@@ -9,10 +10,12 @@ import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import model.*;
 import model.buildings.*;
 import model.units.*;
+import view.GameMenu;
 import view.MainMenu;
 import view.RegisterMenu;
 
@@ -656,6 +659,8 @@ public class GameController {
             game.getCells()[lengthResult][widthResult].setTexture(Texture.ILLNESS);
         }
     }
+
+
     private void updateIllness() {
         for (int i = 0; i < game.getCells().length; i++) {
             for (int j = 0; j < game.getCells()[0].length; j++) {
@@ -693,6 +698,8 @@ public class GameController {
             governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
         }
     }
+
+
 
     private void updateFoodRate() {
         Governance governance;
