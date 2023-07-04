@@ -63,6 +63,12 @@ public class Connection extends Thread {
                             Client client = new Client(DataBase.getInstance().getUserByUsername(value), this);
                             DataBase.getInstance().getClients().add(client);
                             break;
+                        case "logout":
+                            for (Client gameClient: DataBase.getInstance().getClients()) {
+                                if (gameClient.getConnection().equals(this))
+                                    DataBase.getInstance().getClients().remove(gameClient);
+                            }
+                            break;
                         case "start game":
                             Game game = (new Gson()).fromJson(value, Game.class);
                             ArrayList<Client> clients = new ArrayList<>();

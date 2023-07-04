@@ -1,5 +1,6 @@
 package view;
 
+import com.google.gson.Gson;
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.GameControllers.GameController;
 import controller.MainUserController;
@@ -16,7 +17,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.DataBase;
 import model.User;
+import network.Client;
 import network.NotificationReceiver;
+import network.Packet;
 
 import java.net.URL;
 import java.util.Objects;
@@ -113,9 +116,8 @@ public class MainMenu extends Application {
     }
 
     public void back() throws Exception {
-        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
-        //loginMenu.setLoginController(registerAndLoginController);
+        Client.dataOutputStream.writeUTF("logout");
         loginMenu.start(RegisterMenu.getStage());
     }
 
