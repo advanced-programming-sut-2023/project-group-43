@@ -36,8 +36,8 @@
             <Button fx:id="profileMenu" maxWidth="354.0" mnemonicParsing="false" onMouseClicked="#enterProfileMenu" prefHeight="50.0" prefWidth="300.0" text="Profile Menu" />
             <Button fx:id="changeEnvironmentMenu" maxWidth="418.0" mnemonicParsing="false" onMouseClicked="#enterChangeEnvironmentMenu" prefHeight="51.0" prefWidth="300.0" text="Change Environment" />
             <Button fx:id="help" maxWidth="418.0" mnemonicParsing="false" onMouseClicked="#help" prefHeight="50.0" prefWidth="300.0" text="Help" />
-         <Button fx:id="scoreBoard" mnemonicParsing="false" onMouseClicked="#back" prefHeight="50.0" prefWidth="300.0" text="Score Board" />
-         <Button fx:id="friendship" mnemonicParsing="false" onMouseClicked="#back" prefHeight="50.0" prefWidth="300.0" text="FriendShip" />
+         <Button fx:id="scoreBoard" mnemonicParsing="false" onMouseClicked="#enterScoreboardMenu" prefHeight="50.0" prefWidth="300.0" text="Score Board"  />
+         <Button fx:id="friendship" mnemonicParsing="false" onMouseClicked="#enterFriendshipMenu" prefHeight="50.0" prefWidth="300.0" text="FriendShip" />
             <Button fx:id="back" mnemonicParsing="false" onMouseClicked="#back" prefHeight="50.0" prefWidth="300.0" text="Back" />
 
         </children>

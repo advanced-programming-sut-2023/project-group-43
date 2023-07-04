@@ -3,6 +3,8 @@ package view;
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
+import controller.UserControllers.FriendshipController;
+import controller.UserControllers.ScoreboardController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -97,4 +99,20 @@ public class MainMenu extends Application {
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
         changeEnvironmentMenu.start(RegisterMenu.getStage());
     }
+
+    public void enterFriendshipMenu() throws Exception {
+        FriendshipController friendshipController = new FriendshipController(mainUserController.getCurrentUser());
+        FriendshipMenu friendshipMenu = new FriendshipMenu();
+        friendshipMenu.setFriendshipController(friendshipController);
+        friendshipMenu.start(RegisterMenu.getStage());
+    }
+
+    public void enterScoreboardMenu() throws Exception {
+        ScoreboardController scoreboardController = new ScoreboardController(mainUserController.getCurrentUser());
+        ScoreboardMenu scoreboardMenu = new ScoreboardMenu();
+        scoreboardMenu.setScoreboardController(scoreboardController);
+        scoreboardMenu.start(RegisterMenu.getStage());
+    }
+
+
 }
