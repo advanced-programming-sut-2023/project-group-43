@@ -81,6 +81,8 @@ public class Connection extends Thread {
                                     }
                                 }
                             }
+                            System.out.println(clients1.size());
+                            System.out.println(game1.getPlayers().size());
                             nextPerson(clients1, game1);
                             break;
                         case "start game":

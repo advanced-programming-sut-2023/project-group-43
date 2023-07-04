@@ -42,6 +42,8 @@
                     prefWidth="300.0" text="Help"/>
             <Button fx:id="back" mnemonicParsing="false" onMouseClicked="#back" prefHeight="50.0" prefWidth="300.0"
                     text="Back"/>
+            <Button fx:id="chatMenu" mnemonicParsing="false" onMouseClicked="#enterChatroomMenu" prefHeight="50.0" prefWidth="300.0"
+                    text="Back"/>
 
         </children>
     </VBox>
