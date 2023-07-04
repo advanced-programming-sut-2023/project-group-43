@@ -117,7 +117,7 @@ public class MainMenu extends Application {
 
     public void back() throws Exception {
         LoginMenu loginMenu = new LoginMenu();
-        Client.dataOutputStream.writeUTF("logout");
+        Client.dataOutputStream.writeUTF(new Packet("logout", null).toJson());
         loginMenu.start(RegisterMenu.getStage());
     }
 
