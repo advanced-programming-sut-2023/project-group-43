@@ -47,6 +47,8 @@ public class ScoreboardMenu extends Application implements Initializable {
                 new URL((ScoreboardMenu.class.getResource("/fxml/scoreboardMenu.fxml")).toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 

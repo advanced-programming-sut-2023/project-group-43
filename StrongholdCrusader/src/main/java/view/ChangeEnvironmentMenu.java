@@ -52,6 +52,8 @@ public class ChangeEnvironmentMenu extends Application {
         setBackground();
         Scene scene = new Scene(changeEnvironmentMenuPane);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 

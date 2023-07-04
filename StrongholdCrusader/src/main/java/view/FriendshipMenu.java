@@ -44,6 +44,8 @@ public class FriendshipMenu extends Application implements Initializable {
                 new URL((FriendshipMenu.class.getResource("/fxml/friendshipMenu.fxml")).toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 
