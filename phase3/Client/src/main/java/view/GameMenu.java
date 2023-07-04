@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import controller.GameControllers.GameController;
 import controller.GameControllers.GovernanceController;
 import controller.GameControllers.StoreController;
-import controller.TradeController;
 import enums.ImageEnum;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -111,8 +110,12 @@ public class GameMenu extends Application {
     private void addTimeline() {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
-                    if (NotificationReceiver.getGame() != null && NotificationReceiver.getData() != null && NotificationReceiver.getData().equals("next person")) {
-                        pauseThis();
+                    if (NotificationReceiver.getGame() != null) {
+                        try {
+                            pauseThis();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 })
         );
@@ -120,13 +123,19 @@ public class GameMenu extends Application {
         timeline.play();
     }
 
-    private void pauseThis() {
+    private void pauseThis() throws Exception {
         timeline.pause();
-        gameController.setGame(NotificationReceiver.getGame());
-        gameController.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-        resetCells();
+        System.out.println("a new update of game added");
+        GameController gameController = new GameController(NotificationReceiver.getGame());
+        NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+        gameController.initializeGame();
+        GameMenu gameMenu = new GameMenu();
+        gameMenu.setGameController(gameController);
+        if (gameController.getGame().getCurrentPlayer().getUsername().equals(gameController.getGame().getPlayers().get(0).getUsername()))
+            turns--;
+        gameMenu.setTurns(turns);
         NotificationReceiver.setGame(null);
-        timeline.play();
+        gameMenu.start(RegisterMenu.getStage());
     }
 
     private void setSceneOnKeyBoardPress(Scene scene) {
@@ -150,7 +159,10 @@ public class GameMenu extends Application {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws Exception {
+        if (gameController.isGameEnded() || turns <= 0) {
+            endGame();
+        }
         setRootPane();
         addMiniBar();
         setButtons();
@@ -164,7 +176,7 @@ public class GameMenu extends Application {
         map.setLayoutX(1200);
         map.setLayoutY(500);
         for (int i = 0; i < gameController.getGame().getRow(); i++) {
-            for(int j = 0; j < gameController.getGame().getColumn(); j++) {
+            for (int j = 0; j < gameController.getGame().getColumn(); j++) {
                 GridPane cell = loadCell(gameController.getGame().getCells()[i][j], 1);
                 cell.setLayoutX(i);
                 cell.setLayoutY(j);
@@ -226,28 +238,52 @@ public class GameMenu extends Application {
         down.setOnMouseClicked(mouseEvent -> {
             if ((600 / size) - yPosition < gameController.getGame().getColumn()) {
                 yPosition -= 1;
-                resetCells();
+                try {
+                    resetCells();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         up.setOnMouseClicked(mouseEvent -> {
             if (yPosition < 0) yPosition += 1;
-            resetCells();
+            try {
+                resetCells();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
         left.setOnMouseClicked(mouseEvent -> {
             if (xPosition < 0) xPosition += 1;
-            resetCells();
+            try {
+                resetCells();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
         right.setOnMouseClicked(mouseEvent -> {
             if ((1200 / size) - xPosition < gameController.getGame().getRow()) xPosition -= 1;
-            resetCells();
+            try {
+                resetCells();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
         plus.setOnMouseClicked(mouseEvent -> {
             if (size < 100) size *= 2;
-            resetCells();
+            try {
+                resetCells();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
         minus.setOnMouseClicked(mouseEvent -> {
             if (size > 25) size /= 2;
-            resetCells();
+            try {
+                resetCells();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
         back.setOnMouseClicked(mouseEvent -> {
             try {
@@ -258,7 +294,7 @@ public class GameMenu extends Application {
         });
     }
 
-    private void resetCells() {
+    private void resetCells() throws Exception {
         anchorPane.getChildren().removeAll(anchorPane.getChildren());
         root.getChildren().removeAll(root.getChildren());
         anchorPane.getChildren().add(root);
@@ -285,10 +321,12 @@ public class GameMenu extends Application {
         button.setLayoutX(1000);
         button.setLayoutY(500);
         button.setOnMouseClicked(mouseEvent -> {
-            try {
-                enterGovernmentMenu();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            if (gameController.getGame().getCurrentPlayer().getUsername().equals(gameController.getGame().getCurrentUser().getUsername())) {
+                try {
+                    enterGovernmentMenu();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         root.getChildren().add(button);
@@ -299,10 +337,12 @@ public class GameMenu extends Application {
         nextPerson.setLayoutX(1200);
         nextPerson.setLayoutY(650);
         nextPerson.setOnAction(ae -> {
-            try {
-                goToNextPerson();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            if (gameController.getGame().getCurrentPlayer().getUsername().equals(gameController.getGame().getCurrentUser().getUsername())) {
+                try {
+                    goToNextPerson();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         root.getChildren().add(nextPerson);
@@ -318,8 +358,8 @@ public class GameMenu extends Application {
             if (gameController.isGameEnded() || turns <= 0) {
                 endGame();
             }
-            sendNextPerson();
         }
+        sendNextPerson();
     }
 
     private void sendNextPerson() throws IOException {
@@ -376,42 +416,33 @@ public class GameMenu extends Application {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             if (!gameController.getGame().getCurrentPlayer().getUsername().equals(gameController.getGame().getCurrentUser().getUsername())) {
                 alert.setContentText("it is not your turn");
-            }
-            else if (isUnitSelected) {
+            } else if (isUnitSelected) {
                 isUnitSelected = false;
                 alert.setContentText(gameController.selectUnit(finalX + 1, finalY + 1).getString());
-            }
-            else if (isUnitTargetSelected) {
+            } else if (isUnitTargetSelected) {
                 isUnitTargetSelected = false;
                 alert.setContentText(gameController.moveUnit(finalX + 1, finalY + 1).getString());
-            }
-            else if (isAttacking) {
+            } else if (isAttacking) {
                 isAttacking = false;
                 alert.setContentText(gameController.attackToEnemy(finalX + 1, finalY + 1).getString());
-            }
-            else if (isAirAttacking) {
+            } else if (isAirAttacking) {
                 isAirAttacking = false;
                 alert.setContentText(gameController.airAttack(finalX + 1, finalY + 1).getString());
-            }
-            else if (isPouringOil) {
+            } else if (isPouringOil) {
                 isPouringOil = false;
                 alert.setContentText(gameController.pourOil("up").getString());
-            }
-            else if (isCopying) {
+            } else if (isCopying) {
                 isCopying = false;
                 if (gameController.getGame().getCells()[finalX][finalY].getBuilding() != null) {
                     clipboard = gameController.getGame().getCells()[finalX][finalY].getBuilding().getName();
                     alert.setContentText("copied!");
-                }
-                else {
+                } else {
                     alert.setContentText("no building to copy!");
                 }
-            }
-            else if (isPasting) {
+            } else if (isPasting) {
                 isPasting = false;
                 alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, clipboard).getString());
-            }
-            else if (gameController.getMiniBar().selectedBuildingName == null) {
+            } else if (gameController.getMiniBar().selectedBuildingName == null) {
                 alert.setContentText(gameController.cellInfo(gameController.getGame().getCells()[finalX][finalY]));
                 gameController.selectBuilding(finalX + 1, finalY + 1);
                 gameController.dropUnit(finalX + 1, finalY + 1, 1);
@@ -419,7 +450,11 @@ public class GameMenu extends Application {
                 alert.setContentText(gameController.dropBuilding(finalX + 1, finalY + 1, gameController.getMiniBar().selectedBuildingName).getString());
                 gameController.getMiniBar().selectedBuildingName = null;
             }
-            resetCells();
+            try {
+                resetCells();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             try {
                 checkSelectBuilding();
             } catch (Exception e) {
@@ -529,7 +564,7 @@ public class GameMenu extends Application {
         if (building != null)
             item.setImage(building);
         else if (cell.getUnits().size() > 0) {
-            for (Image image: getUnit(cell))
+            for (Image image : getUnit(cell))
                 item.setImage(image);
         }
 
@@ -571,7 +606,7 @@ public class GameMenu extends Application {
 
     private ArrayList<Image> getUnit(Cell cell) {
         ArrayList<Image> units = new ArrayList<>();
-        for (Unit unit: cell.getUnits()) {
+        for (Unit unit : cell.getUnits()) {
             units.add(ImageEnum.getImageByName(unit.getName()));
         }
         return units;

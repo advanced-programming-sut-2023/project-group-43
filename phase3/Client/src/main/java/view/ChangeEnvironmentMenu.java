@@ -63,7 +63,7 @@ public class ChangeEnvironmentMenu extends Application {
     private void addTimeline() {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
-                    if (NotificationReceiver.getGame() != null&& NotificationReceiver.getData() != null && NotificationReceiver.getData().equals("game")) {
+                    if (NotificationReceiver.getGame() != null) {
                         System.out.println("a new game added");
                         GameController gameController = new GameController(NotificationReceiver.getGame());
                         NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));

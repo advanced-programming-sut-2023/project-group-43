@@ -73,15 +73,15 @@ public class Connection extends Thread {
                             Game game1 = (new Gson()).fromJson(value, Game.class);
                             ArrayList<Client> clients1 = new ArrayList<>();
                             for (User player : game1.getPlayers()) {
+                                System.out.println("player: " + player.getUsername());
                                 for (Client clientGame : DataBase.getInstance().getClients()) {
+                                    System.out.println("client: " + clientGame.getUser().getUsername());
                                     if (player.getUsername().equals(clientGame.getUser().getUsername())) {
                                         clients1.add(clientGame);
                                     }
                                 }
                             }
-                            if (game1.getPlayers().size() == clients1.size()) {
-                                nextPerson(clients1, game1);
-                            }
+                            nextPerson(clients1, game1);
                             break;
                         case "start game":
                             Game game = (new Gson()).fromJson(value, Game.class);
