@@ -3,13 +3,19 @@ package view;
 import controller.UserControllers.FriendshipController;
 import enums.ImageEnum;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import model.tableInfo.FriendshipCell;
 
 
 import java.net.URL;
@@ -22,11 +28,14 @@ public class FriendshipMenu extends Application implements Initializable {
     private Scene scene;
 
     public AnchorPane root;
-    public TableColumn username;
-    public TableColumn score;
-    public TableColumn email;
-    public TableColumn state;
-    public TableColumn avatar;
+    public TableView table;
+    public TableColumn<FriendshipCell,String> username;
+    public TableColumn<FriendshipCell,Integer> score;
+    public TableColumn<FriendshipCell,String> email;
+    public TableColumn<FriendshipCell, Button> state;
+    public TableColumn<FriendshipCell, ImageView> avatar;
+
+    private final ObservableList<FriendshipCell> friendshipTable = FXCollections.observableArrayList();
 
 
     @Override
@@ -35,8 +44,6 @@ public class FriendshipMenu extends Application implements Initializable {
                 new URL((FriendshipMenu.class.getResource("/fxml/friendshipMenu.fxml")).toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -60,8 +67,11 @@ public class FriendshipMenu extends Application implements Initializable {
     }
 
     private void setTable(){
-        //rank.setCellValueFactory(new PropertyValueFactory<Integer>());
-        //rankColumn.setCellValueFactory(new PropertyValueFactory<ScoreBoardTable, Integer>("rank"));
+        username.setCellValueFactory(new PropertyValueFactory<FriendshipCell , String>("username"));
+        email.setCellValueFactory(new PropertyValueFactory<FriendshipCell , String>("email"));
+        score.setCellValueFactory(new PropertyValueFactory<FriendshipCell , Integer>("score"));
+        state.setCellValueFactory(new PropertyValueFactory<FriendshipCell , Button>("friendship"));
+        avatar.setCellValueFactory(new PropertyValueFactory<FriendshipCell , ImageView>("avatar"));
     }
 
 
