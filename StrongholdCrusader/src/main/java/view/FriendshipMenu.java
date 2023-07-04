@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -22,6 +23,8 @@ public class FriendshipMenu extends Application implements Initializable {
     private Scene scene;
 
     public AnchorPane root;
+    public TableColumn avatar;
+
     public TableView table;
     public TableColumn rank;
     public TableColumn username;
@@ -44,6 +47,7 @@ public class FriendshipMenu extends Application implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setBackground();
+        setTable();
     }
     public static FriendshipController getFriendshipController() {
         return friendshipController;
@@ -57,6 +61,11 @@ public class FriendshipMenu extends Application implements Initializable {
     private void setBackground() {
         root.setBackground(new Background(new BackgroundImage(ImageEnum.FRIENDSHIP.getImage(),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
+    }
+
+    private void setTable(){
+        //rank.setCellValueFactory(new PropertyValueFactory<Integer>());
+        //rankColumn.setCellValueFactory(new PropertyValueFactory<ScoreBoardTable, Integer>("rank"));
     }
 
 

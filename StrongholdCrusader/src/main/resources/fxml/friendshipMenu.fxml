@@ -4,17 +4,17 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FriendshipMenu">
    <children>
       <TableView fx:id="table" layoutX="76.0" layoutY="123.0" prefHeight="600.0" prefWidth="1450.0">
         <columns>
           <TableColumn fx:id="friendship" minWidth="85.0" prefWidth="250.0" text="Friendship State" />
-          <TableColumn fx:id="lastSeen" minWidth="0.0" prefWidth="250.0" text="Last Seen" />
-            <TableColumn fx:id="state" prefWidth="250.0" text="State" />
-            <TableColumn fx:id="username" prefWidth="250.0" text="Username" />
+          <TableColumn fx:id="lastSeen" minWidth="0.0" prefWidth="200.0" text="Last Seen" />
+            <TableColumn fx:id="state" prefWidth="200.0" text="State" />
+            <TableColumn fx:id="username" prefWidth="200.0" text="Username" />
             <TableColumn fx:id="score" prefWidth="200.0" text="Highest Score" />
-            <TableColumn fx:id="rank" prefWidth="250.0" text="Rank" />
+            <TableColumn fx:id="rank" prefWidth="200.0" text="Rank" />
+            <TableColumn fx:id="avatar" prefWidth="200.0" text="Avatar" />
         </columns>
       </TableView>
    </children>
