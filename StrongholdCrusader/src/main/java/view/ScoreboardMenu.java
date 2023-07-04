@@ -6,7 +6,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -18,12 +22,16 @@ public class ScoreboardMenu extends Application implements Initializable {
     private Scene scene;
 
     public AnchorPane root;
+
+
     @Override
     public void start(Stage stage) throws Exception {
         root = FXMLLoader.load(
                 new URL((ScoreboardMenu.class.getResource("/fxml/scoreboardMenu.fxml")).toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 

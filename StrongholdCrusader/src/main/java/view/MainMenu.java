@@ -62,6 +62,8 @@ public class MainMenu extends Application {
         scene = new Scene(mainPane);
         setBackground();
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 
