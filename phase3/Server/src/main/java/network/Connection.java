@@ -113,7 +113,6 @@ public class Connection extends Thread {
             client.getConnection().dataOutputStream.writeUTF(packet.toJson());
         }
     }
-
     private void showError() throws IOException {
         dataOutputStream.writeUTF("some players are not online!");
     }

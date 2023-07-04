@@ -65,12 +65,15 @@ public class NotificationReceiver extends Thread {
         NotificationReceiver.game = game;
     }
 
-    private void getPacket(Packet packet) throws Exception {
+    private void getPacket(Packet packet) {
         if (packet.command.equals("users")) {
             DataBase.getInstance().setUsers(packet.value);
         } else if (packet.command.equals("game")) {
             System.out.println("game!");
             NotificationReceiver.data = "game";
+            NotificationReceiver.game = (new Gson()).fromJson(packet.value, Game.class);
+        } else if (packet.command.equals("next person")) {
+            NotificationReceiver.data = "next person";
             NotificationReceiver.game = (new Gson()).fromJson(packet.value, Game.class);
         }
     }

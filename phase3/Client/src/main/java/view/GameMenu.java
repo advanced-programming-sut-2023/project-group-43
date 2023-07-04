@@ -111,11 +111,8 @@ public class GameMenu extends Application {
     private void addTimeline() {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
-                    if (NotificationReceiver.getGame() != null) {
-                        gameController.setGame(NotificationReceiver.getGame());
-                        gameController.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-                        resetCells();
-                        NotificationReceiver.setGame(null);
+                    if (NotificationReceiver.getGame() != null && NotificationReceiver.getData() != null && NotificationReceiver.getData().equals("next person")) {
+                        pauseThis();
                     }
                 })
         );
@@ -123,10 +120,13 @@ public class GameMenu extends Application {
         timeline.play();
     }
 
-    private void pauseThis(GameMenu gameMenu) throws Exception {
+    private void pauseThis() {
         timeline.pause();
+        gameController.setGame(NotificationReceiver.getGame());
+        gameController.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+        resetCells();
         NotificationReceiver.setGame(null);
-        gameMenu.start(RegisterMenu.getStage());
+        timeline.play();
     }
 
     private void setSceneOnKeyBoardPress(Scene scene) {
