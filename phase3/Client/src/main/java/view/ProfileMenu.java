@@ -96,7 +96,7 @@ public class ProfileMenu extends Application {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
         profileMenuStage.show();
     }
-    
+
     @FXML
     private void initialize() {
         newUsername.setText(profileController.getCurrentUser().getUsername());

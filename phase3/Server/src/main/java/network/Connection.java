@@ -69,17 +69,12 @@ public class Connection extends Thread {
                             for (User player : game.getPlayers()) {
                                 for (Client clientGame : DataBase.getInstance().getClients()) {
                                     if (player.getUsername().equals(clientGame.getUser().getUsername())) {
-                                        System.out.println("clients:");
-                                        System.out.println(player.getUsername());
                                         clients.add(clientGame);
                                     }
                                 }
                             }
-                            System.out.println(clients.size());
-                            System.out.println(game.getPlayers().size());
                             if (game.getPlayers().size() == clients.size()) {
                                 startGame(clients, game);
-                                System.out.println("starting");
                             } else {
                                 showError();
                             }

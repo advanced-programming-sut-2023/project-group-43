@@ -50,7 +50,7 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration name="RegisterMenu" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="RegisterMenu" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="view.RegisterMenu" />
       <module name="Client" />
       <extension name="coverage">
@@ -76,7 +76,7 @@
       <workItem from="1688397235938" duration="2430000" />
       <workItem from="1688448269675" duration="68000" />
       <workItem from="1688459230877" duration="64000" />
-      <workItem from="1688471988340" duration="3908000" />
+      <workItem from="1688471988340" duration="4376000" />
     </task>
     <servers />
   </component>
