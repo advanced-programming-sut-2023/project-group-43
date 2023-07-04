@@ -8,12 +8,10 @@
    <children>
       <TableView fx:id="table" layoutX="76.0" layoutY="123.0" prefHeight="600.0" prefWidth="1450.0">
         <columns>
-          <TableColumn fx:id="friendship" minWidth="85.0" prefWidth="250.0" text="Friendship State" />
-          <TableColumn fx:id="lastSeen" minWidth="0.0" prefWidth="200.0" text="Last Seen" />
-            <TableColumn fx:id="state" prefWidth="200.0" text="State" />
-            <TableColumn fx:id="username" prefWidth="200.0" text="Username" />
-            <TableColumn fx:id="score" prefWidth="200.0" text="Highest Score" />
-            <TableColumn fx:id="rank" prefWidth="200.0" text="Rank" />
+            <TableColumn fx:id="state" prefWidth="300.0" text="Friendship state" />
+            <TableColumn fx:id="score" prefWidth="300.0" text="Highest Score" />
+            <TableColumn fx:id="email" prefWidth="300.0" text="Email" />
+            <TableColumn fx:id="username" prefWidth="300.0" text="Username" />
             <TableColumn fx:id="avatar" prefWidth="200.0" text="Avatar" />
         </columns>
       </TableView>

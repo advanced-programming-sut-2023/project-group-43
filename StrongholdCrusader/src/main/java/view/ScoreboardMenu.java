@@ -8,9 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
+
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -22,6 +21,15 @@ public class ScoreboardMenu extends Application implements Initializable {
     private Scene scene;
 
     public AnchorPane root;
+
+    public TableColumn avatar;
+    public TableView table ;
+    public TableColumn rank;
+    public TableColumn username;
+    public TableColumn score;
+    public TableColumn state;
+    public TableColumn lastSeen;
+    public TableColumn friendship;
 
 
     @Override

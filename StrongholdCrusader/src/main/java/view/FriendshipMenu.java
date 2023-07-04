@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -23,15 +22,12 @@ public class FriendshipMenu extends Application implements Initializable {
     private Scene scene;
 
     public AnchorPane root;
-    public TableColumn avatar;
-
-    public TableView table;
-    public TableColumn rank;
     public TableColumn username;
     public TableColumn score;
+    public TableColumn email;
     public TableColumn state;
-    public TableColumn lastSeen;
-    public TableColumn friendship;
+    public TableColumn avatar;
+
 
     @Override
     public void start(Stage stage) throws Exception {
