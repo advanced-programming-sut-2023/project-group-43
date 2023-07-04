@@ -6,6 +6,8 @@ import controller.MainUserController;
 import enums.Output;
 import enums.Validations;
 import enums.menuEnums.EnvironmentChangeCommands;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +21,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.DataBase;
+import network.NotificationReceiver;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,6 +36,7 @@ public class ChangeEnvironmentMenu extends Application {
     public ChoiceBox map;
     public ChoiceBox turns;
     public TextArea players;
+    private  Timeline timeline;
     private Stage stage;
     private static ChangeEnvironmentController changeEnvironmentController;
     private BorderPane changeEnvironmentMenuPane ;
@@ -52,7 +57,37 @@ public class ChangeEnvironmentMenu extends Application {
         setBackground();
         Scene scene = new Scene(changeEnvironmentMenuPane);
         stage.setScene(scene);
+        addTimeline();
         stage.show();
+    }
+    private void addTimeline() {
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> {
+                    if (NotificationReceiver.getGame() != null) {
+                        System.out.println("a new game added");
+                        GameController gameController = new GameController(NotificationReceiver.getGame());
+                        NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+                        gameController.initializeGame();
+                        GameMenu gameMenu = new GameMenu();
+                        gameMenu.setGameController(gameController);
+                        gameMenu.setTurns(NotificationReceiver.getGame().getTurns());
+//                        NotificationReceiver.setGame(null);
+                        try {
+                            pauseThis(gameMenu);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                })
+        );
+        timeline.setCycleCount(-1);
+        timeline.play();
+    }
+
+    private void pauseThis(GameMenu gameMenu) throws Exception {
+        timeline.pause();
+        NotificationReceiver.setGame(null);
+        gameMenu.start(RegisterMenu.getStage());
     }
 
     @FXML

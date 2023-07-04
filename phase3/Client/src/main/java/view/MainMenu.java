@@ -30,6 +30,8 @@ public class MainMenu extends Application {
     @FXML
     private Pane mainPane;
 
+    private Timeline timeline;
+
 
     private static String username;
     private MainUserController mainUserController;
@@ -70,9 +72,9 @@ public class MainMenu extends Application {
     }
 
     private void addTimeline() {
-        Timeline timeline = new Timeline(
+        timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
-                    if (NotificationReceiver.getData() != null && NotificationReceiver.getData().equals("game")) {
+                    if (NotificationReceiver.getGame() != null) {
                         System.out.println("a new game added");
                         GameController gameController = new GameController(NotificationReceiver.getGame());
                         NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
@@ -80,9 +82,9 @@ public class MainMenu extends Application {
                         GameMenu gameMenu = new GameMenu();
                         gameMenu.setGameController(gameController);
                         gameMenu.setTurns(NotificationReceiver.getGame().getTurns());
-                        NotificationReceiver.setData(null);
+//                        NotificationReceiver.setGame(null);
                         try {
-                            gameMenu.start(RegisterMenu.getStage());
+                            pauseThis(gameMenu);
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -91,6 +93,12 @@ public class MainMenu extends Application {
         );
         timeline.setCycleCount(-1);
         timeline.play();
+    }
+
+    private void pauseThis(GameMenu gameMenu) throws Exception {
+        timeline.pause();
+        NotificationReceiver.setGame(null);
+        gameMenu.start(RegisterMenu.getStage());
     }
 
 

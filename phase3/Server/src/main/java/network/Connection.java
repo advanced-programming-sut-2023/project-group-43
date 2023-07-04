@@ -92,6 +92,7 @@ public class Connection extends Thread {
 
     private void startGame(ArrayList<Client> clients, Game game) throws IOException {
         for (Client client : clients) {
+            System.out.println("sending game to " + client.getUser().getUsername());
             Packet packet = new Packet("game", (new Gson()).toJson(game));
             client.getConnection().dataOutputStream.writeUTF(packet.toJson());
         }

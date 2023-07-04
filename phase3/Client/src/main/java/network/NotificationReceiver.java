@@ -61,6 +61,10 @@ public class NotificationReceiver extends Thread {
         return data;
     }
 
+    public static void setGame(Game game) {
+        NotificationReceiver.game = game;
+    }
+
     private void getPacket(Packet packet) throws Exception {
         if (packet.command.equals("users")) {
             DataBase.getInstance().setUsers(packet.value);
