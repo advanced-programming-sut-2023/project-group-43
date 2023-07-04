@@ -23,6 +23,8 @@ public class NotificationReceiver extends Thread {
 
     private static String data;
 
+    private static Game game;
+
     @Override
     public synchronized void run() {
         while (true) {
@@ -70,14 +72,16 @@ public class NotificationReceiver extends Thread {
         if (packet.command.equals("users")) {
             DataBase.getInstance().setUsers(packet.value);
         } else if (packet.command.equals("game")) {
-            Game game = (new Gson()).fromJson(packet.value, Game.class);
-            GameController gameController = new GameController(game);
-            game.setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-            gameController.initializeGame();
-            GameMenu gameMenu = new GameMenu();
-            gameMenu.setGameController(gameController);
-            gameMenu.setTurns(game.getTurns());
-            gameMenu.start(RegisterMenu.getStage());
+            data = "game";
+            game = (new Gson()).fromJson(packet.value, Game.class);
         }
+    }
+
+    public static Game getGame() {
+        return game;
+    }
+
+    public static void setData(String data) {
+        NotificationReceiver.data = data;
     }
 }

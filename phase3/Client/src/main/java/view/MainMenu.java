@@ -1,8 +1,11 @@
 package view;
 
 import controller.GameControllers.ChangeEnvironmentController;
+import controller.GameControllers.GameController;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +13,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.DataBase;
 import model.User;
+import network.NotificationReceiver;
 
 import java.net.URL;
 import java.util.Objects;
@@ -60,8 +65,34 @@ public class MainMenu extends Application {
         scene = new Scene(mainPane);
         setBackground();
         stage.setScene(scene);
+        addTimeline();
         stage.show();
     }
+
+    private void addTimeline() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> {
+                    if (NotificationReceiver.getData() != null && NotificationReceiver.getData().equals("game")) {
+                            GameController gameController = new GameController(NotificationReceiver.getGame());
+                            NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+                            gameController.initializeGame();
+                            GameMenu gameMenu = new GameMenu();
+                            gameMenu.setGameController(gameController);
+                            gameMenu.setTurns(NotificationReceiver.getGame().getTurns());
+                            NotificationReceiver.setData(null);
+                        try {
+                            gameMenu.start(RegisterMenu.getStage());
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                })
+        );
+        timeline.setCycleCount(-1);
+        timeline.play();
+    }
+
+
 
 
     private void setBackground() {

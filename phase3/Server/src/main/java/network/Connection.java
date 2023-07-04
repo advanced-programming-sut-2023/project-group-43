@@ -37,8 +37,8 @@ public class Connection extends Thread {
     }
 
     private void removeConnection() {
-        for (Client client: DataBase.getInstance().getClients()) {
-            if(client.getConnection().equals(this)) {
+        for (Client client : DataBase.getInstance().getClients()) {
+            if (client.getConnection().equals(this)) {
                 DataBase.getInstance().getClients().remove(client);
             }
         }
@@ -66,14 +66,20 @@ public class Connection extends Thread {
                         case "start game":
                             Game game = (new Gson()).fromJson(value, Game.class);
                             ArrayList<Client> clients = new ArrayList<>();
-                            for (User player: game.getPlayers()) {
-                                for (Client clientGame: DataBase.getInstance().getClients()) {
-                                    System.out.println(clientGame.getUser().getUsername() + " " + player.getUsername());
-                                    if (player.equals(clientGame.getUser())) clients.add(clientGame);
+                            for (User player : game.getPlayers()) {
+                                for (Client clientGame : DataBase.getInstance().getClients()) {
+                                    if (player.getUsername().equals(clientGame.getUser().getUsername())) {
+                                        System.out.println("clients:");
+                                        System.out.println(player.getUsername());
+                                        clients.add(clientGame);
+                                    }
                                 }
                             }
+                            System.out.println(clients.size());
+                            System.out.println(game.getPlayers().size());
                             if (game.getPlayers().size() == clients.size()) {
                                 startGame(clients, game);
+                                System.out.println("starting");
                             } else {
                                 showError();
                             }
@@ -90,8 +96,8 @@ public class Connection extends Thread {
     }
 
     private void startGame(ArrayList<Client> clients, Game game) throws IOException {
-        for (Client client: clients) {
-            Packet packet = new Packet("game",  (new Gson()).toJson(game));
+        for (Client client : clients) {
+            Packet packet = new Packet("game", (new Gson()).toJson(game));
             client.getConnection().dataOutputStream.writeUTF(packet.toJson());
         }
     }
