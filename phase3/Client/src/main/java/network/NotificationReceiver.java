@@ -21,10 +21,12 @@ public class NotificationReceiver extends Thread {
         this.dataInputStream = dataInputStream;
     }
 
+    private static String data;
+
     @Override
     public synchronized void run() {
         while (true) {
-            String data = null;
+            data = null;
             try {
                 data = dataInputStream.readUTF();
             } catch (IOException e) {
@@ -49,8 +51,12 @@ public class NotificationReceiver extends Thread {
 
     private void showData(String data) throws Exception {
         if (data.equals("some players are not online!")) {
-            enterChangeEnvironmentMenu();
+
         }
+    }
+
+    public static String getData() {
+        return data;
     }
 
     public void enterChangeEnvironmentMenu() throws Exception {

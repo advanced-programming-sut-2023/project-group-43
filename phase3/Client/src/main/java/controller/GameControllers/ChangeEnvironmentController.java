@@ -12,8 +12,10 @@ import model.buildings.CastleDepartment;
 import model.units.Unarmed;
 import model.units.Unit;
 import network.Client;
+import network.NotificationReceiver;
 import network.Packet;
 import view.GameMenu;
+import view.MainMenu;
 import view.RegisterMenu;
 
 import java.util.ArrayList;
@@ -130,8 +132,18 @@ public class ChangeEnvironmentController {
 
         Packet packet = new Packet("start game", (new Gson()).toJson(game));
         String packetStr = packet.toJson();
-        System.out.println(packetStr);
         Client.dataOutputStream.writeUTF(packetStr);
+        Thread.sleep(100);
+        if (NotificationReceiver.getData() != null && !NotificationReceiver.getData().equals("some players are not online!")) {
+            GameController gameController = new GameController(game);
+            game.setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+            gameController.initializeGame();
+            GameMenu gameMenu = new GameMenu();
+            gameMenu.setGameController(gameController);
+            gameMenu.setTurns(game.getTurns());
+            gameMenu.start(RegisterMenu.getStage());
+        }
+        else return false;
         return true;
     }
 
