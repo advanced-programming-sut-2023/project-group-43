@@ -58,9 +58,11 @@ public class Connection extends Thread {
                         case "new user":
                             User user = (new Gson()).fromJson(value, User.class);
                             DataBase.getInstance().addUser(user);
+                            break;
                         case "login":
                             Client client = new Client(DataBase.getInstance().getUserByUsername(value), this);
                             DataBase.getInstance().getClients().add(client);
+                            break;
                         case "start game":
                             Game game = (new Gson()).fromJson(value, Game.class);
                             ArrayList<Client> clients = new ArrayList<>();

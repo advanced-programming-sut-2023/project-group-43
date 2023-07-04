@@ -32,7 +32,7 @@ public class NotificationReceiver extends Thread {
             }
             if (!data.startsWith("{")) {
                 try {
-//                    showData(data);
+                    showData(data);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -65,18 +65,17 @@ public class NotificationReceiver extends Thread {
     }
 
     private void getPacket(Packet packet) throws Exception {
-        switch (packet.command) {
-            case "users":
-                DataBase.getInstance().setUsers(packet.value);
-//            case "game":
-//                Game game = (new Gson()).fromJson(packet.value, Game.class);
-//                GameController gameController = new GameController(game);
-//                game.setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-//                gameController.initializeGame();
-//                GameMenu gameMenu = new GameMenu();
-//                gameMenu.setGameController(gameController);
-//                gameMenu.setTurns(game.getTurns());
-//                gameMenu.start(RegisterMenu.getStage());
+        if (packet.command.equals("users")) {
+            DataBase.getInstance().setUsers(packet.value);
+        } else if (packet.command.equals("game")) {
+            Game game = (new Gson()).fromJson(packet.value, Game.class);
+            GameController gameController = new GameController(game);
+            game.setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+            gameController.initializeGame();
+            GameMenu gameMenu = new GameMenu();
+            gameMenu.setGameController(gameController);
+            gameMenu.setTurns(game.getTurns());
+            gameMenu.start(RegisterMenu.getStage());
         }
     }
 }

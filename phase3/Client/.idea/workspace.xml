@@ -50,8 +50,8 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.Main" />
+    <configuration name="RegisterMenu" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.RegisterMenu" />
       <module name="Client" />
       <extension name="coverage">
         <pattern>
@@ -74,6 +74,9 @@
       <updated>1688371229602</updated>
       <workItem from="1688371230939" duration="2413000" />
       <workItem from="1688397235938" duration="2430000" />
+      <workItem from="1688448269675" duration="68000" />
+      <workItem from="1688459230877" duration="64000" />
+      <workItem from="1688471988340" duration="517000" />
     </task>
     <servers />
   </component>
