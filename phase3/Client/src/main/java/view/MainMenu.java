@@ -73,13 +73,14 @@ public class MainMenu extends Application {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
                     if (NotificationReceiver.getData() != null && NotificationReceiver.getData().equals("game")) {
-                            GameController gameController = new GameController(NotificationReceiver.getGame());
-                            NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-                            gameController.initializeGame();
-                            GameMenu gameMenu = new GameMenu();
-                            gameMenu.setGameController(gameController);
-                            gameMenu.setTurns(NotificationReceiver.getGame().getTurns());
-                            NotificationReceiver.setData(null);
+                        System.out.println("a new game added");
+                        GameController gameController = new GameController(NotificationReceiver.getGame());
+                        NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+                        gameController.initializeGame();
+                        GameMenu gameMenu = new GameMenu();
+                        gameMenu.setGameController(gameController);
+                        gameMenu.setTurns(NotificationReceiver.getGame().getTurns());
+                        NotificationReceiver.setData(null);
                         try {
                             gameMenu.start(RegisterMenu.getStage());
                         } catch (Exception ex) {
@@ -91,8 +92,6 @@ public class MainMenu extends Application {
         timeline.setCycleCount(-1);
         timeline.play();
     }
-
-
 
 
     private void setBackground() {

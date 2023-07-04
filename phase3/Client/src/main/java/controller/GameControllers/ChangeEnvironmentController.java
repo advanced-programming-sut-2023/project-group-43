@@ -134,14 +134,16 @@ public class ChangeEnvironmentController {
         String packetStr = packet.toJson();
         Client.dataOutputStream.writeUTF(packetStr);
         Thread.sleep(100);
-        if (NotificationReceiver.getData() != null && !NotificationReceiver.getData().equals("some players are not online!")) {
-            GameController gameController = new GameController(game);
-            game.setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-            gameController.initializeGame();
-            GameMenu gameMenu = new GameMenu();
-            gameMenu.setGameController(gameController);
-            gameMenu.setTurns(game.getTurns());
-            gameMenu.start(RegisterMenu.getStage());
+        System.out.println(NotificationReceiver.getData());
+        if (NotificationReceiver.getData() == null || NotificationReceiver.getData().equals("game")) {
+//            NotificationReceiver.setData(null);
+//            GameController gameController = new GameController(game);
+//            game.setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+//            gameController.initializeGame();
+//            GameMenu gameMenu = new GameMenu();
+//            gameMenu.setGameController(gameController);
+//            gameMenu.setTurns(game.getTurns());
+//            gameMenu.start(RegisterMenu.getStage());
         }
         else return false;
         return true;

@@ -61,19 +61,13 @@ public class NotificationReceiver extends Thread {
         return data;
     }
 
-    public void enterChangeEnvironmentMenu() throws Exception {
-        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-        ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
-        changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
-        changeEnvironmentMenu.start(RegisterMenu.getStage());
-    }
-
     private void getPacket(Packet packet) throws Exception {
         if (packet.command.equals("users")) {
             DataBase.getInstance().setUsers(packet.value);
         } else if (packet.command.equals("game")) {
-            data = "game";
-            game = (new Gson()).fromJson(packet.value, Game.class);
+            System.out.println("game!");
+            NotificationReceiver.data = "game";
+            NotificationReceiver.game = (new Gson()).fromJson(packet.value, Game.class);
         }
     }
 
