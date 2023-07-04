@@ -25,7 +25,7 @@ public class PushNotification extends Thread {
 
     private void sendUsers() throws IOException {
         String users = DataBase.getInstance().getJsonString();
-        Packet packet = new Packet("users", null, users);
+        Packet packet = new Packet("users", users);
         connection.dataOutputStream.writeUTF(packet.toJson());
     }
 }

@@ -128,8 +128,10 @@ public class ChangeEnvironmentController {
         Output output = generateMap(usernames, row, row, turns, mapOption);
         if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
 
-        Packet packet = new Packet("start game", null, (new Gson()).toJson(game));
-        Client.dataOutputStream.writeUTF(packet.toJson());
+        Packet packet = new Packet("start game", (new Gson()).toJson(game));
+        String packetStr = packet.toJson();
+        System.out.println(packetStr);
+        Client.dataOutputStream.writeUTF(packetStr);
         return true;
     }
 

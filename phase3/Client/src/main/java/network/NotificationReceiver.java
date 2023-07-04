@@ -48,12 +48,8 @@ public class NotificationReceiver extends Thread {
     }
 
     private void showData(String data) throws Exception {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(data);
-        alert.show();
-        switch (data) {
-            case "some players are not online!":
-                enterChangeEnvironmentMenu();
+        if (data.equals("some players are not online!")) {
+            enterChangeEnvironmentMenu();
         }
     }
 

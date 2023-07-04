@@ -74,7 +74,7 @@ public class Connection extends Thread {
                             if (game.getPlayers().size() == clients.size()) {
                                 startGame(clients, game);
                             } else {
-                                showError(clients, game);
+                                showError(clients);
                             }
                     }
                 } catch (JsonSyntaxException e) {
@@ -84,13 +84,13 @@ public class Connection extends Thread {
         }
     }
 
-    private void showError(ArrayList<Client> clients, Game game) throws IOException {
+    private void showError(ArrayList<Client> clients) throws IOException {
         clients.get(0).getConnection().dataOutputStream.writeUTF("some players are not online!");
     }
 
     private void startGame(ArrayList<Client> clients, Game game) throws IOException {
         for (Client client: clients) {
-            Packet packet = new Packet("game", null, (new Gson()).toJson(game));
+            Packet packet = new Packet("game",  (new Gson()).toJson(game));
             client.getConnection().dataOutputStream.writeUTF(packet.toJson());
         }
     }

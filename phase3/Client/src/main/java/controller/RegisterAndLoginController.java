@@ -194,7 +194,7 @@ public class RegisterAndLoginController {
     public static void enterMainMenu(String username) throws Exception {
         MainMenu mainMenu = new MainMenu();
         mainMenu.setMainUserController(username);
-        Packet packet = new Packet("login", null, username);
+        Packet packet = new Packet("login", username);
         Client.dataOutputStream.writeUTF(packet.toJson());
         mainMenu.start(RegisterMenu.getStage());
     }
@@ -220,7 +220,7 @@ public class RegisterAndLoginController {
         String SHA = makeShaCode(password);
         User user = new User(username, SHA, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan);
         DataBase.getInstance().addUser(user);
-        Packet packet = new Packet("new user", null, (new Gson()).toJson(user));
+        Packet packet = new Packet("new user", (new Gson()).toJson(user));
         Client.dataOutputStream.writeUTF(packet.toJson());
         return Output.SUCCESSFUL_REGISTER;
     }
