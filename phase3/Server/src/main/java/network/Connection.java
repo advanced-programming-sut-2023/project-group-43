@@ -69,6 +69,20 @@ public class Connection extends Thread {
                                     DataBase.getInstance().getClients().remove(gameClient);
                             }
                             break;
+                        case "next person":
+                            Game game1 = (new Gson()).fromJson(value, Game.class);
+                            ArrayList<Client> clients1 = new ArrayList<>();
+                            for (User player : game1.getPlayers()) {
+                                for (Client clientGame : DataBase.getInstance().getClients()) {
+                                    if (player.getUsername().equals(clientGame.getUser().getUsername())) {
+                                        clients1.add(clientGame);
+                                    }
+                                }
+                            }
+                            if (game1.getPlayers().size() == clients1.size()) {
+                                nextPerson(clients1, game1);
+                            }
+                            break;
                         case "start game":
                             Game game = (new Gson()).fromJson(value, Game.class);
                             ArrayList<Client> clients = new ArrayList<>();
@@ -89,6 +103,14 @@ public class Connection extends Thread {
                     dataOutputStream.writeUTF("400: Missing topic or command fields.");
                 }
             }
+        }
+    }
+
+    private void nextPerson(ArrayList<Client> clients, Game game) throws IOException {
+        for (Client client : clients) {
+            System.out.println("sending game to " + client.getUser().getUsername());
+            Packet packet = new Packet("next person", (new Gson()).toJson(game));
+            client.getConnection().dataOutputStream.writeUTF(packet.toJson());
         }
     }
 

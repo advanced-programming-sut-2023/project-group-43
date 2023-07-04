@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
-    private final Game game;
+    private Game game;
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
@@ -41,6 +41,10 @@ public class GameController {
 
     public static void setMiniBar(MiniBar miniBar) {
         GameController.miniBar = miniBar;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public String cellInfo(Cell cell) {

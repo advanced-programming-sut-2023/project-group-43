@@ -1,10 +1,13 @@
 package view;
 
+import com.google.gson.Gson;
 import controller.GameControllers.GameController;
 import controller.GameControllers.GovernanceController;
 import controller.GameControllers.StoreController;
 import controller.TradeController;
 import enums.ImageEnum;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,13 +26,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Cell;
+import model.DataBase;
 import model.MiniBar;
 import model.pannels.Barrack;
 import model.pannels.EngineerGuild;
 import model.pannels.MercenaryPost;
 import model.units.Unit;
+import network.Client;
+import network.NotificationReceiver;
+import network.Packet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameMenu extends Application {
@@ -70,6 +79,8 @@ public class GameMenu extends Application {
 
     private boolean isAirAttacking;
 
+    private Timeline timeline;
+
     private int firstX, firstY;
 
     private Label label = new Label();
@@ -91,9 +102,31 @@ public class GameMenu extends Application {
         engineerGuild.addListenerToFindUnit(gameController);
         barrack.addListenerToFindUnit(gameController);
         mercenaryPost.addListenerToFindUnit(gameController);
+        addTimeline();
         stage.setScene(scene);
         setSceneOnKeyBoardPress(scene);
         stage.show();
+    }
+
+    private void addTimeline() {
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> {
+                    if (NotificationReceiver.getGame() != null) {
+                        gameController.setGame(NotificationReceiver.getGame());
+                        gameController.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+                        resetCells();
+                        NotificationReceiver.setGame(null);
+                    }
+                })
+        );
+        timeline.setCycleCount(-1);
+        timeline.play();
+    }
+
+    private void pauseThis(GameMenu gameMenu) throws Exception {
+        timeline.pause();
+        NotificationReceiver.setGame(null);
+        gameMenu.start(RegisterMenu.getStage());
     }
 
     private void setSceneOnKeyBoardPress(Scene scene) {
@@ -285,7 +318,13 @@ public class GameMenu extends Application {
             if (gameController.isGameEnded() || turns <= 0) {
                 endGame();
             }
+            sendNextPerson();
         }
+    }
+
+    private void sendNextPerson() throws IOException {
+        Packet packet = new Packet("next person", (new Gson()).toJson(gameController.getGame()));
+        Client.dataOutputStream.writeUTF(packet.toJson());
     }
 
     private void endGame() throws Exception {
@@ -301,8 +340,10 @@ public class GameMenu extends Application {
             engineerGuild.getPane().setVisible(false);
             barrack.getPane().setVisible(false);
             mercenaryPost.getPane().setVisible(false);
-        } else
+        } else {
+            timeline.pause();
             gameController.enterMainMenu();
+        }
     }
 
     private void setCells() {
@@ -333,7 +374,10 @@ public class GameMenu extends Application {
         });
         cell.setOnMouseClicked(mouseEvent -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            if (isUnitSelected) {
+            if (!gameController.getGame().getCurrentPlayer().getUsername().equals(gameController.getGame().getCurrentUser().getUsername())) {
+                alert.setContentText("it is not your turn");
+            }
+            else if (isUnitSelected) {
                 isUnitSelected = false;
                 alert.setContentText(gameController.selectUnit(finalX + 1, finalY + 1).getString());
             }
