@@ -18,11 +18,12 @@ public class FriendshipMenu extends Application implements Initializable {
 
     private Stage stage;
     private Scene scene;
-    private AnchorPane root;
+
+    public AnchorPane root;
     @Override
     public void start(Stage stage) throws Exception {
         root = FXMLLoader.load(
-                new URL((GovernanceMenu.class.getResource("/fxml/governanceMenu.fxml")).toExternalForm()));
+                new URL((FriendshipMenu.class.getResource("/fxml/friendshipMenu.fxml")).toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

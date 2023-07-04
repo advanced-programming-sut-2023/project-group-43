@@ -16,11 +16,12 @@ public class ScoreboardMenu extends Application implements Initializable {
     private static ScoreboardController scoreboardController;
     private Stage stage;
     private Scene scene;
-    private AnchorPane root;
+
+    public AnchorPane root;
     @Override
     public void start(Stage stage) throws Exception {
         root = FXMLLoader.load(
-                new URL((GovernanceMenu.class.getResource("/fxml/governanceMenu.fxml")).toExternalForm()));
+                new URL((ScoreboardMenu.class.getResource("/fxml/scoreboardMenu.fxml")).toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

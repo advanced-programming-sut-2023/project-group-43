@@ -101,6 +101,9 @@ public class MainMenu extends Application {
     }
 
     public void enterFriendshipMenu() throws Exception {
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
         FriendshipController friendshipController = new FriendshipController(mainUserController.getCurrentUser());
         FriendshipMenu friendshipMenu = new FriendshipMenu();
         friendshipMenu.setFriendshipController(friendshipController);
@@ -108,6 +111,9 @@ public class MainMenu extends Application {
     }
 
     public void enterScoreboardMenu() throws Exception {
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
         ScoreboardController scoreboardController = new ScoreboardController(mainUserController.getCurrentUser());
         ScoreboardMenu scoreboardMenu = new ScoreboardMenu();
         scoreboardMenu.setScoreboardController(scoreboardController);
