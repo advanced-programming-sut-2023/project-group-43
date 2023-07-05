@@ -396,7 +396,9 @@ public class GameMenu extends Application {
             barrack.getPane().setVisible(false);
             mercenaryPost.getPane().setVisible(false);
         } else {
-            timeline.pause();
+            if (timeline != null) {
+                timeline.pause();
+            }
             gameController.enterMainMenu();
         }
     }
