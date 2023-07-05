@@ -25,4 +25,10 @@ module com.example.strongholdcrusader {
     exports model.units;
     opens model.buildings to com.google.gson;
     exports model.buildings;
+    opens network to com.google.gson;
+    exports network;
+    opens controller.GameControllers to com.google.gosn;
+    exports controller.GameControllers;
+    opens model.tableInfo to com.google.gson;
+    exports model.tableInfo;
 }

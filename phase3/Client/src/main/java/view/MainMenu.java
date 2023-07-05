@@ -3,11 +3,14 @@ package view;
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
+import controller.UserControllers.FriendshipController;
+import controller.UserControllers.ScoreboardController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.DataBase;
@@ -19,7 +22,7 @@ import java.util.Objects;
 
 public class MainMenu extends Application {
 
-    private Stage stage;
+    private static Stage stage;
 
     private Scene scene;
     @FXML
@@ -48,18 +51,19 @@ public class MainMenu extends Application {
 
     public void setMainUserController(String username) {
         MainMenu.username = username;
-        User currentUser = DataBase.getInstance().getUserByUsername(username);
-        mainUserController = new MainUserController(currentUser);
+        //mainUserController = new MainUserController(currentUser);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        MainMenu.stage = stage;
         mainPane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
         scene = new Scene(mainPane);
         setBackground();
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -96,5 +100,30 @@ public class MainMenu extends Application {
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
         changeEnvironmentMenu.start(RegisterMenu.getStage());
+    }
+
+    public void enterFriendshipMenu() throws Exception {
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
+        FriendshipController friendshipController = new FriendshipController(mainUserController.getCurrentUser());
+        FriendshipMenu friendshipMenu = new FriendshipMenu();
+        friendshipMenu.setFriendshipController(friendshipController);
+        friendshipMenu.start(RegisterMenu.getStage());
+    }
+
+    public void enterScoreboardMenu() throws Exception {
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
+        ScoreboardController scoreboardController = new ScoreboardController(mainUserController.getCurrentUser());
+        ScoreboardMenu scoreboardMenu = new ScoreboardMenu();
+        scoreboardMenu.setScoreboardController(scoreboardController);
+        scoreboardMenu.start(RegisterMenu.getStage());
+    }
+
+
+    public void enterChatRoom() throws Exception {
+        new ChatroomMenu().start(RegisterMenu.getStage());
     }
 }

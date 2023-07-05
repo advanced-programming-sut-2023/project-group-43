@@ -15,47 +15,19 @@ public class DataBase {
     ArrayList<User> users = new ArrayList<>();
 
     private DataBase() {
-        loadData();
     }
-    private void loadData() {
-        try {
-            Reader reader;
-            try {
-                reader = new FileReader("data.json");
-            } catch (FileNotFoundException e) {
-                return;
-            }
-            Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-            for (JsonElement jsonElement : jsonArray)
-                users.add(gson.fromJson(jsonElement, User.class));
-            for (User user : users) {
-                user.setGovernance(new Governance());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    public void setUsers(String json) {
+        System.out.println(json);
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(json, JsonArray.class);
+        for (JsonElement jsonElement : jsonArray)
+            users.add(gson.fromJson(jsonElement, User.class));
+        for (User user : users) {
+            user.setGovernance(new Governance());
         }
     }
 
-    public void saveData() {
-        for (User user: users) {
-            user.setGovernance(null);
-        }
-        try {
-            Gson gson = new Gson();
-            String json = gson.toJson(users);
-            try {
-                FileWriter myWriter = new FileWriter("data.json");
-                myWriter.write(json);
-                myWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getCause());
-        }
-    }
 
 
     public static DataBase getInstance() {
@@ -100,20 +72,7 @@ public class DataBase {
         return usersScoreboard;
     }
 
-    public int getRank(User user) {
-        for (int i = 0; i < scoreboard().size(); i++) {
-            if (scoreboard().get(i).equals(user))
-                return (i + 1);
-        }
-        return -1;
-    }
 
-    public User findLoggedInUser() {
-        for (User user : users) {
-            if (user.isLoggedIn) return user;
-        }
-        return null;
-    }
 
     public ArrayList<User> getUsers() {
         return users;

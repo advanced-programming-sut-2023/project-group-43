@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
+
+    private ArrayList<User> friends = new ArrayList<>();
     private String username;
     private String password;
     private String nickname;
@@ -32,6 +34,7 @@ public class User {
         this.PasswordRecoveryAnswer = PasswordRecoveryAnswer;
         this.slogan = slogan;
         this.mapsOfThisUser = new HashMap<>();
+        this.avatarNumber = 1;
     }
 
     public HashMap<String, Cell[][]> getMapsOfThisUser() {
@@ -144,5 +147,17 @@ public class User {
 
     public void addTrade(Trade trade) {
         trades.add(trade);
+    }
+
+    public void setFriends(ArrayList<User> friends) {
+        this.friends = friends;
+    }
+
+    public ArrayList<User> getFriends() {
+        return friends;
+    }
+
+    public void addFriend(User user) {
+        friends.add(user);
     }
 }

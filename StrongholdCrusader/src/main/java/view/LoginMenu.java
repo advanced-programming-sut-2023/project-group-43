@@ -41,6 +41,8 @@ public class LoginMenu extends Application {
         Scene scene = new Scene(registerPane);
         setBackground(registerPane);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 

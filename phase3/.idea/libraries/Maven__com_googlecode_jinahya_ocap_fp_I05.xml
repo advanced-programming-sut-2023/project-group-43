@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.googlecode.jinahya:ocap-fp:I05">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-fp/I05/ocap-fp-I05.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-fp/I05/ocap-fp-I05-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-fp/I05/ocap-fp-I05-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

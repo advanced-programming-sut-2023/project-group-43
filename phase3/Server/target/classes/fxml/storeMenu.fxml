@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+      prefWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17" fx:controller="view.StoreMenu"
+      xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fitHeight="137.0" fitWidth="151.0" layoutX="207.0" layoutY="305.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../images/shop/bread.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="219.0" layoutY="153.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../images/shop/tool.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="108.0" fitWidth="115.0" layoutX="460.0" layoutY="326.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../images/shop/mineral.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="115.0" fitWidth="137.0" layoutX="454.0" layoutY="146.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../images/shop/sword.png"/>
+            </image>
+        </ImageView>
+        <Text layoutX="269.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Marketplace"
+              wrappingWidth="284.60003662109375">
+            <font>
+                <Font size="39.0"/>
+            </font>
+        </Text>
+        <Button layoutX="448.0" layoutY="272.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0"
+                text="Weapons" fx:id="weapon"/>
+        <Button layoutX="207.0" layoutY="272.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="137.0"
+                text="Tools" fx:id="tool"/>
+        <Button layoutX="212.0" layoutY="442.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0"
+                text="Foods" fx:id="food"/>
+        <Button layoutX="456.0" layoutY="442.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0"
+                text="Minerals" fx:id="mineral"/>
+        <Button  layoutX="34.0" layoutY="546.0" mnemonicParsing="false" text="Back" fx:id="back"/>
+
+        <Button  layoutX="660.0" layoutY="546.0" mnemonicParsing="false" text="Trade Menu" fx:id="enter"/>
+    </children>
+</Pane>

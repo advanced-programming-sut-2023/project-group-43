@@ -16,7 +16,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBase;
+import network.Client;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class RegisterMenu extends Application {
@@ -27,6 +29,7 @@ public class RegisterMenu extends Application {
     public TextField email;
     public TextField nickname;
     public TextField username;
+
 
     private static Stage stage;
     public CheckBox sloganCheckBox;
@@ -48,12 +51,9 @@ public class RegisterMenu extends Application {
     public ChoiceBox chooseSlogan;
     private String captchaNumber;
 
-    public static void main(String[] args) {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            DataBase.getInstance().saveData();
-            System.exit(0);
-        }));
-        launch(RegisterMenu.class, args);
+    public static void main(String[] args) throws IOException {
+        new Client("localhost", 8005);
+        launch(RegisterMenu.class);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class RegisterMenu extends Application {
         return stage;
     }
 
-    public void createUser() {
+    public void createUser() throws IOException {
         Alert alert = new Alert(Alert.AlertType.NONE);
         if (checkEverything() && captcha.getText().equals(captchaNumber)) {
             alert.setAlertType(Alert.AlertType.INFORMATION);

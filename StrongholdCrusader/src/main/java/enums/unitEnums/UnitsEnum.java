@@ -101,7 +101,7 @@ public enum UnitsEnum {
             return "spearman";
         if (unitName.matches("tunneler"))
             return "tunneler";
-        if (unitName.matches("enginner"))
+        if (unitName.matches("engineer"))
             return "engineer";
         if (unitName.matches("assassin"))
             return "assassin";

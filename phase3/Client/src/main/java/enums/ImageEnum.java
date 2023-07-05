@@ -12,7 +12,7 @@ public enum ImageEnum {
     WOOD_MENU(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/wood.png")).toExternalForm()), "woodMenu", "/images/background/wood.png"),
     OLD_PAPER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/oldPaper.png")).toExternalForm()), "oldPaper", "/images/background/oldPaper.png"),
     REQUEST(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/request.jpg")).toExternalForm()),"request","/images/background/request.jpg"),
-
+    FRIENDSHIP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/friendship.jpg")).toExternalForm()),"friendship","/images/background/friendship.jpg"),
 
     //<<MATERIAL>>
     STONE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/material/Stone.png")).toExternalForm()), "stone","/images/material/Stone.png" ),
@@ -130,13 +130,13 @@ public enum ImageEnum {
     HORSE_ARCHER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/horseArcher.png")).toExternalForm()),"horse archer","/images/units/horseArcher.png"),
     ARABIAN_SWORDSMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/swordsman.png")).toExternalForm()),"arabian swordsman","/images/units/swordsman.png"),
     FIRE_THROWER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/fireThrower.png")).toExternalForm()),"fire thrower","/images/units/fireThrower.png"),
-   PIKEMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/pikeman.png")).toExternalForm()),"pikeman","/images/units/pikeman.png"),
+    PIKEMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/pikeman.png")).toExternalForm()),"pikeman","/images/units/pikeman.png"),
     MACEMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/maceman.png")).toExternalForm()),"maceman","/images/units/maceman.png"),
     KNIGHT(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/knight.png")).toExternalForm()),"knight","/images/units/knight.png"),
     TUNNLER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/tunneler.png")).toExternalForm()),"tunneler","/images/units/tunneler.png"),
     SPEARMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/spearman.png")).toExternalForm()),"spearman","/images/units/spearman.png"),
     LADDERMAN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/ladderman.png")).toExternalForm()),"ladderman","/images/units/ladderman.png"),
-   ENGINNER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/engineer.png")).toExternalForm()),"engineer","/images/units/engineer.png"),
+    ENGINNER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/engineer.png")).toExternalForm()),"engineer","/images/units/engineer.png"),
     ASSASSIN(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/assassin.png")).toExternalForm()),"assassin","/images/units/assassin.png"),
     DOG(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/units/dog.png")).toExternalForm()),"dog","/images/units/dog.png")
 

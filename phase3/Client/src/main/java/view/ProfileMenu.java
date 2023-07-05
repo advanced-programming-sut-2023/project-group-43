@@ -1,11 +1,14 @@
 package view;
 
+import controller.GameControllers.GameController;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
 import controller.UserControllers.ProfileController;
 import enums.ImageEnum;
 import enums.Output;
 import enums.Validations;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.binding.BooleanExpression;
 import javafx.collections.FXCollections;
@@ -22,8 +25,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.DataBase;
 import model.User;
+import network.NotificationReceiver;
 
 import java.io.FileInputStream;
 import java.net.URL;
@@ -91,6 +96,7 @@ public class ProfileMenu extends Application {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
         profileMenuStage.show();
     }
+
     @FXML
     private void initialize() {
         newUsername.setText(profileController.getCurrentUser().getUsername());

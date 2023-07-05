@@ -1,5 +1,6 @@
 package controller.GameControllers;
 
+import com.google.gson.Gson;
 import enums.Output;
 import enums.environmentEnums.Texture;
 import enums.environmentEnums.TreeType;
@@ -10,7 +11,11 @@ import model.buildings.Building;
 import model.buildings.CastleDepartment;
 import model.units.Unarmed;
 import model.units.Unit;
+import network.Client;
+import network.NotificationReceiver;
+import network.Packet;
 import view.GameMenu;
+import view.MainMenu;
 import view.RegisterMenu;
 
 import java.util.ArrayList;
@@ -125,14 +130,13 @@ public class ChangeEnvironmentController {
         Output output = generateMap(usernames, row, row, turns, mapOption);
         if (output != Output.SUCCESSFUL_MAP_GENERATION) return false;
 
-        GameController gameController = new GameController(game);
-        gameController.initializeGame();
-
-        GameMenu gameMenu = new GameMenu();
-        gameMenu.setGameController(gameController);
-        gameMenu.setTurns(game.getTurns());
-        gameMenu.start(RegisterMenu.getStage());
-
+        Packet packet = new Packet("start game", (new Gson()).toJson(game));
+        String packetStr = packet.toJson();
+        Client.dataOutputStream.writeUTF(packetStr);
+        Thread.sleep(100);
+        System.out.println(NotificationReceiver.getData());
+        if (NotificationReceiver.getData() == null);
+            else if (NotificationReceiver.getData().equals("some players are not online!")) return false;
         return true;
     }
 

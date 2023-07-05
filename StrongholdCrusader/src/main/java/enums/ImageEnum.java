@@ -12,7 +12,7 @@ public enum ImageEnum {
     WOOD_MENU(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/wood.png")).toExternalForm()), "woodMenu", "/images/background/wood.png"),
     OLD_PAPER(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/oldPaper.png")).toExternalForm()), "oldPaper", "/images/background/oldPaper.png"),
     REQUEST(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/request.jpg")).toExternalForm()),"request","/images/background/request.jpg"),
-
+    FRIENDSHIP(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/background/friendship.jpg")).toExternalForm()),"friendship","/images/background/friendship.jpg"),
 
     //<<MATERIAL>>
     STONE(new Image(Objects.requireNonNull(ImageEnum.class.getResource("/images/material/Stone.png")).toExternalForm()), "stone","/images/material/Stone.png" ),
