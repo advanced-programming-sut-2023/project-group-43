@@ -11,6 +11,7 @@ import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import model.*;
 import model.buildings.*;
@@ -25,11 +26,21 @@ import java.util.stream.Collectors;
 public class GameController {
 
     private final Game game;
+    private static HashMap<HashMap<User, String>, Pane> allMaps = new HashMap<>();
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
     private static MiniBar miniBar = new MiniBar();
 
+    public static HashMap<HashMap<User, String>, Pane> getAllMaps() {
+        return allMaps;
+    }
+
+    public void addToAllMaps(User user, String string, Pane pane) {
+        HashMap<User, String> hashMap = new HashMap<>();
+        hashMap.put(user, string);
+        this.allMaps.put(hashMap, pane);
+    }
 
     public GameController(Game game) {
         this.game = game;

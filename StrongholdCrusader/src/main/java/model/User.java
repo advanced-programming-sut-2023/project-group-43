@@ -1,7 +1,10 @@
 package model;
 
+import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String username;
@@ -20,7 +23,7 @@ public class User {
     private ArrayList<Trade> trades = new ArrayList<>();
     private ArrayList<User> friends = new ArrayList<>();
     private int avatarNumber = 4;
-    private HashMap<String, Cell[][]> mapsOfThisUser;
+    private HashMap<String, Pane> mapsOfThisUser;
 
 
     public User(String username, String password, String nickname, String email,
@@ -39,14 +42,20 @@ public class User {
         friends.add(user);
     }
 
-    public HashMap<String, Cell[][]> getMapsOfThisUser() {
+    public HashMap<String, Pane> getMapsOfThisUser() {
         return mapsOfThisUser;
     }
 
-    public void setMapsOfThisUser(HashMap<String, Cell[][]> mapsOfThisUser) {
-        this.mapsOfThisUser = mapsOfThisUser;
+    public void AddToMapsOfThisUser(String string, Pane pane) {
+        this.mapsOfThisUser.put(string, pane);
     }
 
+    public Boolean mapWithThisName(String name) {
+        for (Map.Entry<String, Pane> set : mapsOfThisUser.entrySet()) {
+            if (set.getKey().equals(name)) return true;
+        }
+        return false;
+    }
     public int getAvatarNumber() {
         return avatarNumber;
     }
