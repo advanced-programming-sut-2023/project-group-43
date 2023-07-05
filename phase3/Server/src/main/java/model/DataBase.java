@@ -106,6 +106,9 @@ public class DataBase {
         }
     }
 
+    public ArrayList<Chat> getChats() {
+        return chats;
+    }
 
     public static DataBase getInstance() {
         if (dataBase == null) {

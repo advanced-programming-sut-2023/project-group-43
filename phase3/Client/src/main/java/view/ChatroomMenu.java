@@ -36,6 +36,7 @@ public class ChatroomMenu extends Application {
     }
 
     public void enterPublicChat() {
-
+        ChatMenu chatMenu = new ChatMenu();
+        chatMenu.setName("public");
     }
 }

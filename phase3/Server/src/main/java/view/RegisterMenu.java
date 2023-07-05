@@ -55,7 +55,7 @@ public class RegisterMenu extends Application {
             DataBase.getInstance().saveData();
             System.exit(0);
         }));
-        new Server(8001);
+        new Server(8000);
     }
 
     @Override

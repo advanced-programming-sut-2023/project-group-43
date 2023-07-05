@@ -1,15 +1,19 @@
 package network;
 
+import com.google.gson.Gson;
+import model.Chat;
 import model.DataBase;
 
 import java.io.IOException;
 
 public class PushNotification extends Thread {
 
+    private Client client;
     private Connection connection;
 
-    public PushNotification(Connection connection) {
-        this.connection = connection;
+    public PushNotification(Client client) {
+        this.connection = client.getConnection();
+        this.client = client;
     }
 
     @Override
@@ -21,7 +25,7 @@ public class PushNotification extends Thread {
         }
         while (true) {
             try {
-                sendPublicChat();
+                sendChats();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -33,10 +37,13 @@ public class PushNotification extends Thread {
         }
     }
 
-    private void sendPublicChat() throws IOException {
-        String messages = DataBase.getInstance().getPublicChatJson();
-        Packet packet = new Packet("new chat", messages);
-        connection.dataOutputStream.writeUTF(packet.toJson());
+    private void sendChats() throws IOException {
+        for (Chat chat: DataBase.getInstance().getChats()) {
+            if (client.getUser() != null && chat.isUserAChatMember(client.getUser())) {
+                Packet packet = new Packet("new chat", (new Gson()).toJson(chat));
+                connection.dataOutputStream.writeUTF(packet.toJson());
+            }
+        }
     }
 
     private void sendUsers() throws IOException {

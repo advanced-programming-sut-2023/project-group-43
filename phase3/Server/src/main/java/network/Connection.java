@@ -28,7 +28,6 @@ public class Connection extends Thread {
 
     @Override
     public synchronized void run() {
-        (new PushNotification(this)).start();
         try {
             handleClient();
         } catch (IOException e) {
@@ -63,6 +62,7 @@ public class Connection extends Thread {
                         case "login":
                             Client client = new Client(DataBase.getInstance().getUserByUsername(value), this);
                             DataBase.getInstance().getClients().add(client);
+                            (new PushNotification(client)).start();
                             break;
                         case "logout":
                             for (Client gameClient: DataBase.getInstance().getClients()) {
