@@ -5,7 +5,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -43,6 +43,8 @@ public class ChatMenu extends Application {
     private ScrollPane scrollPane = new ScrollPane();
     private String name;
 
+    private boolean isEditing = false, isDeleting = false;
+
     @Override
     public void start(Stage stage) throws Exception {
         initialize();
@@ -55,8 +57,22 @@ public class ChatMenu extends Application {
         anchorPane.getChildren().add(scrollPane);
         addTimeline();
         stage.setScene(scene);
+        setSceneOnKeyBoardPress(scene);
         stage.show();
     }
+
+
+    private void setSceneOnKeyBoardPress(Scene scene) {
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.E) {
+                isEditing = true;
+            } else if (event.getCode() == KeyCode.D) {
+                isEditing = true;
+            }
+        });
+    }
+
+
 
     public void setName(String name) {
         this.name = name;
@@ -118,6 +134,7 @@ public class ChatMenu extends Application {
                 if (message.getUser().getUsername().equals(MainMenu.getUsername())) {
                     hBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px; -fx-border-radius: 5px");
                     hBox.setLayoutX(690);
+                    setFunctions(hBox, message);
                 } else {
                     hBox.setStyle("-fx-background-color: lightpink; -fx-padding: 10px; -fx-border-radius: 5px");
                     hBox.setLayoutX(10);
@@ -128,6 +145,42 @@ public class ChatMenu extends Application {
             }
             scrollPane.setContent(vBox);
         }
+    }
+
+    private void setFunctions(HBox hBox, Message message) {
+        hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (isEditing) {
+                    isEditing = false;
+                    message.setText(newMessage.getText());
+                    Chat chat = NotificationReceiver.getChatByName(name);
+                    synchronized (chat) {
+                        try {
+                            Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    newMessage.setText("");
+                } else if (isDeleting) {
+                    Chat chat = NotificationReceiver.getChatByName(name);
+                    synchronized (chat) {
+                        for (Message m : NotificationReceiver.getChatByName(name).getMessages()) {
+                            if (m.getText().equals(m.getText()) && m.getUser().getUsername().equals(message.getUser().getUsername())) {
+                                chat.getMessages().remove(m);
+                                try {
+                                    Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private Group addAvatar(User user) {
