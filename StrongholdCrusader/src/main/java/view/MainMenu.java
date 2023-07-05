@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class MainMenu extends Application {
 
-    private Stage stage;
+    private static Stage stage;
 
     private Scene scene;
     @FXML
@@ -50,13 +50,12 @@ public class MainMenu extends Application {
 
     public void setMainUserController(String username) {
         MainMenu.username = username;
-        User currentUser = DataBase.getInstance().getUserByUsername(username);
-        mainUserController = new MainUserController(currentUser);
+        //mainUserController = new MainUserController(currentUser);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        MainMenu.stage = stage;
         mainPane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
         scene = new Scene(mainPane);

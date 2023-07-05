@@ -4,6 +4,7 @@ package model.tableInfo;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
+import model.User;
 
 public class ScoreboardCell {
     private ImageView avatar = new ImageView();
@@ -14,7 +15,9 @@ public class ScoreboardCell {
     private String lastSeen;
     private Button friendShip = new Button("Friendship");
 
-    public ScoreboardCell() {
+    public ScoreboardCell(User user) {
+        this.username = user.getUsername();
+        this.rank = user.getRank();
     }
 
     public ImageView getAvatar() {

@@ -17,9 +17,13 @@ import javafx.scene.layout.*;
 
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.DataBase;
+import model.User;
+import model.tableInfo.FriendshipCell;
 import model.tableInfo.ScoreboardCell;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ScoreboardMenu extends Application implements Initializable {
@@ -37,6 +41,7 @@ public class ScoreboardMenu extends Application implements Initializable {
     public TableColumn<ScoreboardCell, Circle> state;
     public TableColumn<ScoreboardCell, String> lastSeen;
     public TableColumn<ScoreboardCell, Button> friendship;
+    public Button back;
 
     private final ObservableList<ScoreboardCell> scoreboardTable = FXCollections.observableArrayList();
 
@@ -56,6 +61,14 @@ public class ScoreboardMenu extends Application implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setBackground();
         setTable();
+        back.setOnAction(actionEvent -> {
+            try {
+                enterMainMenu();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        addRows();
     }
 
     private void setBackground() {
@@ -78,5 +91,23 @@ public class ScoreboardMenu extends Application implements Initializable {
         friendship.setCellValueFactory(new PropertyValueFactory<ScoreboardCell , Button>("friendship"));
         lastSeen.setCellValueFactory(new PropertyValueFactory<ScoreboardCell , String>("last seen"));
         rank.setCellValueFactory(new PropertyValueFactory<ScoreboardCell , Integer>("avatar"));
+    }
+
+    private void addRows(){
+        clearCells();
+        //TODO --> we should set ranking
+        ArrayList<User> users = DataBase.getInstance().getUsers();
+        for(int i = 0 ; i < 3 ; i++){
+            scoreboardTable.add(new ScoreboardCell(users.get(i)));
+        }
+        table.setItems(scoreboardTable);
+    }
+
+    private void clearCells(){
+        scoreboardTable.clear();
+        table.getItems().clear();
+    }
+    private void enterMainMenu() throws Exception {
+        new MainMenu().start(RegisterMenu.getStage());
     }
 }

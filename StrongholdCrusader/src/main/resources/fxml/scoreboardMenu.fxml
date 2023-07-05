@@ -5,9 +5,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ScoreboardMenu">
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1600.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ScoreboardMenu">
     <children>
-        <TableView fx:id="table" layoutX="76.0" layoutY="123.0" prefHeight="600.0" prefWidth="1450.0">
+        <TableView fx:id="table" layoutX="76.0" layoutY="123.0" prefHeight="600.0" prefWidth="1450.0" stylesheets="@../css/style.css">
             <columns>
                 <TableColumn fx:id="friendship" minWidth="85.0" prefWidth="250.0" text="Friendship State" />
                 <TableColumn fx:id="lastSeen" minWidth="0.0" prefWidth="200.0" text="Last Seen" />
@@ -18,6 +18,6 @@
                 <TableColumn fx:id="avatar" prefWidth="200.0" text="Avatar" />
             </columns>
         </TableView>
-      <Button layoutX="791.0" layoutY="742.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="Back" />
+      <Button fx:id="back" layoutX="791.0" layoutY="742.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" stylesheets="@../css/style.css" text="Back" />
     </children>
 </AnchorPane>

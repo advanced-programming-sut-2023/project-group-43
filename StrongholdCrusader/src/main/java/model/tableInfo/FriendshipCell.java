@@ -2,16 +2,21 @@ package model.tableInfo;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import model.User;
+
 
 public class FriendshipCell {
     private ImageView avatar = new ImageView();
     private int rank;
     private String username;
     private int score;
-    private String email;
+    private String slogan;
     private Button friendShip = new Button("Friendship");
 
-    public FriendshipCell() {
+    public FriendshipCell(User currentUser) {
+        this.username = currentUser.getUsername();
+        this.slogan = currentUser.getSlogan();
+        this.score = currentUser.getScore();
     }
 
     public ImageView getAvatar() {
@@ -46,19 +51,19 @@ public class FriendshipCell {
         this.score = score;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Button getFriendShip() {
         return friendShip;
     }
 
     public void setFriendShip(Button friendShip) {
         this.friendShip = friendShip;
+    }
+
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
     }
 }
