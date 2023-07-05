@@ -29,6 +29,7 @@ public class RegisterMenu extends Application {
     public TextField email;
     public TextField nickname;
     public TextField username;
+    //گیت سگ گیت سگ
 
     private static Stage stage;
     public CheckBox sloganCheckBox;
