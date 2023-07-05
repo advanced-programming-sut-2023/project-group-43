@@ -3,7 +3,6 @@ package model.tableInfo;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import model.DataBase;
@@ -18,7 +17,7 @@ public class FriendshipCell {
     private String username;
     private int score;
     private String slogan;
-    private Rectangle friendShip ;
+    private Button friendship = new Button("Friendship") ;
 
     public FriendshipCell(User currentUser , User friendUser) {
         this.currentUser = currentUser;
@@ -28,10 +27,7 @@ public class FriendshipCell {
         this.slogan = friendUser.getSlogan();
         this.score = friendUser.getScore();
         this.slogan = friendUser.getSlogan();
-        this.friendShip = new Rectangle();
-        friendShip.setWidth(20);
-        friendShip.setHeight(20);
-        friendShip.setOnMouseClicked(ae -> makeRequestPopup());
+        friendship.setOnAction(ae -> makeRequestPopup());
     }
 
     private void makeRequestPopup() {
@@ -78,8 +74,8 @@ public class FriendshipCell {
         this.score = score;
     }
 
-    public Rectangle getFriendShip() {
-        return friendShip;
+    public Button getFriendShip() {
+        return friendship;
     }
 
     public String getSlogan() {
