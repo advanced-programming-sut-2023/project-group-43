@@ -36,6 +36,7 @@ public class DataBase {
                 users.add(gson.fromJson(jsonElement, User.class));
             for (User user : users) {
                 user.setGovernance(new Governance());
+                if (user.getAvatarNumber() == 0) user.setAvatarNumber(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
