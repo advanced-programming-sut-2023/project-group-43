@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.DataBase;
@@ -122,4 +123,7 @@ public class MainMenu extends Application {
     }
 
 
+    public void enterChatRoom() throws Exception {
+        new ChatroomMenu().start(RegisterMenu.getStage());
+    }
 }
