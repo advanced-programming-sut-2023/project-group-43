@@ -56,7 +56,6 @@ public class FriendshipMenu extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        users = DataBase.getInstance().getUsers();
         setBackground();
         setTable();
         back.setOnAction(actionEvent -> {
@@ -91,10 +90,11 @@ public class FriendshipMenu extends Application implements Initializable {
     }
 
     private void addRows(){
+        users = DataBase.getInstance().getUsers();
         clearCells();
         //TODO -> size should change to proper number
         for(int i = 0 ; i < users.size() ; i++){
-            friendshipTable.add(new FriendshipCell(users.get(i)));
+            friendshipTable.add(new FriendshipCell(friendshipController.getCurrentUser(),users.get(i)));
         }
         table.setItems(friendshipTable);
     }
