@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.DataBase;
 import model.User;
@@ -37,7 +38,7 @@ public class FriendshipMenu extends Application implements Initializable {
     public TableColumn<FriendshipCell,String> username;
     public TableColumn<FriendshipCell,Integer> score;
     public TableColumn<FriendshipCell,String> slogan;
-    public TableColumn<FriendshipCell, Button> state;
+    public TableColumn<FriendshipCell, Rectangle> state;
     public TableColumn<FriendshipCell, ImageView> avatar;
     public Button back;
 
@@ -86,7 +87,7 @@ public class FriendshipMenu extends Application implements Initializable {
         username.setCellValueFactory(new PropertyValueFactory<FriendshipCell , String>("username"));
         slogan.setCellValueFactory(new PropertyValueFactory<FriendshipCell , String>("slogan"));
         score.setCellValueFactory(new PropertyValueFactory<FriendshipCell , Integer>("score"));
-        state.setCellValueFactory(new PropertyValueFactory<FriendshipCell , Button>("friendship"));
+        state.setCellValueFactory(new PropertyValueFactory<FriendshipCell , Rectangle>("friendship"));
         avatar.setCellValueFactory(new PropertyValueFactory<FriendshipCell , ImageView>("avatar"));
     }
 
