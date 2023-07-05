@@ -139,4 +139,5 @@ public class MainMenu extends Application {
     public void enterChatroomMenu() throws Exception {
         new ChatroomMenu().start(RegisterMenu.getStage());
     }
+
 }

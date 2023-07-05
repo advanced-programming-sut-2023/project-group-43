@@ -13,8 +13,11 @@ public class DataBase {
 
     private static DataBase dataBase = null;
 
-    ArrayList<User> users = new ArrayList<>();
-    ArrayList<Client> clients = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Client> clients = new ArrayList<>();
+
+    private ArrayList<Chat> chats = new ArrayList<>();
+    private Chat publicChat;
 
     private DataBase() {
         loadData();
@@ -37,6 +40,35 @@ public class DataBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            Reader reader;
+            try {
+                reader = new FileReader("chats.json");
+            } catch (FileNotFoundException e) {
+                return;
+            }
+            Gson gson = new Gson();
+            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+            for (JsonElement jsonElement : jsonArray)
+                chats.add(gson.fromJson(jsonElement, Chat.class));
+            publicChat = getChatByName("public");
+            publicChat.setMembers(users);
+            if (publicChat == null) {
+                publicChat = new Chat();
+                publicChat.setMembers(users);
+                publicChat.setName("public");
+                chats.add(publicChat);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Chat getChatByName(String name) {
+        for (Chat chat: chats) {
+            if (chat.getName().equals(name)) return chat;
+        }
+        return null;
     }
 
     public void saveData() {
@@ -48,6 +80,20 @@ public class DataBase {
             String json = gson.toJson(users);
             try {
                 FileWriter myWriter = new FileWriter("data.json");
+                myWriter.write(json);
+                myWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getCause());
+        } try {
+            Gson gson = new Gson();
+
+            String json = gson.toJson(chats);
+            try {
+                FileWriter myWriter = new FileWriter("chats.json");
                 myWriter.write(json);
                 myWriter.close();
             } catch (IOException e) {
@@ -68,7 +114,9 @@ public class DataBase {
     }
 
     public void addUser(User user) {
+
         users.add(user);
+        publicChat.addMember(user);
     }
 
     public User getUserByUsername(String username) {
@@ -91,6 +139,21 @@ public class DataBase {
 
     public String getJsonString() {
         return (new Gson()).toJson(users);
+    }
+
+    public String getPublicChatJson() {
+        return (new Gson()).toJson(publicChat);
+    }
+
+    public void addChat(Chat chat) {
+        boolean isFound = false;
+        for (Chat c: chats) {
+            if (c.getName().equals(chat.getName())) {
+                isFound = true;
+                c.setMessages(chat.getMessages());
+            }
+        }
+        if (!isFound) chats.add(chat);
     }
 
     private class sortUsers implements Comparator<User> {

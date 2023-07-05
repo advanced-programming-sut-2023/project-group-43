@@ -1,11 +1,12 @@
 package network;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.GameControllers.GameController;
 import javafx.scene.control.Alert;
-import model.DataBase;
-import model.Game;
+import model.*;
 import view.ChangeEnvironmentMenu;
 import view.GameMenu;
 import view.MainMenu;
@@ -13,6 +14,7 @@ import view.RegisterMenu;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NotificationReceiver extends Thread {
     private final DataInputStream dataInputStream;
@@ -20,6 +22,8 @@ public class NotificationReceiver extends Thread {
     public NotificationReceiver(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
     }
+
+    private static ArrayList<Chat> chats = new ArrayList<>();
 
     private static String data;
 
@@ -51,7 +55,7 @@ public class NotificationReceiver extends Thread {
         }
     }
 
-    private void showData(String data) throws Exception {
+    private void showData(String data) {
         if (data.equals("some players are not online!")) {
 
         }
@@ -66,16 +70,45 @@ public class NotificationReceiver extends Thread {
     }
 
     private void getPacket(Packet packet) {
-        if (packet.command.equals("users")) {
-            DataBase.getInstance().setUsers(packet.value);
-        } else if (packet.command.equals("game")) {
-            System.out.println("game!");
-            NotificationReceiver.data = "game";
-            NotificationReceiver.game = (new Gson()).fromJson(packet.value, Game.class);
-        } else if (packet.command.equals("next person")) {
-            NotificationReceiver.data = "next person";
-            NotificationReceiver.game = (new Gson()).fromJson(packet.value, Game.class);
+        switch (packet.command) {
+            case "users" -> DataBase.getInstance().setUsers(packet.value);
+            case "game" -> {
+                NotificationReceiver.data = "game";
+                NotificationReceiver.game = (new Gson()).fromJson(packet.value, Game.class);
+            }
+            case "next person" -> {
+                NotificationReceiver.data = "next person";
+                NotificationReceiver.game = (new Gson()).fromJson(packet.value, Game.class);
+            }
+            case "new chat" -> {
+                Chat chat = (new Gson()).fromJson(packet.value, Chat.class);
+                if (chat != null) {
+                    if (getChatByName(chat.getName()) == null) chats.add(chat);
+                    else {
+                        removeChatByName(chat.getName());
+                        chats.add(chat);
+                    }
+                }
+            }
         }
+    }
+
+    public static Chat getChatByName(String name) {
+        for (Chat chat: chats) {
+            if (chat.getName().equals(name)) return chat;
+        }
+        return null;
+    }
+
+    public void removeChatByName(String name) {
+        int index = 0;
+        for (int i = 0; i < chats.size(); i++) {
+            if (chats.get(i).getName().equals(name)) {
+                index = i;
+                break;
+            }
+        }
+        chats.remove(index);
     }
 
     public static Game getGame() {

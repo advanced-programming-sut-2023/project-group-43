@@ -51,7 +51,7 @@ public class RegisterMenu extends Application {
     private String captchaNumber;
 
     public static void main(String[] args) throws IOException {
-        new Client("localhost", 8000);
+        new Client("localhost", 8001);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DataBase.getInstance().saveData();
             System.exit(0);

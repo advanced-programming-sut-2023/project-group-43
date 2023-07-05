@@ -55,6 +55,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\HAMAHANG\Documents\GitHub\project-group-43\phase3\Client\src\main\resources\fxml" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="model" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="RegisterMenu" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
@@ -86,7 +89,9 @@
       <workItem from="1688471988340" duration="5838000" />
       <workItem from="1688477985803" duration="1388000" />
       <workItem from="1688480334573" duration="5235000" />
-      <workItem from="1688495018244" duration="1653000" />
+      <workItem from="1688495018244" duration="1935000" />
+      <workItem from="1688500890040" duration="5184000" />
+      <workItem from="1688536574205" duration="359000" />
     </task>
     <servers />
   </component>

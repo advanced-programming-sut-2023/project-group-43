@@ -2,6 +2,7 @@ package network;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import model.Chat;
 import model.DataBase;
 import model.Game;
 import model.User;
@@ -100,6 +101,10 @@ public class Connection extends Thread {
                             } else {
                                 showError();
                             }
+                            break;
+                        case "update chat":
+                            Chat chat = (new Gson()).fromJson(value, Chat.class);
+                            DataBase.getInstance().addChat(chat);
                     }
                 } catch (JsonSyntaxException e) {
                     dataOutputStream.writeUTF("400: Missing topic or command fields.");
