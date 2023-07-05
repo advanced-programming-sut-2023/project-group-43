@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.googlecode.jinahya:ocap-dvr:I08">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-dvr/I08/ocap-dvr-I08.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-dvr/I08/ocap-dvr-I08-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-dvr/I08/ocap-dvr-I08-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
