@@ -87,18 +87,30 @@ public class FriendshipMenu extends Application implements Initializable {
         Popup popup = new Popup();
         BorderPane borderPane = new BorderPane();
         borderPane.setMinSize(200,200);
-
+        borderPane.setBackground(new Background(new BackgroundImage(ImageEnum.OLD_PAPER.getImage(),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1, 1, true, true, false, false))));
         Button back = new Button("Back");
+        borderPane.setBottom(back);
         back.setOnAction(ae -> popup.hide());
 
         if (DataBase.getInstance().isFriend(currentUser, friendUser)) {
             Text text = new Text("Friend");
             borderPane.setCenter(text);
-            borderPane.setBottom(back);
             popup.getContent().add(borderPane);
             popup.show(RegisterMenu.getStage());
+            return;
         }
-        
+        if(DataBase.getInstance().hasRequest(currentUser , friendUser)){
+            Button accept = new Button("Accept");
+            Button decline = new Button("Decline");
+            borderPane.setLeft(accept);
+            borderPane.setRight(decline);
+            popup.getContent().add(borderPane);
+            popup.show(RegisterMenu.getStage());
+            return;
+        }
+        Button sendRequest = new Button("Send Request");
+        borderPane.setCenter(sendRequest);
         popup.getContent().add(borderPane);
         popup.show(RegisterMenu.getStage());
     }

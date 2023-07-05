@@ -91,6 +91,15 @@ public class DataBase {
         return false;
     }
 
+    public Boolean hasRequest(User user1 ,User user2){
+        if(user1.getRequest() == null)return false;
+        for(int i= 0 ; i < user1.getRequest().size() ; i++){
+            if(user1.getRequest().get(i).equals(user2))
+                return true;
+        }
+        return false;
+    }
+
     public ArrayList<User> getUsers() {
         return users;
     }
