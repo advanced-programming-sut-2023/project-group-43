@@ -100,6 +100,10 @@ public class NotificationReceiver extends Thread {
         return null;
     }
 
+    public static ArrayList<Chat> getChats() {
+        return chats;
+    }
+
     public void removeChatByName(String name) {
         int index = 0;
         for (int i = 0; i < chats.size(); i++) {

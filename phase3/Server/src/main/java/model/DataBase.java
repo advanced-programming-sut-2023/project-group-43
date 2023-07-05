@@ -6,6 +6,7 @@ import java.util.Comparator;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import enums.ChatType;
 import network.Client;
 
 
@@ -62,6 +63,7 @@ public class DataBase {
             else {
                 publicChat.setMembers(users);
             }
+            publicChat.setChatType(ChatType.PUBLIC);
         } catch (Exception e) {
             e.printStackTrace();
         }

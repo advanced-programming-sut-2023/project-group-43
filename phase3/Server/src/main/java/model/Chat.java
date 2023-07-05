@@ -1,6 +1,8 @@
 package model;
 
 
+import enums.ChatType;
+
 import java.util.ArrayList;
 
 public class Chat {
@@ -8,6 +10,7 @@ public class Chat {
     private String name;
     private ArrayList<Message> messages = new ArrayList<>();
     private ArrayList<User> members = new ArrayList<>();
+    ChatType chatType;
 
     public ArrayList<Message> getMessages() {
         return messages;
@@ -32,6 +35,14 @@ public class Chat {
 
     public void setMembers(ArrayList<User> members) {
         this.members = members;
+    }
+
+    public void setChatType(ChatType chatType) {
+        this.chatType = chatType;
+    }
+
+    public ChatType getChatType() {
+        return chatType;
     }
 
     public void addMessage(Message message) {
