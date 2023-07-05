@@ -137,7 +137,7 @@ public class ChatroomMenu extends Application {
                 Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
             }
             ChatMenu chatMenu = new ChatMenu();
-            chatMenu.setName(roomName.getText());
+            chatMenu.setName(chatName.toString());
             chatMenu.start(RegisterMenu.getStage());
         }
     }
