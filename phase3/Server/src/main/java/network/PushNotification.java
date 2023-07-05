@@ -18,11 +18,6 @@ public class PushNotification extends Thread {
 
     @Override
     public synchronized void run() {
-        try {
-            sendUsers();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         while (true) {
             try {
                 sendChats();
@@ -46,9 +41,5 @@ public class PushNotification extends Thread {
         }
     }
 
-    private void sendUsers() throws IOException {
-        String users = DataBase.getInstance().getJsonString();
-        Packet packet = new Packet("users", users);
-        connection.dataOutputStream.writeUTF(packet.toJson());
-    }
+
 }

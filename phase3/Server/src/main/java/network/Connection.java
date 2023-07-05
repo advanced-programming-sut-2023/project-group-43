@@ -29,6 +29,11 @@ public class Connection extends Thread {
     @Override
     public synchronized void run() {
         try {
+            sendUsers();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             handleClient();
         } catch (IOException e) {
             removeConnection();
@@ -113,6 +118,12 @@ public class Connection extends Thread {
         }
     }
 
+    private void sendUsers() throws IOException {
+        String users = DataBase.getInstance().getJsonString();
+        System.out.println(users);
+        Packet packet = new Packet("users", users);
+        dataOutputStream.writeUTF(packet.toJson());
+    }
     private void nextPerson(ArrayList<Client> clients, Game game) throws IOException {
         for (Client client : clients) {
             System.out.println("sending game to " + client.getUser().getUsername());
