@@ -61,6 +61,7 @@ public class Connection extends Thread {
                     dataOutputStream.writeUTF("");
                     switch (command) {
                         case "new user":
+                            System.out.println("new user added!");
                             User user = (new Gson()).fromJson(value, User.class);
                             DataBase.getInstance().addUser(user);
                             break;

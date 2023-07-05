@@ -137,13 +137,21 @@ public class ChatMenu extends Application {
                     hBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px; -fx-border-radius: 5px");
                     hBox.setLayoutX(690);
                     setFunctions(hBox, message);
+                    hBox.getChildren().add(new Label("+"));
+                    if (message.isSeen()) hBox.getChildren().add(new Label("+"));
                 } else {
                     hBox.setStyle("-fx-background-color: lightpink; -fx-padding: 10px; -fx-border-radius: 5px");
                     hBox.setLayoutX(10);
+                    message.setSeen(true);
                 }
                 vBox.getChildren().add(hBox);
                 hBox.getChildren().add(new Label(message.getUser().getUsername()));
                 hBox.getChildren().add(new Label(message.getText()));
+                if (message.getTime() == null)
+                    message.setTime("11:12");
+                Label label = new Label(message.getTime());
+                label.setStyle("-fx-font-size: 8px");
+                hBox.getChildren().add(label);
             }
             scrollPane.setContent(vBox);
         }
