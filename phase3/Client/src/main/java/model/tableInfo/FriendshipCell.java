@@ -2,26 +2,39 @@ package model.tableInfo;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Popup;
 import model.DataBase;
 import model.User;
 
 
 public class FriendshipCell {
     private User currentUser;
+    private User friendUser;
     private ImageView avatar = new ImageView();
     private int rank;
     private String username;
     private int score;
     private String slogan;
-    private Button friendShip = new Button("Friendship");
+    private Button friendShip ;
 
-    public FriendshipCell(User currentUser) {
+    public FriendshipCell(User currentUser , User friendUser) {
         this.currentUser = currentUser;
-        this.username = currentUser.getUsername();
-        this.slogan = currentUser.getSlogan();
-        this.score = currentUser.getScore();
+        this.friendUser = friendUser;
+
+        this.username = friendUser.getUsername();
+        this.slogan = friendUser.getSlogan();
+        this.score = friendUser.getScore();
         //this.rank = DataBase.getInstance().getRank(currentUser);
-        this.slogan = currentUser.getSlogan();
+        this.slogan = friendUser.getSlogan();
+        this.friendShip = new Button("Friendship");
+        friendShip.setOnAction(actionEvent -> makeRequestPopup());
+    }
+
+    private void makeRequestPopup() {
+        Popup popup = new Popup();
+        BorderPane borderPane = new BorderPane();
+        //if(DataBase.getInstance().isFriend(currentUser , friendUser))
 
     }
 

@@ -72,6 +72,8 @@ public class DataBase {
         return usersScoreboard;
     }
 
+
+
     public ArrayList<User> getUsers() {
         return users;
     }

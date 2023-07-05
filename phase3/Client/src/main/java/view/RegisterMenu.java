@@ -52,7 +52,7 @@ public class RegisterMenu extends Application {
     private String captchaNumber;
 
     public static void main(String[] args) throws IOException {
-        new Client("localhost", 8000);
+        new Client("localhost", 8005);
         launch(RegisterMenu.class);
     }
 
