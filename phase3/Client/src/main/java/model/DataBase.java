@@ -18,6 +18,7 @@ public class DataBase {
     }
 
     public void setUsers(String json) {
+        System.out.println(json);
         Gson gson = new Gson();
         JsonArray jsonArray = gson.fromJson(json, JsonArray.class);
         for (JsonElement jsonElement : jsonArray)
@@ -26,25 +27,7 @@ public class DataBase {
             user.setGovernance(new Governance());
         }
     }
-    public void saveData() {
-        for (User user: users) {
-            user.setGovernance(null);
-        }
-        try {
-            Gson gson = new Gson();
-            String json = gson.toJson(users);
-            try {
-                FileWriter myWriter = new FileWriter("data.json");
-                myWriter.write(json);
-                myWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getCause());
-        }
-    }
+
 
 
     public static DataBase getInstance() {

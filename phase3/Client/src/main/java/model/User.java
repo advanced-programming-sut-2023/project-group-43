@@ -34,6 +34,7 @@ public class User {
         this.PasswordRecoveryAnswer = PasswordRecoveryAnswer;
         this.slogan = slogan;
         this.mapsOfThisUser = new HashMap<>();
+        this.avatarNumber = 1;
     }
 
     public HashMap<String, Cell[][]> getMapsOfThisUser() {

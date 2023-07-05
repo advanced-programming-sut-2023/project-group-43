@@ -53,10 +53,6 @@ public class RegisterMenu extends Application {
 
     public static void main(String[] args) throws IOException {
         new Client("localhost", 8000);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            DataBase.getInstance().saveData();
-            System.exit(0);
-        }));
         launch(RegisterMenu.class);
     }
 
