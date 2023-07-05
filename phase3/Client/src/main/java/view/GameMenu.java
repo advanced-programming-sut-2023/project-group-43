@@ -302,7 +302,7 @@ public class GameMenu extends Application {
         saveMap.setOnMouseClicked(mouseEvent -> {
             StringBuilder sb = new StringBuilder();
             sb.append(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).getUsername()).append(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).getMapsOfThisUser().size() + 1);
-            DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).AddToMapsOfThisUser(sb.toString(), miniMap());
+            DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).AddToMapsOfThisUser(sb.toString(), gameController.getGame().getCells());
             HashMap<User, String> hs = new HashMap<>();
             hs.put(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()), sb.toString());
             gameController.addToAllMaps(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()), sb.toString(), miniMap());

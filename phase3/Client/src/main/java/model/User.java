@@ -24,7 +24,7 @@ public class User {
 
     private ArrayList<Trade> trades = new ArrayList<>();
     private int avatarNumber = 4;
-    private HashMap<String, Pane> mapsOfThisUser;
+    private HashMap<String, Cell[][]> mapsOfThisUser;
 
 
     public User(String username, String password, String nickname, String email,
@@ -40,16 +40,16 @@ public class User {
         this.avatarNumber = 1;
     }
 
-    public HashMap<String, Pane> getMapsOfThisUser() {
+    public HashMap<String, Cell[][]> getMapsOfThisUser() {
         return mapsOfThisUser;
     }
 
-    public void AddToMapsOfThisUser(String string, Pane pane) {
-        this.mapsOfThisUser.put(string, pane);
+    public void AddToMapsOfThisUser(String string, Cell[][] cells) {
+        this.mapsOfThisUser.put(string, cells);
     }
 
     public Boolean mapWithThisName(String name) {
-        for (Map.Entry<String, Pane> set : mapsOfThisUser.entrySet()) {
+        for (Map.Entry<String, Cell[][]> set : mapsOfThisUser.entrySet()) {
             if (set.getKey().equals(name)) return true;
         }
         return false;

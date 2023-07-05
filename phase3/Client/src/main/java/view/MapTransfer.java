@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameControllers.ChangeEnvironmentController;
+import controller.GameControllers.GameController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -62,7 +63,7 @@ public class MapTransfer extends Application {
         } else if (DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).mapWithThisName(mapName.getText().toString())) {
             alert.setContentText("you already have a map with this name!\nenter another name");
         } else {
-            DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).AddToMapsOfThisUser(mapName.getText().toString(), selectedPane);
+            DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).AddToMapsOfThisUser(mapName.getText().toString(), GameController.getGame().getCells());
             alert.setAlertType(Alert.AlertType.CONFIRMATION);
             alert.setContentText("you already have a map with this name!\nenter another name");
         }

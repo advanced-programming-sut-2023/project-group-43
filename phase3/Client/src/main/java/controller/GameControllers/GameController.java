@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
-    private Game game;
+    private static Game game;
     private static HashMap<HashMap<User, String>, Pane> allMaps = new HashMap<>();
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
@@ -175,7 +175,7 @@ public class GameController {
         }
     }
 
-    public Game getGame() {
+    public static Game getGame() {
         return game;
     }
 
