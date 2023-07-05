@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -60,8 +61,21 @@ public class MapTransfer extends Application {
     }
 
     public void save(MouseEvent mouseEvent) {
-        if (DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).mapWithThisName(mapName.getText().toString())) {
-            //TODO
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        if (DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).equals(user)) {
+            alert.setContentText("you already have a map with this name!\nselect another map");
+        } else if (DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).mapWithThisName(mapName.getText().toString())) {
+            alert.setContentText("you already have a map with this name!\nenter another name");
+        } else {
+            DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).AddToMapsOfThisUser(mapName.getText().toString(), selectedPane);
+            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("you already have a map with this name!\nenter another name");
+        }
+        alert.show();
+        try {
+            (new ChangeEnvironmentMenu()).start(RegisterMenu.getStage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
