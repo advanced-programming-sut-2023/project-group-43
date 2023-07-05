@@ -149,7 +149,7 @@ public class ChatMenu extends Application {
                 hBox.getChildren().add(new Label(message.getText()));
                 if (message.getTime() == null)
                     message.setTime("11:12");
-                Label label = new Label(message.getText());
+                Label label = new Label(message.getTime());
                 label.setStyle("-fx-font-size: 8px");
                 hBox.getChildren().add(label);
             }
