@@ -59,16 +59,28 @@ public class DataBase {
         return null;
     }
 
-    private class sortUsers implements Comparator<User> {
-        public int compare(User o1, User o2) {
-            return Integer.compare(o1.getScore(), o2.getScore());
-        }
-    }
 
     public ArrayList<User> scoreboard() {
-        ArrayList<User> usersScoreboard = new ArrayList<>();
-        usersScoreboard.sort(new sortUsers());
-        return usersScoreboard;
+        ArrayList<User> notSortedUsers = users;
+        ArrayList<User> sortedUsers = new ArrayList<>();
+        for (int i = 0 ; i < users.size(); i++) {
+            User user = getMaxUser(notSortedUsers);
+            notSortedUsers.remove(user);
+            sortedUsers.add(user);
+        }
+        return sortedUsers;
+    }
+
+    private User getMaxUser(ArrayList<User> notSortedUsers) {
+        int maxScore = -1;
+        User maxUser = null;
+        for (User user: notSortedUsers) {
+            if (user.getScore() > maxScore) {
+                maxUser = user;
+                maxScore = user.getScore();
+            }
+        }
+        return maxUser;
     }
 
     public Boolean isFriend(User user1 , User user2){
