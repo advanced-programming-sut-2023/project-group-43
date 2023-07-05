@@ -9,6 +9,7 @@ import java.util.Map;
 public class User {
 
     private ArrayList<User> friends = new ArrayList<>();
+    private ArrayList<User> request = new ArrayList<>();
     private String username;
     private String password;
     private String nickname;
@@ -166,5 +167,13 @@ public class User {
 
     public void addFriend(User user) {
         friends.add(user);
+    }
+
+    public ArrayList<User> getRequest() {
+        return request;
+    }
+
+    public void setRequest(ArrayList<User> request) {
+        this.request = request;
     }
 }
