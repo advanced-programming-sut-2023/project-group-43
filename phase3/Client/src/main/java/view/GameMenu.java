@@ -29,6 +29,7 @@ import javafx.util.Duration;
 import model.Cell;
 import model.DataBase;
 import model.MiniBar;
+import model.User;
 import model.pannels.Barrack;
 import model.pannels.EngineerGuild;
 import model.pannels.MercenaryPost;
@@ -39,6 +40,7 @@ import network.Packet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameMenu extends Application {
 
@@ -170,20 +172,23 @@ public class GameMenu extends Application {
         dragAndDropBuildingOnMap();
     }
 
-    private void addMiniMap() {
+    private void addMiniMap(Pane map) {
+        anchorPane.getChildren().add(map);
+    }
+    private Pane miniMap() {
         Pane map = new Pane();
         map.setMaxSize(100, 100);
         map.setLayoutX(1200);
         map.setLayoutY(500);
         for (int i = 0; i < gameController.getGame().getRow(); i++) {
-            for (int j = 0; j < gameController.getGame().getColumn(); j++) {
+            for(int j = 0; j < gameController.getGame().getColumn(); j++) {
                 GridPane cell = loadCell(gameController.getGame().getCells()[i][j], 1);
                 cell.setLayoutX(i);
                 cell.setLayoutY(j);
                 map.getChildren().add(cell);
             }
         }
-        anchorPane.getChildren().add(map);
+        return map;
     }
 
     public static void setGameController(GameController gameController) {
@@ -220,6 +225,7 @@ public class GameMenu extends Application {
         Rectangle plus = new Rectangle();
         Rectangle minus = new Rectangle();
         Rectangle back = new Rectangle();
+        Rectangle saveMap = new Rectangle();
         addDirectionButton(up, "up", 600, 10);
         addDirectionButton(down, "down", 600, 600);
         addDirectionButton(right, "right", 1200, 300);
@@ -227,14 +233,15 @@ public class GameMenu extends Application {
         addDirectionButton(plus, "plus", 10, 10);
         addDirectionButton(minus, "minus", 10, 70);
         addDirectionButton(back, "backButton", 1200, 10);
-        addFunctions(up, down, right, left, plus, minus, back);
+        addDirectionButton(saveMap, "save", 1200, 70);
+        addFunctions(up, down, right, left, plus, minus, back, saveMap);
     }
 
     private void setRootPane() {
         root.setMinSize(1500, 600);
     }
 
-    private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left, Rectangle plus, Rectangle minus, Rectangle back) {
+    private void addFunctions(Rectangle up, Rectangle down, Rectangle right, Rectangle left, Rectangle plus, Rectangle minus, Rectangle back, Rectangle saveMap) {
         down.setOnMouseClicked(mouseEvent -> {
             if ((600 / size) - yPosition < gameController.getGame().getColumn()) {
                 yPosition -= 1;
@@ -292,6 +299,14 @@ public class GameMenu extends Application {
                 throw new RuntimeException(e);
             }
         });
+        saveMap.setOnMouseClicked(mouseEvent -> {
+            StringBuilder sb = new StringBuilder();
+            sb.append(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).getUsername()).append(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).getMapsOfThisUser().size() + 1);
+            DataBase.getInstance().getUserByUsername(MainMenu.getUsername()).AddToMapsOfThisUser(sb.toString(), miniMap());
+            HashMap<User, String> hs = new HashMap<>();
+            hs.put(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()), sb.toString());
+            gameController.addToAllMaps(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()), sb.toString(), miniMap());
+        });
     }
 
     private void resetCells() throws Exception {
@@ -313,7 +328,7 @@ public class GameMenu extends Application {
     }
 
     private void addButton(AnchorPane root) {
-        addMiniMap();
+        addMiniMap(miniMap());
         Rectangle button = new Rectangle();
         button.setWidth(200);
         button.setHeight(200);
