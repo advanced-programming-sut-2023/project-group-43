@@ -1,19 +1,19 @@
 package view;
 
 import com.google.gson.Gson;
-import controller.GameControllers.GameController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -23,12 +23,13 @@ import javafx.util.Duration;
 import model.Chat;
 import model.DataBase;
 import model.Message;
+import model.User;
 import network.Client;
 import network.NotificationReceiver;
 import network.Packet;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChatMenu extends Application {
 
@@ -45,7 +46,9 @@ public class ChatMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         initialize();
-        scrollPane.setMaxSize(1000, 600);
+        scrollPane.setMaxSize(1100, 600);
+        scrollPane.setMinSize(1100, 600);
+        scrollPane.setStyle("-fx-background-color: #939191");
         Scene scene = new Scene(anchorPane);
         scrollPane.setLayoutX(10);
         scrollPane.setLayoutY(10);
@@ -62,13 +65,15 @@ public class ChatMenu extends Application {
     private void initialize() {
         vBox = new VBox();
         vBox.setMaxSize(1000, 600);
+        vBox.setMinSize(1000, 600);
+        vBox.setSpacing(10);
         setVbox();
         newMessage = new TextField();
         newMessage.setLayoutX(10);
         newMessage.setLayoutY(610);
         anchorPane.getChildren().add(newMessage);
         Button button = new Button("send");
-        button.setLayoutX(1010);
+        button.setLayoutX(510);
         button.setLayoutY(610);
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -85,7 +90,7 @@ public class ChatMenu extends Application {
         });
         anchorPane.getChildren().add(button);
         Button back = new Button("back");
-        back.setLayoutX(1010);
+        back.setLayoutX(510);
         back.setLayoutY(660);
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -105,12 +110,38 @@ public class ChatMenu extends Application {
         synchronized (NotificationReceiver.getChatByName(name)) {
             for (Message message : NotificationReceiver.getChatByName(name).getMessages()) {
                 HBox hBox = new HBox();
+                hBox.setSpacing(20);
+                hBox.setMinWidth(300);
+                hBox.setMaxWidth(300);
+                hBox.setMinHeight(40);
+                hBox.getChildren().add(addAvatar(message.getUser()));
+                if (message.getUser().getUsername().equals(MainMenu.getUsername())) {
+                    hBox.setStyle("-fx-background-color: lightblue; -fx-padding: 10px; -fx-border-radius: 5px");
+                    hBox.setLayoutX(690);
+                } else {
+                    hBox.setStyle("-fx-background-color: lightpink; -fx-padding: 10px; -fx-border-radius: 5px");
+                    hBox.setLayoutX(10);
+                }
                 vBox.getChildren().add(hBox);
                 hBox.getChildren().add(new Label(message.getUser().getUsername()));
                 hBox.getChildren().add(new Label(message.getText()));
             }
             scrollPane.setContent(vBox);
         }
+    }
+
+    private Group addAvatar(User user) {
+        StringBuilder avatarPath = new StringBuilder();
+        avatarPath.append("/images/avatar/" + user.getAvatarNumber() + ".png");
+        Image image = new Image(Objects.requireNonNull(ProfileMenu.class.getResource(avatarPath.toString())).toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setX(1);
+        imageView.setY(1);
+        imageView.setFitHeight(10);
+        imageView.setFitWidth(10);
+        imageView.setPreserveRatio(true);
+        Group root = new Group(imageView);
+        return root;
     }
 
     private void addTimeline() {

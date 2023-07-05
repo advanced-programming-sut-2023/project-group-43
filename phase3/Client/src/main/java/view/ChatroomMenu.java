@@ -35,8 +35,9 @@ public class ChatroomMenu extends Application {
 
     }
 
-    public void enterPublicChat() {
+    public void enterPublicChat() throws Exception {
         ChatMenu chatMenu = new ChatMenu();
         chatMenu.setName("public");
+        chatMenu.start(RegisterMenu.getStage());
     }
 }
