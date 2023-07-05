@@ -98,6 +98,7 @@ public class ChatroomMenu extends Application {
             chat.setName(roomName.getText());
             chat.setChatType(ChatType.GROUP);
             chat.setMembers(members);
+            NotificationReceiver.getChats().add(chat);
             Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
             ChatMenu chatMenu = new ChatMenu();
             chatMenu.setName(roomName.getText());

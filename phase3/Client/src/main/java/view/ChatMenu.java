@@ -123,8 +123,9 @@ public class ChatMenu extends Application {
     }
 
     private void setVbox() {
-        synchronized (NotificationReceiver.getChatByName(name)) {
-            for (Message message : NotificationReceiver.getChatByName(name).getMessages()) {
+        Chat chat = NotificationReceiver.getChatByName(name);
+        synchronized (chat) {
+            for (Message message : chat.getMessages()) {
                 HBox hBox = new HBox();
                 hBox.setSpacing(20);
                 hBox.setMinWidth(300);
