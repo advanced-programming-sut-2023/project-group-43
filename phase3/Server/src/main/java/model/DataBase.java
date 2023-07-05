@@ -1,13 +1,14 @@
 package model;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import enums.ChatType;
 import network.Client;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class DataBase {
@@ -23,6 +24,7 @@ public class DataBase {
     private DataBase() {
         loadData();
     }
+
     private void loadData() {
         try {
             Reader reader;
@@ -59,8 +61,7 @@ public class DataBase {
                 publicChat.setMembers(users);
                 publicChat.setName("public");
                 chats.add(publicChat);
-            }
-            else {
+            } else {
                 publicChat.setMembers(users);
             }
             publicChat.setChatType(ChatType.PUBLIC);
@@ -70,14 +71,14 @@ public class DataBase {
     }
 
     public Chat getChatByName(String name) {
-        for (Chat chat: chats) {
+        for (Chat chat : chats) {
             if (chat.getName().equals(name)) return chat;
         }
         return null;
     }
 
     public void saveData() {
-        for (User user: users) {
+        for (User user : users) {
             user.setGovernance(null);
         }
         try {
@@ -93,7 +94,8 @@ public class DataBase {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getCause());
-        } try {
+        }
+        try {
             Gson gson = new Gson();
 
             String json = gson.toJson(chats);
@@ -155,10 +157,12 @@ public class DataBase {
 
     public void addChat(Chat chat) {
         boolean isFound = false;
-        for (Chat c: chats) {
+        for (Chat c : chats) {
             if (c.getName().equals(chat.getName()) && c.getChatType().equals(chat.getChatType())) {
                 isFound = true;
-                c.setMessages(chat.getMessages());
+                if (isFound) {
+                    c.setMessages(chat.getMessages());
+                }
             }
         }
         if (!isFound) chats.add(chat);
@@ -177,9 +181,9 @@ public class DataBase {
         return usersScoreboard;
     }
 
-    public Boolean isFriend(User user1 , User user2){
-        for(int i = 0 ; i < user1.getFriends().size() ; i++){
-            if(user1.getFriends().get(i).equals(user2))
+    public Boolean isFriend(User user1, User user2) {
+        for (int i = 0; i < user1.getFriends().size(); i++) {
+            if (user1.getFriends().get(i).equals(user2))
                 return true;
         }
         return false;

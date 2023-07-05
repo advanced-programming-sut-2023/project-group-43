@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import controller.GameControllers.ChangeEnvironmentController;
 import controller.GameControllers.GameController;
+import enums.ChatType;
 import javafx.scene.control.Alert;
 import model.*;
 import view.ChangeEnvironmentMenu;
@@ -89,12 +90,14 @@ public class NotificationReceiver extends Thread {
         }
     }
 
-    private void addChat(Chat chat) {
+    public void addChat(Chat chat) {
         boolean isFound = false;
-        for (Chat c: chats) {
+        for (Chat c : chats) {
             if (c.getName().equals(chat.getName()) && c.getChatType().equals(chat.getChatType())) {
                 isFound = true;
-                c.setMessages(chat.getMessages());
+                if (isFound) {
+                    c.setMessages(chat.getMessages());
+                }
             }
         }
         if (!isFound) chats.add(chat);

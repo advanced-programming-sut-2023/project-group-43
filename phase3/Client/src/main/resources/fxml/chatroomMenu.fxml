@@ -16,8 +16,9 @@
             <Label text="name:" />
             <TextField fx:id="roomName" />
             <Button maxWidth="354.0" mnemonicParsing="false" onMouseClicked="#makeNewRoom" prefHeight="50.0" prefWidth="300.0" text="make new room" />
+            <TextField fx:id="user" />
+            <Button maxWidth="354.0" mnemonicParsing="false" onMouseClicked="#enterPrivateChat" prefHeight="50.0" prefWidth="300.0" text="enter private chat" />
             <Button maxWidth="354.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="50.0" prefWidth="300.0" text="back" />
-
         </children>
     </VBox>
 </Pane>
