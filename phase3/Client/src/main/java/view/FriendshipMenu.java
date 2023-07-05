@@ -22,6 +22,7 @@ import model.tableInfo.FriendshipCell;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class FriendshipMenu extends Application implements Initializable {
@@ -46,7 +47,7 @@ public class FriendshipMenu extends Application implements Initializable {
     @Override
     public void start(Stage stage) throws Exception {
         root = FXMLLoader.load(
-                new URL((FriendshipMenu.class.getResource("/fxml/friendshipMenu.fxml")).toExternalForm()));
+                new URL((Objects.requireNonNull(FriendshipMenu.class.getResource("/fxml/friendshipMenu.fxml"))).toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -83,7 +84,7 @@ public class FriendshipMenu extends Application implements Initializable {
 
     private void setTable(){
         username.setCellValueFactory(new PropertyValueFactory<FriendshipCell , String>("username"));
-        slogan.setCellValueFactory(new PropertyValueFactory<FriendshipCell , String>("email"));
+        slogan.setCellValueFactory(new PropertyValueFactory<FriendshipCell , String>("slogan"));
         score.setCellValueFactory(new PropertyValueFactory<FriendshipCell , Integer>("score"));
         state.setCellValueFactory(new PropertyValueFactory<FriendshipCell , Button>("friendship"));
         avatar.setCellValueFactory(new PropertyValueFactory<FriendshipCell , ImageView>("avatar"));
@@ -93,8 +94,9 @@ public class FriendshipMenu extends Application implements Initializable {
         users = DataBase.getInstance().getUsers();
         clearCells();
         //TODO -> size should change to proper number
-        for(int i = 0 ; i < users.size() ; i++){
-            friendshipTable.add(new FriendshipCell(friendshipController.getCurrentUser(),users.get(i)));
+        System.out.println("this is users size" + users.size());
+        for (User user : users) {
+            friendshipTable.add(new FriendshipCell(friendshipController.getCurrentUser(), user));
         }
         table.setItems(friendshipTable);
     }

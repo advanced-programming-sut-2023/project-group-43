@@ -3,9 +3,11 @@ package model.tableInfo;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import model.DataBase;
 import model.User;
+import view.RegisterMenu;
 
 
 public class FriendshipCell {
@@ -34,7 +36,18 @@ public class FriendshipCell {
     private void makeRequestPopup() {
         Popup popup = new Popup();
         BorderPane borderPane = new BorderPane();
-        //if(DataBase.getInstance().isFriend(currentUser , friendUser))
+        Button back = new Button("Back");
+        back.setOnAction(ae -> popup.hide());
+
+        if(DataBase.getInstance().isFriend(currentUser , friendUser)){
+            Text text = new Text("Friend");
+            borderPane.setCenter(text);
+            borderPane.setBottom(back);
+            popup.getContent().add(borderPane);
+            popup.show(RegisterMenu.getStage());
+        }
+
+        //handle request
 
     }
 
