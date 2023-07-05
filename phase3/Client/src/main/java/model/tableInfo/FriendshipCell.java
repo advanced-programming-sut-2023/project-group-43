@@ -20,7 +20,7 @@ public class FriendshipCell {
         this.username = currentUser.getUsername();
         this.slogan = currentUser.getSlogan();
         this.score = currentUser.getScore();
-        this.rank = DataBase.getInstance().getRank(currentUser);
+        //this.rank = DataBase.getInstance().getRank(currentUser);
         this.slogan = currentUser.getSlogan();
 
     }
