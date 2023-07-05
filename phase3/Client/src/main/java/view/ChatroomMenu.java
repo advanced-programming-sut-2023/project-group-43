@@ -20,8 +20,10 @@ public class ChatroomMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        mainPane = FXMLLoader.load(ChatroomMenu.class.getResource("/fxml/chatroomMenu.fxml"));
-        scene = new Scene(mainPane);
+        mainPane = FXMLLoader.load(
+                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/chatroomMenu.fxml")).toExternalForm()));
+
+        Scene scene = new Scene(mainPane);
         setBackground();
         stage.setScene(scene);
         stage.show();
