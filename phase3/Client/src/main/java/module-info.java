@@ -30,5 +30,5 @@ module com.example.strongholdcrusader {
     opens controller.GameControllers to com.google.gosn;
     exports controller.GameControllers;
     exports model.tableInfo;
-    opens model.tableInfo to javafx.base;
+    opens model.tableInfo to javafx.scene, com.google.gosn, javafx.fxml;
 }
