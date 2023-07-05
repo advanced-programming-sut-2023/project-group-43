@@ -67,7 +67,7 @@ public class ChatMenu extends Application {
             if (event.getCode() == KeyCode.E) {
                 isEditing = true;
             } else if (event.getCode() == KeyCode.D) {
-                isEditing = true;
+                isDeleting = true;
             }
         });
     }
@@ -169,15 +169,20 @@ public class ChatMenu extends Application {
                     isDeleting = false;
                     Chat chat = NotificationReceiver.getChatByName(name);
                     synchronized (chat) {
-                        for (Message m : NotificationReceiver.getChatByName(name).getMessages()) {
-                            if (m.getText().equals(m.getText()) && m.getUser().getUsername().equals(message.getUser().getUsername())) {
-                                chat.getMessages().remove(m);
-                                try {
-                                    Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
+                        int index = -1;
+                        for (int i = 0; i < chat.getMessages().size(); i++) {
+                            if (chat.getMessages().get(i).getText().equals(chat.getMessages().get(i).getText()) &&
+                                    chat.getMessages().get(i).getUser().getUsername().equals(message.getUser().getUsername())) {
+                                index = i;
                                 break;
+                            }
+                        }
+                        if (index > -1) {
+                            chat.getMessages().remove(index);
+                            try {
+                                Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
                             }
                         }
                     }
