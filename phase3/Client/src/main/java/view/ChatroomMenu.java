@@ -34,6 +34,7 @@ public class ChatroomMenu extends Application {
     public ChoiceBox rooms;
     public TextArea members;
     public TextField roomName;
+    public TextField user;
     private Scene scene;
     @FXML
     private Pane mainPane;
@@ -108,6 +109,36 @@ public class ChatroomMenu extends Application {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("users are invalid or room name is empty");
             alert.show();
+        }
+    }
+
+    public void enterPrivateChat() throws Exception {
+        if (DataBase.getInstance().getUserByUsername(user.getText()) == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("username is invalid");
+            alert.show();
+        } else {
+            StringBuilder chatName = new StringBuilder();
+            if (user.getText().compareTo(MainMenu.getUsername()) > 0) {
+                chatName.append(MainMenu.getUsername()).append(user.getText());
+            } else {
+                chatName.append(user.getText()).append(MainMenu.getUsername());
+            }
+            Chat chat = NotificationReceiver.getChatByName(chatName.toString());
+            if (chat == null) {
+                chat = new Chat();
+                chat.setName(chatName.toString());
+                chat.setChatType(ChatType.PRIVATE);
+                ArrayList<User> members = new ArrayList<>();
+                members.add(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
+                members.add(DataBase.getInstance().getUserByUsername(user.getText()));
+                chat.setMembers(members);
+                NotificationReceiver.getChats().add(chat);
+                Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
+            }
+            ChatMenu chatMenu = new ChatMenu();
+            chatMenu.setName(roomName.getText());
+            chatMenu.start(RegisterMenu.getStage());
         }
     }
 }

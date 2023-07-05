@@ -802,13 +802,13 @@ public class GameController {
     public String showGameResult() {
         updateScores();
         StringBuilder ans = new StringBuilder();
-        ans.append("<<<GAME OVER>>>" + "\n");
         ans.append("The winner of the game is ").append(findWinner().getUsername()).append("\n");
         ans.append("Losers:" + "\n");
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (!game.getPlayers().get(i).getUsername().equals(findWinner().getUsername()))
                 ans.append(game.getPlayers().get(i).getUsername()).append("\n");
         }
+        clearGame();
         return String.valueOf(ans);
     }
 
