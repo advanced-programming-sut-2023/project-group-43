@@ -83,14 +83,21 @@ public class NotificationReceiver extends Thread {
             case "new chat" -> {
                 Chat chat = (new Gson()).fromJson(packet.value, Chat.class);
                 if (chat != null) {
-                    if (getChatByName(chat.getName()) == null) chats.add(chat);
-                    else {
-                        removeChatByName(chat.getName());
-                        chats.add(chat);
-                    }
+                    addChat(chat);
                 }
             }
         }
+    }
+
+    private void addChat(Chat chat) {
+        boolean isFound = false;
+        for (Chat c: chats) {
+            if (c.getName().equals(chat.getName()) && c.getChatType().equals(chat.getChatType())) {
+                isFound = true;
+                c.setMessages(chat.getMessages());
+            }
+        }
+        if (!isFound) chats.add(chat);
     }
 
     public static Chat getChatByName(String name) {
@@ -102,17 +109,6 @@ public class NotificationReceiver extends Thread {
 
     public static ArrayList<Chat> getChats() {
         return chats;
-    }
-
-    public void removeChatByName(String name) {
-        int index = 0;
-        for (int i = 0; i < chats.size(); i++) {
-            if (chats.get(i).getName().equals(name)) {
-                index = i;
-                break;
-            }
-        }
-        chats.remove(index);
     }
 
     public static Game getGame() {
