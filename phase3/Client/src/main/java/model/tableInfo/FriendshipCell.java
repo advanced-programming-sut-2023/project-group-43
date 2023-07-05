@@ -3,20 +3,22 @@ package model.tableInfo;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import model.DataBase;
 import model.User;
+import view.RegisterMenu;
 
 
 public class FriendshipCell {
     private User currentUser;
     private User friendUser;
     private ImageView avatar = new ImageView();
-    private int rank;
     private String username;
     private int score;
     private String slogan;
-    private Button friendShip ;
+    private Rectangle friendShip ;
 
     public FriendshipCell(User currentUser , User friendUser) {
         this.currentUser = currentUser;
@@ -25,18 +27,31 @@ public class FriendshipCell {
         this.username = friendUser.getUsername();
         this.slogan = friendUser.getSlogan();
         this.score = friendUser.getScore();
-        //this.rank = DataBase.getInstance().getRank(currentUser);
         this.slogan = friendUser.getSlogan();
-        this.friendShip = new Button("Friendship");
-        friendShip.setOnAction(actionEvent -> makeRequestPopup());
+        this.friendShip = new Rectangle();
+        friendShip.setWidth(20);
+        friendShip.setHeight(20);
+        friendShip.setOnMouseClicked(ae -> makeRequestPopup());
     }
 
     private void makeRequestPopup() {
         Popup popup = new Popup();
         BorderPane borderPane = new BorderPane();
-        //if(DataBase.getInstance().isFriend(currentUser , friendUser))
+        Button back = new Button("Back");
+        back.setOnAction(ae -> popup.hide());
+
+        if(DataBase.getInstance().isFriend(currentUser , friendUser)){
+            Text text = new Text("Friend");
+            borderPane.setCenter(text);
+            borderPane.setBottom(back);
+            popup.getContent().add(borderPane);
+            popup.show(RegisterMenu.getStage());
+        }
+
+        //handle request
 
     }
+
 
     public ImageView getAvatar() {
         return avatar;
@@ -46,13 +61,6 @@ public class FriendshipCell {
         this.avatar = avatar;
     }
 
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
 
     public String getUsername() {
         return username;
@@ -70,12 +78,8 @@ public class FriendshipCell {
         this.score = score;
     }
 
-    public Button getFriendShip() {
+    public Rectangle getFriendShip() {
         return friendShip;
-    }
-
-    public void setFriendShip(Button friendShip) {
-        this.friendShip = friendShip;
     }
 
     public String getSlogan() {

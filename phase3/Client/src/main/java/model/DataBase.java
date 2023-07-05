@@ -72,7 +72,13 @@ public class DataBase {
         return usersScoreboard;
     }
 
-
+    public Boolean isFriend(User user1 , User user2){
+        for(int i = 0 ; i < user1.getFriends().size() ; i++){
+            if(user1.getFriends().get(i).equals(user2))
+                return true;
+        }
+        return false;
+    }
 
     public ArrayList<User> getUsers() {
         return users;

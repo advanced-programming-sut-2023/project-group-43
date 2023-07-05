@@ -22,7 +22,7 @@ public class PushNotification extends Thread {
             try {
                 sendChats();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                DataBase.getInstance().getClients().remove(this.client);
             }
             try {
                 sleep(1000);

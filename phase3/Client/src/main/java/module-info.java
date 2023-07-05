@@ -29,6 +29,6 @@ module com.example.strongholdcrusader {
     exports network;
     opens controller.GameControllers to com.google.gosn;
     exports controller.GameControllers;
-    opens model.tableInfo to com.google.gson;
     exports model.tableInfo;
+    opens model.tableInfo to javafx.base;
 }
