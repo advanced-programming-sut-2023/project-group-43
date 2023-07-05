@@ -53,12 +53,14 @@ public class DataBase {
             for (JsonElement jsonElement : jsonArray)
                 chats.add(gson.fromJson(jsonElement, Chat.class));
             publicChat = getChatByName("public");
-            publicChat.setMembers(users);
             if (publicChat == null) {
                 publicChat = new Chat();
                 publicChat.setMembers(users);
                 publicChat.setName("public");
                 chats.add(publicChat);
+            }
+            else {
+                publicChat.setMembers(users);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,6 +108,9 @@ public class DataBase {
         }
     }
 
+    public ArrayList<Chat> getChats() {
+        return chats;
+    }
 
     public static DataBase getInstance() {
         if (dataBase == null) {

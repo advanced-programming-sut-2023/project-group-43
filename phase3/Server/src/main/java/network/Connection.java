@@ -28,7 +28,11 @@ public class Connection extends Thread {
 
     @Override
     public synchronized void run() {
-        (new PushNotification(this)).start();
+        try {
+            sendUsers();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             handleClient();
         } catch (IOException e) {
@@ -63,6 +67,7 @@ public class Connection extends Thread {
                         case "login":
                             Client client = new Client(DataBase.getInstance().getUserByUsername(value), this);
                             DataBase.getInstance().getClients().add(client);
+                            (new PushNotification(client)).start();
                             break;
                         case "logout":
                             for (Client gameClient: DataBase.getInstance().getClients()) {
@@ -113,6 +118,12 @@ public class Connection extends Thread {
         }
     }
 
+    private void sendUsers() throws IOException {
+        String users = DataBase.getInstance().getJsonString();
+        System.out.println(users);
+        Packet packet = new Packet("users", users);
+        dataOutputStream.writeUTF(packet.toJson());
+    }
     private void nextPerson(ArrayList<Client> clients, Game game) throws IOException {
         for (Client client : clients) {
             System.out.println("sending game to " + client.getUser().getUsername());

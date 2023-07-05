@@ -40,4 +40,11 @@ public class Chat {
     public void addMember(User user) {
         members.add(user);
     }
+
+    public boolean isUserAChatMember(User user) {
+        for (User member: members) {
+            if (member.getUsername().equals(user.getUsername())) return true;
+        }
+        return false;
+    }
 }

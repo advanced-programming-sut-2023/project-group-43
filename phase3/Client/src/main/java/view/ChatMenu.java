@@ -55,6 +55,10 @@ public class ChatMenu extends Application {
         stage.show();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private void initialize() {
         vBox = new VBox();
         vBox.setMaxSize(1000, 600);
