@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.googlecode.jinahya:ocap-hn:I09">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-hn/I09/ocap-hn-I09.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-hn/I09/ocap-hn-I09-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-hn/I09/ocap-hn-I09-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
