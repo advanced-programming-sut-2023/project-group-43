@@ -120,7 +120,6 @@ public class Connection extends Thread {
 
     private void sendUsers() throws IOException {
         String users = DataBase.getInstance().getJsonString();
-        System.out.println(users);
         Packet packet = new Packet("users", users);
         dataOutputStream.writeUTF(packet.toJson());
     }
