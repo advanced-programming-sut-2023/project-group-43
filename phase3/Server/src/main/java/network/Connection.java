@@ -107,6 +107,7 @@ public class Connection extends Thread {
                             } else {
                                 showError();
                             }
+                            DataBase.getInstance().getGames().add(game);
                             break;
                         case "update chat":
                             Chat chat = (new Gson()).fromJson(value, Chat.class);

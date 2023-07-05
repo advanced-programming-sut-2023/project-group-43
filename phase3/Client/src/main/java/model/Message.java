@@ -12,6 +12,8 @@ public class Message {
 
     private boolean isSeen = false;
 
+    private int reactionNumber = 0;
+
     public Message(User user, String text) {
         this.user = user;
         this.text = text;
@@ -46,6 +48,14 @@ public class Message {
 
     public void setSeen(boolean seen) {
         isSeen = seen;
+    }
+
+    public void setReactionNumber(int reactionNumber) {
+        this.reactionNumber = reactionNumber;
+    }
+
+    public int getReactionNumber() {
+        return reactionNumber;
     }
 
     public boolean isSeen() {

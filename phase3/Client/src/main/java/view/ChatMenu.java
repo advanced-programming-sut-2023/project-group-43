@@ -4,13 +4,12 @@ import com.google.gson.Gson;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -41,6 +40,8 @@ public class ChatMenu extends Application {
     private Timeline timeline;
 
     private ScrollPane scrollPane = new ScrollPane();
+
+    private ChoiceBox choiceBox = new ChoiceBox();
     private String name;
 
     private boolean isEditing = false, isDeleting = false;
@@ -78,32 +79,37 @@ public class ChatMenu extends Application {
         this.name = name;
     }
 
-    private void initialize() {
+    private void initialize() throws IOException {
         vBox = new VBox();
         vBox.setMaxSize(1000, 600);
         vBox.setMinSize(1000, 600);
         vBox.setSpacing(10);
+
         setVbox();
         newMessage = new TextField();
         newMessage.setLayoutX(10);
         newMessage.setLayoutY(610);
         anchorPane.getChildren().add(newMessage);
+        choiceBox.setLayoutX(1100);
+        choiceBox.setLayoutY(300);
+        ObservableList<String> reactions = FXCollections.observableArrayList();
+        reactions.addAll("1", "2", "3");
+        choiceBox.setItems(reactions);
+        choiceBox.setValue("1");
+        anchorPane.getChildren().add(choiceBox);
         Button button = new Button("send");
         button.setLayoutX(510);
         button.setLayoutY(610);
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Message message = new Message(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()), newMessage.getText());
-                Chat chat = NotificationReceiver.getChatByName(name);
-                chat.addMessage(message);
-                try {
-                    Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                newMessage.setText("");
+        button.setOnMouseClicked(mouseEvent -> {
+            Message message = new Message(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()), newMessage.getText());
+            Chat chat = NotificationReceiver.getChatByName(name);
+            chat.addMessage(message);
+            try {
+                Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            newMessage.setText("");
         });
         anchorPane.getChildren().add(button);
         Button back = new Button("back");
@@ -123,7 +129,7 @@ public class ChatMenu extends Application {
         anchorPane.getChildren().add(back);
     }
 
-    private void setVbox() {
+    private void setVbox() throws IOException {
         Chat chat = NotificationReceiver.getChatByName(name);
         synchronized (chat) {
             for (Message message : chat.getMessages()) {
@@ -142,7 +148,11 @@ public class ChatMenu extends Application {
                 } else {
                     hBox.setStyle("-fx-background-color: lightpink; -fx-padding: 10px; -fx-border-radius: 5px");
                     hBox.setLayoutX(10);
-                    message.setSeen(true);
+                    if (!message.isSeen()) {
+                        message.setSeen(true);
+                        Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
+                    }
+                    setFunction(hBox, message);
                 }
                 vBox.getChildren().add(hBox);
                 hBox.getChildren().add(new Label(message.getUser().getUsername()));
@@ -152,9 +162,43 @@ public class ChatMenu extends Application {
                 Label label = new Label(message.getTime());
                 label.setStyle("-fx-font-size: 8px");
                 hBox.getChildren().add(label);
+                if (message.getReactionNumber() > 0) {
+                    hBox.getChildren().add(addReaction(message));
+                }
             }
             scrollPane.setContent(vBox);
         }
+    }
+
+    private void setFunction(HBox hBox, Message message) {
+        hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                message.setReactionNumber(Integer.parseInt(choiceBox.getValue().toString()));
+                Chat chat = NotificationReceiver.getChatByName(name);
+                synchronized (chat) {
+                    try {
+                        Client.dataOutputStream.writeUTF(new Packet("update chat", (new Gson()).toJson(chat)).toJson());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
+
+    private Group addReaction(Message message) {
+        StringBuilder avatarPath = new StringBuilder();
+        avatarPath.append("/images/emoji/" + message.getReactionNumber() + ".jpg");
+        Image image = new Image(Objects.requireNonNull(ProfileMenu.class.getResource(avatarPath.toString())).toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setX(1);
+        imageView.setY(1);
+        imageView.setFitHeight(15);
+        imageView.setFitWidth(15);
+        imageView.setPreserveRatio(true);
+        Group root = new Group(imageView);
+        return root;
     }
 
     private void setFunctions(HBox hBox, Message message) {
@@ -217,7 +261,11 @@ public class ChatMenu extends Application {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
                     vBox.getChildren().removeAll(vBox.getChildren());
-                    setVbox();
+                    try {
+                        setVbox();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 })
         );
         timeline.setCycleCount(-1);

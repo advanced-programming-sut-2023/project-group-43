@@ -19,6 +19,8 @@ public class DataBase {
     private ArrayList<Client> clients = new ArrayList<>();
 
     private ArrayList<Chat> chats = new ArrayList<>();
+
+    private ArrayList<Game> games = new ArrayList<>();
     private Chat publicChat;
 
     private DataBase() {
@@ -209,5 +211,9 @@ public class DataBase {
 
     public ArrayList<Client> getClients() {
         return clients;
+    }
+
+    public ArrayList<Game> getGames() {
+        return games;
     }
 }
