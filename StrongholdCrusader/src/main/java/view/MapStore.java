@@ -1,25 +1,15 @@
 package view;
 
 import controller.GameControllers.GameController;
-import enums.environmentEnums.Texture;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.Cell;
-import model.DataBase;
 import model.User;
-
-import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 public class MapStore extends Application {
     public User currentUser;
@@ -28,7 +18,6 @@ public class MapStore extends Application {
     public Pane pane = new Pane();
     private ScrollPane scrollPane = new ScrollPane();
     private HBox hBox = new HBox();
-    public static HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
     @Override
     public void start(Stage stage) throws Exception {
         this.pane.setMinSize(1600, 200);
@@ -71,6 +60,7 @@ public class MapStore extends Application {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("owner : " + user.getUsername() + "\nmapName : " + mapName);
                 alert.show();
+                MapTransfer mapTransfer = new MapTransfer(user, mapName, value);
             });
         });
     }
@@ -80,8 +70,7 @@ public class MapStore extends Application {
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
-
-    public static void setDefaultMaps(int row, int column) {
+    /*public static void setDefaultMaps(int row, int column) {
         System.out.println("this is row " + row);
         System.out.println("this is column " + column);
         Cell[][] cells = new Cell[row][column];
@@ -134,5 +123,5 @@ public class MapStore extends Application {
                 break;
             }
         }
-    }
+    }*/
 }

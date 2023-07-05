@@ -4,6 +4,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String username;
@@ -49,6 +50,12 @@ public class User {
         this.mapsOfThisUser.put(string, pane);
     }
 
+    public Boolean mapWithThisName(String name) {
+        for (Map.Entry<String, Pane> set : mapsOfThisUser.entrySet()) {
+            if (set.getKey().equals(name)) return true;
+        }
+        return false;
+    }
     public int getAvatarNumber() {
         return avatarNumber;
     }
