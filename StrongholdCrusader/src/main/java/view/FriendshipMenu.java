@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 
 public class FriendshipMenu extends Application implements Initializable {
     private static FriendshipController friendshipController;
+    private ArrayList<User> users;
 
     private Stage stage;
     private Scene scene;
@@ -55,6 +56,7 @@ public class FriendshipMenu extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        users = DataBase.getInstance().getUsers();
         setBackground();
         setTable();
         back.setOnAction(actionEvent -> {
@@ -90,8 +92,8 @@ public class FriendshipMenu extends Application implements Initializable {
 
     private void addRows(){
         clearCells();
-        ArrayList<User> users = DataBase.getInstance().getUsers();
-        for(int i = 0 ; i < 3 ; i++){
+        //TODO -> size should change to proper number
+        for(int i = 0 ; i < users.size() ; i++){
             friendshipTable.add(new FriendshipCell(users.get(i)));
         }
         table.setItems(friendshipTable);

@@ -3,21 +3,35 @@ package model.tableInfo;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import model.User;
 
 public class ScoreboardCell {
+    private  User user;
     private ImageView avatar = new ImageView();
     private int rank;
     private String username;
     private int score;
-    private Circle state = new Circle();
+    private Circle state ;
     private String lastSeen;
     private Button friendShip = new Button("Friendship");
 
     public ScoreboardCell(User user) {
+        this.user = user;
         this.username = user.getUsername();
         this.rank = user.getRank();
+        this.score = user.getScore();
+        this.state = checkOnlineState();
+    }
+
+    private Circle checkOnlineState(){
+        //if user is online
+        state.setRadius(10);
+        state.setFill(Color.GREEN);
+        //if not
+        //state.setFill(Color.RED);
+        return state;
     }
 
     public ImageView getAvatar() {

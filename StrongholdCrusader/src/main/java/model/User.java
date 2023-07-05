@@ -18,6 +18,7 @@ public class User {
     boolean isLoggedIn;
 
     private ArrayList<Trade> trades = new ArrayList<>();
+    private ArrayList<User> friends = new ArrayList<>();
     private int avatarNumber = 4;
     private HashMap<String, Cell[][]> mapsOfThisUser;
 
@@ -32,6 +33,10 @@ public class User {
         this.PasswordRecoveryAnswer = PasswordRecoveryAnswer;
         this.slogan = slogan;
         this.mapsOfThisUser = new HashMap<>();
+    }
+
+    public void addFriend(User user){
+        friends.add(user);
     }
 
     public HashMap<String, Cell[][]> getMapsOfThisUser() {

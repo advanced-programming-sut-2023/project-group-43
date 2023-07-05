@@ -1,26 +1,19 @@
 package view;
 
-import com.google.gson.Gson;
 import controller.GameControllers.ChangeEnvironmentController;
-import controller.GameControllers.GameController;
 import controller.MainUserController;
 import controller.RegisterAndLoginController;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import controller.UserControllers.FriendshipController;
+import controller.UserControllers.ScoreboardController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.DataBase;
 import model.User;
-import network.Client;
-import network.NotificationReceiver;
-import network.Packet;
 
 import java.net.URL;
 import java.util.Objects;
@@ -28,13 +21,11 @@ import java.util.Objects;
 
 public class MainMenu extends Application {
 
-    private Stage stage;
+    private static Stage stage;
 
     private Scene scene;
     @FXML
     private Pane mainPane;
-
-    private Timeline timeline;
 
 
     private static String username;
@@ -59,50 +50,20 @@ public class MainMenu extends Application {
 
     public void setMainUserController(String username) {
         MainMenu.username = username;
-        User currentUser = DataBase.getInstance().getUserByUsername(username);
-        mainUserController = new MainUserController(currentUser);
+        //mainUserController = new MainUserController(currentUser);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        MainMenu.stage = stage;
         mainPane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(RegisterMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
         scene = new Scene(mainPane);
         setBackground();
         stage.setScene(scene);
-        addTimeline();
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
-    }
-
-    private void addTimeline() {
-        timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), e -> {
-                    if (NotificationReceiver.getGame() != null) {
-                        System.out.println("a new game added");
-                        GameController gameController = new GameController(NotificationReceiver.getGame());
-                        NotificationReceiver.getGame().setCurrentUser(DataBase.getInstance().getUserByUsername(MainMenu.getUsername()));
-                        gameController.initializeGame();
-                        GameMenu gameMenu = new GameMenu();
-                        gameMenu.setGameController(gameController);
-                        gameMenu.setTurns(NotificationReceiver.getGame().getTurns());
-//                        NotificationReceiver.setGame(null);
-                        try {
-                            pauseThis(gameMenu);
-                        } catch (Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                })
-        );
-        timeline.setCycleCount(-1);
-        timeline.play();
-    }
-
-    private void pauseThis(GameMenu gameMenu) throws Exception {
-        timeline.pause();
-        NotificationReceiver.setGame(null);
-        gameMenu.start(RegisterMenu.getStage());
     }
 
 
@@ -117,8 +78,9 @@ public class MainMenu extends Application {
     }
 
     public void back() throws Exception {
+        RegisterAndLoginController registerAndLoginController = new RegisterAndLoginController();
         LoginMenu loginMenu = new LoginMenu();
-        Client.dataOutputStream.writeUTF(new Packet("logout", null).toJson());
+        //loginMenu.setLoginController(registerAndLoginController);
         loginMenu.start(RegisterMenu.getStage());
     }
 
@@ -130,14 +92,34 @@ public class MainMenu extends Application {
     }
 
     public void enterChangeEnvironmentMenu() throws Exception {
-        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
+        ChangeEnvironmentController changeEnvironmentController = new ChangeEnvironmentController(mainUserController.getCurrentUser());
         ChangeEnvironmentMenu changeEnvironmentMenu = new ChangeEnvironmentMenu();
         changeEnvironmentMenu.setChangeEnvironmentController(changeEnvironmentController);
         changeEnvironmentMenu.start(RegisterMenu.getStage());
     }
 
-    public void enterChatroomMenu() throws Exception {
-        new ChatroomMenu().start(RegisterMenu.getStage());
+    public void enterFriendshipMenu() throws Exception {
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
+        FriendshipController friendshipController = new FriendshipController(mainUserController.getCurrentUser());
+        FriendshipMenu friendshipMenu = new FriendshipMenu();
+        friendshipMenu.setFriendshipController(friendshipController);
+        friendshipMenu.start(RegisterMenu.getStage());
     }
+
+    public void enterScoreboardMenu() throws Exception {
+        if (mainUserController == null) {
+            mainUserController = new MainUserController(DataBase.getInstance().getUserByUsername(MainMenu.username));
+        }
+        ScoreboardController scoreboardController = new ScoreboardController(mainUserController.getCurrentUser());
+        ScoreboardMenu scoreboardMenu = new ScoreboardMenu();
+        scoreboardMenu.setScoreboardController(scoreboardController);
+        scoreboardMenu.start(RegisterMenu.getStage());
+    }
+
 
 }

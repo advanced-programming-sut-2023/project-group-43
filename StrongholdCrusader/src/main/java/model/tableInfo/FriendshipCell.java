@@ -2,10 +2,12 @@ package model.tableInfo;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import model.DataBase;
 import model.User;
 
 
 public class FriendshipCell {
+    private User currentUser;
     private ImageView avatar = new ImageView();
     private int rank;
     private String username;
@@ -14,9 +16,13 @@ public class FriendshipCell {
     private Button friendShip = new Button("Friendship");
 
     public FriendshipCell(User currentUser) {
+        this.currentUser = currentUser;
         this.username = currentUser.getUsername();
         this.slogan = currentUser.getSlogan();
         this.score = currentUser.getScore();
+        this.rank = DataBase.getInstance().getRank(currentUser);
+        this.slogan = currentUser.getSlogan();
+
     }
 
     public ImageView getAvatar() {

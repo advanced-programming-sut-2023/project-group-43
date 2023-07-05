@@ -19,7 +19,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.DataBase;
 import model.User;
-import model.tableInfo.FriendshipCell;
 import model.tableInfo.ScoreboardCell;
 
 import java.net.URL;
@@ -95,9 +94,10 @@ public class ScoreboardMenu extends Application implements Initializable {
 
     private void addRows(){
         clearCells();
-        //TODO --> we should set ranking
-        ArrayList<User> users = DataBase.getInstance().getUsers();
-        for(int i = 0 ; i < 3 ; i++){
+        ArrayList<User> users = DataBase.getInstance().scoreboard();
+        System.out.println( "Score board :" + users.size());
+        //TODO -> size should be change to a proper number
+        for(int i = 0 ; i < users.size() ; i++){
             scoreboardTable.add(new ScoreboardCell(users.get(i)));
         }
         table.setItems(scoreboardTable);
