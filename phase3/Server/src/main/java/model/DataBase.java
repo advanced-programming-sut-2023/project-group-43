@@ -156,7 +156,7 @@ public class DataBase {
     public void addChat(Chat chat) {
         boolean isFound = false;
         for (Chat c: chats) {
-            if (c.getName().equals(chat.getName())) {
+            if (c.getName().equals(chat.getName()) && c.getChatType().equals(chat.getChatType())) {
                 isFound = true;
                 c.setMessages(chat.getMessages());
             }

@@ -102,6 +102,7 @@ public class ChatMenu extends Application {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                newMessage.setText("");
             }
         });
         anchorPane.getChildren().add(button);
@@ -165,6 +166,7 @@ public class ChatMenu extends Application {
                     }
                     newMessage.setText("");
                 } else if (isDeleting) {
+                    isDeleting = false;
                     Chat chat = NotificationReceiver.getChatByName(name);
                     synchronized (chat) {
                         for (Message m : NotificationReceiver.getChatByName(name).getMessages()) {
