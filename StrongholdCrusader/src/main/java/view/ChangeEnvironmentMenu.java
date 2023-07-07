@@ -52,6 +52,8 @@ public class ChangeEnvironmentMenu extends Application {
         setBackground();
         Scene scene = new Scene(changeEnvironmentMenuPane);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -117,5 +119,15 @@ public class ChangeEnvironmentMenu extends Application {
         MainMenu mainMenu = new MainMenu();
         mainMenu.setMainUserController(MainMenu.getUsername());
         mainMenu.start(RegisterMenu.getStage());
+    }
+
+    public void mapStore(MouseEvent mouseEvent) {
+        MapStore mapStore = new MapStore();
+        mapStore.setCurrentUser(changeEnvironmentController.getCurrentUser());
+        try {
+            mapStore.start(RegisterMenu.getStage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

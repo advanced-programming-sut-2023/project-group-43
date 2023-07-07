@@ -65,6 +65,8 @@ public class RegisterMenu extends Application {
         Scene scene = new Scene(registerPane);
         stage.setScene(scene);
         setBackground(registerPane);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="258d56e5-c1ef-40b7-be21-1ca23e7fd6a4" name="Changes" comment="fix yellow errors">
+      <change beforePath="$PROJECT_DIR$/StrongholdCrusader/src/main/java/model/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/StrongholdCrusader/src/main/java/model/DataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StrongholdCrusader/src/main/java/model/GovernanceResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/StrongholdCrusader/src/main/java/model/GovernanceResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StrongholdCrusader/src/main/java/view/TradeMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/StrongholdCrusader/src/main/java/view/TradeMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StrongholdCrusader/target/classes/model/DataBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/StrongholdCrusader/target/classes/model/DataBase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StrongholdCrusader/target/classes/view/TradeMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/StrongholdCrusader/target/classes/view/TradeMenu.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2OgIukkydaaZr5LHWhyiwQWwicG" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;G:/AP/Project&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\AP\Project\StrongholdCrusader\src\main\resources\images\material" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="258d56e5-c1ef-40b7-be21-1ca23e7fd6a4" name="Changes" comment="" />
+      <created>1681976022435</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681976022435</updated>
+      <workItem from="1681976024315" duration="112000" />
+      <workItem from="1685425533231" duration="153000" />
+      <workItem from="1685425696666" duration="10432000" />
+      <workItem from="1685520188653" duration="7304000" />
+      <workItem from="1685617928638" duration="3718000" />
+      <workItem from="1685692370243" duration="1569000" />
+      <workItem from="1685695280007" duration="4364000" />
+      <workItem from="1685699745868" duration="9663000" />
+      <workItem from="1685797844232" duration="29450000" />
+      <workItem from="1685959876981" duration="2101000" />
+      <workItem from="1686157314946" duration="1281000" />
+      <workItem from="1686197126849" duration="79000" />
+      <workItem from="1686197230767" duration="712000" />
+      <workItem from="1687525824265" duration="3706000" />
+      <workItem from="1687688843652" duration="1519000" />
+    </task>
+    <task id="LOCAL-00001" summary="commit unknown changes before pull">
+      <created>1685425800643</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1685425800643</updated>
+    </task>
+    <task id="LOCAL-00002" summary="commit unknown changes after pull">
+      <created>1685426004990</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1685426004990</updated>
+    </task>
+    <task id="LOCAL-00003" summary="commit unknown changes after pull">
+      <created>1685426024941</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1685426024941</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add fxml file of some menus and change their classes&#10;(bugs inside controllers)">
+      <created>1685430317287</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1685430317287</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add mainMenu">
+      <created>1685433679093</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1685433679093</updated>
+    </task>
+    <task id="LOCAL-00006" summary="try to change controllers 1">
+      <created>1685525443514</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1685525443514</updated>
+    </task>
+    <task id="LOCAL-00007" summary="take controllers to previous state and delete constructors">
+      <created>1685618384099</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1685618384099</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix enter menus based">
+      <created>1685692484159</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1685692484159</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add primary images for store menu and complete main menu">
+      <created>1685712868174</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1685712868174</updated>
+    </task>
+    <task id="LOCAL-00010" summary="push after solving got problem&#10;(new stuff including imageEnum and store menu)">
+      <created>1685889370471</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1685889370472</updated>
+    </task>
+    <task id="LOCAL-00011" summary="complete Store menu">
+      <created>1685897947636</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1685897947636</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix yellow errors">
+      <created>1685898072580</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1685898072580</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/aida" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="commit unknown changes before pull" />
+    <MESSAGE value="commit unknown changes after pull" />
+    <MESSAGE value="add fxml file of some menus and change their classes&#10;(bugs inside controllers)" />
+    <MESSAGE value="add mainMenu" />
+    <MESSAGE value="try to change controllers 1" />
+    <MESSAGE value="take controllers to previous state and delete constructors" />
+    <MESSAGE value="fix enter menus based" />
+    <MESSAGE value="add primary images for store menu and complete main menu" />
+    <MESSAGE value="push after solving got problem&#10;(new stuff including imageEnum and store menu)" />
+    <MESSAGE value="complete Store menu" />
+    <MESSAGE value="fix yellow errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix yellow errors" />
+  </component>
+</project>

@@ -25,4 +25,6 @@ module com.example.strongholdcrusader {
     exports model.units;
     opens model.buildings to com.google.gson;
     exports model.buildings;
+    exports model.tableInfo;
+    opens model.tableInfo to com.google.gson, javafx.graphics, javafx.scene;
 }

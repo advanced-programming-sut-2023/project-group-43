@@ -38,6 +38,9 @@ public class DataBase {
     }
 
     public void saveData() {
+        for (User user: users) {
+            user.setGovernance(null);
+        }
         try {
             Gson gson = new Gson();
             String json = gson.toJson(users);
@@ -85,9 +88,8 @@ public class DataBase {
     }
 
     private class sortUsers implements Comparator<User> {
-        public int compare(User a, User b) {
-            if (a.getScore() != b.getScore()) return b.getScore() - a.getScore();
-            else return a.getScore() - b.getScore();
+        public int compare(User o1, User o2) {
+            return Integer.compare(o1.getScore(), o2.getScore());
         }
     }
 

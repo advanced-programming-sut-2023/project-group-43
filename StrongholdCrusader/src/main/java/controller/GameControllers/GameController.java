@@ -2,6 +2,7 @@ package controller.GameControllers;
 
 import controller.MainUserController;
 import enums.BuildingEnums.BuildingEnum;
+import enums.ImageEnum;
 import enums.Output;
 import enums.RateNumber;
 import enums.environmentEnums.Material;
@@ -9,10 +10,13 @@ import enums.environmentEnums.Texture;
 import enums.unitEnums.ArmedWeapon;
 import enums.unitEnums.UnitState;
 import enums.unitEnums.UnitsEnum;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import model.*;
 import model.buildings.*;
 import model.units.*;
+import view.GameMenu;
 import view.MainMenu;
 import view.RegisterMenu;
 
@@ -22,11 +26,21 @@ import java.util.stream.Collectors;
 public class GameController {
 
     private final Game game;
+    private static HashMap<HashMap<User, String>, Pane> allMaps = new HashMap<>();
     private static final HashMap<String, Cell[][]> defaultMaps = new HashMap<>();
 
     private final Cell village = new Cell();
     private static MiniBar miniBar = new MiniBar();
 
+    public static HashMap<HashMap<User, String>, Pane> getAllMaps() {
+        return allMaps;
+    }
+
+    public void addToAllMaps(User user, String string, Pane pane) {
+        HashMap<User, String> hashMap = new HashMap<>();
+        hashMap.put(user, string);
+        this.allMaps.put(hashMap, pane);
+    }
 
     public GameController(Game game) {
         this.game = game;
@@ -179,7 +193,7 @@ public class GameController {
     public Output dropBuilding(int x, int y, String type) {
         if (x <= 0 || y <= 0 || x > game.getCells().length || y > game.getCells()[0].length)
             return Output.WRONG_COORDINATES;
-        if (type.matches("headquarter")) return Output.INVALID_BUILDING;
+        if (type.matches("headquarter") && game.getCurrentPlayer().getGovernance().getBuildingByName("headquarter") != null) return Output.INVALID_BUILDING;
         if (game.getCells()[x - 1][y - 1].getBuilding() != null) return Output.INVALID_CELL;
         Building building = BuildingBuilder.BuildingBuilder(type, game.getCurrentPlayer());
         if (building == null) return null;
@@ -201,7 +215,7 @@ public class GameController {
             return Output.NOT_ENOUGH_RESOURCE;
         if (governance.getGovernanceResource().getAmountOfItemInStockpile(Material.STONE) < building.getStone())
             return Output.NOT_ENOUGH_RESOURCE;
-        if (governance.getUnits().size() < building.getLadderlans()) return Output.NOT_ENOUGH_UNITS;
+        if (governance.getUnemployedPopulation() < building.getLadderlans()) return Output.NOT_ENOUGH_UNITS;
         governance.changeGoldAmount(-building.getCost());
         governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.WOOD, building.getWood());
         governance.getGovernanceResource().changeAmountOfItemInStockpile(Material.STONE, building.getStone());
@@ -240,8 +254,8 @@ public class GameController {
         return Output.SUCCESSFUL_UNIT_CREATION;
     }
 
-    public Output dropUnit(int x, int y, String type, int count) {
-        ArrayList<Unit> units = game.getCurrentPlayer().getGovernance().getNewUnits(type);
+    public Output dropUnit(int x, int y, int count) {
+        ArrayList<Unit> units = game.getCurrentPlayer().getGovernance().getNewUnits();
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         if (units.size() < count) return Output.NOT_ENOUGH_UNIT;
         Cell cell = game.getCells()[x - 1][y - 1];
@@ -268,11 +282,11 @@ public class GameController {
         return Output.NO_BUILDING;
     }
 
-    public Output selectUnit(int x, int y, String type) {
+    public Output selectUnit(int x, int y) {
         if (isCoordinateInvalid(x, y)) return Output.WRONG_COORDINATES;
         ArrayList<Unit> selectedUnits = new ArrayList<>();
         for (Unit unit : game.getCells()[x - 1][y - 1].getUnits()) {
-            if (unit.getName().equals(type) && unit.getOwner().equals(game.getCurrentPlayer())) {
+            if (unit.getOwner().equals(game.getCurrentPlayer())) {
                 selectedUnits.add(unit);
             }
         }
@@ -323,14 +337,7 @@ public class GameController {
         return Output.UNIT_STATE_SET_SUCCESSFULLY;
     }
 
-    public Output attack(int x, int y, String item) {
-        if (item != null)
-            return attackToEnemy(x, y);
-        else
-            return airAttack(x, y);
-    }
-
-    private Output attackToEnemy(int x, int y) {
+    public Output attackToEnemy(int x, int y) {
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         for (Unit unit : game.getSelectedUnit()) {
             if (unit instanceof Troop) {
@@ -347,7 +354,7 @@ public class GameController {
         return Output.SUCCESSFUL_ACTION;
     }
 
-    private Output airAttack(int x, int y) {
+    public Output airAttack(int x, int y) {
         if (isCoordinateInvalid(x - 1, y - 1)) return Output.WRONG_COORDINATES;
         for (Unit unit : game.getSelectedUnit()) {
             if (unit.getName().equals("archer")) {
@@ -363,6 +370,9 @@ public class GameController {
 
     private void attack(int x, int y, Unit unit) {
         Cell cell = game.getCells()[x - 1][y - 1];
+        if (unit.getName().equals("fire thrower")) {
+            cell.setTexture(Texture.FIRE_TEXTURE);
+        }
         Building building = cell.getBuilding();
         if (building != null && building.getOwner().equals(game.getCurrentPlayer())) {
             building.setHp(building.getHp() - (int) Math.floor(unit.getHitPoint()));
@@ -663,6 +673,8 @@ public class GameController {
             game.getCells()[lengthResult][widthResult].setTexture(Texture.ILLNESS);
         }
     }
+
+
     private void updateIllness() {
         for (int i = 0; i < game.getCells().length; i++) {
             for (int j = 0; j < game.getCells()[0].length; j++) {
@@ -700,6 +712,8 @@ public class GameController {
             governance.setPopularity(governance.getPopularity() + governance.getTaxRate().getPopularityIncrement());
         }
     }
+
+
 
     private void updateFoodRate() {
         Governance governance;
